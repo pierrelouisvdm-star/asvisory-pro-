@@ -45,7 +45,7 @@ api_router.include_router(market_router)
 # Health check endpoint
 @api_router.get("/health")
 async def health_check():
-    return {"status": "healthy", "service": "wealthcalc-api"}
+    return {"status": "healthy", "service": "advisorypro-api"}
 
 # Include the main router
 app.include_router(api_router)
