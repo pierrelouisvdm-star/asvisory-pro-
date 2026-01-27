@@ -1,7 +1,7 @@
 # WealthCalc - Financial Advisor Suite PRD
 
 ## Overview
-A comprehensive frontend-only financial calculator suite for financial advisors, featuring 15 professional calculators with premium UI design.
+A comprehensive frontend-only financial calculator suite for financial advisors, featuring 15 professional calculators with a modern, clean UI design.
 
 ## Original Requirements
 1. Build a financial advisor application with various calculators
@@ -11,14 +11,35 @@ A comprehensive frontend-only financial calculator suite for financial advisors,
 5. Added: 8 new tools - Tax Calculator, Estate Planning, Emergency Fund, Debt Payoff, Education Savings, Budget Planner, Net Worth Tracker, Risk Profile Quiz
 6. Annual return slider max increased to 50%, default 25%
 7. ZAR set as default currency
+8. **UI Redesign**: Modern, clean, professional look requested
 
 ## Tech Stack
 - **Frontend**: React.js with react-router-dom
 - **Styling**: Tailwind CSS with custom design system
 - **Components**: shadcn/ui
-- **Charts**: recharts
+- **Charts**: recharts (with Emerald/Slate color scheme)
 - **Animation**: framer-motion
 - **State**: React Hooks + Context API (CurrencyContext)
+
+## Design System (Updated December 2025)
+
+### Typography
+- **Headings**: Manrope (500-800 weights) - Modern, clean sans-serif
+- **Body**: Public Sans (400-600 weights) - Highly readable
+- **Code**: JetBrains Mono - For financial formulas
+
+### Color Palette
+- **Primary**: Slate (900: #0f172a for text/UI, 50-100 for backgrounds)
+- **Accent**: Emerald (#10b981) - Success, CTAs, highlights
+- **Backgrounds**: Clean white/slate-50 (light), slate-900/950 (dark)
+- **Charts**: Emerald, Teal, Slate palette
+
+### UI Principles
+- High contrast, clean layouts
+- Rounded corners (xl for cards, lg for buttons)
+- Subtle shadows (shadow-sm, shadow-lg on hover)
+- Glassmorphism header with backdrop blur
+- Consistent spacing and typography hierarchy
 
 ## Features Implemented
 
@@ -68,7 +89,7 @@ A comprehensive frontend-only financial calculator suite for financial advisors,
 │   │   │   ├── PrintReport.jsx
 │   │   │   └── ComparisonMode.jsx
 │   │   ├── layout/
-│   │   │   ├── Header.jsx
+│   │   │   ├── Header.jsx (glassmorphism)
 │   │   │   └── Footer.jsx
 │   │   ├── ui/ (shadcn components)
 │   │   └── CurrencySelector.jsx
@@ -78,7 +99,7 @@ A comprehensive frontend-only financial calculator suite for financial advisors,
 │   │   ├── Dashboard.jsx
 │   │   └── (15 calculator pages)
 │   ├── App.js
-│   ├── index.css
+│   ├── index.css (design tokens)
 │   └── tailwind.config.js
 ```
 
@@ -87,15 +108,28 @@ A comprehensive frontend-only financial calculator suite for financial advisors,
 - **P2**: Client Management (CRM Lite)
 - **P3**: Advanced simulations (Monte Carlo)
 - **P3**: Portfolio tracking
-- **P3**: Fix `for` to `htmlFor` linter warnings across JSX files
 
 ## Status
 ✅ **Complete** - All 15 calculators implemented and integrated
+✅ **UI Redesign Complete** - Modern Manrope/Public Sans fonts, Emerald/Slate colors
 - Frontend testing: 100% pass rate
 - All navigation and routing working
 - Dashboard displays all 4 sections
 - Currency toggle functional
 - Dark/light mode working
 
-## Last Updated
-December 2025
+## Changelog
+
+### December 2025 - UI Redesign
+- Replaced Playfair Display/Inter fonts with Manrope/Public Sans
+- Changed color scheme from Navy/Gold/Forest to Slate/Emerald
+- Updated all component styling for cleaner, more professional look
+- Implemented glassmorphism header
+- Updated chart colors to Emerald palette
+- Modernized all card, button, and form styling
+
+### December 2025 - Initial Implementation
+- Implemented all 15 financial calculators
+- Added inflation/fee adjustments
+- Added currency toggle (ZAR/USD)
+- Created comprehensive dashboard with 4 sections
