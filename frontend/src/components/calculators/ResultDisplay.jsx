@@ -27,10 +27,10 @@ export const ResultDisplay = ({
   };
 
   const variantClasses = {
-    default: 'bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl',
+    default: 'bg-slate-50 dark:bg-slate-800/50 border border-navy-700 rounded-xl',
     premium: 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl',
     success: 'bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-xl',
-    muted: 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl',
+    muted: 'bg-slate-100 dark:bg-slate-800 border border-navy-700 rounded-xl',
   };
 
   return (
@@ -39,10 +39,10 @@ export const ResultDisplay = ({
       variantClasses[variant],
       className
     )}>
-      <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-1">{label}</p>
+      <p className="text-sm font-medium text-slate-400 mb-1">{label}</p>
       <div className="flex items-baseline gap-2 flex-wrap">
         <span className={cn(
-          "font-display font-bold text-slate-900 dark:text-white animate-count-up",
+          "font-display font-bold text-white animate-count-up",
           sizeClasses[size]
         )}>
           {prefix}{formattedValue}{suffix}
@@ -52,7 +52,7 @@ export const ResultDisplay = ({
             "flex items-center gap-1 text-sm font-medium px-2 py-0.5 rounded-full",
             trend === 'up' && "text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30",
             trend === 'down' && "text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/30",
-            trend === 'neutral' && "text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800"
+            trend === 'neutral' && "text-slate-400 bg-slate-100 dark:bg-slate-800"
           )}>
             <TrendIcon className="h-3 w-3" />
             {trendValue}

@@ -32,8 +32,8 @@ const CHART_COLORS = {
 const CustomTooltip = ({ active, payload, label, prefix = '$', suffix = '' }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4">
-        <p className="text-sm font-medium text-slate-900 dark:text-white mb-2">{label}</p>
+      <div className="bg-navy-900/60 border border-navy-700 rounded-lg shadow-lg p-4">
+        <p className="text-sm font-medium text-white mb-2">{label}</p>
         {payload.map((entry, index) => (
           <p key={index} className="text-sm" style={{ color: entry.color }}>
             {entry.name}: {prefix}

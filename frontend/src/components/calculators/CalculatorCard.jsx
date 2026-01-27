@@ -12,7 +12,7 @@ export const CalculatorCard = ({
 }) => {
   return (
     <Card className={cn(
-      "rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden",
+      "rounded-xl border border-navy-700 bg-navy-900/60 shadow-sm overflow-hidden",
       className
     )}>
       <CardHeader className="pb-4">
@@ -24,11 +24,11 @@ export const CalculatorCard = ({
               </div>
             )}
             <div>
-              <CardTitle className="font-display text-lg font-semibold text-slate-900 dark:text-white">
+              <CardTitle className="font-display text-lg font-semibold text-white">
                 {title}
               </CardTitle>
               {description && (
-                <CardDescription className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                <CardDescription className="text-sm text-slate-400 mt-0.5">
                   {description}
                 </CardDescription>
               )}
