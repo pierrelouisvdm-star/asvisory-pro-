@@ -144,14 +144,6 @@ const personalFinanceTools = [
     path: '/emergency-fund',
     features: ['Risk Analysis', 'Funding Progress', 'Timeline'],
   },
-  {
-    id: 'debt-payoff',
-    title: 'Debt Payoff',
-    description: 'Compare Snowball vs Avalanche strategies',
-    icon: CreditCard,
-    path: '/debt-payoff',
-    features: ['Avalanche', 'Snowball', 'Interest Savings'],
-  },
 ];
 
 const planningTools = [
@@ -170,14 +162,6 @@ const planningTools = [
     icon: GraduationCap,
     path: '/education-savings',
     features: ['Cost Projection', 'Inflation', 'Funding Gap'],
-  },
-  {
-    id: 'risk-profile',
-    title: 'Risk Profile Quiz',
-    description: 'Discover your investment risk tolerance',
-    icon: ClipboardList,
-    path: '/risk-profile',
-    features: ['10 Questions', 'Asset Allocation', 'Portfolio'],
   },
 ];
 
