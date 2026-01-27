@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Dashboard } from "@/pages/Dashboard";
@@ -19,18 +19,36 @@ import { EducationSavingsCalculator } from "@/pages/EducationSavingsCalculator";
 import { BudgetPlanner } from "@/pages/BudgetPlanner";
 import { NetWorthTracker } from "@/pages/NetWorthTracker";
 import { RiskProfileQuiz } from "@/pages/RiskProfileQuiz";
+import { AuthPage } from "@/pages/AuthPage";
+import { ClientsPage } from "@/pages/ClientsPage";
+import { ClientProfilePage } from "@/pages/ClientProfilePage";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
+import { AuthProvider } from "@/context/AuthContext";
+
+// Layout wrapper to conditionally show header/footer
+const AppLayout = ({ children }) => {
+  const location = useLocation();
+  const hideLayout = location.pathname === '/auth';
+  
+  return (
+    <>
+      {!hideLayout && <Header />}
+      <main className="flex-1">
+        {children}
+      </main>
+      {!hideLayout && <Footer />}
+    </>
+  );
+};
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
-    // Initialize from stored preference or system preference
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const shouldBeDark = stored === 'dark' || (!stored && prefersDark);
       
-      // Apply class immediately to prevent flash
       if (shouldBeDark) {
         document.documentElement.classList.add('dark');
       }
@@ -50,38 +68,48 @@ function App() {
   }, [isDark]);
 
   return (
-    <CurrencyProvider>
-      <div className="min-h-screen flex flex-col bg-background">
-        <BrowserRouter>
-          <Header isDark={isDark} setIsDark={setIsDark} />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              {/* Investment Calculators */}
-              <Route path="/future-value" element={<FutureValueCalculator />} />
-              <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
-              <Route path="/bond" element={<BondCalculator />} />
-              <Route path="/car-finance" element={<CarFinanceCalculator />} />
-              {/* Insurance & Planning */}
-              <Route path="/life-insurance" element={<LifeInsuranceCalculator />} />
-              <Route path="/income-disability" element={<IncomeDisabilityCalculator />} />
-              <Route path="/retirement" element={<RetirementCalculator />} />
-              {/* Personal Finance Tools */}
-              <Route path="/tax-calculator" element={<TaxCalculator />} />
-              <Route path="/estate-planning" element={<EstatePlanningCalculator />} />
-              <Route path="/emergency-fund" element={<EmergencyFundCalculator />} />
-              <Route path="/debt-payoff" element={<DebtPayoffCalculator />} />
-              <Route path="/education-savings" element={<EducationSavingsCalculator />} />
-              <Route path="/budget-planner" element={<BudgetPlanner />} />
-              <Route path="/net-worth" element={<NetWorthTracker />} />
-              <Route path="/risk-profile" element={<RiskProfileQuiz />} />
-            </Routes>
-          </main>
-          <Footer />
-          <Toaster position="top-right" />
-        </BrowserRouter>
-      </div>
-    </CurrencyProvider>
+    <AuthProvider>
+      <CurrencyProvider>
+        <div className="min-h-screen flex flex-col bg-background">
+          <BrowserRouter>
+            <AppLayout>
+              <Routes>
+                {/* Public Routes */}
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/auth" element={<AuthPage />} />
+                
+                {/* Client Management */}
+                <Route path="/clients" element={<ClientsPage />} />
+                <Route path="/clients/:clientId" element={<ClientProfilePage />} />
+                <Route path="/clients/:clientId/analysis" element={<ClientProfilePage />} />
+                
+                {/* Investment Calculators */}
+                <Route path="/future-value" element={<FutureValueCalculator />} />
+                <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
+                <Route path="/bond" element={<BondCalculator />} />
+                <Route path="/car-finance" element={<CarFinanceCalculator />} />
+                
+                {/* Insurance & Planning */}
+                <Route path="/life-insurance" element={<LifeInsuranceCalculator />} />
+                <Route path="/income-disability" element={<IncomeDisabilityCalculator />} />
+                <Route path="/retirement" element={<RetirementCalculator />} />
+                
+                {/* Personal Finance Tools */}
+                <Route path="/tax-calculator" element={<TaxCalculator />} />
+                <Route path="/estate-planning" element={<EstatePlanningCalculator />} />
+                <Route path="/emergency-fund" element={<EmergencyFundCalculator />} />
+                <Route path="/debt-payoff" element={<DebtPayoffCalculator />} />
+                <Route path="/education-savings" element={<EducationSavingsCalculator />} />
+                <Route path="/budget-planner" element={<BudgetPlanner />} />
+                <Route path="/net-worth" element={<NetWorthTracker />} />
+                <Route path="/risk-profile" element={<RiskProfileQuiz />} />
+              </Routes>
+            </AppLayout>
+            <Toaster position="top-right" />
+          </BrowserRouter>
+        </div>
+      </CurrencyProvider>
+    </AuthProvider>
   );
 }
 
