@@ -155,7 +155,7 @@ async def get_market_data():
     Data is cached and refreshed every 15 minutes.
     """
     # Check cache first
-    cached = get_cached_data()
+    cached = await get_cached_data()
     if cached:
         return MarketDataResponse(
             indices=[MarketIndex(
@@ -182,7 +182,7 @@ async def get_market_data():
     # Fetch fresh data
     try:
         data = await fetch_market_data()
-        cached = save_cache(data)
+        cached = await save_cache(data)
         
         return MarketDataResponse(
             indices=[MarketIndex(
