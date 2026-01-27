@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
 import { CalculatorCard } from '@/components/calculators/CalculatorCard';
-import { SliderInput } from '@/components/calculators/InputField';
+import { SliderField } from '@/components/calculators/InputField';
 import { ResultDisplay, ResultGrid } from '@/components/calculators/ResultDisplay';
-import { GrowthAreaChart, ComparisonBarChart } from '@/components/calculators/GrowthChart';
+import { GrowthAreaChart } from '@/components/calculators/GrowthChart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';

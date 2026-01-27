@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useCurrency } from '@/context/CurrencyContext';
 import { monteCarloApi } from '@/services/api';
 import { CalculatorCard } from '@/components/calculators/CalculatorCard';
-import { SliderInput } from '@/components/calculators/InputField';
+import { SliderField } from '@/components/calculators/InputField';
 import { ResultDisplay, ResultGrid } from '@/components/calculators/ResultDisplay';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
