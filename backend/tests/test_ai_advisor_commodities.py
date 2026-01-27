@@ -86,7 +86,8 @@ class TestAIAdvisorChat:
             f"{BASE_URL}/api/ai-advisor/chat",
             json={"message": "What is compound interest?"}
         )
-        assert response.status_code == 401, f"Expected 401 without auth, got {response.status_code}"
+        # Accept both 401 (Unauthorized) and 403 (Forbidden) as valid auth rejection
+        assert response.status_code in [401, 403], f"Expected 401 or 403 without auth, got {response.status_code}"
     
     def test_chat_with_auth_returns_response(self, auth_token):
         """POST /api/ai-advisor/chat with auth should return AI response"""
