@@ -154,7 +154,7 @@ export const LandingPage = () => {
       <section className="relative py-20 bg-navy-900/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
               Simple Pricing
             </h2>
             <p className="text-slate-400">Start free, upgrade as you grow.</p>
