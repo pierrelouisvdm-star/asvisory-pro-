@@ -238,7 +238,7 @@ export const AuthPage = () => {
           </CardContent>
         </Card>
 
-        <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
+        <p className="text-center text-sm text-slate-500 mt-6">
           By signing in, you agree to our Terms of Service and Privacy Policy
         </p>
       </div>
