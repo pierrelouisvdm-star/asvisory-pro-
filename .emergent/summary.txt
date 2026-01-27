@@ -1,90 +1,95 @@
 <analysis>**original_problem_statement:**
-The user initially requested a financial advisor application with four basic calculators. The project scope has expanded significantly to include:
-- A total of 15+ functional financial calculators and planning tools.
-- Advanced calculator features like inflation/fee adjustments and a USD/ZAR currency toggle.
-- A complete, modern UI/UX redesign with a professional look and feel.
-- A full-stack architecture with a FastAPI backend and MongoDB database.
-- User authentication and a client management (CRM) system.
-- A sophisticated Financial Plan Shortfall Analysis feature that provides clients with a health score and actionable recommendations.
-- A new suite of advanced features including a Goal Planner, Meeting Scheduler, PDF Report Generation, Portfolio Tracker, Loan Comparison Tool, Monte Carlo Simulator, and a Cash Flow Projector.
+The user requested the development of a comprehensive financial advisor SaaS platform, initially named WealthCalc and later rebranded to AdvisoryPro.
+
+**PRODUCT REQUIREMENTS:**
+1.  **Core Application**: A full-stack application with a React frontend, FastAPI backend, and MongoDB.
+2.  **Financial Tools**: 15+ functional financial calculators and planning tools (e.g., Retirement, Investment, Loan, Tax, Budget).
+3.  **Advanced Features**:
+    *   Goal Planner
+    *   Meeting Scheduler & Review Tracker
+    *   PDF Report Generation
+    *   Portfolio Tracker
+    *   Loan Comparison Tool
+    *   Monte Carlo Simulator
+    *   Cash Flow Projector
+4.  **UI/UX**: A modern, clean, and professional user interface with a dark mode.
+5.  **User & Client Management**: Full user authentication (registration/login) and a Client Management (CRM) system.
+6.  **Subscription Model**: A tiered subscription system (Free, Standard, Premium) with Stripe integration for payments.
+    *   **Free Tier**: Limited to 4 calculators.
+    *   **Paid Tiers**: Access to all features.
+7.  **Live Market Data**: A dashboard widget tracking market data, updated every 15 minutes.
+    *   **Indices**: JSE (or a proxy), Nasdaq, S&P 500, Nifty 50.
+    *   **Commodities**: Gold, Silver, Bitcoin.
+    *   **Currencies**: Major pairs against ZAR.
+8.  **AI Financial Advisor**: A premium, chatbot-style feature powered by an LLM to explain financial concepts to clients.
+9.  **Onboarding & Authentication**:
+    *   A professional landing page for unauthenticated users.
+    *   Users must register and select a plan to access the application dashboard.
+    *   Redirect to the pricing page after a new user registers.
+10. **Coupon System**: A system to generate and redeem coupon codes for free premium subscriptions. 50 codes were requested and generated.
+11. **Deployment**: The application must be made ready for production deployment.
 
 **User's preferred language**: English
 
 **what currently exists?**
-A full-stack application with a React frontend and FastAPI backend.
--   **Frontend:** A fully redesigned, modern, and professional UI using Tailwind CSS and shadcn/ui. It features a dashboard, user authentication pages, client management pages, and 15+ functional financial tools. It uses a React Context API for managing authentication and currency state globally.
--   **Backend:** A FastAPI server connected to MongoDB. It provides REST APIs for:
-    -   JWT-based user registration and login.
-    -   CRUD operations for client management.
-    -   Storing/retrieving financial data.
-    -   A complex endpoint for running a Financial Plan Shortfall Analysis.
-    -   Boilerplate models and routes for the next set of features (goals, meetings, reports, portfolio management).
+The project is a feature-complete, full-stack financial advisor SaaS platform named AdvisoryPro.
+- **Frontend (React)**: Features a professional landing page, a complete user authentication and onboarding flow, a dashboard with a live market tracker, a multi-tiered pricing page, a coupon redemption UI, 15+ calculators, and a full suite of advanced tools including an AI advisor chat. Feature access is gated based on the user's subscription status.
+- **Backend (FastAPI)**: Provides APIs for user management, client CRM, all financial tools, Stripe-based subscriptions, coupon management, and market data fetching (using  and web scraping for JSE proxy). It also includes an endpoint for the AI advisor chatbot, integrated with an LLM via .
 
 **Last working item**:
-    - Last item agent was working: The agent was in the middle of a large feature expansion. The backend models, routes, and utilities for a new suite of tools (Goal Planner, PDF Reports, Portfolio Tracker, Loan Comparison, etc.) were created. On the frontend, the API service was updated, and the boilerplate files for , , and  were created. The agent was just about to create the file for the .
+    - Last item agent was working: The agent had just run the , which identified critical issues with environment variable configurations that would prevent successful deployment. The agent's last action was to begin investigating these issues by viewing the  files.
     - Status: IN PROGRESS
-    - Agent Testing Done: N
-    - Which testing method agent to use? Both backend testing agent and frontend testing agent will be needed after the full feature set is implemented.
+    - Agent Testing Done: N (for the deployment fixes)
+    - Which testing method agent to use? After fixing the  files, the  should be run again to verify the fixes. No frontend or backend testing is needed unless the fixes break functionality.
     - User Testing Done: N
 
 **All Pending/In progress Issue list**:
-  - Issue 1: Complete the implementation of the new advanced feature suite (P0)
+  - Issue 1: Fix Deployment Readiness Issues (P0)
 
   Issues Detail:
   - Issue 1: 
-     - Attempted fixes: The agent has laid the backend and frontend foundations but has not completed the implementation of any of the new tools.
+     - Attempted fixes: The  was run, and it identified the problems. No fix has been attempted yet.
      - Next debug checklist: 
-        1.  Complete the creation and implementation of all new frontend pages (, , , , etc.).
-        2.  Build the UI and logic for each new feature, connecting them to the already-defined backend endpoints.
-        3.  Implement the PDF report generation and download functionality on the client-side.
-        4.  Integrate all new pages into the application's main routing () and navigation () so they are accessible to logged-in users.
-     - Why fix this issue and what will be achieved with the fix? To deliver the comprehensive feature set requested and approved by the user, transforming the application into a full-fledged financial advisory platform.
-     - Status:  IN PROGRESS
+        1. View the contents of  and .
+        2. Identify and remove any hardcoded credentials or fallback values (like database connections).
+        3. Ensure the application is configured to pull all sensitive information and environment-specific settings directly from environment variables provided by the deployment environment.
+        4. Re-run the  to confirm that all readiness checks pass.
+     - Why fix this issue and what will be achieved with the fix? To ensure the application is portable and can be deployed successfully to a production environment without configuration failures. This is the final step before the application is considered production-ready.
+     - Status:  NOT STARTED
      - Is recurring issue? N
-     - Should Test frontend/backend/both after fix? Both
-     - Blocked on other issue: None
+     - Should Test frontend/backend/both after fix? Neither. Run .
+     - Blocked on other issue: None. This is the final blocker for deployment.
 
 **In progress Task List**:
-  - Task 1: Create and implement the  page (P0)
-
- Task Detail:
-  - Task 1: 
-     - Where to resume: The agent's last action was to create this file. The next step is to execute  for  and then build its UI and logic.
-     - What will be achieved with this? This will be the first of the new tool suite to be built.
-     - Status:  NOT STARTED
-     - Should Test frontend/backend/both after fix? Frontend
-     - Blocked on something: None
+- None. The focus is on the single pending issue.
 
 **Upcoming and Future Tasks**
     Upcoming Tasks:
-    - **P1: Implement UI and Logic for New Tools:** Build out the frontend for , , and . The files exist but are empty.
-    - **P1: Create Frontend for New Backend Features:** Create pages and components for the Meeting Scheduler, Review Tracker, and Portfolio Tracker.
-    - **P1: Implement PDF Report Generation:** Add a Download Report button (likely on the client profile page) to trigger the backend PDF generation and download the file.
-    - **P2: Integrate New Pages into Navigation:** Update  and  to add routes and links for all the newly created pages.
+    - **P0: Deploy the application:** Once the deployment readiness issues are resolved, proceed with deploying the application as requested by the user.
 
     Future Tasks:
-    - **P3: Email Reminders:** Add a feature to send email reminders for scheduled client meetings and reviews.
-    - **P3: Associate Calculations with Clients:** Create a mechanism to save specific calculator results directly to a client's profile.
+    - **P1: Secure a paid JSE Data API:** The current solution uses web scraping and an ETF as a proxy for JSE data due to the lack of a free, reliable API. The user has shown interest in a more direct data source like Moneyweb, which would likely require a paid subscription.
+    - **P2: Password Reset Functionality:** Implement a forgot password flow.
+    - **P3: Multi-language Support:** Add support for other languages, as suggested in a previous summary (e.g., Afrikaans, Zulu).
 
 **Completed work in this session**
-- **Full-Stack Implementation:**
-  - Built a FastAPI backend with MongoDB, user authentication (JWT), and a full Client Management (CRM) feature.
-  - Implemented a Financial Plan Shortfall Analysis engine on the backend.
-  - Created corresponding frontend pages for Auth, Client Listing, and Client Profiles, fully integrated with the backend.
-- **Major UI Redesign:**
-  - Executed a complete, professional UI/UX overhaul based on  guidelines, updating fonts, colors, and layouts across the entire application for a modern and clean aesthetic.
-- **Feature Integration & Refinement:**
-  - Integrated 8 new financial tools (Tax Calculator, Budget Planner, etc.) into the main application.
-  - Updated the default interest rate to 10% across all relevant calculators as per the user's request.
-- **Comprehensive Testing:**
-  - Successfully ran the testing agent three times to validate the integration of new tools, the UI redesign, and the full-stack CRM implementation, with all tests passing.
+- **Advanced Feature Suite:** Implemented the full suite of advanced tools (Goal Planner, Monte Carlo Simulator, etc.) on both the frontend and backend.
+- **Application Rebranding:** Renamed the entire application from WealthCalc to AdvisoryPro, updating all relevant files, logos, and text.
+- **Subscription & Payments:** Integrated a multi-tiered subscription system (Free, Standard, Premium) using Stripe for payments.
+- **Live Market Tracker:** Built a dashboard widget that fetches and displays live data for indices, commodities (Gold, Silver, Bitcoin), and currencies. Implemented a web-scraping solution for a South African market proxy.
+- **AI Financial Advisor:** Added a premium-only AI chatbot powered by an LLM to provide financial explanations.
+- **Feature Gating:** Implemented a  and  component to restrict access to features based on the user's subscription plan.
+- **Onboarding Overhaul:** Created a professional landing page for unauthenticated users and implemented a full registration-to-subscription onboarding flow.
+- **Coupon System:** Developed a backend system to generate unique coupon codes and a frontend UI on the pricing page to redeem them. Generated 50 premium codes for the user.
+- **Deployment Analysis:** Ran the  to check for production readiness.
+- **Comprehensive Testing:** Used the  multiple times (iterations 4-8) to validate all major feature implementations, including the advanced tools, rebranding, subscriptions, and onboarding flow.
 
 **Earlier issues found/mentioned but not fixed**
-   - Issue 1: Linter Warning:  vs 
-     - Debug checklist: A project-wide search for the  attribute in JSX files and replace it with . This mainly affects component files like .
-     - Why to solve this issue and what will be achieved with this? To improve code quality, remove React console warnings, and enhance accessibility.
-     - Should Test frontend/backend/both after fix: Frontend (run linter)
-     - Is recurring issue? N
+   - Issue 1: Lack of direct JSE data source.
+     - Debug checklist: Research and integrate a paid API for JSE data (e.g., from Moneyweb or the JSE itself) when the user approves the cost.
+     - Why to solve this issue and what will be achieved with this? To provide accurate, real-time data for the Johannesburg Stock Exchange as originally requested, rather than relying on a proxy ETF or fragile web scraping.
+     - Should Test frontend/backend/both after fix: Backend
+     - Is recurring issue? Y
 
 **Known issue recurrence from previous fork**
   - None.
@@ -97,76 +102,92 @@ A full-stack application with a React frontend and FastAPI backend.
 - **Authentication:** JWT (JSON Web Tokens)
 - **State Management:** React Context API
 - **Styling:** Tailwind CSS, shadcn/ui, framer-motion
-- **Data Visualization:** 
-- **Backend PDF Generation:** 
+- **Payments:** Stripe
+- **Market Data:** , ,  (for web scraping)
+- **AI/LLM:**  library
 
 **key DB schema**
   - **users**: 
   - **clients**: 
-  - Schemas for , , ,  are defined in the backend models.
+  - **subscriptions**: 
+  - **coupons**: 
 
 **changes in tech stack**
-  - The project evolved from a frontend-only prototype to a full-stack application with a FastAPI backend and MongoDB database.
+- Added  for payment processing.
+- Added , , and  for market data fetching and scraping.
+- Added  for LLM integration.
+- Added  for rendering chatbot responses.
 
 **All files of reference**
-- : The main FastAPI application file.
-- : The main React component for routing and context providers.
-- : The centralized service for all frontend-to-backend communication.
-- : Directory containing all frontend pages, including the new shells to be implemented.
-- : Directory containing all API endpoint logic.
-- : Directory containing all data models.
+- : Needs to be fixed for deployment.
+- : Main FastAPI app, includes all routers.
+- : Stripe and subscription logic.
+- : Market data fetching and caching logic.
+- : Coupon generation and validation logic.
+- : Main router, now includes protected routes and a landing page.
+- : Entry point for unauthenticated users.
+- : Displays tiers and handles subscription checkout/coupon redemption.
+- : Manages user subscription state and gates features.
+- : Displays live market data on the dashboard.
 
 **Areas that need refactoring**:
-- The  attribute should be replaced with  in all JSX files to resolve linter warnings and adhere to React best practices.
+- The  files in both  and  contain hardcoded values and fallbacks that need to be removed to make the application deployable.
 
 **key api endpoints**
-- , 
--  (GET, POST)
--  (GET, PUT, DELETE)
--  (GET)
-- New endpoints defined under  and .
+- 
+- 
+- 
+- 
+- 
+- 
 
 **Critical Info for New Agent**
-- You are resuming a large, multi-feature build-out. The user has approved all new features.
-- Your immediate task is to continue the frontend implementation, starting with creating and building the  page.
-- After creating the individual feature pages, you must integrate them into the main application's routing and navigation (, ).
-- The backend foundation for these features is already in place. Your focus will be primarily on frontend development and integration.
-- Once the entire suite is implemented, comprehensive testing of both the frontend and backend is mandatory.
+- You are taking over at the final step before deployment. The application is feature-complete according to all user requests.
+- Your immediate and only priority is to fix the deployment-blocking issues identified by the . This involves cleaning up the  files to remove hardcoded values.
+- Do not add new features or make changes unrelated to deployment readiness.
+- After fixing the environment configurations, run the  again to verify the fix.
+- Once all checks pass, the next step is to proceed with deployment.
 
 **documents and test reports created in this job**
-  - /app/memory/PRD.md
-  - /app/test_reports/iteration_1.json
-  - /app/test_reports/iteration_2.json
-  - /app/test_reports/iteration_3.json
-  - /app/design_guidelines.json
+-  (updated multiple times)
+- 
+- 
+- 
+- 
+- 
+-  (List of 50 generated premium codes)
 
 **Last 10 User Messages and any pending HUMAN messages** 
- - 1.  - **In Progress**. User approved the agent's proposal to build a large new suite of features (Goal Planner, Monte Carlo, etc.).
- - 2.  - **Completed**. User asked for more feature ideas.
- - 3.  - **Completed**.
- - 4.  - **Completed**. User provided detailed requirements for the backend, CRM, and analysis feature.
- - 5.  - **Completed**. User approved continuing after the major UI redesign was finished.
- - 6.  - **Completed**. User requested a full UI/UX redesign.
- - 7.  - **Completed**. User gave initial approval to the agent's plan and requested a cleaner design.
- - 8.  - **Completed**.
- - 9.  - **Completed**.
- - 10.  - **Completed**.
+ - 1.  - **Completed**. Agent implemented a coupon system and generated 50 codes.
+ - 2.  - **Completed**. Agent investigated Moneyweb, found no free API, and implemented a web-scraping solution as a fallback.
+ - 3.  - **Completed**. Agent implemented a full onboarding flow with a landing page and protected routes, forcing registration before app use.
+ - 4.  - **Completed**. Agent added commodities to the market tracker and implemented feature gating.
+ - 5.  - **Completed**. Agent integrated an LLM-powered AI advisor chat for premium users.
+ - 6.  - **Completed**. User approved the subscription plan and requested the market tracker feature.
+ - 7.  - **In Progress**. User defined the subscription tiers, which the agent then implemented.
+ - 8.  - **Completed**. User chose the new name for the application.
+ - 9.  - **Completed**. User requested rebranding.
+ - 10.  - **Completed**. User approved the plan to build the advanced feature suite.
 
 **Project Health Check:**
-- **Broken:** None. The application is stable and functional with the features implemented so far. The new feature set is under construction.
-- **Mocked:** None. The application is a fully functional full-stack system.
+- **Broken:** The application is broken for **deployment only**. The  files contain hardcoded values that will cause failure in a production environment. The application runs correctly in the local development environment.
+- **Mocked:** None.
 
 **3rd Party Integrations**
-- None.
+- **Stripe (Payments)** — requires User API Key (test key is in use).
+- **OpenAI (via )** — uses Emergent LLM Key.
+- **Yahoo Finance (via  library)** — Public data, no key required.
+- **Moneyweb (via web scraping)** — Public data, no key required, but may be fragile.
 
 **Testing status**
-  - Testing agent used after significant changes: YES (used 3 times successfully)
+  - Testing agent used after significant changes: YES (5 times in this session)
   - Troubleshoot agent used after agent stuck in loop: NO
   - Test files created: []
-  - Known regressions: []
+  - Known regressions: None
 
 **Credentials to test flow:**
-- User registration is open. Create a new user via the  page to test authenticated routes.
+- **User Registration**: Open on the  page.
+- **Premium Access**: 50 coupon codes for lifetime premium access were generated and saved to . Use any of these codes on the pricing page to test premium features.
 
 **What agent forgot to execute**
-- The minor linting issue ( vs. ) from the initial handoff was not addressed during the development cycles.</analysis>
+- The agent ran the  but has not yet acted on its findings. The immediate next step is to fix the environment variable issues that were flagged as critical blockers for deployment.</analysis>
