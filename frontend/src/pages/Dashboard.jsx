@@ -227,14 +227,14 @@ const CalculatorCard = ({ calc, index }) => {
 
 const SectionHeader = ({ badge, title, description, icon: Icon }) => (
   <div className="text-center mb-10">
-    <Badge className="mb-3 bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 font-medium">
+    <Badge className="mb-3 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 font-medium">
       <Icon className="h-3 w-3 mr-1.5" />
       {badge}
     </Badge>
-    <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
+    <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">
       {title}
     </h2>
-    <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+    <p className="text-slate-400 max-w-2xl mx-auto">
       {description}
     </p>
   </div>
