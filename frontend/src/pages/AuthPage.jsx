@@ -225,7 +225,7 @@ export const AuthPage = () => {
 
                   <Button 
                     type="submit" 
-                    className="w-full btn-premium" 
+                    className="w-full bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold" 
                     disabled={isLoading}
                     data-testid="register-submit-btn"
                   >
