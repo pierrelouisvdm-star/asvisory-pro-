@@ -19,8 +19,8 @@ export const CalculatorCard = ({
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
             {Icon && (
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20 ring-1 ring-emerald-200 dark:ring-emerald-800">
-                <Icon className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-500/20 ring-1 ring-emerald-500/30">
+                <Icon className="h-5 w-5 text-emerald-400" />
               </div>
             )}
             <div>
