@@ -16,19 +16,23 @@ import {
   GitCompare,
   Shield,
   Clock,
-  Users
+  Users,
+  Umbrella,
+  PiggyBank,
+  DollarSign
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCurrency } from '@/context/CurrencyContext';
 
-const calculators = [
+const investmentCalculators = [
   {
     id: 'future-value',
     title: 'Future Value Calculator',
-    description: 'Calculate the future value of investments with regular contributions',
+    description: 'Calculate future value with inflation & fee adjustments',
     icon: TrendingUp,
     path: '/future-value',
     color: 'gold',
-    features: ['Compound Growth', 'Regular Deposits', 'Inflation Adjusted'],
+    features: ['Inflation Adjusted', 'Fee Impact', 'Regular Deposits'],
   },
   {
     id: 'compound-interest',
@@ -56,6 +60,36 @@ const calculators = [
     path: '/car-finance',
     color: 'gold',
     features: ['Loan vs Lease', 'Total Cost Analysis', 'Payment Schedule'],
+  },
+];
+
+const insuranceCalculators = [
+  {
+    id: 'life-insurance',
+    title: 'Life Insurance Calculator',
+    description: 'Calculate the right coverage to protect your family',
+    icon: Shield,
+    path: '/life-insurance',
+    color: 'forest',
+    features: ['DIME Method', 'Coverage Gap Analysis', 'Premium Estimates'],
+  },
+  {
+    id: 'income-disability',
+    title: 'Income Disability',
+    description: 'Protect your income with disability coverage',
+    icon: Umbrella,
+    path: '/income-disability',
+    color: 'navy',
+    features: ['Waiting Period', 'Benefit Analysis', 'Premium Calculator'],
+  },
+  {
+    id: 'retirement',
+    title: 'Retirement Planner',
+    description: 'Plan your path to a comfortable retirement',
+    icon: PiggyBank,
+    path: '/retirement',
+    color: 'gold',
+    features: ['Funding Ratio', 'Income Sources', 'Inflation Adjusted'],
   },
 ];
 
