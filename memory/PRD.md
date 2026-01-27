@@ -1,4 +1,4 @@
-# WealthCalc - Financial Advisor Suite PRD
+# AdvisoryPro - Financial Advisor Suite PRD
 
 ## Overview
 A comprehensive financial calculator suite for financial advisors with client management, financial plan analysis, and shortfall identification.
