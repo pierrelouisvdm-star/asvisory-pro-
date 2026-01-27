@@ -197,24 +197,24 @@ const CalculatorCard = ({ calc, index }) => {
       data-testid={`calculator-card-${calc.id}`}
       style={{ animationDelay: `${index * 50}ms` }}
     >
-      <div className="h-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg animate-fade-in">
+      <div className="h-full rounded-xl border border-navy-700 bg-navy-900/60 p-5 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg animate-fade-in">
         <div className="flex items-start justify-between mb-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 transition-colors group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/20">
-            <Icon className="h-5 w-5 text-slate-600 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-navy-800 transition-colors group-hover:bg-emerald-500/20">
+            <Icon className="h-5 w-5 text-slate-400 group-hover:text-emerald-400 transition-colors" />
           </div>
-          <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all duration-300" />
+          <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all duration-300" />
         </div>
-        <h3 className="font-display text-base font-semibold text-slate-900 dark:text-white mb-1.5 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+        <h3 className="font-display text-base font-semibold text-white mb-1.5 group-hover:text-emerald-400 transition-colors">
           {calc.title}
         </h3>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 line-clamp-2">
+        <p className="text-sm text-slate-400 mb-3 line-clamp-2">
           {calc.description}
         </p>
         <div className="flex flex-wrap gap-1.5">
           {calc.features.map((feature) => (
             <span 
               key={feature} 
-              className="inline-flex text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+              className="inline-flex text-xs px-2 py-0.5 rounded-full bg-navy-800 text-slate-400"
             >
               {feature}
             </span>
