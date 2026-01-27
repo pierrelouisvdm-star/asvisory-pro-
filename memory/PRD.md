@@ -158,21 +158,74 @@ Each shortfall includes:
 ```
 
 ## Future Backlog
-- **P2**: PDF report generation
-- **P2**: Save calculation results to client history
-- **P3**: Advanced simulations (Monte Carlo)
-- **P3**: Portfolio tracking
 - **P3**: Email notifications for review reminders
+- **P3**: Associate calculator results directly with client profiles
 
 ## Status
-✅ **Complete** - All 15 calculators + Backend + Client Management + Shortfall Analysis
-- Backend API: 100% pass rate (21/21 tests)
+✅ **Complete** - All 15 calculators + Backend + Client Management + Shortfall Analysis + Advanced Tools Suite
+- Backend API: 100% pass rate (All endpoints tested)
 - Frontend: 100% pass rate
 - Auth flow: Working (register, login, logout)
 - Client CRUD: Working
 - Shortfall Analysis: Working with 8 categories
+- Advanced Tools: All 7 new tools working
+
+## Advanced Tools Suite (New - December 2025)
+
+### Standalone Tools (Public Access)
+1. **Cash Flow Projector** (`/cash-flow`)
+   - Track monthly income vs expenses
+   - Multi-year projections with growth rates
+   - Visual breakdown of expense categories
+
+2. **Monte Carlo Retirement Simulator** (`/monte-carlo`)
+   - 1000+ simulations for retirement planning
+   - Probability of success calculation
+   - Ending balance percentile distribution
+
+3. **Loan Comparison Tool** (`/loan-comparison`)
+   - Compare up to 5 loan options
+   - Automatic best option identification
+   - Total cost and savings calculation
+
+### Client-Specific Tools (Authenticated)
+4. **Goal Planner** (`/clients/{id}/goals`)
+   - Track multiple financial goals
+   - Progress tracking with status badges
+   - Monthly contribution calculator
+
+5. **Meeting Scheduler** (`/clients/{id}/meetings`)
+   - Record meeting notes
+   - Track action items
+   - Schedule follow-ups
+
+6. **Review Tracker** (`/clients/{id}/reviews`)
+   - Set periodic review schedules
+   - Customizable checklists
+   - Reminder system
+
+7. **Portfolio Tracker** (`/clients/{id}/portfolio`)
+   - Track holdings by asset class
+   - Diversification scoring
+   - Rebalancing suggestions
+
+8. **PDF Report Generation**
+   - Download financial analysis reports
+   - Download goals progress reports
+   - Client-branded PDFs
 
 ## Changelog
+
+### December 2025 - Advanced Tools Suite
+- Added 7 new frontend pages for advanced financial tools
+- Implemented Monte Carlo simulation endpoint
+- Added Goal Planner with CRUD operations
+- Added Meeting Scheduler with action item tracking
+- Added Review Tracker with customizable checklists
+- Added Portfolio Tracker with rebalancing suggestions
+- Added PDF report generation using reportlab
+- Updated Header navigation with "Advanced" dropdown
+- Added quick action buttons on client profile page
 
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
