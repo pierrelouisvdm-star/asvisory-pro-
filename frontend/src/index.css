@@ -17,81 +17,9 @@ code {
 
 @layer base {
     :root {
-        /* AdvisoryPro Premium Theme - Light Mode */
-        /* Deep Navy + Wealth Green */
+        /* AdvisoryPro - Dark Navy Theme (Default) */
         
-        /* Primary - Deep Navy */
-        --primary: 222 47% 11%;
-        --primary-foreground: 210 40% 98%;
-        
-        /* Background - Clean White */
-        --background: 0 0% 100%;
-        --foreground: 222 47% 11%;
-        
-        /* Card - Pure White with subtle warmth */
-        --card: 0 0% 100%;
-        --card-foreground: 222 47% 11%;
-        
-        /* Popover */
-        --popover: 0 0% 100%;
-        --popover-foreground: 222 47% 11%;
-        
-        /* Secondary - Light Navy */
-        --secondary: 214 32% 96%;
-        --secondary-foreground: 222 47% 11%;
-        
-        /* Muted - Soft Gray */
-        --muted: 214 32% 96%;
-        --muted-foreground: 215 16% 47%;
-        
-        /* Accent - Wealth Green */
-        --accent: 158 64% 32%;
-        --accent-foreground: 0 0% 100%;
-        
-        /* Success - Wealth Green */
-        --success: 158 64% 32%;
-        --success-foreground: 0 0% 100%;
-        
-        /* Destructive */
-        --destructive: 0 72% 51%;
-        --destructive-foreground: 210 40% 98%;
-        
-        /* Border & Input */
-        --border: 214 32% 91%;
-        --input: 214 32% 91%;
-        --ring: 158 64% 32%;
-        
-        /* Chart Colors - Navy & Green palette */
-        --chart-1: 158 64% 32%;
-        --chart-2: 220 47% 25%;
-        --chart-3: 158 50% 45%;
-        --chart-4: 220 30% 50%;
-        --chart-5: 43 74% 49%;
-        
-        /* Custom Tokens */
-        --emerald: 158 64% 32%;
-        --emerald-light: 158 64% 42%;
-        --emerald-dark: 158 64% 24%;
-        --navy: 220 47% 15%;
-        --navy-light: 220 35% 25%;
-        --gold: 43 74% 49%;
-        --slate-dark: 222 47% 11%;
-        --slate-medium: 215 25% 27%;
-        
-        --radius: 0.75rem;
-        
-        /* Shadows */
-        --shadow-soft: 0 2px 10px -3px rgba(15, 23, 42, 0.08);
-        --shadow-elevated: 0 10px 40px -15px rgba(15, 23, 42, 0.15);
-        --shadow-glow: 0 0 25px -5px rgba(5, 150, 105, 0.25);
-        
-        /* Transitions */
-        --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        --transition-bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
-    
-    .dark {
-        /* Dark Mode - Deep Navy Base */
+        /* Primary */
         --primary: 0 0% 98%;
         --primary-foreground: 220 47% 10%;
         
@@ -103,36 +31,43 @@ code {
         --card: 220 47% 10%;
         --card-foreground: 210 40% 98%;
         
+        /* Popover */
         --popover: 220 47% 10%;
         --popover-foreground: 210 40% 98%;
         
+        /* Secondary */
         --secondary: 220 40% 14%;
         --secondary-foreground: 210 40% 98%;
         
+        /* Muted */
         --muted: 220 40% 14%;
         --muted-foreground: 215 20% 65%;
         
-        /* Bright Emerald Accent for Dark Mode */
+        /* Accent - Emerald */
         --accent: 160 84% 45%;
         --accent-foreground: 220 47% 10%;
         
+        /* Success */
         --success: 160 84% 45%;
         --success-foreground: 220 47% 10%;
         
+        /* Destructive */
         --destructive: 0 62% 50%;
         --destructive-foreground: 210 40% 98%;
         
+        /* Border & Input */
         --border: 220 40% 18%;
         --input: 220 40% 18%;
         --ring: 160 84% 45%;
         
-        /* Chart Colors - Dark Mode */
+        /* Chart Colors */
         --chart-1: 160 84% 45%;
         --chart-2: 215 20% 65%;
         --chart-3: 160 60% 55%;
         --chart-4: 43 74% 55%;
         --chart-5: 220 40% 50%;
         
+        /* Custom Tokens */
         --emerald: 160 84% 45%;
         --emerald-light: 160 84% 55%;
         --emerald-dark: 161 94% 35%;
@@ -142,9 +77,41 @@ code {
         --slate-dark: 220 47% 10%;
         --slate-medium: 220 40% 18%;
         
+        --radius: 0.75rem;
+        
+        /* Shadows */
         --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.4);
         --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.5);
         --shadow-glow: 0 0 30px -5px rgba(52, 211, 153, 0.35);
+        
+        /* Transitions */
+        --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-bounce: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    .dark {
+        /* Same as root - dark mode is default */
+        --primary: 0 0% 98%;
+        --primary-foreground: 220 47% 10%;
+        --background: 220 47% 6%;
+        --foreground: 210 40% 98%;
+        --card: 220 47% 10%;
+        --card-foreground: 210 40% 98%;
+        --popover: 220 47% 10%;
+        --popover-foreground: 210 40% 98%;
+        --secondary: 220 40% 14%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 220 40% 14%;
+        --muted-foreground: 215 20% 65%;
+        --accent: 160 84% 45%;
+        --accent-foreground: 220 47% 10%;
+        --success: 160 84% 45%;
+        --success-foreground: 220 47% 10%;
+        --destructive: 0 62% 50%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 220 40% 18%;
+        --input: 220 40% 18%;
+        --ring: 160 84% 45%;
     }
 }
 
