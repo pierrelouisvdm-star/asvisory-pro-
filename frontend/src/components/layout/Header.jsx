@@ -44,6 +44,7 @@ export const Header = () => {
   const [isDark, setIsDark] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
+  const { user, isAuthenticated, logout } = useAuth();
 
   React.useEffect(() => {
     const isDarkMode = document.documentElement.classList.contains('dark');
@@ -53,6 +54,11 @@ export const Header = () => {
   const toggleDarkMode = () => {
     document.documentElement.classList.toggle('dark');
     setIsDark(!isDark);
+  };
+
+  const handleLogout = () => {
+    logout();
+    window.location.href = '/';
   };
 
   const NavDropdown = ({ items, label, icon: Icon, isActive }) => (
