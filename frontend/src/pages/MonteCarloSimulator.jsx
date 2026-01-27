@@ -277,7 +277,7 @@ export const MonteCarloSimulator = () => {
               <>
                 {/* Success Rate */}
                 <Card className="overflow-hidden">
-                  <CardHeader className="bg-slate-50 dark:bg-slate-800/50 pb-4">
+                  <CardHeader className="bg-navy-800/50 pb-4">
                     <CardTitle className="flex items-center gap-2">
                       {results.success_rate >= 75 ? (
                         <CheckCircle2 className="h-5 w-5 text-emerald-500" />
@@ -303,7 +303,7 @@ export const MonteCarloSimulator = () => {
                         results.success_rate >= 75 ? "[&>div]:bg-emerald-500" : "[&>div]:bg-amber-500"
                       )}
                     />
-                    <p className="text-sm text-slate-400 mt-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                    <p className="text-sm text-slate-400 mt-4 p-4 bg-navy-800 rounded-lg">
                       {results.interpretation}
                     </p>
                   </CardContent>

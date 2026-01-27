@@ -318,7 +318,7 @@ export const ClientsPage = () => {
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 font-semibold text-lg">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-navy-800 text-slate-400 font-semibold text-lg">
                         {client.first_name[0]}{client.last_name[0]}
                       </div>
                       <div>

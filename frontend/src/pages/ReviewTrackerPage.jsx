@@ -237,7 +237,7 @@ export const ReviewTrackerPage = () => {
                       <Label>Review Checklist</Label>
                       <div className="space-y-2 mt-2 max-h-48 overflow-y-auto">
                         {setupData.checklist.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                          <div key={index} className="flex items-center gap-2 p-2 bg-navy-800 rounded">
                             <ClipboardList className="h-4 w-4 text-emerald-500 shrink-0" />
                             <span className="flex-1 text-sm">{item}</span>
                             <Button 

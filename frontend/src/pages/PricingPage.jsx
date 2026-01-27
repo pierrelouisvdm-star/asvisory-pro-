@@ -45,7 +45,7 @@ const tierIcons = {
 };
 
 const tierColors = {
-  free: 'border-slate-200 dark:border-slate-700',
+  free: 'border-navy-700',
   standard: 'border-blue-200 dark:border-blue-800 bg-blue-50/30 dark:bg-blue-950/20',
   premium: 'border-emerald-300 dark:border-emerald-700 bg-gradient-to-b from-emerald-50/50 to-transparent dark:from-emerald-950/30',
 };
@@ -231,7 +231,7 @@ export const PricingPage = () => {
                   <div className="flex items-center gap-3 mb-2">
                     <div className={cn(
                       "flex h-10 w-10 items-center justify-center rounded-lg",
-                      tier.tier === 'free' && "bg-slate-100 dark:bg-slate-800",
+                      tier.tier === 'free' && "bg-navy-800",
                       tier.tier === 'standard' && "bg-blue-100 dark:bg-blue-900/30",
                       tier.tier === 'premium' && "bg-emerald-100 dark:bg-emerald-900/30"
                     )}>
@@ -271,7 +271,7 @@ export const PricingPage = () => {
                         <div 
                           key={key} 
                           className={cn(
-                            "flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-800 last:border-0",
+                            "flex items-center justify-between py-2 border-b border-navy-700 last:border-0",
                             !hasFeature && "opacity-50"
                           )}
                         >

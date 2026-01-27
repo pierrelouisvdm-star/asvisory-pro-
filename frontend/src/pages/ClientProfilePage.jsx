@@ -115,7 +115,7 @@ const ShortfallCard = ({ shortfall, currencySymbol }) => {
               </div>
             </div>
 
-            <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 mb-3">
+            <div className="bg-navy-800/50 rounded-lg p-3 mb-3">
               <p className="text-sm font-medium text-white mb-2">
                 Recommendation
               </p>
@@ -137,7 +137,7 @@ const ShortfallCard = ({ shortfall, currencySymbol }) => {
             </div>
 
             {shortfall.estimated_monthly_cost > 0 && (
-              <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
+              <div className="mt-3 pt-3 border-t border-navy-700">
                 <p className="text-xs text-slate-400">
                   Estimated Monthly Investment: 
                   <span className="font-semibold text-white ml-1">
@@ -261,7 +261,7 @@ export const ClientProfilePage = () => {
           </Link>
           
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 font-bold text-2xl">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-navy-800 text-slate-400 font-bold text-2xl">
               {client.first_name[0]}{client.last_name[0]}
             </div>
             <div>

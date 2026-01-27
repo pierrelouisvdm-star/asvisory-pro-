@@ -281,7 +281,7 @@ export const MeetingSchedulerPage = () => {
                       <Label>Action Items</Label>
                       <div className="space-y-2 mt-2">
                         {newMeeting.action_items.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded">
+                          <div key={index} className="flex items-center gap-2 p-2 bg-navy-800 rounded">
                             <Circle className="h-4 w-4 text-amber-500" />
                             <span className="flex-1 text-sm">{item.description}</span>
                             <Badge variant="outline" className="text-xs">{item.assigned_to}</Badge>

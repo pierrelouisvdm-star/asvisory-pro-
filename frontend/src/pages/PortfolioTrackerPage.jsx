@@ -219,7 +219,7 @@ export const PortfolioTrackerPage = () => {
                       <Label className="text-base font-semibold">Holdings</Label>
                       <div className="space-y-2 mt-3 max-h-48 overflow-y-auto">
                         {holdings.map((holding) => (
-                          <div key={holding.id} className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                          <div key={holding.id} className="flex items-center gap-2 p-3 bg-navy-800 rounded-lg">
                             <div className="flex-1">
                               <p className="font-medium">{holding.name}</p>
                               <p className="text-sm text-slate-500">
@@ -448,7 +448,7 @@ export const PortfolioTrackerPage = () => {
                 <CardContent>
                   <div className="space-y-3 max-h-64 overflow-y-auto">
                     {portfolio.holdings?.map((holding, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-3 bg-navy-800 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div 
                             className="w-3 h-3 rounded-full" 
@@ -488,7 +488,7 @@ export const PortfolioTrackerPage = () => {
                 <CardContent>
                   <div className="space-y-3">
                     {rebalanceSuggestions.suggestions.map((suggestion, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-white dark:bg-slate-900 rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-3 bg-navy-900/60 rounded-lg">
                         <div className="flex items-center gap-3">
                           <div 
                             className="w-3 h-3 rounded-full" 
