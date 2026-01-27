@@ -48,7 +48,9 @@ const GatedCalculator = ({ path, children }) => (
 // Layout wrapper to conditionally show header/footer
 const AppLayout = ({ children }) => {
   const location = useLocation();
-  const hideLayout = location.pathname === '/auth';
+  const { isAuthenticated } = useAuth();
+  const isPublicPage = ['/', '/auth', '/pricing'].includes(location.pathname) || location.pathname.startsWith('/subscription');
+  const hideLayout = location.pathname === '/auth' || (location.pathname === '/' && !isAuthenticated);
   
   return (
     <>
@@ -57,7 +59,7 @@ const AppLayout = ({ children }) => {
         {children}
       </main>
       {!hideLayout && <Footer />}
-      {!hideLayout && <AIAdvisorButton />}
+      {isAuthenticated && <AIAdvisorButton />}
     </>
   );
 };
