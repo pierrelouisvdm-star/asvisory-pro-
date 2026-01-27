@@ -42,6 +42,8 @@ const GatedCalculator = ({ path, children }) => (
   <CalculatorGate path={path}>{children}</CalculatorGate>
 );
 
+import { AIAdvisorButton } from "@/components/AIAdvisorChat";
+
 // Layout wrapper to conditionally show header/footer
 const AppLayout = ({ children }) => {
   const location = useLocation();
@@ -54,6 +56,7 @@ const AppLayout = ({ children }) => {
         {children}
       </main>
       {!hideLayout && <Footer />}
+      {!hideLayout && <AIAdvisorButton />}
     </>
   );
 };
