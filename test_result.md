@@ -107,15 +107,18 @@ user_problem_statement: "Test the updated Financial Advisor Calculator App with 
 frontend:
   - task: "Currency Selector Functionality"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/components/CurrencySelector.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "testing"
         - comment: "Need to test USD/ZAR currency toggle in header, verify currency symbols update across all calculators, and ensure proper formatting"
+        - working: true
+        - agent: "testing"
+        - comment: "✅ PASSED: Currency selector working perfectly. USD/ZAR toggle functional in header dropdown. Currency symbols update correctly ($ to R). Dropdown shows both USD and ZAR options with proper labels. Currency switching works on both desktop and mobile."
 
   - task: "Header Navigation Dropdown Menus"
     implemented: true
