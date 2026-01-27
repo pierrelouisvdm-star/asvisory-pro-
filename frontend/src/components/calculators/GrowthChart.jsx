@@ -217,10 +217,10 @@ export const BreakdownPieChart = ({
   prefix = '$',
   className,
 }) => {
-  const COLORS = [CHART_COLORS.gold, CHART_COLORS.forest, CHART_COLORS.navy, CHART_COLORS.forestLight];
+  const COLORS = [CHART_COLORS.emerald, CHART_COLORS.slate, CHART_COLORS.teal, CHART_COLORS.slateLight];
 
   return (
-    <div className={cn("chart-container w-full", className)}>
+    <div className={cn("rounded-xl p-4 bg-slate-50/50 dark:bg-slate-800/30 w-full", className)}>
       <ResponsiveContainer width="100%" height={height}>
         <PieChart>
           <Pie
@@ -232,13 +232,14 @@ export const BreakdownPieChart = ({
             paddingAngle={2}
             dataKey="value"
             label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-            labelLine={{ stroke: 'hsl(var(--muted-foreground))' }}
+            labelLine={{ stroke: '#64748b' }}
           >
             {data.map((entry, index) => (
               <Cell 
                 key={`cell-${index}`} 
                 fill={entry.color || COLORS[index % COLORS.length]} 
-                stroke="hsl(var(--card))"
+                stroke="#ffffff"
+                className="dark:stroke-slate-900"
                 strokeWidth={2}
               />
             ))}
@@ -246,8 +247,8 @@ export const BreakdownPieChart = ({
           <Tooltip 
             formatter={(value) => `${prefix}${typeof value === 'number' ? value.toLocaleString() : value}`}
             contentStyle={{
-              backgroundColor: 'hsl(var(--card))',
-              border: '1px solid hsl(var(--border))',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e2e8f0',
               borderRadius: '8px',
             }}
           />
