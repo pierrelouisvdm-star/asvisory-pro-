@@ -84,29 +84,11 @@ const AppLayout = ({ children }) => {
 };
 
 function App() {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const shouldBeDark = stored === 'dark' || (!stored && prefersDark);
-      
-      if (shouldBeDark) {
-        document.documentElement.classList.add('dark');
-      }
-      return shouldBeDark;
-    }
-    return false;
-  });
-
+  // Always use dark mode
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDark]);
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   return (
     <AuthProvider>
