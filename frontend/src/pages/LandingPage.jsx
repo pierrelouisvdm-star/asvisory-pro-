@@ -112,7 +112,7 @@ export const LandingPage = () => {
       {/* About Section */}
       <section className="relative bg-navy-900/50 border-y border-navy-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-4">
             Created by Advisors Who <span className="text-emerald-400">Understand</span>
           </h2>
           <p className="text-slate-400 leading-relaxed">
