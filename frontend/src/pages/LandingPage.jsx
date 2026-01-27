@@ -125,70 +125,29 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* About Us Section - NEW */}
+      {/* About Us Section */}
       <section className="bg-slate-100/50 dark:bg-slate-900/30 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge className="mb-4 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
-                About AdvisoryPro
-              </Badge>
-              <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-                Created by Advisors Who{' '}
-                <span className="text-emerald-600">Understand Your Needs</span>
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-                AdvisoryPro was born from the frustrations of practising financial advisors 
-                who needed better tools. We understand the daily challenges you face — from 
-                complex calculations to client management, from staying compliant to delivering 
-                exceptional service.
-              </p>
-              <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
-                Our team combines decades of financial planning experience with cutting-edge 
-                technology. Every feature, every calculation, every workflow has been designed 
-                by people who've sat where you sit — across the desk from clients who trust you 
-                with their financial futures.
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="flex -space-x-2">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold text-sm border-2 border-white">CFP</div>
-                  <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold text-sm border-2 border-white">CFA</div>
-                  <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-semibold text-sm border-2 border-white">RFP</div>
-                </div>
-                <span className="text-sm text-slate-500">Built by certified professionals</span>
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
-                <CardContent className="p-6 text-center">
-                  <Award className="h-8 w-8 text-emerald-600 mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">50+</div>
-                  <div className="text-sm text-slate-500">Years Combined Experience</div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
-                <CardContent className="p-6 text-center">
-                  <Briefcase className="h-8 w-8 text-blue-600 mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">15+</div>
-                  <div className="text-sm text-slate-500">Professional Tools</div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
-                <CardContent className="p-6 text-center">
-                  <Users className="h-8 w-8 text-purple-600 mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">1000+</div>
-                  <div className="text-sm text-slate-500">Advisors Trust Us</div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
-                <CardContent className="p-6 text-center">
-                  <Target className="h-8 w-8 text-amber-600 mx-auto mb-3" />
-                  <div className="text-3xl font-bold text-slate-900 dark:text-white mb-1">100%</div>
-                  <div className="text-sm text-slate-500">SA-Focused Design</div>
-                </CardContent>
-              </Card>
-            </div>
+          <div className="max-w-3xl mx-auto text-center">
+            <Badge className="mb-4 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+              About AdvisoryPro
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+              Created by Advisors Who{' '}
+              <span className="text-emerald-600">Understand Your Needs</span>
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+              AdvisoryPro was born from the frustrations of practising financial advisors 
+              who needed better tools. We understand the daily challenges you face — from 
+              complex calculations to client management, from staying compliant to delivering 
+              exceptional service.
+            </p>
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+              Our team combines financial planning experience with cutting-edge 
+              technology. Every feature, every calculation, every workflow has been designed 
+              by people who've sat where you sit — across the desk from clients who trust you 
+              with their financial futures.
+            </p>
           </div>
         </div>
       </section>
