@@ -18,7 +18,7 @@ export const currencies = {
 };
 
 export const CurrencyProvider = ({ children }) => {
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('ZAR');
 
   const currentCurrency = currencies[currency];
 
