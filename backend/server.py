@@ -16,7 +16,7 @@ db = client[os.environ['DB_NAME']]
 
 # Create the main app
 app = FastAPI(
-    title="WealthCalc API",
+    title="AdvisoryPro API",
     description="Financial Advisor Suite - Backend API",
     version="1.0.0"
 )
