@@ -183,10 +183,10 @@ export const PricingPage = () => {
           <Badge className="mb-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
             Pricing
           </Badge>
-          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
             {isWelcome ? 'Select Your Plan' : 'Choose Your Plan'}
           </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-8">
             Start free and upgrade as your practice grows. All plans include a {pricing?.trial_days}-day free trial.
           </p>
 
@@ -244,14 +244,14 @@ export const PricingPage = () => {
                     </div>
                     <CardTitle className="text-xl">{tier.name}</CardTitle>
                   </div>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                  <p className="text-sm text-slate-400">
                     {tier.description}
                   </p>
                 </CardHeader>
 
                 <CardContent className="pb-6">
                   <div className="mb-6">
-                    <span className="text-4xl font-bold text-slate-900 dark:text-white">
+                    <span className="text-4xl font-bold text-white">
                       R{price.toLocaleString()}
                     </span>
                     {tier.tier !== 'free' && (
@@ -362,7 +362,7 @@ export const PricingPage = () => {
 
         {/* FAQ / Additional Info */}
         <div className="mt-16 text-center">
-          <p className="text-slate-500 dark:text-slate-400 mb-4">
+          <p className="text-slate-400 mb-4">
             All plans include SSL encryption, automatic backups, and priority support.
           </p>
           <p className="text-sm text-slate-400">

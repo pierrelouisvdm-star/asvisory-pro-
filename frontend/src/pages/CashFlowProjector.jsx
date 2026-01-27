@@ -97,7 +97,7 @@ export const CashFlowProjector = () => {
             <TrendingUp className="h-3 w-3 mr-1" />
             Cash Flow Analysis
           </Badge>
-          <h1 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
             Cash Flow Projector
           </h1>
           <p className="text-slate-500 mt-2">

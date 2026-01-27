@@ -171,7 +171,7 @@ export const ReviewTrackerPage = () => {
           
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+              <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
                 Review Schedule
               </h1>
               <p className="text-slate-500 mt-1">
@@ -325,10 +325,10 @@ export const ReviewTrackerPage = () => {
                       )} />
                     </div>
                     <div>
-                      <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-white">
+                      <h3 className="font-display text-xl font-semibold text-white">
                         Next Review
                       </h3>
-                      <p className="text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                      <p className="text-2xl font-bold text-white mt-1">
                         {new Date(review.next_review_date).toLocaleDateString('en-US', {
                           weekday: 'long',
                           year: 'numeric',
@@ -407,7 +407,7 @@ export const ReviewTrackerPage = () => {
                         <div className="flex h-5 w-5 items-center justify-center rounded border border-slate-300">
                           <CheckCircle2 className="h-4 w-4 text-slate-300" />
                         </div>
-                        <span className="text-sm text-slate-600 dark:text-slate-400">{item}</span>
+                        <span className="text-sm text-slate-400">{item}</span>
                       </div>
                     ))}
                   </div>

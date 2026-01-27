@@ -138,10 +138,10 @@ export const ClientsPage = () => {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+            <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
               Clients
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-slate-400 mt-1">
               Manage your client profiles and financial plans
             </p>
           </div>
@@ -248,7 +248,7 @@ export const ClientsPage = () => {
                   <Users className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white">{clients.length}</p>
+                  <p className="text-2xl font-bold text-white">{clients.length}</p>
                   <p className="text-sm text-slate-500">Total Clients</p>
                 </div>
               </div>
@@ -261,7 +261,7 @@ export const ClientsPage = () => {
                   <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white">
+                  <p className="text-2xl font-bold text-white">
                     {clients.filter(c => !c.financial_data?.life_insurance_coverage).length}
                   </p>
                   <p className="text-sm text-slate-500">Need Review</p>
@@ -276,7 +276,7 @@ export const ClientsPage = () => {
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white">
+                  <p className="text-2xl font-bold text-white">
                     {clients.filter(c => c.financial_data?.life_insurance_coverage > 0).length}
                   </p>
                   <p className="text-sm text-slate-500">Plans Complete</p>
@@ -291,10 +291,10 @@ export const ClientsPage = () => {
           <Card className="text-center py-12">
             <CardContent>
               <Users className="h-12 w-12 mx-auto text-slate-300 dark:text-slate-600 mb-4" />
-              <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-2">
+              <h3 className="font-display text-lg font-semibold text-white mb-2">
                 {searchQuery ? 'No clients found' : 'No clients yet'}
               </h3>
-              <p className="text-slate-500 dark:text-slate-400 mb-4">
+              <p className="text-slate-400 mb-4">
                 {searchQuery 
                   ? 'Try a different search term' 
                   : 'Add your first client to get started'}
@@ -318,11 +318,11 @@ export const ClientsPage = () => {
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-semibold text-lg">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 font-semibold text-lg">
                         {client.first_name[0]}{client.last_name[0]}
                       </div>
                       <div>
-                        <h3 className="font-display font-semibold text-slate-900 dark:text-white">
+                        <h3 className="font-display font-semibold text-white">
                           {client.first_name} {client.last_name}
                         </h3>
                         <div className="flex flex-wrap items-center gap-3 mt-1 text-sm text-slate-500">

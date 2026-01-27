@@ -83,32 +83,32 @@ const ShortfallCard = ({ shortfall, currencySymbol }) => {
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <h4 className="font-semibold text-slate-900 dark:text-white text-sm">
+              <h4 className="font-semibold text-white text-sm">
                 {shortfall.title}
               </h4>
               <Badge variant="outline" className={cn("text-xs", priorityColors[shortfall.priority])}>
                 {shortfall.priority}
               </Badge>
             </div>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mb-3">
+            <p className="text-sm text-slate-400 mb-3">
               {shortfall.description}
             </p>
             
             <div className="grid grid-cols-3 gap-4 mb-3 text-sm">
               <div>
-                <p className="text-slate-500 dark:text-slate-400">Current</p>
-                <p className="font-semibold text-slate-900 dark:text-white">
+                <p className="text-slate-400">Current</p>
+                <p className="font-semibold text-white">
                   {currencySymbol}{shortfall.current_value.toLocaleString()}
                 </p>
               </div>
               <div>
-                <p className="text-slate-500 dark:text-slate-400">Target</p>
+                <p className="text-slate-400">Target</p>
                 <p className="font-semibold text-emerald-600 dark:text-emerald-400">
                   {currencySymbol}{shortfall.target_value.toLocaleString()}
                 </p>
               </div>
               <div>
-                <p className="text-slate-500 dark:text-slate-400">Gap</p>
+                <p className="text-slate-400">Gap</p>
                 <p className="font-semibold text-red-600 dark:text-red-400">
                   {currencySymbol}{shortfall.gap.toLocaleString()}
                 </p>
@@ -116,19 +116,19 @@ const ShortfallCard = ({ shortfall, currencySymbol }) => {
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3 mb-3">
-              <p className="text-sm font-medium text-slate-900 dark:text-white mb-2">
+              <p className="text-sm font-medium text-white mb-2">
                 Recommendation
               </p>
-              <p className="text-sm text-slate-600 dark:text-slate-300">
+              <p className="text-sm text-slate-300">
                 {shortfall.recommendation}
               </p>
             </div>
 
             <div>
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2">Action Items:</p>
+              <p className="text-xs font-medium text-slate-400 mb-2">Action Items:</p>
               <ul className="space-y-1">
                 {shortfall.action_items.map((item, idx) => (
-                  <li key={idx} className="text-xs text-slate-600 dark:text-slate-300 flex items-start gap-2">
+                  <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
                     <span className="text-emerald-500 mt-0.5">•</span>
                     {item}
                   </li>
@@ -138,9 +138,9 @@ const ShortfallCard = ({ shortfall, currencySymbol }) => {
 
             {shortfall.estimated_monthly_cost > 0 && (
               <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-slate-400">
                   Estimated Monthly Investment: 
-                  <span className="font-semibold text-slate-900 dark:text-white ml-1">
+                  <span className="font-semibold text-white ml-1">
                     {currencySymbol}{shortfall.estimated_monthly_cost.toLocaleString()}
                   </span>
                 </p>
@@ -261,11 +261,11 @@ export const ClientProfilePage = () => {
           </Link>
           
           <div className="flex items-center gap-4">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold text-2xl">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 font-bold text-2xl">
               {client.first_name[0]}{client.last_name[0]}
             </div>
             <div>
-              <h1 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+              <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
                 {client.first_name} {client.last_name}
               </h1>
               <div className="flex items-center gap-4 mt-1 text-sm text-slate-500">
@@ -367,7 +367,7 @@ export const ClientProfilePage = () => {
                             {Math.round(analysis.overall_score)}
                           </span>
                         </div>
-                        <p className="text-sm font-medium text-slate-900 dark:text-white">Health Score</p>
+                        <p className="text-sm font-medium text-white">Health Score</p>
                         <Badge className={cn(
                           "mt-1",
                           analysis.health_rating === 'Excellent' ? 'bg-emerald-100 text-emerald-700' :
@@ -388,7 +388,7 @@ export const ClientProfilePage = () => {
                           <AlertCircle className="h-5 w-5 text-red-600" />
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+                          <p className="text-2xl font-bold text-white">
                             {analysis.total_shortfalls}
                           </p>
                           <p className="text-sm text-slate-500">Shortfalls Found</p>
@@ -404,7 +404,7 @@ export const ClientProfilePage = () => {
                           <TrendingUp className="h-5 w-5 text-amber-600" />
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+                          <p className="text-2xl font-bold text-white">
                             {currencySymbol}{(analysis.total_gap_amount / 1000000).toFixed(1)}M
                           </p>
                           <p className="text-sm text-slate-500">Total Gap</p>
@@ -420,7 +420,7 @@ export const ClientProfilePage = () => {
                           <Wallet className="h-5 w-5 text-emerald-600" />
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-slate-900 dark:text-white">
+                          <p className="text-2xl font-bold text-white">
                             {currencySymbol}{analysis.estimated_monthly_investment_needed.toLocaleString()}
                           </p>
                           <p className="text-sm text-slate-500">Monthly Need</p>
@@ -445,7 +445,7 @@ export const ClientProfilePage = () => {
                 {/* Shortfalls by Priority */}
                 {analysis.critical_shortfalls.length > 0 && (
                   <div>
-                    <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <h3 className="font-display text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <AlertCircle className="h-5 w-5 text-red-600" />
                       Critical Priority ({analysis.critical_shortfalls.length})
                     </h3>
@@ -459,7 +459,7 @@ export const ClientProfilePage = () => {
 
                 {analysis.high_priority_shortfalls.length > 0 && (
                   <div>
-                    <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <h3 className="font-display text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <AlertTriangle className="h-5 w-5 text-orange-600" />
                       High Priority ({analysis.high_priority_shortfalls.length})
                     </h3>
@@ -473,7 +473,7 @@ export const ClientProfilePage = () => {
 
                 {analysis.medium_priority_shortfalls.length > 0 && (
                   <div>
-                    <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <h3 className="font-display text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <AlertTriangle className="h-5 w-5 text-amber-600" />
                       Medium Priority ({analysis.medium_priority_shortfalls.length})
                     </h3>
@@ -487,7 +487,7 @@ export const ClientProfilePage = () => {
 
                 {analysis.low_priority_shortfalls.length > 0 && (
                   <div>
-                    <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                    <h3 className="font-display text-lg font-semibold text-white mb-4 flex items-center gap-2">
                       <CheckCircle2 className="h-5 w-5 text-emerald-600" />
                       Low Priority ({analysis.low_priority_shortfalls.length})
                     </h3>
@@ -503,7 +503,7 @@ export const ClientProfilePage = () => {
                   <Card className="text-center py-12">
                     <CardContent>
                       <CheckCircle2 className="h-12 w-12 mx-auto text-emerald-500 mb-4" />
-                      <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                      <h3 className="font-display text-lg font-semibold text-white mb-2">
                         No Shortfalls Identified
                       </h3>
                       <p className="text-slate-500">
@@ -517,7 +517,7 @@ export const ClientProfilePage = () => {
               <Card className="text-center py-12">
                 <CardContent>
                   <AlertTriangle className="h-12 w-12 mx-auto text-slate-300 dark:text-slate-600 mb-4" />
-                  <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="font-display text-lg font-semibold text-white mb-2">
                     No Analysis Available
                   </h3>
                   <p className="text-slate-500 mb-4">

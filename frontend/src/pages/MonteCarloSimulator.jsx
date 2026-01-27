@@ -145,7 +145,7 @@ export const MonteCarloSimulator = () => {
             <BarChart3 className="h-3 w-3 mr-1" />
             Advanced Analysis
           </Badge>
-          <h1 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+          <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
             Monte Carlo Retirement Simulator
           </h1>
           <p className="text-slate-500 mt-2">
@@ -303,7 +303,7 @@ export const MonteCarloSimulator = () => {
                         results.success_rate >= 75 ? "[&>div]:bg-emerald-500" : "[&>div]:bg-amber-500"
                       )}
                     />
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mt-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                    <p className="text-sm text-slate-400 mt-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
                       {results.interpretation}
                     </p>
                   </CardContent>

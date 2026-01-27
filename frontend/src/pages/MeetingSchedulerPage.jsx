@@ -176,7 +176,7 @@ export const MeetingSchedulerPage = () => {
           
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
+              <h1 className="font-display text-2xl sm:text-3xl font-bold text-white">
                 Meeting Notes
               </h1>
               <p className="text-slate-500 mt-1">
@@ -423,7 +423,7 @@ export const MeetingSchedulerPage = () => {
                           </Badge>
                         </div>
                         
-                        <p className="text-slate-600 dark:text-slate-400 mb-4">
+                        <p className="text-slate-400 mb-4">
                           {meeting.summary}
                         </p>
 

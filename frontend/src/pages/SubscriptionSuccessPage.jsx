@@ -79,7 +79,7 @@ export const SubscriptionSuccessPage = () => {
                   <CheckCircle2 className="h-20 w-20 text-emerald-500 opacity-30" />
                 </div>
               </div>
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              <h2 className="text-2xl font-bold text-white mb-2">
                 Welcome to {tier?.charAt(0).toUpperCase() + tier?.slice(1)}!
               </h2>
               <p className="text-slate-500 mb-6">{message}</p>
