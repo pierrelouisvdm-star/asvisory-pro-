@@ -202,11 +202,11 @@ class TestMarketTrackerTabs:
     """Tests to verify market tracker has 3 tabs worth of data"""
     
     def test_indices_tab_data(self):
-        """Indices tab should have data (4 indices)"""
+        """Indices tab should have data (5 indices including SA Market EZA ETF)"""
         response = requests.get(f"{BASE_URL}/api/market/data", timeout=30)
         data = response.json()
         
-        assert len(data["indices"]) == 4, f"Expected 4 indices, got {len(data['indices'])}"
+        assert len(data["indices"]) == 5, f"Expected 5 indices, got {len(data['indices'])}"
     
     def test_commodities_tab_data(self):
         """Commodities tab should have data (3 commodities)"""
