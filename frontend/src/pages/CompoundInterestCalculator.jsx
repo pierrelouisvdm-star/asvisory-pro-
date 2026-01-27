@@ -24,7 +24,7 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 const defaultScenario = () => ({
   id: generateId(),
   principal: 25000,
-  rate: 6,
+  rate: 25,
   years: 15,
   compounding: '12',
 });
