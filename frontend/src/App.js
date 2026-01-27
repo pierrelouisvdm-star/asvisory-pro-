@@ -11,18 +11,21 @@ import { CarFinanceCalculator } from "@/pages/CarFinanceCalculator";
 import { Toaster } from "@/components/ui/sonner";
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    // Check for system preference or stored preference
-    const stored = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (stored === 'dark' || (!stored && prefersDark)) {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
+  const [isDark, setIsDark] = useState(() => {
+    // Initialize from stored preference or system preference
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const shouldBeDark = stored === 'dark' || (!stored && prefersDark);
+      
+      // Apply class immediately to prevent flash
+      if (shouldBeDark) {
+        document.documentElement.classList.add('dark');
+      }
+      return shouldBeDark;
     }
-  }, []);
+    return false;
+  });
 
   useEffect(() => {
     if (isDark) {
