@@ -244,8 +244,8 @@ export const ClientsPage = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20">
-                  <Users className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20">
+                  <Users className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">{clients.length}</p>
@@ -257,8 +257,8 @@ export const ClientsPage = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-50 dark:bg-amber-900/20">
-                  <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/20">
+                  <AlertTriangle className="h-5 w-5 text-amber-400" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">
@@ -272,8 +272,8 @@ export const ClientsPage = () => {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-white">
@@ -290,7 +290,7 @@ export const ClientsPage = () => {
         {filteredClients.length === 0 ? (
           <Card className="text-center py-12">
             <CardContent>
-              <Users className="h-12 w-12 mx-auto text-slate-300 dark:text-slate-600 mb-4" />
+              <Users className="h-12 w-12 mx-auto text-slate-500 mb-4" />
               <h3 className="font-display text-lg font-semibold text-white mb-2">
                 {searchQuery ? 'No clients found' : 'No clients yet'}
               </h3>
