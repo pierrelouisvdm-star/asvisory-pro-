@@ -51,25 +51,40 @@ export const FutureValueCalculator = () => {
     // Net rate after fees
     const grossRate = rate / 100;
     const feeRate = investmentFee / 100;
-    const netRate = grossRate - feeRate;
+    const netRate = Math.max(0, grossRate - feeRate); // Ensure non-negative
     const inflation = inflationRate / 100;
     const n = parseFloat(compounding);
     const contributionsPerYear = parseFloat(contributionFrequency);
     
-    // Future value calculations with net rate (after fees)
+    // Future value with fees (net rate)
     const fvPrincipal = principal * Math.pow(1 + netRate / n, n * years);
     const periodicRate = netRate / contributionsPerYear;
     const totalPeriods = contributionsPerYear * years;
-    const fvContributions = contribution * ((Math.pow(1 + periodicRate, totalPeriods) - 1) / periodicRate);
+    
+    let fvContributions = 0;
+    if (periodicRate > 0) {
+      fvContributions = contribution * ((Math.pow(1 + periodicRate, totalPeriods) - 1) / periodicRate);
+    } else {
+      fvContributions = contribution * totalPeriods;
+    }
     
     const nominalFV = fvPrincipal + fvContributions;
     const totalContributed = principal + (contribution * contributionsPerYear * years);
     const totalInterest = nominalFV - totalContributed;
     
-    // Calculate total fees paid
-    const fvWithoutFees = principal * Math.pow(1 + grossRate / n, n * years) + 
-      contribution * ((Math.pow(1 + grossRate / contributionsPerYear, totalPeriods) - 1) / (grossRate / contributionsPerYear));
-    const totalFeesPaid = fvWithoutFees - nominalFV;
+    // Future value without fees (gross rate) for comparison
+    const fvPrincipalGross = principal * Math.pow(1 + grossRate / n, n * years);
+    const periodicRateGross = grossRate / contributionsPerYear;
+    
+    let fvContributionsGross = 0;
+    if (periodicRateGross > 0) {
+      fvContributionsGross = contribution * ((Math.pow(1 + periodicRateGross, totalPeriods) - 1) / periodicRateGross);
+    } else {
+      fvContributionsGross = contribution * totalPeriods;
+    }
+    
+    const fvWithoutFees = fvPrincipalGross + fvContributionsGross;
+    const totalFeesPaid = Math.max(0, fvWithoutFees - nominalFV);
     
     // Real (inflation-adjusted) future value
     const realFV = nominalFV / Math.pow(1 + inflation, years);
