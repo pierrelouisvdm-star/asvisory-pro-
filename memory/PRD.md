@@ -1,7 +1,7 @@
 # AdvisoryPro - Financial Advisor Suite PRD
 
 ## Overview
-A comprehensive financial calculator suite for financial advisors with client management, financial plan analysis, shortfall identification, and subscription-based monetization.
+A comprehensive financial calculator suite for financial advisors with client management, financial plan analysis, shortfall identification, subscription-based monetization, live market tracking, and AI-powered advisory.
 
 ## Original Requirements
 1. Build a financial advisor application with various calculators
@@ -15,7 +15,9 @@ A comprehensive financial calculator suite for financial advisors with client ma
 9. **Backend Integration**: User auth, client management
 10. **Financial Plan Shortfall Analysis**: Compile shortfalls and recommendations
 11. **Subscription Tiers**: Free, Standard (R49/month), Premium (R149/month) with Stripe
-12. **Live Market Tracker**: JSE, Nasdaq, S&P 500, Nifty 50, Currency pairs to ZAR
+12. **Live Market Tracker**: Gold, Silver, Bitcoin, Nasdaq, S&P 500, Nifty 50, Currency pairs to ZAR
+13. **Feature Gating**: Only 4 calculators for free tier
+14. **AI Financial Advisor**: GPT-5.2 powered chatbot for Premium users
 
 ## Tech Stack
 - **Frontend**: React.js with react-router-dom
@@ -27,6 +29,7 @@ A comprehensive financial calculator suite for financial advisors with client ma
 - **Charts**: recharts
 - **Payments**: Stripe (via emergentintegrations)
 - **Market Data**: yfinance
+- **AI**: GPT-5.2 via Emergent LLM Key
 
 ## Features Implemented
 
