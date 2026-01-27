@@ -322,12 +322,12 @@ export const LandingPage = () => {
             </div>
           </div>
           
-          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="border-t border-navy-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm">
               © {new Date().getFullYear()} AdvisoryPro. All rights reserved.
             </p>
             <p className="text-sm text-center md:text-right">
-              Designed with ❤️ by South African Financial Professionals
+              Designed with <span className="text-emerald-500">♥</span> by South African Financial Professionals
             </p>
           </div>
         </div>
