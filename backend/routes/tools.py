@@ -188,12 +188,24 @@ async def create_review_schedule(
     if not client_doc:
         raise HTTPException(status_code=404, detail="Client not found")
     
+    # Default checklist if not provided
+    default_checklist = [
+        "Review investment performance",
+        "Update risk profile",
+        "Check insurance coverage",
+        "Review goals progress",
+        "Update financial data",
+        "Discuss life changes",
+        "Review fees and costs",
+        "Update beneficiaries"
+    ]
+    
     review = ReviewSchedule(
         client_id=review_data.client_id,
         advisor_id=user_id,
         frequency=review_data.frequency,
         next_review_date=review_data.next_review_date,
-        checklist=review_data.checklist if review_data.checklist else ReviewSchedule().checklist,
+        checklist=review_data.checklist if review_data.checklist else default_checklist,
         reminder_days_before=review_data.reminder_days_before,
         notes=review_data.notes
     )
