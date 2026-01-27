@@ -4,6 +4,9 @@ from typing import Dict, List, Optional
 import yfinance as yf
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
+import requests
+from bs4 import BeautifulSoup
+import re
 
 from models.market import MarketIndex, CurrencyPair, Commodity, MarketDataResponse
 from server import db
@@ -14,12 +17,18 @@ router = APIRouter(prefix="/market", tags=["Market Data"])
 CACHE_DURATION_MINUTES = 15
 UPDATE_INTERVAL_MINUTES = 15
 
-# Market indices configuration
+# Market indices configuration (yfinance)
 INDICES = {
     "^IXIC": {"name": "Nasdaq Composite", "region": "US"},
     "^GSPC": {"name": "S&P 500", "region": "US"},
     "^NSEI": {"name": "Nifty 50", "region": "IN"},
     "VNQI": {"name": "SA Property (ETF Proxy)", "region": "ZA"},
+}
+
+# JSE Indices (scraped from Moneyweb)
+JSE_INDICES = {
+    "JSE All Share": {"symbol": "J203", "region": "ZA"},
+    "JSE Top 40": {"symbol": "J200", "region": "ZA"},
 }
 
 # Commodities & Crypto
