@@ -222,20 +222,24 @@ export const Dashboard = () => {
         </div>
       </section>
 
-      {/* Calculators Section */}
+      {/* Investment Calculators Section */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-12 animate-fade-in">
+          <Badge className="mb-4 bg-gold/10 text-gold border-gold/20">
+            <TrendingUp className="h-3 w-3 mr-1" />
+            Investment Tools
+          </Badge>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Professional Calculators
+            Investment Calculators
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Four essential financial calculators designed for advisor-client meetings. 
-            Each tool offers comparison modes, visual charts, and printable reports.
+            Essential calculators for investment planning with inflation & fee adjustments. 
+            Compare scenarios, visualize growth, and generate client reports.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {calculators.map((calc, index) => {
+          {investmentCalculators.map((calc, index) => {
             const Icon = calc.icon;
             return (
               <Link 
@@ -282,6 +286,75 @@ export const Dashboard = () => {
               </Link>
             );
           })}
+        </div>
+      </section>
+
+      {/* Insurance & Planning Section */}
+      <section className="bg-muted/20 py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 animate-fade-in">
+            <Badge className="mb-4 bg-forest/10 text-forest border-forest/20">
+              <Shield className="h-3 w-3 mr-1" />
+              Protection & Planning
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Insurance & Retirement
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Comprehensive tools for life insurance needs analysis, disability coverage, 
+              and retirement planning with inflation adjustments.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {insuranceCalculators.map((calc, index) => {
+              const Icon = calc.icon;
+              return (
+                <Link 
+                  key={calc.id} 
+                  to={calc.path}
+                  className="group"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <Card className={cn(
+                    "h-full card-elevated overflow-hidden",
+                    "border-2 border-transparent hover:border-forest/30"
+                  )}>
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between">
+                        <div className={cn(
+                          "flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ring-1",
+                          colorVariants[calc.color]
+                        )}>
+                          <Icon className={cn("h-7 w-7", iconColorVariants[calc.color])} />
+                        </div>
+                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-forest group-hover:translate-x-1 transition-all duration-300" />
+                      </div>
+                      <CardTitle className="font-display text-xl font-semibold mt-4 group-hover:text-forest transition-colors">
+                        {calc.title}
+                      </CardTitle>
+                      <CardDescription className="text-muted-foreground">
+                        {calc.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2">
+                        {calc.features.map((feature) => (
+                          <Badge 
+                            key={feature} 
+                            variant="secondary"
+                            className="bg-muted/50 text-muted-foreground border-0"
+                          >
+                            {feature}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </section>
 
