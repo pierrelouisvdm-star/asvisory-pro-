@@ -159,8 +159,8 @@ export const CompoundInterestCalculator = () => {
           value={scenario.rate}
           onChange={(val) => updateScenario(index, 'rate', val)}
           min={0}
-          max={20}
-          step={0.1}
+          max={50}
+          step={0.5}
           suffix="%"
         />
         <SliderField
