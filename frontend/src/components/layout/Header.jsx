@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Calculator, TrendingUp, Percent, Car, Building2, Moon, Sun, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown, Receipt, ScrollText, ShieldAlert, CreditCard, GraduationCap, Wallet, Landmark, ClipboardList, Users, LogIn, LogOut, User, BarChart3, GitCompare, ArrowRightLeft, Crown } from 'lucide-react';
+import { Calculator, TrendingUp, Percent, Car, Building2, Moon, Sun, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown, Receipt, ScrollText, ShieldAlert, CreditCard, GraduationCap, Wallet, Landmark, Users, LogIn, LogOut, User, BarChart3, GitCompare, ArrowRightLeft, Crown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import { useAuth } from '@/context/AuthContext';
@@ -16,8 +16,13 @@ import {
 const investmentCalcs = [
   { path: '/future-value', label: 'Future Value', icon: TrendingUp },
   { path: '/compound-interest', label: 'Compound Interest', icon: Percent },
+];
+
+const debtCalcs = [
   { path: '/bond', label: 'Bond Calculator', icon: Building2 },
-  { path: '/car-finance', label: 'Car Finance', icon: Car },
+  { path: '/car-finance', label: 'Vehicle Finance', icon: Car },
+  { path: '/debt-payoff', label: 'Debt Payoff', icon: CreditCard },
+  { path: '/loan-comparison', label: 'Loan Comparison', icon: GitCompare },
 ];
 
 const insuranceCalcs = [
@@ -31,19 +36,16 @@ const personalFinanceTools = [
   { path: '/budget-planner', label: 'Budget Planner', icon: Wallet },
   { path: '/net-worth', label: 'Net Worth Tracker', icon: Landmark },
   { path: '/emergency-fund', label: 'Emergency Fund', icon: ShieldAlert },
-  { path: '/debt-payoff', label: 'Debt Payoff', icon: CreditCard },
 ];
 
 const planningTools = [
   { path: '/estate-planning', label: 'Estate Planning', icon: ScrollText },
   { path: '/education-savings', label: 'Education Savings', icon: GraduationCap },
-  { path: '/risk-profile', label: 'Risk Profile Quiz', icon: ClipboardList },
 ];
 
 const advancedTools = [
   { path: '/cash-flow', label: 'Cash Flow Projector', icon: ArrowRightLeft },
   { path: '/monte-carlo', label: 'Monte Carlo Simulator', icon: BarChart3 },
-  { path: '/loan-comparison', label: 'Loan Comparison', icon: GitCompare },
 ];
 
 export const Header = () => {
