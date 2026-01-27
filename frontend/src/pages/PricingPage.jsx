@@ -269,7 +269,7 @@ export const PricingPage = () => {
                       onClick={() => navigate(isAuthenticated ? '/' : '/auth')}
                       data-testid="get-started-free"
                     >
-                      {isAuthenticated ? 'Current Plan' : 'Get Started Free'}
+                      {isAuthenticated ? (isWelcome ? 'Continue with Free' : 'Go to Dashboard') : 'Get Started Free'}
                     </Button>
                   ) : (
                     <>
