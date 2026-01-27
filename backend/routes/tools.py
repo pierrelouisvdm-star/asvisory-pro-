@@ -262,16 +262,34 @@ async def get_upcoming_reviews(
         {"_id": 0}
     ).to_list(1000)
     
-    upcoming = []
+    # Filter reviews that are upcoming
+    upcoming_reviews = []
     for review in reviews:
-        next_date = datetime.strptime(review['next_review_date'], '%Y-%m-%d').date()
-        if today <= next_date <= end_date:
-            client = await db.clients.find_one({"id": review['client_id']}, {"_id": 0, "first_name": 1, "last_name": 1})
-            upcoming.append({
-                **review,
-                'client_name': f"{client.get('first_name', '')} {client.get('last_name', '')}",
-                'days_until': (next_date - today).days
-            })
+        try:
+            next_date = datetime.strptime(review['next_review_date'], '%Y-%m-%d').date()
+            if today <= next_date <= end_date:
+                review['_next_date'] = next_date
+                review['_days_until'] = (next_date - today).days
+                upcoming_reviews.append(review)
+        except (KeyError, ValueError):
+            continue
+    
+    # Batch fetch all clients to avoid N+1 queries
+    client_ids = list(set(r['client_id'] for r in upcoming_reviews if r.get('client_id')))
+    clients = await db.clients.find(
+        {"id": {"$in": client_ids}},
+        {"_id": 0, "id": 1, "first_name": 1, "last_name": 1}
+    ).to_list(len(client_ids))
+    client_map = {c['id']: c for c in clients}
+    
+    upcoming = []
+    for review in upcoming_reviews:
+        client = client_map.get(review.get('client_id'), {})
+        upcoming.append({
+            **{k: v for k, v in review.items() if not k.startswith('_')},
+            'client_name': f"{client.get('first_name', '')} {client.get('last_name', '')}".strip(),
+            'days_until': review['_days_until']
+        })
     
     return sorted(upcoming, key=lambda x: x['next_review_date'])
 
