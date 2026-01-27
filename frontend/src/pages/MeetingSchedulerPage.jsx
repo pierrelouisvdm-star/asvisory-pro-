@@ -165,7 +165,7 @@ export const MeetingSchedulerPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950" data-testid="meeting-scheduler-page">
+    <div className="min-h-screen bg-navy-950" data-testid="meeting-scheduler-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">

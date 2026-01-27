@@ -165,7 +165,7 @@ export const PricingPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900" data-testid="pricing-page">
+    <div className="min-h-screen bg-navy-950" data-testid="pricing-page">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Welcome Message for New Users */}
         {isWelcome && (

@@ -90,7 +90,7 @@ export const CashFlowProjector = () => {
   }, [income, expenses, projectionYears, incomeGrowth, expenseGrowth]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+    <div className="min-h-screen bg-navy-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <Badge className="mb-3 bg-cyan-100 text-cyan-700 border-cyan-200">

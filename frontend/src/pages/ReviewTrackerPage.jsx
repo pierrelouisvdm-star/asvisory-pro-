@@ -160,7 +160,7 @@ export const ReviewTrackerPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950" data-testid="review-tracker-page">
+    <div className="min-h-screen bg-navy-950" data-testid="review-tracker-page">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">

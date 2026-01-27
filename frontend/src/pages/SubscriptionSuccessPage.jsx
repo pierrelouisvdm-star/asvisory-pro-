@@ -60,7 +60,7 @@ export const SubscriptionSuccessPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-navy-950 flex items-center justify-center p-4">
       <Card className="max-w-md w-full">
         <CardContent className="pt-8 pb-6 text-center">
           {status === 'checking' && (
