@@ -118,6 +118,28 @@ export const PricingPage = () => {
     }
   };
 
+  const handleRedeemCoupon = async (e) => {
+    e.preventDefault();
+    if (!couponCode.trim()) return;
+
+    if (!isAuthenticated) {
+      navigate('/auth?redirect=/pricing');
+      return;
+    }
+
+    setCouponLoading(true);
+    try {
+      const result = await couponApi.redeem(couponCode.trim());
+      toast.success(result.message);
+      setCouponCode('');
+      navigate('/');
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setCouponLoading(false);
+    }
+  };
+
   const getFeatureValue = (features, key) => {
     const value = features[key];
     if (typeof value === 'boolean') return value;
