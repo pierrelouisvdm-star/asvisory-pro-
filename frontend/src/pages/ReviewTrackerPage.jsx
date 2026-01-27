@@ -166,7 +166,7 @@ export const ReviewTrackerPage = () => {
         <div className="mb-8">
           <Link to={`/clients/${clientId}`} className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-4">
             <ArrowLeft className="h-4 w-4 mr-1" />
-            Back to {client?.first_name}'s Profile
+            Back to {client?.first_name}&apos;s Profile
           </Link>
           
           <div className="flex items-center justify-between">

@@ -187,7 +187,7 @@ export const PortfolioTrackerPage = () => {
         <div className="mb-8">
           <Link to={`/clients/${clientId}`} className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-4">
             <ArrowLeft className="h-4 w-4 mr-1" />
-            Back to {client?.first_name}'s Profile
+            Back to {client?.first_name}&apos;s Profile
           </Link>
           
           <div className="flex items-center justify-between">
@@ -196,7 +196,7 @@ export const PortfolioTrackerPage = () => {
                 Portfolio Tracker
               </h1>
               <p className="text-slate-500 mt-1">
-                Manage {client?.first_name}'s investment portfolio
+                Manage {client?.first_name}&apos;s investment portfolio
               </p>
             </div>
 

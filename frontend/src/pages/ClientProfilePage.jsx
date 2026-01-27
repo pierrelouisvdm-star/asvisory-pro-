@@ -507,7 +507,7 @@ export const ClientProfilePage = () => {
                         No Shortfalls Identified
                       </h3>
                       <p className="text-slate-500">
-                        This client's financial plan appears to be well-structured.
+                        This client&apos;s financial plan appears to be well-structured.
                       </p>
                     </CardContent>
                   </Card>
