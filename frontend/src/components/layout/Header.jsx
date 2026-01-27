@@ -186,6 +186,13 @@ export const Header = () => {
               icon={ScrollText}
               isActive={planningTools.some(c => c.path === location.pathname)}
             />
+
+            <NavDropdown 
+              items={advancedTools} 
+              label="Advanced" 
+              icon={BarChart3}
+              isActive={advancedTools.some(c => c.path === location.pathname)}
+            />
           </nav>
 
           {/* Right Side Actions */}
