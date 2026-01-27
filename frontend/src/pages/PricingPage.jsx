@@ -59,6 +59,8 @@ export const PricingPage = () => {
   const [isAnnual, setIsAnnual] = useState(false);
   const [loading, setLoading] = useState(true);
   const [checkoutLoading, setCheckoutLoading] = useState(null);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponLoading, setCouponLoading] = useState(false);
 
   useEffect(() => {
     fetchPricing();
