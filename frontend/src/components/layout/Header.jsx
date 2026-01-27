@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Calculator, TrendingUp, Percent, Car, Building2, Moon, Sun, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown, Receipt, ScrollText, ShieldAlert, CreditCard, GraduationCap, Wallet, Landmark, ClipboardList, Users, LogIn, LogOut, User } from 'lucide-react';
+import { Calculator, TrendingUp, Percent, Car, Building2, Moon, Sun, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown, Receipt, ScrollText, ShieldAlert, CreditCard, GraduationCap, Wallet, Landmark, ClipboardList, Users, LogIn, LogOut, User, BarChart3, GitCompare, ArrowRightLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import { useAuth } from '@/context/AuthContext';
