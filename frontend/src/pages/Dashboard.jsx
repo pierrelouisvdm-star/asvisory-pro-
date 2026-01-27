@@ -10,13 +10,10 @@ import {
   Car, 
   Building2, 
   ArrowRight, 
-  Sparkles,
   BarChart3,
   FileText,
   GitCompare,
   Shield,
-  Clock,
-  Users,
   Umbrella,
   PiggyBank,
   DollarSign,
@@ -28,59 +25,53 @@ import {
   Wallet,
   Landmark,
   ClipboardList,
-  Target
+  Sparkles
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useCurrency } from '@/context/CurrencyContext';
 
 const investmentCalculators = [
   {
     id: 'future-value',
-    title: 'Future Value Calculator',
-    description: 'Calculate future value with inflation & fee adjustments',
+    title: 'Future Value',
+    description: 'Project the growth of your investments over time',
     icon: TrendingUp,
     path: '/future-value',
-    color: 'gold',
-    features: ['Inflation Adjusted', 'Fee Impact', 'Regular Deposits'],
+    features: ['Inflation Adjusted', 'Fee Impact', 'Visual Growth'],
   },
   {
     id: 'compound-interest',
     title: 'Compound Interest',
-    description: 'Understand the power of compound interest over time',
+    description: 'Calculate returns with multiple compounding frequencies',
     icon: Percent,
     path: '/compound-interest',
-    color: 'forest',
-    features: ['Multiple Frequencies', 'Visual Growth Chart', 'Interest Breakdown'],
+    features: ['Monthly/Annual', 'Growth Chart', 'Comparison'],
   },
   {
     id: 'bond',
     title: 'Bond Calculator',
-    description: 'Analyze bond pricing, yields, and duration metrics',
+    description: 'Analyze bond prices, yields, and duration',
     icon: Building2,
     path: '/bond',
-    color: 'navy',
-    features: ['Price Calculation', 'Yield to Maturity', 'Duration Analysis'],
+    features: ['Yield Analysis', 'Duration', 'Price Sensitivity'],
   },
   {
     id: 'car-finance',
-    title: 'Car Finance Calculator',
-    description: 'Compare financing options for vehicle purchases',
+    title: 'Car Finance',
+    description: 'Compare loan options and calculate payments',
     icon: Car,
     path: '/car-finance',
-    color: 'gold',
-    features: ['Loan vs Lease', 'Total Cost Analysis', 'Payment Schedule'],
+    features: ['Loan vs Lease', 'Total Cost', 'Payment Schedule'],
   },
 ];
 
 const insuranceCalculators = [
   {
     id: 'life-insurance',
-    title: 'Life Insurance Calculator',
-    description: 'Calculate the right coverage to protect your family',
+    title: 'Life Insurance',
+    description: 'Calculate coverage needs using DIME method',
     icon: Shield,
     path: '/life-insurance',
-    color: 'forest',
-    features: ['DIME Method', 'Coverage Gap Analysis', 'Premium Estimates'],
+    features: ['DIME Method', 'Gap Analysis', 'Premium Est.'],
   },
   {
     id: 'income-disability',
@@ -88,8 +79,7 @@ const insuranceCalculators = [
     description: 'Protect your income with disability coverage',
     icon: Umbrella,
     path: '/income-disability',
-    color: 'navy',
-    features: ['Waiting Period', 'Benefit Analysis', 'Premium Calculator'],
+    features: ['Waiting Period', 'Benefit Analysis', 'Premiums'],
   },
   {
     id: 'retirement',
@@ -97,8 +87,7 @@ const insuranceCalculators = [
     description: 'Plan your path to a comfortable retirement',
     icon: PiggyBank,
     path: '/retirement',
-    color: 'gold',
-    features: ['Funding Ratio', 'Income Sources', 'Inflation Adjusted'],
+    features: ['Funding Ratio', 'Income Sources', 'Inflation'],
   },
 ];
 
@@ -106,11 +95,10 @@ const personalFinanceTools = [
   {
     id: 'tax-calculator',
     title: 'Tax Calculator',
-    description: 'Calculate your income tax with deductions & credits',
+    description: 'Calculate income tax with deductions & credits',
     icon: Receipt,
     path: '/tax-calculator',
-    color: 'gold',
-    features: ['SA Tax Brackets', 'Medical Credits', 'Retirement Deductions'],
+    features: ['SA Tax Brackets', 'Medical Credits', 'Retirement'],
   },
   {
     id: 'budget-planner',
@@ -118,35 +106,31 @@ const personalFinanceTools = [
     description: 'Plan your budget using the 50/30/20 rule',
     icon: Wallet,
     path: '/budget-planner',
-    color: 'forest',
-    features: ['50/30/20 Rule', 'Expense Tracking', 'Savings Goals'],
+    features: ['50/30/20 Rule', 'Tracking', 'Savings Goals'],
   },
   {
     id: 'net-worth',
     title: 'Net Worth Tracker',
-    description: 'Track assets, liabilities, and overall wealth',
+    description: 'Track assets, liabilities, and wealth',
     icon: Landmark,
     path: '/net-worth',
-    color: 'navy',
     features: ['Asset Tracking', 'Debt Analysis', 'Health Score'],
   },
   {
     id: 'emergency-fund',
     title: 'Emergency Fund',
-    description: 'Calculate how much you need for financial security',
+    description: 'Calculate your financial security needs',
     icon: ShieldAlert,
     path: '/emergency-fund',
-    color: 'gold',
-    features: ['Risk Analysis', 'Funding Progress', 'Savings Timeline'],
+    features: ['Risk Analysis', 'Funding Progress', 'Timeline'],
   },
   {
     id: 'debt-payoff',
     title: 'Debt Payoff',
-    description: 'Compare Snowball vs Avalanche payoff strategies',
+    description: 'Compare Snowball vs Avalanche strategies',
     icon: CreditCard,
     path: '/debt-payoff',
-    color: 'forest',
-    features: ['Avalanche Method', 'Snowball Method', 'Interest Savings'],
+    features: ['Avalanche', 'Snowball', 'Interest Savings'],
   },
 ];
 
@@ -154,20 +138,18 @@ const planningTools = [
   {
     id: 'estate-planning',
     title: 'Estate Planning',
-    description: 'Calculate estate duty and beneficiary distributions',
+    description: 'Calculate estate duty and distributions',
     icon: ScrollText,
     path: '/estate-planning',
-    color: 'navy',
-    features: ['Estate Duty', 'Executor Fees', 'Liquidity Analysis'],
+    features: ['Estate Duty', 'Executor Fees', 'Liquidity'],
   },
   {
     id: 'education-savings',
     title: 'Education Savings',
-    description: 'Plan and save for your children\'s education',
+    description: 'Plan for your children\'s education',
     icon: GraduationCap,
     path: '/education-savings',
-    color: 'gold',
-    features: ['Cost Projection', 'Education Inflation', 'Funding Gap'],
+    features: ['Cost Projection', 'Inflation', 'Funding Gap'],
   },
   {
     id: 'risk-profile',
@@ -175,8 +157,7 @@ const planningTools = [
     description: 'Discover your investment risk tolerance',
     icon: ClipboardList,
     path: '/risk-profile',
-    color: 'forest',
-    features: ['10 Questions', 'Asset Allocation', 'Portfolio Match'],
+    features: ['10 Questions', 'Asset Allocation', 'Portfolio'],
   },
 ];
 
@@ -184,7 +165,7 @@ const features = [
   {
     icon: BarChart3,
     title: 'Visual Analytics',
-    description: 'Interactive charts for clear client presentations',
+    description: 'Interactive charts for clear presentations',
   },
   {
     icon: GitCompare,
@@ -203,397 +184,174 @@ const features = [
   },
 ];
 
-const colorVariants = {
-  gold: 'from-gold/20 to-gold/5 ring-gold/20',
-  forest: 'from-forest/20 to-forest/5 ring-forest/20',
-  navy: 'from-navy-light/20 to-navy-light/5 ring-navy-light/20',
+const CalculatorCard = ({ calc, index }) => {
+  const Icon = calc.icon;
+  return (
+    <Link 
+      to={calc.path}
+      className="group block"
+      data-testid={`calculator-card-${calc.id}`}
+      style={{ animationDelay: `${index * 50}ms` }}
+    >
+      <div className="h-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg animate-fade-in">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 transition-colors group-hover:bg-emerald-50 dark:group-hover:bg-emerald-900/20">
+            <Icon className="h-5 w-5 text-slate-600 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors" />
+          </div>
+          <ArrowRight className="h-4 w-4 text-slate-400 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all duration-300" />
+        </div>
+        <h3 className="font-display text-base font-semibold text-slate-900 dark:text-white mb-1.5 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+          {calc.title}
+        </h3>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 line-clamp-2">
+          {calc.description}
+        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {calc.features.map((feature) => (
+            <span 
+              key={feature} 
+              className="inline-flex text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+            >
+              {feature}
+            </span>
+          ))}
+        </div>
+      </div>
+    </Link>
+  );
 };
 
-const iconColorVariants = {
-  gold: 'text-gold',
-  forest: 'text-forest',
-  navy: 'text-navy-light',
-};
+const SectionHeader = ({ badge, title, description, icon: Icon }) => (
+  <div className="text-center mb-10">
+    <Badge className="mb-3 bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 font-medium">
+      <Icon className="h-3 w-3 mr-1.5" />
+      {badge}
+    </Badge>
+    <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
+      {title}
+    </h2>
+    <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+      {description}
+    </p>
+  </div>
+);
 
 export const Dashboard = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" data-testid="dashboard">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-pattern">
-        {/* Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gold/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-forest/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 relative">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="space-y-8 animate-fade-in">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/20">
-                <Sparkles className="h-4 w-4 text-gold" />
-                <span className="text-sm font-medium text-gold">Professional Calculator Suite</span>
-              </div>
-              
-              <div className="space-y-4">
-                <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                  Financial Clarity for 
-                  <span className="text-gold-gradient block">Your Clients</span>
-                </h1>
-                <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-                  Empower your client meetings with elegant, accurate financial calculators. 
-                  Present complex calculations with beautiful visualizations and professional reports.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-4">
-                <Button asChild variant="premium" size="lg" className="gap-2">
-                  <Link to="/future-value">
-                    Get Started
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
+      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+          <div className="text-center max-w-3xl mx-auto">
+            <Badge className="mb-4 bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 font-medium animate-fade-in">
+              <Sparkles className="h-3 w-3 mr-1.5" />
+              Professional Financial Tools
+            </Badge>
+            
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-5 tracking-tight animate-fade-in" style={{ animationDelay: '100ms' }}>
+              Financial Calculations
+              <span className="block text-emerald-600 dark:text-emerald-400">Made Simple</span>
+            </h1>
+            
+            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
+              A comprehensive suite of 15 professional calculators for financial advisors. 
+              Help your clients make informed decisions with precision tools.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-3 animate-fade-in" style={{ animationDelay: '300ms' }}>
+              <Link to="/future-value">
+                <Button size="lg" className="btn-premium rounded-lg px-6" data-testid="get-started-btn">
+                  Get Started
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button asChild variant="outline" size="lg">
-                  <Link to="/compound-interest">
-                    Explore Calculators
-                  </Link>
+              </Link>
+              <Link to="/risk-profile">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="rounded-lg px-6 border-slate-300 dark:border-slate-700"
+                  data-testid="take-quiz-btn"
+                >
+                  Take Risk Quiz
                 </Button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="flex items-center gap-6 pt-4">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Shield className="h-4 w-4 text-gold" />
-                  <span>Bank-grade accuracy</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Clock className="h-4 w-4 text-forest" />
-                  <span>Real-time calculations</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Content - Hero Image */}
-            <div className="relative hidden lg:block animate-fade-in-up">
-              <div className="relative rounded-2xl overflow-hidden shadow-elevated">
-                <img 
-                  src="https://images.pexels.com/photos/8292854/pexels-photo-8292854.jpeg?auto=compress&cs=tinysrgb&w=800"
-                  alt="Financial advisor consulting with clients"
-                  className="w-full h-[400px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="bg-card/95 backdrop-blur-sm rounded-xl p-4 shadow-soft">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold/20">
-                        <Users className="h-5 w-5 text-gold" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">Client-Ready Presentations</p>
-                        <p className="text-xs text-muted-foreground">Professional reports in seconds</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Floating Card */}
-              <div className="absolute -top-4 -right-4 bg-card rounded-xl shadow-elevated p-4 animate-pulse-soft">
-                <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-lg bg-success/20 flex items-center justify-center">
-                    <TrendingUp className="h-4 w-4 text-success" />
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Growth Projection</p>
-                    <p className="text-sm font-bold text-foreground">+127.4%</p>
-                  </div>
-                </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* Investment Calculators Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12 animate-fade-in">
-          <Badge className="mb-4 bg-gold/10 text-gold border-gold/20">
-            <TrendingUp className="h-3 w-3 mr-1" />
-            Investment Tools
-          </Badge>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Investment Calculators
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Essential calculators for investment planning with inflation & fee adjustments. 
-            Compare scenarios, visualize growth, and generate client reports.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {investmentCalculators.map((calc, index) => {
-            const Icon = calc.icon;
-            return (
-              <Link 
-                key={calc.id} 
-                to={calc.path}
-                className="group"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <Card className={cn(
-                  "h-full card-elevated overflow-hidden",
-                  "border-2 border-transparent hover:border-gold/30"
-                )}>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div className={cn(
-                        "flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ring-1",
-                        colorVariants[calc.color]
-                      )}>
-                        <Icon className={cn("h-7 w-7", iconColorVariants[calc.color])} />
-                      </div>
-                      <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-gold group-hover:translate-x-1 transition-all duration-300" />
-                    </div>
-                    <CardTitle className="font-display text-xl font-semibold mt-4 group-hover:text-gold transition-colors">
-                      {calc.title}
-                    </CardTitle>
-                    <CardDescription className="text-muted-foreground">
-                      {calc.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {calc.features.map((feature) => (
-                        <Badge 
-                          key={feature} 
-                          variant="secondary"
-                          className="bg-muted/50 text-muted-foreground border-0"
-                        >
-                          {feature}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <SectionHeader
+          badge="Investment"
+          title="Investment Calculators"
+          description="Powerful tools for projecting growth, calculating returns, and analyzing bonds."
+          icon={TrendingUp}
+        />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {investmentCalculators.map((calc, index) => (
+            <CalculatorCard key={calc.id} calc={calc} index={index} />
+          ))}
         </div>
       </section>
 
-      {/* Insurance & Planning Section */}
-      <section className="bg-muted/20 py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in">
-            <Badge className="mb-4 bg-forest/10 text-forest border-forest/20">
-              <Shield className="h-3 w-3 mr-1" />
-              Protection & Planning
-            </Badge>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Insurance & Retirement
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Comprehensive tools for life insurance needs analysis, disability coverage, 
-              and retirement planning with inflation adjustments.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {insuranceCalculators.map((calc, index) => {
-              const Icon = calc.icon;
-              return (
-                <Link 
-                  key={calc.id} 
-                  to={calc.path}
-                  className="group"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <Card className={cn(
-                    "h-full card-elevated overflow-hidden",
-                    "border-2 border-transparent hover:border-forest/30"
-                  )}>
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between">
-                        <div className={cn(
-                          "flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ring-1",
-                          colorVariants[calc.color]
-                        )}>
-                          <Icon className={cn("h-7 w-7", iconColorVariants[calc.color])} />
-                        </div>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-forest group-hover:translate-x-1 transition-all duration-300" />
-                      </div>
-                      <CardTitle className="font-display text-xl font-semibold mt-4 group-hover:text-forest transition-colors">
-                        {calc.title}
-                      </CardTitle>
-                      <CardDescription className="text-muted-foreground">
-                        {calc.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2">
-                        {calc.features.map((feature) => (
-                          <Badge 
-                            key={feature} 
-                            variant="secondary"
-                            className="bg-muted/50 text-muted-foreground border-0"
-                          >
-                            {feature}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
+      {/* Insurance Section */}
+      <section className="bg-slate-50 dark:bg-slate-900/50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            badge="Insurance"
+            title="Insurance & Retirement"
+            description="Comprehensive tools for life insurance, disability coverage, and retirement planning."
+            icon={Shield}
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {insuranceCalculators.map((calc, index) => (
+              <CalculatorCard key={calc.id} calc={calc} index={index} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Personal Finance Tools Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-12 animate-fade-in">
-          <Badge className="mb-4 bg-gold/10 text-gold border-gold/20">
-            <Wallet className="h-3 w-3 mr-1" />
-            Personal Finance
-          </Badge>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-            Personal Finance Tools
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Take control of your finances with powerful tools for budgeting, 
-            debt management, tax planning, and wealth tracking.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {personalFinanceTools.map((calc, index) => {
-            const Icon = calc.icon;
-            return (
-              <Link 
-                key={calc.id} 
-                to={calc.path}
-                className="group"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <Card className={cn(
-                  "h-full card-elevated overflow-hidden",
-                  "border-2 border-transparent hover:border-gold/30"
-                )}>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between">
-                      <div className={cn(
-                        "flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ring-1",
-                        colorVariants[calc.color]
-                      )}>
-                        <Icon className={cn("h-6 w-6", iconColorVariants[calc.color])} />
-                      </div>
-                      <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-gold group-hover:translate-x-1 transition-all duration-300" />
-                    </div>
-                    <CardTitle className="font-display text-lg font-semibold mt-3 group-hover:text-gold transition-colors">
-                      {calc.title}
-                    </CardTitle>
-                    <CardDescription className="text-muted-foreground text-sm">
-                      {calc.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-1.5">
-                      {calc.features.map((feature) => (
-                        <Badge 
-                          key={feature} 
-                          variant="secondary"
-                          className="bg-muted/50 text-muted-foreground border-0 text-xs"
-                        >
-                          {feature}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
+      {/* Personal Finance Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <SectionHeader
+          badge="Personal Finance"
+          title="Personal Finance Tools"
+          description="Take control with budgeting, debt management, tax planning, and wealth tracking."
+          icon={Wallet}
+        />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+          {personalFinanceTools.map((calc, index) => (
+            <CalculatorCard key={calc.id} calc={calc} index={index} />
+          ))}
         </div>
       </section>
 
       {/* Planning Tools Section */}
-      <section className="bg-muted/20 py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 animate-fade-in">
-            <Badge className="mb-4 bg-navy-light/20 text-navy-light border-navy-light/20 dark:bg-gold/10 dark:text-gold dark:border-gold/20">
-              <Target className="h-3 w-3 mr-1" />
-              Planning Tools
-            </Badge>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Future Planning
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Plan for major life events with estate planning, education savings, 
-              and discover your investment risk profile.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {planningTools.map((calc, index) => {
-              const Icon = calc.icon;
-              return (
-                <Link 
-                  key={calc.id} 
-                  to={calc.path}
-                  className="group"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <Card className={cn(
-                    "h-full card-elevated overflow-hidden",
-                    "border-2 border-transparent hover:border-navy-light/30 dark:hover:border-gold/30"
-                  )}>
-                    <CardHeader className="pb-3">
-                      <div className="flex items-start justify-between">
-                        <div className={cn(
-                          "flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ring-1",
-                          colorVariants[calc.color]
-                        )}>
-                          <Icon className={cn("h-7 w-7", iconColorVariants[calc.color])} />
-                        </div>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-navy-light dark:group-hover:text-gold group-hover:translate-x-1 transition-all duration-300" />
-                      </div>
-                      <CardTitle className="font-display text-xl font-semibold mt-4 group-hover:text-navy-light dark:group-hover:text-gold transition-colors">
-                        {calc.title}
-                      </CardTitle>
-                      <CardDescription className="text-muted-foreground">
-                        {calc.description}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2">
-                        {calc.features.map((feature) => (
-                          <Badge 
-                            key={feature} 
-                            variant="secondary"
-                            className="bg-muted/50 text-muted-foreground border-0"
-                          >
-                            {feature}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
+      <section className="bg-slate-50 dark:bg-slate-900/50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            badge="Planning"
+            title="Future Planning"
+            description="Plan for major life events with estate planning, education savings, and risk assessment."
+            icon={ScrollText}
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {planningTools.map((calc, index) => (
+              <CalculatorCard key={calc.id} calc={calc} index={index} />
+            ))}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-muted/30 border-y border-border/40">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl font-bold text-foreground mb-4">
+      <section className="border-t border-slate-200 dark:border-slate-800 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
               Built for Advisors
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400">
               Every feature designed to enhance your client presentations
             </p>
           </div>
@@ -604,16 +362,16 @@ export const Dashboard = () => {
               return (
                 <div 
                   key={feature.title}
-                  className="text-center p-6 animate-fade-in rounded-xl bg-card/50 border border-border/40"
+                  className="text-center p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 mb-4">
-                    <Icon className="h-6 w-6 text-gold" />
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20 mb-4">
+                    <Icon className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                   </div>
-                  <h3 className="font-display text-base font-semibold text-foreground mb-2">
+                  <h3 className="font-display text-sm font-semibold text-slate-900 dark:text-white mb-1.5">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-slate-500 dark:text-slate-400 text-sm">
                     {feature.description}
                   </p>
                 </div>
@@ -624,28 +382,31 @@ export const Dashboard = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-navy to-navy-light p-8 lg:p-12">
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-forest/10 rounded-full blur-3xl" />
-          </div>
-          
-          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="text-center lg:text-left">
-              <h2 className="font-display text-2xl lg:text-3xl font-bold text-cream mb-3">
-                Ready to Elevate Your Client Meetings?
-              </h2>
-              <p className="text-cream/80 max-w-lg">
-                Start using professional-grade financial calculators that your clients will love.
-              </p>
-            </div>
-            <Button asChild variant="premium" size="lg" className="gap-2 whitespace-nowrap">
-              <Link to="/future-value">
-                <Calculator className="h-5 w-5" />
-                Start Calculating
-              </Link>
-            </Button>
+      <section className="bg-slate-900 dark:bg-slate-950 py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4 tracking-tight">
+            Ready to elevate your client presentations?
+          </h2>
+          <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
+            Start using our professional calculators today and help your clients make better financial decisions.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link to="/future-value">
+              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-6" data-testid="cta-explore-btn">
+                Explore Calculators
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/risk-profile">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-lg px-6 border-slate-600 text-white hover:bg-slate-800"
+                data-testid="cta-quiz-btn"
+              >
+                Start with Risk Quiz
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
