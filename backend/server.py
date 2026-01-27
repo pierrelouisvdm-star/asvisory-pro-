@@ -32,6 +32,7 @@ from routes.tools import router as tools_router
 from routes.portfolio import router as portfolio_router
 from routes.subscriptions import router as subscriptions_router
 from routes.market import router as market_router
+from routes.ai_advisor import router as ai_advisor_router
 
 # Include route modules
 api_router.include_router(auth_router)
@@ -41,6 +42,7 @@ api_router.include_router(tools_router)
 api_router.include_router(portfolio_router)
 api_router.include_router(subscriptions_router)
 api_router.include_router(market_router)
+api_router.include_router(ai_advisor_router)
 
 # Health check endpoint
 @api_router.get("/health")
