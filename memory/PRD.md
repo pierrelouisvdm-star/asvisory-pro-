@@ -282,10 +282,18 @@ Each shortfall includes:
 - Added 7-day free trial functionality
 - Annual billing with 17% discount
 - Live Market Tracker with 15-minute refresh
-- Indices: Nasdaq, S&P 500, Nifty 50, SA Property ETF
+- Indices: SA Market (EZA ETF), Nasdaq, S&P 500, Nifty 50, SA Property ETF
+- Commodities: Gold, Silver, Bitcoin
 - Currency pairs: USD/ZAR, EUR/ZAR, GBP/ZAR, and 5 more
 - Pricing page with feature comparison
 - Subscription success page with status polling
+
+### January 2026 - Registration & Onboarding Flow
+- Landing page for non-authenticated users
+- Protected routes requiring authentication
+- Registration redirects to pricing page with welcome message
+- Feature gating: 4 free calculators, paid calculators require subscription
+- AI Financial Advisor chatbot (GPT-5.2) for Premium users
 
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
