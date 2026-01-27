@@ -49,8 +49,8 @@ export const AuthPage = () => {
 
     try {
       await register(registerEmail, registerPassword, registerName, registerCompany);
-      toast.success('Account created! Choose your plan to get started.');
-      navigate('/pricing?welcome=true');
+      toast.success('Account created! Welcome to AdvisoryPro.');
+      navigate('/');
     } catch (err) {
       setError(err.message);
       toast.error(err.message);
