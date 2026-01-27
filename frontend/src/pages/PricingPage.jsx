@@ -51,6 +51,8 @@ const tierColors = {
 
 export const PricingPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isWelcome = searchParams.get('welcome') === 'true';
   const { isAuthenticated } = useAuth();
   const [pricing, setPricing] = useState(null);
   const [isAnnual, setIsAnnual] = useState(false);
