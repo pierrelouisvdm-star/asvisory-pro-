@@ -86,57 +86,57 @@ function App() {
   return (
     <AuthProvider>
       <CurrencyProvider>
-        <div className="min-h-screen flex flex-col bg-background">
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/auth" element={<AuthPage />} />
-                
-                {/* Client Management */}
-                <Route path="/clients" element={<ClientsPage />} />
-                <Route path="/clients/:clientId" element={<ClientProfilePage />} />
-                <Route path="/clients/:clientId/analysis" element={<ClientProfilePage />} />
-                <Route path="/clients/:clientId/goals" element={<GoalPlannerPage />} />
-                <Route path="/clients/:clientId/meetings" element={<MeetingSchedulerPage />} />
-                <Route path="/clients/:clientId/reviews" element={<ReviewTrackerPage />} />
-                <Route path="/clients/:clientId/portfolio" element={<PortfolioTrackerPage />} />
-                
-                {/* Advanced Tools */}
-                <Route path="/cash-flow" element={<CashFlowProjector />} />
-                <Route path="/monte-carlo" element={<MonteCarloSimulator />} />
-                <Route path="/loan-comparison" element={<LoanComparisonTool />} />
-                
-                {/* Pricing & Subscription */}
-                <Route path="/pricing" element={<PricingPage />} />
-                <Route path="/subscription/success" element={<SubscriptionSuccessPage />} />
-                
-                {/* Investment Calculators */}
-                <Route path="/future-value" element={<FutureValueCalculator />} />
-                <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
-                <Route path="/bond" element={<BondCalculator />} />
-                <Route path="/car-finance" element={<CarFinanceCalculator />} />
-                
-                {/* Insurance & Planning */}
-                <Route path="/life-insurance" element={<LifeInsuranceCalculator />} />
-                <Route path="/income-disability" element={<IncomeDisabilityCalculator />} />
-                <Route path="/retirement" element={<RetirementCalculator />} />
-                
-                {/* Personal Finance Tools */}
-                <Route path="/tax-calculator" element={<TaxCalculator />} />
-                <Route path="/estate-planning" element={<EstatePlanningCalculator />} />
-                <Route path="/emergency-fund" element={<EmergencyFundCalculator />} />
-                <Route path="/debt-payoff" element={<DebtPayoffCalculator />} />
-                <Route path="/education-savings" element={<EducationSavingsCalculator />} />
-                <Route path="/budget-planner" element={<BudgetPlanner />} />
-                <Route path="/net-worth" element={<NetWorthTracker />} />
-                <Route path="/risk-profile" element={<RiskProfileQuiz />} />
-              </Routes>
-            </AppLayout>
-            <Toaster position="top-right" />
-          </BrowserRouter>
-        </div>
+        <SubscriptionProvider>
+          <div className="min-h-screen flex flex-col bg-background">
+            <BrowserRouter>
+              <AppLayout>
+                <Routes>
+                  {/* Public Routes */}
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/auth" element={<AuthPage />} />
+                  
+                  {/* Client Management */}
+                  <Route path="/clients" element={<ClientsPage />} />
+                  <Route path="/clients/:clientId" element={<ClientProfilePage />} />
+                  <Route path="/clients/:clientId/analysis" element={<ClientProfilePage />} />
+                  <Route path="/clients/:clientId/goals" element={<GoalPlannerPage />} />
+                  <Route path="/clients/:clientId/meetings" element={<MeetingSchedulerPage />} />
+                  <Route path="/clients/:clientId/reviews" element={<ReviewTrackerPage />} />
+                  <Route path="/clients/:clientId/portfolio" element={<PortfolioTrackerPage />} />
+                  
+                  {/* Advanced Tools */}
+                  <Route path="/cash-flow" element={<CashFlowProjector />} />
+                  <Route path="/monte-carlo" element={<MonteCarloSimulator />} />
+                  <Route path="/loan-comparison" element={<LoanComparisonTool />} />
+                  
+                  {/* Pricing & Subscription */}
+                  <Route path="/pricing" element={<PricingPage />} />
+                  <Route path="/subscription/success" element={<SubscriptionSuccessPage />} />
+                  
+                  {/* FREE Calculators (available to all) */}
+                  <Route path="/future-value" element={<FutureValueCalculator />} />
+                  <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
+                  <Route path="/bond" element={<BondCalculator />} />
+                  <Route path="/car-finance" element={<CarFinanceCalculator />} />
+                  
+                  {/* PAID Calculators (Standard+) */}
+                  <Route path="/life-insurance" element={<GatedCalculator path="/life-insurance"><LifeInsuranceCalculator /></GatedCalculator>} />
+                  <Route path="/income-disability" element={<GatedCalculator path="/income-disability"><IncomeDisabilityCalculator /></GatedCalculator>} />
+                  <Route path="/retirement" element={<GatedCalculator path="/retirement"><RetirementCalculator /></GatedCalculator>} />
+                  <Route path="/tax-calculator" element={<GatedCalculator path="/tax-calculator"><TaxCalculator /></GatedCalculator>} />
+                  <Route path="/estate-planning" element={<GatedCalculator path="/estate-planning"><EstatePlanningCalculator /></GatedCalculator>} />
+                  <Route path="/emergency-fund" element={<GatedCalculator path="/emergency-fund"><EmergencyFundCalculator /></GatedCalculator>} />
+                  <Route path="/debt-payoff" element={<GatedCalculator path="/debt-payoff"><DebtPayoffCalculator /></GatedCalculator>} />
+                  <Route path="/education-savings" element={<GatedCalculator path="/education-savings"><EducationSavingsCalculator /></GatedCalculator>} />
+                  <Route path="/budget-planner" element={<GatedCalculator path="/budget-planner"><BudgetPlanner /></GatedCalculator>} />
+                  <Route path="/net-worth" element={<GatedCalculator path="/net-worth"><NetWorthTracker /></GatedCalculator>} />
+                  <Route path="/risk-profile" element={<GatedCalculator path="/risk-profile"><RiskProfileQuiz /></GatedCalculator>} />
+                </Routes>
+              </AppLayout>
+              <Toaster position="top-right" />
+            </BrowserRouter>
+          </div>
+        </SubscriptionProvider>
       </CurrencyProvider>
     </AuthProvider>
   );
