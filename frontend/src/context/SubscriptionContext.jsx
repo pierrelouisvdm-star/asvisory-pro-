@@ -1,83 +1,52 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { subscriptionApi } from '@/services/api';
+import React, { createContext, useContext, useState } from 'react';
 
 const SubscriptionContext = createContext(null);
 
-// Free tier calculators
-const FREE_CALCULATORS = [
-  '/future-value',
-  '/compound-interest',
-  '/bond',
-  '/car-finance'
-];
-
-// Feature definitions
-const TIER_FEATURES = {
-  free: {
-    calculators: FREE_CALCULATORS,
-    maxClients: 0,
-    pdfReports: false,
-    advancedTools: false,
-    marketTracker: false,
-    goalPlanner: false,
-    meetingScheduler: false,
-    portfolioTracker: false,
-  },
-  standard: {
-    calculators: 'all',
-    maxClients: 5,
-    pdfReports: true,
-    advancedTools: false,
-    marketTracker: true,
-    goalPlanner: false,
-    meetingScheduler: false,
-    portfolioTracker: false,
-  },
-  premium: {
-    calculators: 'all',
-    maxClients: -1, // unlimited
-    pdfReports: true,
-    advancedTools: true,
-    marketTracker: true,
-    goalPlanner: true,
-    meetingScheduler: true,
-    portfolioTracker: true,
-  },
+// All features unlocked for everyone (free access)
+const FULL_ACCESS_FEATURES = {
+  calculators: 'all',
+  maxClients: -1, // unlimited
+  pdfReports: true,
+  advancedTools: true,
+  marketTracker: true,
+  goalPlanner: true,
+  meetingScheduler: true,
+  portfolioTracker: true,
 };
 
 export const SubscriptionProvider = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  const [subscription, setSubscription] = useState({
-    tier: 'free',
+  // Everyone gets full premium access for free
+  const [subscription] = useState({
+    tier: 'premium',
     status: 'active',
-    features: TIER_FEATURES.free,
-    loading: true,
+    features: FULL_ACCESS_FEATURES,
+    loading: false,
   });
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchSubscription();
-    } else {
-      setSubscription({
-        tier: 'free',
-        status: 'active',
-        features: TIER_FEATURES.free,
-        loading: false,
-      });
-    }
-  }, [isAuthenticated]);
+  // All features always accessible
+  const hasFeature = () => true;
+  const canAccessCalculator = () => true;
+  const canAddClient = () => true;
 
-  const fetchSubscription = async () => {
-    try {
-      const data = await subscriptionApi.getCurrentSubscription();
-      setSubscription({
-        tier: data.tier,
-        status: data.status,
-        features: TIER_FEATURES[data.tier] || TIER_FEATURES.free,
-        trialEndsAt: data.trial_ends_at,
-        periodEnd: data.current_period_end,
-        loading: false,
+  return (
+    <SubscriptionContext.Provider value={{
+      ...subscription,
+      hasFeature,
+      canAccessCalculator,
+      canAddClient,
+    }}>
+      {children}
+    </SubscriptionContext.Provider>
+  );
+};
+
+export const useSubscription = () => {
+  const context = useContext(SubscriptionContext);
+  if (!context) {
+    throw new Error('useSubscription must be used within a SubscriptionProvider');
+  }
+  return context;
+};
       });
     } catch (error) {
       // If error, default to free tier
