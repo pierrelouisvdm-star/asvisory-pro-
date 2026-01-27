@@ -158,7 +158,7 @@ export const MonteCarloSimulator = () => {
           <div className="space-y-6">
             <CalculatorCard title="Current Situation" icon={Target}>
               <div className="space-y-6">
-                <SliderInput
+                <SliderField
                   id="current_savings"
                   label="Current Retirement Savings"
                   value={params.current_savings}
@@ -168,7 +168,7 @@ export const MonteCarloSimulator = () => {
                   step={10000}
                   prefix={currencySymbol}
                 />
-                <SliderInput
+                <SliderField
                   id="monthly_contribution"
                   label="Monthly Contribution"
                   value={params.monthly_contribution}
@@ -178,7 +178,7 @@ export const MonteCarloSimulator = () => {
                   step={500}
                   prefix={currencySymbol}
                 />
-                <SliderInput
+                <SliderField
                   id="years_to_retirement"
                   label="Years to Retirement"
                   value={params.years_to_retirement}
@@ -193,7 +193,7 @@ export const MonteCarloSimulator = () => {
 
             <CalculatorCard title="Retirement Needs" icon={TrendingUp}>
               <div className="space-y-6">
-                <SliderInput
+                <SliderField
                   id="monthly_retirement_need"
                   label="Monthly Income Needed in Retirement"
                   value={params.monthly_retirement_need}
@@ -203,7 +203,7 @@ export const MonteCarloSimulator = () => {
                   step={1000}
                   prefix={currencySymbol}
                 />
-                <SliderInput
+                <SliderField
                   id="retirement_years"
                   label="Years in Retirement"
                   value={params.retirement_years}
@@ -218,7 +218,7 @@ export const MonteCarloSimulator = () => {
 
             <CalculatorCard title="Market Assumptions" icon={BarChart3}>
               <div className="space-y-6">
-                <SliderInput
+                <SliderField
                   id="expected_return"
                   label="Expected Annual Return"
                   value={params.expected_return}
@@ -228,7 +228,7 @@ export const MonteCarloSimulator = () => {
                   step={0.5}
                   suffix="%"
                 />
-                <SliderInput
+                <SliderField
                   id="volatility"
                   label="Market Volatility (Std Dev)"
                   value={params.volatility}
@@ -238,7 +238,7 @@ export const MonteCarloSimulator = () => {
                   step={1}
                   suffix="%"
                 />
-                <SliderInput
+                <SliderField
                   id="inflation"
                   label="Expected Inflation"
                   value={params.inflation}

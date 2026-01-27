@@ -127,7 +127,7 @@ export const CashFlowProjector = () => {
               <TabsContent value="income" className="mt-6">
                 <CalculatorCard title="Monthly Income" icon={ArrowUpCircle}>
                   <div className="space-y-5">
-                    <SliderInput
+                    <SliderField
                       id="salary"
                       label="Salary / Wages"
                       value={income.salary}
@@ -137,7 +137,7 @@ export const CashFlowProjector = () => {
                       step={1000}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="bonus"
                       label="Bonuses / Commission (Monthly Avg)"
                       value={income.bonus}
@@ -147,7 +147,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="rental"
                       label="Rental Income"
                       value={income.rental}
@@ -157,7 +157,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="investments"
                       label="Investment Income"
                       value={income.investments}
@@ -167,7 +167,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="otherIncome"
                       label="Other Income"
                       value={income.other}
@@ -184,7 +184,7 @@ export const CashFlowProjector = () => {
               <TabsContent value="expenses" className="mt-6">
                 <CalculatorCard title="Monthly Expenses" icon={ArrowDownCircle}>
                   <div className="space-y-5">
-                    <SliderInput
+                    <SliderField
                       id="housing"
                       label="Housing (Rent/Bond)"
                       value={expenses.housing}
@@ -194,7 +194,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="utilities"
                       label="Utilities (Water, Electricity)"
                       value={expenses.utilities}
@@ -204,7 +204,7 @@ export const CashFlowProjector = () => {
                       step={100}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="transport"
                       label="Transport (Fuel, Car Payment)"
                       value={expenses.transport}
@@ -214,7 +214,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="groceries"
                       label="Groceries & Food"
                       value={expenses.groceries}
@@ -224,7 +224,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="debt"
                       label="Debt Repayments"
                       value={expenses.debt}
@@ -234,7 +234,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="savings"
                       label="Savings & Investments"
                       value={expenses.savings}
@@ -244,7 +244,7 @@ export const CashFlowProjector = () => {
                       step={500}
                       prefix={currencySymbol}
                     />
-                    <SliderInput
+                    <SliderField
                       id="otherExpenses"
                       label="Other (Insurance, Healthcare, Entertainment)"
                       value={expenses.insurance + expenses.healthcare + expenses.entertainment + expenses.other}
@@ -261,7 +261,7 @@ export const CashFlowProjector = () => {
               <TabsContent value="projection" className="mt-6">
                 <CalculatorCard title="Projection Settings" icon={TrendingUp}>
                   <div className="space-y-5">
-                    <SliderInput
+                    <SliderField
                       id="projectionYears"
                       label="Projection Period"
                       value={projectionYears}
@@ -271,7 +271,7 @@ export const CashFlowProjector = () => {
                       step={1}
                       suffix=" years"
                     />
-                    <SliderInput
+                    <SliderField
                       id="incomeGrowth"
                       label="Expected Income Growth"
                       value={incomeGrowth}
@@ -281,7 +281,7 @@ export const CashFlowProjector = () => {
                       step={0.5}
                       suffix="%/year"
                     />
-                    <SliderInput
+                    <SliderField
                       id="expenseGrowth"
                       label="Expected Expense Growth (Inflation)"
                       value={expenseGrowth}
