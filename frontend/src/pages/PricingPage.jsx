@@ -142,13 +142,24 @@ export const PricingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900" data-testid="pricing-page">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Welcome Message for New Users */}
+        {isWelcome && (
+          <Alert className="mb-8 border-emerald-200 bg-emerald-50 dark:bg-emerald-950/30 dark:border-emerald-800">
+            <PartyPopper className="h-5 w-5 text-emerald-600" />
+            <AlertDescription className="text-emerald-800 dark:text-emerald-300 ml-2">
+              <span className="font-semibold">Welcome to AdvisoryPro!</span> Your account is ready. 
+              Choose a plan below to get started, or continue with the free tier.
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Header */}
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
             Pricing
           </Badge>
           <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-4">
-            Choose Your Plan
+            {isWelcome ? 'Select Your Plan' : 'Choose Your Plan'}
           </h1>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8">
             Start free and upgrade as your practice grows. All plans include a {pricing?.trial_days}-day free trial.
