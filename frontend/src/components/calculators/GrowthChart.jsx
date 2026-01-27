@@ -19,13 +19,14 @@ import {
 import { cn } from '@/lib/utils';
 
 const CHART_COLORS = {
-  gold: 'hsl(43, 74%, 49%)',
-  goldLight: 'hsl(43, 70%, 60%)',
-  forest: 'hsl(150, 45%, 35%)',
-  forestLight: 'hsl(150, 35%, 45%)',
-  navy: 'hsl(215, 50%, 35%)',
-  navyLight: 'hsl(215, 40%, 45%)',
-  cream: 'hsl(45, 25%, 92%)',
+  emerald: '#10b981',
+  emeraldLight: '#34d399',
+  emeraldDark: '#059669',
+  slate: '#334155',
+  slateLight: '#64748b',
+  slateDark: '#1e293b',
+  teal: '#14b8a6',
+  cyan: '#06b6d4',
 };
 
 const CustomTooltip = ({ active, payload, label, prefix = '$', suffix = '' }) => {
