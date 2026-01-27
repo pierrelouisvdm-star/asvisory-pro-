@@ -96,7 +96,21 @@ async def fetch_market_data() -> dict:
                 "value": data["price"],
                 "change": data["change"],
                 "change_percent": data["change_percent"],
-                "region": meta["region"]
+                "region": meta.get("region", "US")
+            })
+    
+    # Fetch commodities & crypto
+    commodities_data = []
+    for symbol, meta in COMMODITIES.items():
+        data = await loop.run_in_executor(executor, fetch_ticker_data, symbol)
+        if data:
+            commodities_data.append({
+                "symbol": symbol,
+                "name": meta["name"],
+                "value": data["price"],
+                "change": data["change"],
+                "change_percent": data["change_percent"],
+                "unit": meta["unit"]
             })
     
     # Fetch currencies
@@ -118,6 +132,10 @@ async def fetch_market_data() -> dict:
             })
     
     return {
+        "indices": indices_data,
+        "commodities": commodities_data,
+        "currencies": currencies_data
+    }
         "indices": indices_data,
         "currencies": currencies_data
     }
