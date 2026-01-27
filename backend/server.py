@@ -28,11 +28,15 @@ api_router = APIRouter(prefix="/api")
 from routes.auth import router as auth_router
 from routes.clients import router as clients_router
 from routes.calculations import router as calculations_router
+from routes.tools import router as tools_router
+from routes.portfolio import router as portfolio_router
 
 # Include route modules
 api_router.include_router(auth_router)
 api_router.include_router(clients_router)
 api_router.include_router(calculations_router)
+api_router.include_router(tools_router)
+api_router.include_router(portfolio_router)
 
 # Health check endpoint
 @api_router.get("/health")
