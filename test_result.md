@@ -215,17 +215,21 @@ frontend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.0"
-  test_sequence: 1
+  version: "2.0"
+  test_sequence: 2
 
 test_plan:
-  current_focus: []
+  current_focus:
+    - "Currency Selector Functionality"
+    - "Header Navigation Dropdown Menus"
+    - "Updated Future Value Calculator with New Features"
+    - "Life Insurance Calculator Functionality"
+    - "Income Disability Calculator Functionality"
+    - "Retirement Calculator Functionality"
   stuck_tasks: []
   test_all: true
-  test_priority: "completed"
+  test_priority: "high_first"
 
 agent_communication:
     - agent: "testing"
-    - message: "Starting comprehensive testing of Financial Advisor Calculator App. Will test all calculators, navigation, UI interactions, and mobile responsiveness."
-    - agent: "testing"
-    - message: "COMPREHENSIVE TESTING COMPLETED SUCCESSFULLY. All features tested and working properly. Dashboard navigation, all 4 calculators (Future Value, Compound Interest, Bond, Car Finance), theme toggle, mobile responsiveness, print reports, and comparison modes all functioning excellently. No critical issues found. App is ready for production use."
+    - message: "Starting comprehensive testing of updated Financial Advisor Calculator App with 7 calculators, currency selector, and enhanced features. Will test all new functionality including dropdown navigation, currency switching, and three new calculators."
