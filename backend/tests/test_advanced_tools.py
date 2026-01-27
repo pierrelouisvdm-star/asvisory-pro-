@@ -210,12 +210,11 @@ class TestMeetingsEndpoints:
         assert response.status_code == 200, f"Create meeting failed: {response.text}"
         
         data = response.json()
-        assert data["meeting_type"] == "initial_consultation"
+        assert data["meeting_type"] == "initial"  # Correct enum value
         assert data["duration_minutes"] == 60
         assert len(data["action_items"]) == 2
         assert "id" in data
         print(f"✓ Meeting note created - ID: {data['id']}")
-        return data
     
     def test_get_client_meetings(self):
         """Test getting all meetings for a client"""
@@ -306,14 +305,15 @@ class TestReviewsEndpoints:
     
     def test_get_client_review(self):
         """Test getting review schedule for a client"""
-        # First create a review
+        # First create a review for this client
         review_data = {
             "client_id": self.client_id,
             "frequency": "annual",
             "next_review_date": (datetime.now() + timedelta(days=365)).strftime("%Y-%m-%d"),
             "reminder_days_before": 14
         }
-        requests.post(f"{BASE_URL}/api/tools/reviews", json=review_data, headers=self.headers)
+        create_response = requests.post(f"{BASE_URL}/api/tools/reviews", json=review_data, headers=self.headers)
+        assert create_response.status_code == 200, f"Create review failed: {create_response.text}"
         
         # Get review
         response = requests.get(f"{BASE_URL}/api/tools/reviews/client/{self.client_id}", headers=self.headers)
