@@ -51,7 +51,7 @@ const CustomTooltip = ({ active, payload, label, prefix = '$', suffix = '' }) =>
 
 export const GrowthAreaChart = ({ 
   data, 
-  dataKeys = [{ key: 'value', name: 'Value', color: CHART_COLORS.gold }],
+  dataKeys = [{ key: 'value', name: 'Value', color: CHART_COLORS.emerald }],
   xAxisKey = 'year',
   height = 300,
   prefix = '$',
@@ -60,7 +60,7 @@ export const GrowthAreaChart = ({
   gradientId = 'colorGradient',
 }) => {
   return (
-    <div className={cn("chart-container w-full", className)}>
+    <div className={cn("rounded-xl p-4 bg-slate-50/50 dark:bg-slate-800/30 w-full", className)}>
       <ResponsiveContainer width="100%" height={height}>
         <AreaChart data={data} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
           <defs>
@@ -71,16 +71,16 @@ export const GrowthAreaChart = ({
               </linearGradient>
             ))}
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:stroke-slate-700" vertical={false} />
           <XAxis 
             dataKey={xAxisKey} 
-            stroke="hsl(var(--muted-foreground))"
+            stroke="#64748b"
             fontSize={12}
             tickLine={false}
             axisLine={false}
           />
           <YAxis 
-            stroke="hsl(var(--muted-foreground))"
+            stroke="#64748b"
             fontSize={12}
             tickLine={false}
             axisLine={false}
