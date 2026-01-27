@@ -339,6 +339,23 @@ export const subscriptionApi = {
   },
 };
 
+// Coupon API
+export const couponApi = {
+  redeem: async (code) => {
+    const response = await fetch(`${API_URL}/api/coupons/redeem`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ code }),
+    });
+    return handleResponse(response);
+  },
+
+  validate: async (code) => {
+    const response = await fetch(`${API_URL}/api/coupons/validate/${encodeURIComponent(code)}`);
+    return handleResponse(response);
+  },
+};
+
 // Market Data API
 export const marketApi = {
   getData: async () => {
