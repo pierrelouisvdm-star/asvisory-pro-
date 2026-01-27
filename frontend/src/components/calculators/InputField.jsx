@@ -165,7 +165,7 @@ export const SelectField = ({
         )}
       </div>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="h-11 border-2 focus:border-gold focus:ring-2 focus:ring-gold/20">
+        <SelectTrigger className="h-11 border-2 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
