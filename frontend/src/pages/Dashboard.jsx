@@ -281,6 +281,11 @@ export const Dashboard = () => {
         </div>
       </section>
 
+      {/* Live Market Tracker Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <MarketTracker />
+      </section>
+
       {/* Investment Calculators Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <SectionHeader
