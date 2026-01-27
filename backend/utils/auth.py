@@ -68,3 +68,29 @@ async def get_current_user_id(credentials: HTTPAuthorizationCredentials = Depend
         raise credentials_exception
     
     return user_id
+
+
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> dict:
+    """Get the current user info from the JWT token"""
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    
+    token = credentials.credentials
+    payload = decode_token(token)
+    
+    if payload is None:
+        raise credentials_exception
+    
+    user_id: str = payload.get("sub")
+    email: str = payload.get("email")
+    
+    if user_id is None:
+        raise credentials_exception
+    
+    return {
+        "id": user_id,
+        "email": email
+    }
