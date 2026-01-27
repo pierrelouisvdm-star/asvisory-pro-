@@ -40,6 +40,12 @@ const planningTools = [
   { path: '/risk-profile', label: 'Risk Profile Quiz', icon: ClipboardList },
 ];
 
+const advancedTools = [
+  { path: '/cash-flow', label: 'Cash Flow Projector', icon: ArrowRightLeft },
+  { path: '/monte-carlo', label: 'Monte Carlo Simulator', icon: BarChart3 },
+  { path: '/loan-comparison', label: 'Loan Comparison', icon: GitCompare },
+];
+
 export const Header = () => {
   const [isDark, setIsDark] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
