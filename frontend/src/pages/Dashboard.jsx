@@ -109,6 +109,11 @@ const features = [
     title: 'Print Reports',
     description: 'Generate professional PDF reports for clients',
   },
+  {
+    icon: DollarSign,
+    title: 'Multi-Currency',
+    description: 'Support for USD and ZAR currencies',
+  },
 ];
 
 const colorVariants = {
