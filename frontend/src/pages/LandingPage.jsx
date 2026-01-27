@@ -311,6 +311,60 @@ export const LandingPage = () => {
           </CardContent>
         </Card>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-900 text-slate-400 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div className="md:col-span-2">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">A</span>
+                </div>
+                <span className="text-white font-bold text-xl">AdvisoryPro</span>
+              </div>
+              <p className="text-sm mb-4 max-w-md">
+                Built by financial professionals, for financial professionals. We understand the 
+                challenges you face because we've faced them too. Our mission is to empower advisors 
+                with the tools they need to deliver exceptional client outcomes.
+              </p>
+              <div className="flex items-center gap-2 text-sm">
+                <Shield className="h-4 w-4 text-emerald-500" />
+                <span>POPIA Compliant • SSL Secured • SA-Based</span>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="text-white font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-sm">
+                <li><Link to="/auth" className="hover:text-white transition-colors">Calculators</Link></li>
+                <li><Link to="/auth" className="hover:text-white transition-colors">Client Management</Link></li>
+                <li><Link to="/auth" className="hover:text-white transition-colors">Market Tracker</Link></li>
+                <li><Link to="/auth" className="hover:text-white transition-colors">AI Advisor</Link></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="text-white font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-sm">
+                <li><span className="hover:text-white transition-colors cursor-pointer">About Us</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">Contact</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">Privacy Policy</span></li>
+                <li><span className="hover:text-white transition-colors cursor-pointer">Terms of Service</span></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm">
+              © {new Date().getFullYear()} AdvisoryPro. All rights reserved.
+            </p>
+            <p className="text-sm text-center md:text-right">
+              Designed with ❤️ by South African Financial Professionals
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
