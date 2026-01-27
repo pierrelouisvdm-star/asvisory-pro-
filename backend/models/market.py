@@ -10,6 +10,15 @@ class MarketIndex(BaseModel):
     change_percent: float
     last_updated: datetime
 
+class Commodity(BaseModel):
+    symbol: str
+    name: str
+    value: float
+    change: float
+    change_percent: float
+    unit: str
+    last_updated: datetime
+
 class CurrencyPair(BaseModel):
     pair: str
     base: str
@@ -21,6 +30,7 @@ class CurrencyPair(BaseModel):
 
 class MarketDataResponse(BaseModel):
     indices: List[MarketIndex]
+    commodities: List[Commodity]
     currencies: List[CurrencyPair]
     last_updated: datetime
     next_update: datetime
