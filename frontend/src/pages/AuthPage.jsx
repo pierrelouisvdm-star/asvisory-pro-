@@ -33,7 +33,7 @@ export const AuthPage = () => {
     try {
       await login(loginEmail, loginPassword);
       toast.success('Welcome back!');
-      navigate('/clients');
+      navigate('/');
     } catch (err) {
       setError(err.message);
       toast.error(err.message);
