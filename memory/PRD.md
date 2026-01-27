@@ -1,7 +1,7 @@
 # AdvisoryPro - Financial Advisor Suite PRD
 
 ## Overview
-A comprehensive financial calculator suite for financial advisors with client management, financial plan analysis, and shortfall identification.
+A comprehensive financial calculator suite for financial advisors with client management, financial plan analysis, shortfall identification, and subscription-based monetization.
 
 ## Original Requirements
 1. Build a financial advisor application with various calculators
@@ -14,6 +14,8 @@ A comprehensive financial calculator suite for financial advisors with client ma
 8. **UI Redesign**: Modern, clean, professional look
 9. **Backend Integration**: User auth, client management
 10. **Financial Plan Shortfall Analysis**: Compile shortfalls and recommendations
+11. **Subscription Tiers**: Free, Standard (R49/month), Premium (R149/month) with Stripe
+12. **Live Market Tracker**: JSE, Nasdaq, S&P 500, Nifty 50, Currency pairs to ZAR
 
 ## Tech Stack
 - **Frontend**: React.js with react-router-dom
@@ -23,6 +25,8 @@ A comprehensive financial calculator suite for financial advisors with client ma
 - **Styling**: Tailwind CSS with custom design system
 - **Components**: shadcn/ui
 - **Charts**: recharts
+- **Payments**: Stripe (via emergentintegrations)
+- **Market Data**: yfinance
 
 ## Features Implemented
 
@@ -32,13 +36,29 @@ A comprehensive financial calculator suite for financial advisors with client ma
 - **Finance**: Tax Calculator, Budget Planner, Net Worth, Emergency Fund, Debt Payoff
 - **Planning**: Estate Planning, Education Savings, Risk Profile Quiz
 
-### Backend API (New)
+### Subscription System (NEW)
+Three-tier pricing model:
+- **Free (R0)**: 4 basic calculators, no client management
+- **Standard (R49/month)**: All 15 calculators, 5 clients, PDF reports, market tracker
+- **Premium (R149/month)**: Unlimited clients, all advanced tools, portfolio tracker
+- **Annual discount**: 17% off (R490/year Standard, R1490/year Premium)
+- **7-day free trial** for paid tiers
+
+### Live Market Tracker (NEW)
+Real-time market data refreshing every 15 minutes:
+- **Indices**: Nasdaq, S&P 500, Nifty 50, SA Property ETF
+- **Currency Pairs**: USD/ZAR, EUR/ZAR, GBP/ZAR, JPY/ZAR, AUD/ZAR, CHF/ZAR, CNY/ZAR, INR/ZAR
+- Data cached in MongoDB for performance
+
+### Backend API
 - **Auth**: Register/Login with JWT tokens
 - **Clients CRUD**: Create, read, update, delete client profiles
 - **Financial Data**: Store and update client financial information
 - **Shortfall Analysis**: AI-powered analysis of financial gaps
+- **Subscriptions**: Checkout, status polling, trial activation
+- **Market Data**: Live indices and currency pairs
 
-### Financial Plan Shortfall Analysis (New Feature)
+### Financial Plan Shortfall Analysis
 Analyzes client's financial data and identifies gaps across 8 categories:
 
 1. **Life Insurance Gap** - Compares coverage vs DIME-calculated need
