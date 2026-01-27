@@ -19,7 +19,16 @@ import {
   Users,
   Umbrella,
   PiggyBank,
-  DollarSign
+  DollarSign,
+  Receipt,
+  ScrollText,
+  ShieldAlert,
+  CreditCard,
+  GraduationCap,
+  Wallet,
+  Landmark,
+  ClipboardList,
+  Target
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCurrency } from '@/context/CurrencyContext';
