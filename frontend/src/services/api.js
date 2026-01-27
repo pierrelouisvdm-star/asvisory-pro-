@@ -295,3 +295,59 @@ export const monteCarloApi = {
     return handleResponse(response);
   },
 };
+
+// Subscription API
+export const subscriptionApi = {
+  getPricing: async () => {
+    const response = await fetch(`${API_URL}/api/subscriptions/pricing`);
+    return handleResponse(response);
+  },
+
+  getCurrentSubscription: async () => {
+    const response = await fetch(`${API_URL}/api/subscriptions/current`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  createCheckout: async (tier, billingCycle) => {
+    const response = await fetch(`${API_URL}/api/subscriptions/checkout`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({
+        tier,
+        billing_cycle: billingCycle,
+        origin_url: window.location.origin,
+      }),
+    });
+    return handleResponse(response);
+  },
+
+  getCheckoutStatus: async (sessionId) => {
+    const response = await fetch(`${API_URL}/api/subscriptions/checkout/status/${sessionId}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  startTrial: async (tier) => {
+    const response = await fetch(`${API_URL}/api/subscriptions/start-trial?tier=${tier}`, {
+      method: 'POST',
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+};
+
+// Market Data API
+export const marketApi = {
+  getData: async () => {
+    const response = await fetch(`${API_URL}/api/market/data`);
+    return handleResponse(response);
+  },
+
+  refresh: async () => {
+    const response = await fetch(`${API_URL}/api/market/refresh`);
+    return handleResponse(response);
+  },
+};
