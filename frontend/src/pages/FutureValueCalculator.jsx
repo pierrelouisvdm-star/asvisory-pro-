@@ -31,7 +31,7 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 const defaultScenario = () => ({
   id: generateId(),
   principal: 10000,
-  rate: 7,
+  rate: 25,
   years: 10,
   contribution: 500,
   contributionFrequency: '12',
@@ -186,8 +186,8 @@ export const FutureValueCalculator = () => {
           value={scenario.rate}
           onChange={(val) => updateScenario(index, 'rate', val)}
           min={0}
-          max={20}
-          step={0.1}
+          max={50}
+          step={0.5}
           suffix="%"
         />
         <SliderField
@@ -331,8 +331,8 @@ export const FutureValueCalculator = () => {
                   value={currentScenario.rate}
                   onChange={(val) => updateScenario(0, 'rate', val)}
                   min={0}
-                  max={20}
-                  step={0.1}
+                  max={50}
+                  step={0.5}
                   suffix="%"
                   tooltip="Expected annual return on investment"
                 />
