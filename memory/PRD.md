@@ -203,15 +203,21 @@ Each shortfall includes:
 - **P3**: Webhook handling for subscription renewals
 
 ## Status
-✅ **Complete** - Full SaaS Platform with Subscription Monetization
-- Backend API: 100% pass rate (All endpoints tested)
+✅ **Complete** - Full SaaS Platform with Subscription Monetization + AI Advisor
+- Backend API: 100% pass rate (35/35 tests)
 - Frontend: 100% pass rate
 - Auth flow: Working (register, login, logout)
 - Client CRUD: Working
 - Shortfall Analysis: Working with 8 categories
 - Advanced Tools: All 7 new tools working
 - **Subscription System**: 3 tiers with Stripe checkout
-- **Market Tracker**: Live indices and currencies (15-min refresh)
+- **Market Tracker**: Live indices, commodities (Gold/Silver/Bitcoin), currencies
+- **Feature Gating**: 4 free calculators, paid calculators gated
+- **AI Advisor**: GPT-5.2 chatbot for premium users
+
+### Known Limitations
+- JSE indices (Top 40, All Share) not available from Yahoo Finance
+- AI Advisor requires EMERGENT_LLM_KEY budget - users can top up via Profile > Universal Key
 
 ## Advanced Tools Suite (New - December 2025)
 
