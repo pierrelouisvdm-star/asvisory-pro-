@@ -93,7 +93,7 @@ class TestGoalsEndpoints:
         goal_data = {
             "client_id": self.client_id,
             "name": f"{TEST_PREFIX}Emergency Fund",
-            "category": "emergency_fund",
+            "category": "emergency",  # Correct enum value
             "target_amount": 100000,
             "current_amount": 60000,  # 60% complete
             "target_date": (datetime.now() + timedelta(days=365)).strftime("%Y-%m-%d"),
@@ -179,7 +179,7 @@ class TestMeetingsEndpoints:
         """Test creating a meeting note with action items"""
         meeting_data = {
             "client_id": self.client_id,
-            "meeting_type": "initial_consultation",
+            "meeting_type": "initial",  # Correct enum value
             "meeting_date": datetime.now().strftime("%Y-%m-%d"),
             "duration_minutes": 60,
             "attendees": ["John Doe", "Jane Advisor"],
@@ -192,13 +192,13 @@ class TestMeetingsEndpoints:
             "action_items": [
                 {
                     "description": "Gather tax documents",
-                    "assigned_to": "Client",
+                    "assigned_to": "client",  # lowercase
                     "due_date": (datetime.now() + timedelta(days=7)).strftime("%Y-%m-%d"),
                     "status": "pending"
                 },
                 {
                     "description": "Prepare insurance quote",
-                    "assigned_to": "Advisor",
+                    "assigned_to": "advisor",  # lowercase
                     "due_date": (datetime.now() + timedelta(days=3)).strftime("%Y-%m-%d"),
                     "status": "pending"
                 }
@@ -358,13 +358,13 @@ class TestPortfolioEndpoints:
             "holdings": [
                 {
                     "name": "SA Equity Fund",
-                    "asset_class": "equity",
+                    "asset_class": "domestic_equity",  # Correct enum value
                     "value": 500000,
                     "cost_basis": 400000
                 },
                 {
                     "name": "Bond Fund",
-                    "asset_class": "fixed_income",
+                    "asset_class": "bonds",  # Correct enum value
                     "value": 300000,
                     "cost_basis": 280000
                 },
@@ -376,8 +376,8 @@ class TestPortfolioEndpoints:
                 }
             ],
             "target_allocation": {
-                "equity": 50,
-                "fixed_income": 30,
+                "domestic_equity": 50,
+                "bonds": 30,
                 "cash": 20
             }
         }
@@ -404,9 +404,9 @@ class TestPortfolioEndpoints:
         portfolio_data = {
             "name": "Test Portfolio",
             "holdings": [
-                {"name": "Stock A", "asset_class": "equity", "value": 100000, "cost_basis": 80000}
+                {"name": "Stock A", "asset_class": "domestic_equity", "value": 100000, "cost_basis": 80000}
             ],
-            "target_allocation": {"equity": 100}
+            "target_allocation": {"domestic_equity": 100}
         }
         requests.post(f"{BASE_URL}/api/portfolio/client/{self.client_id}", json=portfolio_data, headers=self.headers)
         
@@ -424,12 +424,12 @@ class TestPortfolioEndpoints:
         portfolio_data = {
             "name": "Imbalanced Portfolio",
             "holdings": [
-                {"name": "Equity Heavy", "asset_class": "equity", "value": 800000, "cost_basis": 600000},
-                {"name": "Small Bond", "asset_class": "fixed_income", "value": 200000, "cost_basis": 180000}
+                {"name": "Equity Heavy", "asset_class": "domestic_equity", "value": 800000, "cost_basis": 600000},
+                {"name": "Small Bond", "asset_class": "bonds", "value": 200000, "cost_basis": 180000}
             ],
             "target_allocation": {
-                "equity": 60,  # Target 60% but have 80%
-                "fixed_income": 40  # Target 40% but have 20%
+                "domestic_equity": 60,  # Target 60% but have 80%
+                "bonds": 40  # Target 40% but have 20%
             }
         }
         requests.post(f"{BASE_URL}/api/portfolio/client/{self.client_id}", json=portfolio_data, headers=self.headers)
