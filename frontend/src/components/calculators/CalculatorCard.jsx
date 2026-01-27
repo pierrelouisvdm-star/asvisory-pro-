@@ -12,23 +12,23 @@ export const CalculatorCard = ({
 }) => {
   return (
     <Card className={cn(
-      "calculator-card overflow-hidden",
+      "rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm overflow-hidden",
       className
     )}>
       <CardHeader className="pb-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
             {Icon && (
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-gold/20 to-forest/10 ring-1 ring-gold/20">
-                <Icon className="h-6 w-6 text-gold" />
+              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20 ring-1 ring-emerald-200 dark:ring-emerald-800">
+                <Icon className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
               </div>
             )}
             <div>
-              <CardTitle className="font-display text-xl font-semibold text-foreground">
+              <CardTitle className="font-display text-lg font-semibold text-slate-900 dark:text-white">
                 {title}
               </CardTitle>
               {description && (
-                <CardDescription className="text-sm text-muted-foreground mt-1">
+                <CardDescription className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                   {description}
                 </CardDescription>
               )}
