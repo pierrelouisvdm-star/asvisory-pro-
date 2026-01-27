@@ -17,8 +17,8 @@ import os
 router = APIRouter(prefix="/tools", tags=["Advisor Tools"])
 
 # Get database connection
-mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
-db_name = os.environ.get('DB_NAME', 'test_database')
+mongo_url = os.environ['MONGO_URL']
+db_name = os.environ['DB_NAME']
 client = AsyncIOMotorClient(mongo_url)
 db = client[db_name]
 
