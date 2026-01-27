@@ -17,7 +17,7 @@ A comprehensive financial calculator suite for financial advisors with client ma
 11. **Subscription Tiers**: Free, Standard (R49/month), Premium (R149/month) with Stripe
 12. **Live Market Tracker**: Gold, Silver, Bitcoin, Nasdaq, S&P 500, Nifty 50, Currency pairs to ZAR
 13. **Feature Gating**: Only 4 calculators for free tier
-14. **AI Financial Advisor**: GPT-5.2 powered chatbot for Premium users
+14. **AI Assistant**: GPT-5.2 powered chatbot for Premium users
 
 ## Tech Stack
 - **Frontend**: React.js with react-router-dom
@@ -54,7 +54,7 @@ Real-time market data refreshing every 15 minutes:
 - **Currency Pairs**: USD/ZAR, EUR/ZAR, GBP/ZAR, JPY/ZAR, AUD/ZAR, CHF/ZAR, CNY/ZAR, INR/ZAR
 - Data cached in MongoDB for performance
 
-### AI Financial Advisor (Premium)
+### AI Assistant (Premium)
 GPT-5.2 powered chatbot for premium users:
 - Personalized financial advice
 - Explains complex financial concepts
@@ -67,7 +67,7 @@ GPT-5.2 powered chatbot for premium users:
 Subscription-based feature access:
 - **Free Tier (4 calculators)**: Future Value, Compound Interest, Bond, Car Finance
 - **Standard+**: All 15 calculators + Market Tracker
-- **Premium**: AI Advisor + All client tools + Unlimited clients
+- **Premium**: AI Assistant + All client tools + Unlimited clients
 
 ### Backend API
 - **Auth**: Register/Login with JWT tokens
@@ -206,7 +206,7 @@ Each shortfall includes:
 - **P3**: Secure a paid Moneyweb or JSE API for direct market data
 
 ## Status
-✅ **Complete** - Full SaaS Platform with Subscription Monetization + AI Advisor
+✅ **Complete** - Full SaaS Platform with Subscription Monetization + AI Assistant
 - Backend API: 100% pass rate (35/35 tests)
 - Frontend: 100% pass rate
 - Auth flow: Working (register, login, logout)
@@ -216,12 +216,12 @@ Each shortfall includes:
 - **Subscription System**: 3 tiers with Stripe checkout
 - **Market Tracker**: Live indices, commodities (Gold/Silver/Bitcoin), currencies
 - **Feature Gating**: 4 free calculators, paid calculators gated
-- **AI Advisor**: GPT-5.2 chatbot for premium users
+- **AI Assistant**: GPT-5.2 chatbot for premium users
 - **Deployment Ready**: All environment variables properly configured, no hardcoded fallbacks
 
 ### Known Limitations
 - JSE indices (Top 40, All Share) not directly available - using EZA ETF as SA market proxy
-- AI Advisor requires EMERGENT_LLM_KEY budget - users can top up via Profile > Universal Key
+- AI Assistant requires EMERGENT_LLM_KEY budget - users can top up via Profile > Universal Key
 
 ### January 2026 - Deployment Readiness & Landing Page Enhancement
 - Fixed deployment blocking issues: removed all hardcoded MongoDB fallback values from route files
@@ -304,7 +304,7 @@ Each shortfall includes:
 - Protected routes requiring authentication
 - Registration redirects to pricing page with welcome message
 - Feature gating: 4 free calculators, paid calculators require subscription
-- AI Financial Advisor chatbot (GPT-5.2) for Premium users
+- AI Assistant chatbot (GPT-5.2) for Premium users
 
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
