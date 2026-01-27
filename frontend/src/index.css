@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap');
 
 body {
     margin: 0;
@@ -17,18 +17,18 @@ code {
 
 @layer base {
     :root {
-        /* Modern Financial Theme - Light Mode */
-        /* Clean Slate with Emerald Accents */
+        /* AdvisoryPro Premium Theme - Light Mode */
+        /* Deep Navy + Wealth Green */
         
-        /* Primary - Obsidian/Slate */
+        /* Primary - Deep Navy */
         --primary: 222 47% 11%;
         --primary-foreground: 210 40% 98%;
         
-        /* Background - Clean Slate */
-        --background: 210 40% 98%;
+        /* Background - Clean White */
+        --background: 0 0% 100%;
         --foreground: 222 47% 11%;
         
-        /* Card - Pure White */
+        /* Card - Pure White with subtle warmth */
         --card: 0 0% 100%;
         --card-foreground: 222 47% 11%;
         
@@ -36,20 +36,20 @@ code {
         --popover: 0 0% 100%;
         --popover-foreground: 222 47% 11%;
         
-        /* Secondary - Slate */
-        --secondary: 210 40% 96%;
+        /* Secondary - Light Navy */
+        --secondary: 214 32% 96%;
         --secondary-foreground: 222 47% 11%;
         
-        /* Muted - Light Slate */
-        --muted: 210 40% 96%;
+        /* Muted - Soft Gray */
+        --muted: 214 32% 96%;
         --muted-foreground: 215 16% 47%;
         
-        /* Accent - Emerald */
-        --accent: 160 84% 39%;
+        /* Accent - Wealth Green */
+        --accent: 158 64% 32%;
         --accent-foreground: 0 0% 100%;
         
-        /* Success - Emerald */
-        --success: 160 84% 39%;
+        /* Success - Wealth Green */
+        --success: 158 64% 32%;
         --success-foreground: 0 0% 100%;
         
         /* Destructive */
@@ -59,28 +59,31 @@ code {
         /* Border & Input */
         --border: 214 32% 91%;
         --input: 214 32% 91%;
-        --ring: 160 84% 39%;
+        --ring: 158 64% 32%;
         
-        /* Chart Colors */
-        --chart-1: 160 84% 39%;
-        --chart-2: 215 25% 27%;
-        --chart-3: 160 60% 45%;
-        --chart-4: 215 16% 47%;
-        --chart-5: 160 40% 55%;
+        /* Chart Colors - Navy & Green palette */
+        --chart-1: 158 64% 32%;
+        --chart-2: 220 47% 25%;
+        --chart-3: 158 50% 45%;
+        --chart-4: 220 30% 50%;
+        --chart-5: 43 74% 49%;
         
         /* Custom Tokens */
-        --emerald: 160 84% 39%;
-        --emerald-light: 160 84% 50%;
-        --emerald-dark: 161 94% 24%;
+        --emerald: 158 64% 32%;
+        --emerald-light: 158 64% 42%;
+        --emerald-dark: 158 64% 24%;
+        --navy: 220 47% 15%;
+        --navy-light: 220 35% 25%;
+        --gold: 43 74% 49%;
         --slate-dark: 222 47% 11%;
         --slate-medium: 215 25% 27%;
         
         --radius: 0.75rem;
         
         /* Shadows */
-        --shadow-soft: 0 2px 10px -3px rgba(6,81,237,0.1);
-        --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.1);
-        --shadow-glow: 0 0 20px -5px rgba(16,185,129,0.3);
+        --shadow-soft: 0 2px 10px -3px rgba(15, 23, 42, 0.08);
+        --shadow-elevated: 0 10px 40px -15px rgba(15, 23, 42, 0.15);
+        --shadow-glow: 0 0 25px -5px rgba(5, 150, 105, 0.25);
         
         /* Transitions */
         --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -88,53 +91,60 @@ code {
     }
     
     .dark {
-        /* Dark Mode - Deep Slate Base */
-        --primary: 0 0% 100%;
-        --primary-foreground: 222 47% 11%;
+        /* Dark Mode - Deep Navy Base */
+        --primary: 0 0% 98%;
+        --primary-foreground: 220 47% 10%;
         
-        --background: 224 71% 4%;
+        /* Deep Navy Background */
+        --background: 220 47% 6%;
         --foreground: 210 40% 98%;
         
-        --card: 222 47% 11%;
+        /* Navy Cards */
+        --card: 220 47% 10%;
         --card-foreground: 210 40% 98%;
         
-        --popover: 222 47% 11%;
+        --popover: 220 47% 10%;
         --popover-foreground: 210 40% 98%;
         
-        --secondary: 217 33% 17%;
+        --secondary: 220 40% 14%;
         --secondary-foreground: 210 40% 98%;
         
-        --muted: 217 33% 17%;
+        --muted: 220 40% 14%;
         --muted-foreground: 215 20% 65%;
         
+        /* Bright Emerald Accent for Dark Mode */
         --accent: 160 84% 45%;
-        --accent-foreground: 222 47% 11%;
+        --accent-foreground: 220 47% 10%;
         
         --success: 160 84% 45%;
-        --success-foreground: 222 47% 11%;
+        --success-foreground: 220 47% 10%;
         
         --destructive: 0 62% 50%;
         --destructive-foreground: 210 40% 98%;
         
-        --border: 217 33% 17%;
-        --input: 217 33% 17%;
+        --border: 220 40% 18%;
+        --input: 220 40% 18%;
         --ring: 160 84% 45%;
         
+        /* Chart Colors - Dark Mode */
         --chart-1: 160 84% 45%;
         --chart-2: 215 20% 65%;
         --chart-3: 160 60% 55%;
-        --chart-4: 215 16% 55%;
-        --chart-5: 160 40% 65%;
+        --chart-4: 43 74% 55%;
+        --chart-5: 220 40% 50%;
         
         --emerald: 160 84% 45%;
         --emerald-light: 160 84% 55%;
         --emerald-dark: 161 94% 35%;
-        --slate-dark: 222 47% 11%;
-        --slate-medium: 217 33% 17%;
+        --navy: 220 47% 15%;
+        --navy-light: 220 35% 25%;
+        --gold: 43 74% 55%;
+        --slate-dark: 220 47% 10%;
+        --slate-medium: 220 40% 18%;
         
-        --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.3);
-        --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.4);
-        --shadow-glow: 0 0 25px -5px rgba(16,185,129,0.4);
+        --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.4);
+        --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.5);
+        --shadow-glow: 0 0 30px -5px rgba(52, 211, 153, 0.35);
     }
 }
 
