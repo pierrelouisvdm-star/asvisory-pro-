@@ -49,20 +49,9 @@ const advancedTools = [
 ];
 
 export const Header = () => {
-  const [isDark, setIsDark] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth();
-
-  React.useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
-  }, []);
-
-  const toggleDarkMode = () => {
-    document.documentElement.classList.toggle('dark');
-    setIsDark(!isDark);
-  };
 
   const handleLogout = () => {
     logout();
