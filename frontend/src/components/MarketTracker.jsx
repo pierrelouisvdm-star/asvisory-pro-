@@ -140,12 +140,16 @@ export const MarketTracker = ({ compact = false }) => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="indices">
-          <TabsList className="w-full mb-4">
-            <TabsTrigger value="indices" className="flex-1">
+          <TabsList className="w-full mb-4 grid grid-cols-3">
+            <TabsTrigger value="indices">
               <Globe className="h-4 w-4 mr-2" />
               Indices
             </TabsTrigger>
-            <TabsTrigger value="currencies" className="flex-1">
+            <TabsTrigger value="commodities">
+              <Coins className="h-4 w-4 mr-2" />
+              Commodities
+            </TabsTrigger>
+            <TabsTrigger value="currencies">
               <DollarSign className="h-4 w-4 mr-2" />
               Currencies
             </TabsTrigger>
