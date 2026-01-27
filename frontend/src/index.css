@@ -160,7 +160,7 @@ code {
 /* Typography Classes */
 @layer components {
     .font-display {
-        font-family: 'Manrope', -apple-system, sans-serif;
+        font-family: 'Playfair Display', serif;
     }
     
     .font-body {
@@ -173,12 +173,12 @@ code {
     
     /* Premium Button Variants */
     .btn-premium {
-        @apply relative overflow-hidden bg-slate-900 text-white shadow-sm font-medium;
+        @apply relative overflow-hidden bg-emerald-500 text-slate-900 shadow-lg shadow-emerald-500/20 font-semibold;
         transition: all var(--transition-smooth);
     }
     
     .btn-premium:hover {
-        @apply bg-slate-800;
+        @apply bg-emerald-400 shadow-emerald-500/30;
         transform: translateY(-1px);
     }
     
@@ -187,16 +187,21 @@ code {
     }
     
     .dark .btn-premium {
-        @apply bg-white text-slate-900;
+        @apply bg-emerald-500 text-slate-900;
     }
     
     .dark .btn-premium:hover {
-        @apply bg-slate-100;
+        @apply bg-emerald-400;
+    }
+    
+    /* Glass Header */
+    .glass-header {
+        @apply bg-white/80 dark:bg-navy-950/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-navy-800/50;
     }
     
     /* Card Elevation */
     .card-elevated {
-        @apply bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800;
+        @apply bg-white dark:bg-navy-900 border border-slate-200 dark:border-navy-700;
         box-shadow: var(--shadow-soft);
         transition: all var(--transition-smooth);
     }
