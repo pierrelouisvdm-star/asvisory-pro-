@@ -294,6 +294,7 @@ export const Header = () => {
                 { title: 'Insurance', items: insuranceCalcs },
                 { title: 'Personal Finance', items: personalFinanceTools },
                 { title: 'Planning', items: planningTools },
+                { title: 'Advanced Tools', items: advancedTools },
               ].map((section) => (
                 <React.Fragment key={section.title}>
                   <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-2">
