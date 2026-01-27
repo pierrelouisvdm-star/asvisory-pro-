@@ -82,6 +82,25 @@ async def startup_db_client():
     # Financial analysis indexes
     await db.financial_analyses.create_index("client_id", unique=True)
     
+    # Goals indexes
+    await db.goals.create_index("id", unique=True)
+    await db.goals.create_index([("client_id", 1), ("priority", 1)])
+    
+    # Meetings indexes
+    await db.meetings.create_index("id", unique=True)
+    await db.meetings.create_index([("client_id", 1), ("meeting_date", -1)])
+    
+    # Reviews indexes
+    await db.reviews.create_index("client_id", unique=True)
+    await db.reviews.create_index([("advisor_id", 1), ("next_review_date", 1)])
+    
+    # Portfolio indexes
+    await db.portfolios.create_index("client_id", unique=True)
+    
+    # Loan comparisons indexes
+    await db.loan_comparisons.create_index("id", unique=True)
+    await db.loan_comparisons.create_index([("client_id", 1), ("created_at", -1)])
+    
     logger.info("Database indexes created")
 
 @app.on_event("shutdown")
