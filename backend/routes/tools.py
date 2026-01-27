@@ -161,15 +161,23 @@ async def get_pending_action_items(user_id: str = Depends(get_current_user_id)):
         {"_id": 0}
     ).to_list(1000)
     
+    # Batch fetch all clients to avoid N+1 queries
+    client_ids = list(set(m['client_id'] for m in meetings if m.get('client_id')))
+    clients = await db.clients.find(
+        {"id": {"$in": client_ids}},
+        {"_id": 0, "id": 1, "first_name": 1, "last_name": 1}
+    ).to_list(len(client_ids))
+    client_map = {c['id']: c for c in clients}
+    
     pending_items = []
     for meeting in meetings:
-        client = await db.clients.find_one({"id": meeting['client_id']}, {"_id": 0, "first_name": 1, "last_name": 1})
+        client = client_map.get(meeting.get('client_id'), {})
         for item in meeting.get('action_items', []):
             if item.get('status') in ['pending', 'in_progress']:
                 pending_items.append({
                     **item,
                     'client_id': meeting['client_id'],
-                    'client_name': f"{client.get('first_name', '')} {client.get('last_name', '')}",
+                    'client_name': f"{client.get('first_name', '')} {client.get('last_name', '')}".strip(),
                     'meeting_date': meeting['meeting_date']
                 })
     
