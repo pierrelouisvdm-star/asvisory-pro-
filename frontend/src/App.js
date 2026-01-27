@@ -1,51 +1,54 @@
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "@/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { Dashboard } from "@/pages/Dashboard";
+import { FutureValueCalculator } from "@/pages/FutureValueCalculator";
+import { CompoundInterestCalculator } from "@/pages/CompoundInterestCalculator";
+import { BondCalculator } from "@/pages/BondCalculator";
+import { CarFinanceCalculator } from "@/pages/CarFinanceCalculator";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    // Check for system preference or stored preference
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (stored === 'dark' || (!stored && prefersDark)) {
+      setIsDark(true);
+      document.documentElement.classList.add('dark');
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
+
   return (
-    <div className="App">
+    <div className="min-h-screen flex flex-col bg-background">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
+        <Header isDark={isDark} setIsDark={setIsDark} />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/future-value" element={<FutureValueCalculator />} />
+            <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
+            <Route path="/bond" element={<BondCalculator />} />
+            <Route path="/car-finance" element={<CarFinanceCalculator />} />
+          </Routes>
+        </main>
+        <Footer />
+        <Toaster position="top-right" />
       </BrowserRouter>
     </div>
   );
