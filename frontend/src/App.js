@@ -29,6 +29,8 @@ import { PortfolioTrackerPage } from "@/pages/PortfolioTrackerPage";
 import { CashFlowProjector } from "@/pages/CashFlowProjector";
 import { MonteCarloSimulator } from "@/pages/MonteCarloSimulator";
 import { LoanComparisonTool } from "@/pages/LoanComparisonTool";
+import { PricingPage } from "@/pages/PricingPage";
+import { SubscriptionSuccessPage } from "@/pages/SubscriptionSuccessPage";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider } from "@/context/AuthContext";
