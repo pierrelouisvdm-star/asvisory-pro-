@@ -326,6 +326,40 @@ export const PricingPage = () => {
           })}
         </div>
 
+        {/* Coupon Code Redemption */}
+        <Card className="mt-12 max-w-md mx-auto border-dashed border-2 border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/20">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Gift className="h-5 w-5 text-emerald-600" />
+              <h3 className="font-semibold">Have a coupon code?</h3>
+            </div>
+            <form onSubmit={handleRedeemCoupon} className="flex gap-2">
+              <Input
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                placeholder="Enter coupon code"
+                className="flex-1 uppercase"
+                data-testid="coupon-input"
+              />
+              <Button 
+                type="submit" 
+                disabled={couponLoading || !couponCode.trim()}
+                className="bg-emerald-600 hover:bg-emerald-700"
+                data-testid="redeem-coupon-btn"
+              >
+                {couponLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  'Redeem'
+                )}
+              </Button>
+            </form>
+            <p className="text-xs text-slate-500 mt-2">
+              Enter your promotional code to unlock premium features
+            </p>
+          </CardContent>
+        </Card>
+
         {/* FAQ / Additional Info */}
         <div className="mt-16 text-center">
           <p className="text-slate-500 dark:text-slate-400 mb-4">
