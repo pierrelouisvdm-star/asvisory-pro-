@@ -222,7 +222,7 @@ class TestMeetingsEndpoints:
         # First create a meeting
         meeting_data = {
             "client_id": self.client_id,
-            "meeting_type": "review",
+            "meeting_type": "review",  # Correct enum value
             "meeting_date": datetime.now().strftime("%Y-%m-%d"),
             "duration_minutes": 30,
             "summary": f"{TEST_PREFIX}Quarterly review meeting",
@@ -244,7 +244,7 @@ class TestMeetingsEndpoints:
         # Create meeting with pending action items
         meeting_data = {
             "client_id": self.client_id,
-            "meeting_type": "follow_up",
+            "meeting_type": "followup",  # Correct enum value
             "meeting_date": datetime.now().strftime("%Y-%m-%d"),
             "duration_minutes": 45,
             "summary": f"{TEST_PREFIX}Follow-up meeting",
@@ -252,7 +252,7 @@ class TestMeetingsEndpoints:
             "action_items": [
                 {
                     "description": f"{TEST_PREFIX}Pending action item",
-                    "assigned_to": "Advisor",
+                    "assigned_to": "advisor",
                     "due_date": (datetime.now() + timedelta(days=5)).strftime("%Y-%m-%d"),
                     "status": "pending"
                 }
