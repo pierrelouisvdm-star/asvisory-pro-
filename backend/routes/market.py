@@ -187,11 +187,14 @@ def fetch_ticker_data(symbol: str) -> Optional[dict]:
     return None
 
 async def fetch_market_data() -> dict:
-    """Fetch all market data from yfinance"""
+    """Fetch all market data from yfinance and Moneyweb"""
     loop = asyncio.get_event_loop()
     
-    # Fetch indices
-    indices_data = []
+    # Fetch JSE indices first (from Moneyweb)
+    jse_data = await loop.run_in_executor(executor, fetch_jse_data)
+    
+    # Fetch global indices
+    indices_data = list(jse_data)  # Start with JSE data
     for symbol, meta in INDICES.items():
         data = await loop.run_in_executor(executor, fetch_ticker_data, symbol)
         if data:
