@@ -124,12 +124,82 @@ export const Header = ({ isDark, setIsDark }) => {
                   )}
                 >
                   <Shield className="h-4 w-4" />
-                  <span>Insurance & Planning</span>
+                  <span>Insurance</span>
                   <ChevronDown className="h-3 w-3" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-48">
                 {insuranceCalcs.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <DropdownMenuItem key={item.path} asChild>
+                      <Link to={item.path} className={cn(
+                        "flex items-center gap-2 cursor-pointer",
+                        location.pathname === item.path && "bg-gold/10 text-gold"
+                      )}>
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Personal Finance Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "gap-1 px-3 text-sm font-medium",
+                    personalFinanceTools.some(c => c.path === location.pathname)
+                      ? "bg-gold/10 text-gold"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <Wallet className="h-4 w-4" />
+                  <span>Finance</span>
+                  <ChevronDown className="h-3 w-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48">
+                {personalFinanceTools.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <DropdownMenuItem key={item.path} asChild>
+                      <Link to={item.path} className={cn(
+                        "flex items-center gap-2 cursor-pointer",
+                        location.pathname === item.path && "bg-gold/10 text-gold"
+                      )}>
+                        <Icon className="h-4 w-4" />
+                        {item.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  );
+                })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Planning Tools Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    "gap-1 px-3 text-sm font-medium",
+                    planningTools.some(c => c.path === location.pathname)
+                      ? "bg-gold/10 text-gold"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <ScrollText className="h-4 w-4" />
+                  <span>Planning</span>
+                  <ChevronDown className="h-3 w-3" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-52">
+                {planningTools.map((item) => {
                   const Icon = item.icon;
                   return (
                     <DropdownMenuItem key={item.path} asChild>
