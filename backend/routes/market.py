@@ -16,12 +16,17 @@ UPDATE_INTERVAL_MINUTES = 15
 
 # Market indices configuration
 INDICES = {
-    "^JTOPI": {"name": "JSE Top 40", "region": "ZA"},
-    "^J203": {"name": "JSE All Share", "region": "ZA"},
     "^IXIC": {"name": "Nasdaq Composite", "region": "US"},
     "^GSPC": {"name": "S&P 500", "region": "US"},
     "^NSEI": {"name": "Nifty 50", "region": "IN"},
-    "VNQI": {"name": "SA Property (ETF Proxy)", "region": "ZA"},  # Vanguard Global ex-US Real Estate as proxy
+    "VNQI": {"name": "SA Property (ETF Proxy)", "region": "ZA"},
+}
+
+# Commodities & Crypto
+COMMODITIES = {
+    "GC=F": {"name": "Gold", "unit": "USD/oz"},
+    "SI=F": {"name": "Silver", "unit": "USD/oz"},
+    "BTC-USD": {"name": "Bitcoin", "unit": "USD"},
 }
 
 # Currency pairs to ZAR
