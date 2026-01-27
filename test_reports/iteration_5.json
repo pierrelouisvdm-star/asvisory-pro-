@@ -1,0 +1,87 @@
+{
+  "summary": "Comprehensive testing of Subscription Tiers and Market Tracker features. All 18 backend API tests pass. Frontend pricing page and market tracker on dashboard work correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "/api/market/data",
+        "issue": "JSE indices (^JTOPI, ^J203) not available from Yahoo Finance - returns 404. This is a data source limitation, not a code bug. App gracefully shows available indices.",
+        "priority": "LOW"
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_subscriptions_market.py",
+    "/app/test_reports/pytest/pytest_subscriptions_market.xml"
+  ],
+  "action_items": [
+    "Consider adding alternative JSE data source or removing JSE indices from config if Yahoo Finance doesn't support them"
+  ],
+  "critical_code_review_comments": [],
+  "updated_files": [
+    "/app/backend/tests/test_subscriptions_market.py"
+  ],
+  "success_rate": {
+    "backend": "100% (18/18 tests passed)",
+    "frontend": "100% (all features working)"
+  },
+  "test_credentials": "No auth required for pricing page or market data",
+  "seed_data_creation": "None required",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Subscription and Market Tracker features fully tested. Backend endpoints: GET /api/subscriptions/pricing (returns 3 tiers with correct pricing), GET /api/market/data (returns indices and currencies with 15-min cache). Frontend: /pricing page shows 3 tiers with monthly/annual toggle, dashboard shows Live Market Tracker with Indices and Currencies tabs. JSE indices not available from Yahoo Finance data source.",
+  "test_results": {
+    "backend_api_tests": {
+      "pricing_returns_200": "PASS",
+      "pricing_has_three_tiers": "PASS - free, standard, premium",
+      "free_tier_pricing": "PASS - R0 monthly/annual",
+      "standard_tier_pricing": "PASS - R49/month, R490/year",
+      "premium_tier_pricing": "PASS - R149/month, R1490/year",
+      "free_tier_features": "PASS - 4 calculators, 0 clients",
+      "standard_tier_features": "PASS - all calculators, 5 clients, market tracker",
+      "premium_tier_features": "PASS - unlimited clients, all features",
+      "trial_days_included": "PASS - 7 days",
+      "market_data_returns_200": "PASS",
+      "market_data_has_indices": "PASS - 4 indices",
+      "market_data_has_currencies": "PASS - 8 currency pairs",
+      "market_data_has_timestamps": "PASS",
+      "index_structure": "PASS",
+      "currency_structure": "PASS",
+      "has_major_indices": "PASS - Nasdaq, S&P 500, Nifty 50",
+      "has_zar_currency_pairs": "PASS - USD/ZAR, EUR/ZAR, GBP/ZAR, etc."
+    },
+    "frontend_tests": {
+      "pricing_page_loads": "PASS - /pricing loads with 3 tier cards",
+      "monthly_annual_toggle": "PASS - switches between R49/R490 and R149/R1490",
+      "free_tier_display": "PASS - R0, 4 tools, no client management",
+      "standard_tier_display": "PASS - R49/month, 5 clients, market tracker",
+      "premium_tier_display": "PASS - R149/month, unlimited clients, all features",
+      "trial_buttons": "PASS - 7-day free trial buttons present",
+      "subscribe_buttons": "PASS - Subscribe to Standard/Premium buttons present",
+      "pricing_link_in_header": "PASS - Crown icon with Pricing link visible",
+      "market_tracker_on_dashboard": "PASS - Live Market Tracker component displayed",
+      "indices_tab": "PASS - Shows Nasdaq, S&P 500, Nifty 50, SA Property",
+      "currencies_tab": "PASS - Shows USD/ZAR, EUR/ZAR, GBP/ZAR, etc.",
+      "refresh_indicator": "PASS - 'Refreshes every 15 minutes' shown"
+    }
+  },
+  "features_verified": {
+    "pricing_page_at_/pricing": true,
+    "three_tiers_displayed": true,
+    "monthly_annual_toggle": true,
+    "market_tracker_on_dashboard": true,
+    "market_data_api": true,
+    "subscription_pricing_api": true,
+    "pricing_link_in_header": true,
+    "free_tier_4_calculators": true,
+    "standard_tier_R49_5_clients": true,
+    "premium_tier_R149_unlimited": true,
+    "7_day_free_trial": true,
+    "annual_discount_17_percent": true
+  }
+}
