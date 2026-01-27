@@ -169,6 +169,20 @@ export const MarketTracker = ({ compact = false }) => {
             </div>
           </TabsContent>
 
+          <TabsContent value="commodities" className="mt-0">
+            <div className="space-y-0">
+              {data?.commodities?.map((com) => (
+                <MarketItem 
+                  key={com.symbol} 
+                  name={com.name} 
+                  value={com.value}
+                  change={com.change}
+                  changePercent={com.change_percent}
+                />
+              ))}
+            </div>
+          </TabsContent>
+
           <TabsContent value="currencies" className="mt-0">
             <div className="space-y-0">
               {data?.currencies?.map((cur) => (
