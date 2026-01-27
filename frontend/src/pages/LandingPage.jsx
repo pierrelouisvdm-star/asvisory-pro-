@@ -37,7 +37,7 @@ const features = [
   },
   {
     icon: Bot,
-    title: 'AI Financial Advisor',
+    title: 'AI Assistant',
     description: 'GPT-5.2 powered chatbot for personalized financial guidance.',
     color: 'text-cyan-600 bg-cyan-100 dark:bg-cyan-900/30'
   },
@@ -73,7 +73,7 @@ const tiers = [
     period: '/month',
     icon: Crown,
     description: 'Complete toolkit for established advisors',
-    features: ['Everything in Standard', 'Unlimited clients', 'AI Financial Advisor', 'Advanced analytics'],
+    features: ['Everything in Standard', 'Unlimited clients', 'AI Assistant', 'Advanced analytics'],
     popular: true,
     color: 'border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/20'
   },
@@ -340,7 +340,7 @@ export const LandingPage = () => {
                 <li><Link to="/auth" className="hover:text-white transition-colors">Calculators</Link></li>
                 <li><Link to="/auth" className="hover:text-white transition-colors">Client Management</Link></li>
                 <li><Link to="/auth" className="hover:text-white transition-colors">Market Tracker</Link></li>
-                <li><Link to="/auth" className="hover:text-white transition-colors">AI Advisor</Link></li>
+                <li><Link to="/auth" className="hover:text-white transition-colors">AI Assistant</Link></li>
               </ul>
             </div>
             

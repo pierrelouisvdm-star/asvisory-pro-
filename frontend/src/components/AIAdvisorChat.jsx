@@ -131,7 +131,7 @@ export const AIAdvisorChat = ({
         <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 flex items-center justify-between">
           <div className="flex items-center gap-2 text-white">
             <Bot className="h-5 w-5" />
-            <span className="font-semibold">AI Financial Advisor</span>
+            <span className="font-semibold">AI Assistant</span>
           </div>
           <Button variant="ghost" size="icon" onClick={onClose} className="text-white hover:bg-white/20">
             <X className="h-4 w-4" />
@@ -182,7 +182,7 @@ export const AIAdvisorChat = ({
             <Bot className="h-5 w-5" />
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse" />
           </div>
-          <span className="font-semibold">AI Financial Advisor</span>
+          <span className="font-semibold">AI Assistant</span>
           <Badge className="bg-white/20 text-white text-xs">GPT-5.2</Badge>
         </div>
         <div className="flex items-center gap-1">
