@@ -10,8 +10,8 @@ module.exports = {
                 sm: 'calc(var(--radius) - 4px)'
             },
             fontFamily: {
-                display: ['Playfair Display', 'serif'],
-                body: ['Public Sans', 'sans-serif'],
+                display: ['Plus Jakarta Sans', 'sans-serif'],
+                body: ['Inter', 'sans-serif'],
                 mono: ['JetBrains Mono', 'monospace'],
             },
             colors: {
