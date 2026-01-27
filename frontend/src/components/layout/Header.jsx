@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Calculator, TrendingUp, Percent, Car, Building2, Moon, Sun, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown } from 'lucide-react';
+import { Calculator, TrendingUp, Percent, Car, Building2, Moon, Sun, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown, Receipt, ScrollText, ShieldAlert, CreditCard, GraduationCap, Wallet, Landmark, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import {
@@ -24,6 +24,20 @@ const insuranceCalcs = [
   { path: '/life-insurance', label: 'Life Insurance', icon: Shield },
   { path: '/income-disability', label: 'Income Disability', icon: Umbrella },
   { path: '/retirement', label: 'Retirement Planner', icon: PiggyBank },
+];
+
+const personalFinanceTools = [
+  { path: '/tax-calculator', label: 'Tax Calculator', icon: Receipt },
+  { path: '/budget-planner', label: 'Budget Planner', icon: Wallet },
+  { path: '/net-worth', label: 'Net Worth Tracker', icon: Landmark },
+  { path: '/emergency-fund', label: 'Emergency Fund', icon: ShieldAlert },
+  { path: '/debt-payoff', label: 'Debt Payoff', icon: CreditCard },
+];
+
+const planningTools = [
+  { path: '/estate-planning', label: 'Estate Planning', icon: ScrollText },
+  { path: '/education-savings', label: 'Education Savings', icon: GraduationCap },
+  { path: '/risk-profile', label: 'Risk Profile Quiz', icon: ClipboardList },
 ];
 
 export const Header = ({ isDark, setIsDark }) => {
