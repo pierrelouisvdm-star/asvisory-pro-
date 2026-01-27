@@ -213,7 +213,7 @@ async def refresh_market_data():
     """Force refresh market data (admin only in production)"""
     try:
         data = await fetch_market_data()
-        cached = save_cache(data)
+        cached = await save_cache(data)
         return {"message": "Market data refreshed", "last_updated": cached["last_updated"]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to refresh: {str(e)}")
