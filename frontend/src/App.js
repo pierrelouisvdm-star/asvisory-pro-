@@ -3,6 +3,7 @@ import "@/App.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { LandingPage } from "@/pages/LandingPage";
 import { Dashboard } from "@/pages/Dashboard";
 import { FutureValueCalculator } from "@/pages/FutureValueCalculator";
 import { CompoundInterestCalculator } from "@/pages/CompoundInterestCalculator";
@@ -33,16 +34,16 @@ import { PricingPage } from "@/pages/PricingPage";
 import { SubscriptionSuccessPage } from "@/pages/SubscriptionSuccessPage";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
-import { AuthProvider } from "@/context/AuthContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { SubscriptionProvider } from "@/context/SubscriptionContext";
 import { CalculatorGate } from "@/components/FeatureGate";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { AIAdvisorButton } from "@/components/AIAdvisorChat";
 
 // Wrap a calculator with feature gate
 const GatedCalculator = ({ path, children }) => (
   <CalculatorGate path={path}>{children}</CalculatorGate>
 );
-
-import { AIAdvisorButton } from "@/components/AIAdvisorChat";
 
 // Layout wrapper to conditionally show header/footer
 const AppLayout = ({ children }) => {
