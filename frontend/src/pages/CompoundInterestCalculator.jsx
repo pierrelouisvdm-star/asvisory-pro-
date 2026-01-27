@@ -274,8 +274,8 @@ export const CompoundInterestCalculator = () => {
                   value={currentScenario.rate}
                   onChange={(val) => updateScenario(0, 'rate', val)}
                   min={0}
-                  max={20}
-                  step={0.1}
+                  max={50}
+                  step={0.5}
                   suffix="%"
                   tooltip="The nominal annual interest rate"
                 />
