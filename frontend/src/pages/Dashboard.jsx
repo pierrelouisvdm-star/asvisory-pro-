@@ -598,19 +598,19 @@ export const Dashboard = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <div 
                   key={feature.title}
-                  className="text-center p-6 animate-fade-in"
+                  className="text-center p-6 animate-fade-in rounded-xl bg-card/50 border border-border/40"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10 mb-4">
-                    <Icon className="h-7 w-7 text-gold" />
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 mb-4">
+                    <Icon className="h-6 w-6 text-gold" />
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                  <h3 className="font-display text-base font-semibold text-foreground mb-2">
                     {feature.title}
                   </h3>
                   <p className="text-muted-foreground text-sm">
