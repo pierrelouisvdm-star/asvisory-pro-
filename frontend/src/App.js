@@ -11,6 +11,14 @@ import { CarFinanceCalculator } from "@/pages/CarFinanceCalculator";
 import { LifeInsuranceCalculator } from "@/pages/LifeInsuranceCalculator";
 import { IncomeDisabilityCalculator } from "@/pages/IncomeDisabilityCalculator";
 import { RetirementCalculator } from "@/pages/RetirementCalculator";
+import { TaxCalculator } from "@/pages/TaxCalculator";
+import { EstatePlanningCalculator } from "@/pages/EstatePlanningCalculator";
+import { EmergencyFundCalculator } from "@/pages/EmergencyFundCalculator";
+import { DebtPayoffCalculator } from "@/pages/DebtPayoffCalculator";
+import { EducationSavingsCalculator } from "@/pages/EducationSavingsCalculator";
+import { BudgetPlanner } from "@/pages/BudgetPlanner";
+import { NetWorthTracker } from "@/pages/NetWorthTracker";
+import { RiskProfileQuiz } from "@/pages/RiskProfileQuiz";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 
