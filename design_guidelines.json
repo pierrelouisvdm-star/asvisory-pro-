@@ -1,0 +1,161 @@
+{
+  "design_system": {
+    "identity": {
+      "name": "FinCore",
+      "archetype": "The Performance Pro",
+      "tone": "Precision, Authority, Clarity, Wealth",
+      "principles": [
+        "Data is the Art: Visualizations should be beautiful but functional.",
+        "Precision First: Every pixel must align. No sloppy margins.",
+        "High Contrast: Black text on white. White text on black. No grey-on-grey.",
+        "Speed: The interface should feel instant."
+      ]
+    },
+    "typography": {
+      "fonts": {
+        "headings": {
+          "family": "Manrope",
+          "weights": ["500", "600", "700", "800"],
+          "usage": "All headings (h1-h6), Big Stats, Hero Text",
+          "letterSpacing": "tracking-tight"
+        },
+        "body": {
+          "family": "Public Sans",
+          "weights": ["400", "500"],
+          "usage": "Paragraphs, Inputs, Labels, Data Tables",
+          "letterSpacing": "tracking-normal"
+        },
+        "mono": {
+          "family": "JetBrains Mono",
+          "weights": ["400"],
+          "usage": "Code snippets, API keys, Financial Formulas"
+        }
+      },
+      "scale": {
+        "h1": "text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight",
+        "h2": "text-3xl md:text-4xl font-semibold tracking-tight",
+        "h3": "text-2xl font-semibold tracking-tight",
+        "h4": "text-xl font-medium",
+        "body-lg": "text-lg leading-relaxed",
+        "body-base": "text-base leading-relaxed text-slate-600 dark:text-slate-400",
+        "caption": "text-sm text-slate-500 uppercase tracking-wider font-semibold"
+      }
+    },
+    "colors": {
+      "palette": {
+        "primary": {
+          "name": "Obsidian",
+          "50": "#f8fafc",
+          "100": "#f1f5f9",
+          "200": "#e2e8f0",
+          "300": "#cbd5e1",
+          "400": "#94a3b8",
+          "500": "#64748b",
+          "600": "#475569",
+          "700": "#334155",
+          "800": "#1e293b",
+          "900": "#0f172a",
+          "950": "#020617",
+          "DEFAULT": "#0f172a"
+        },
+        "accent": {
+          "name": "Emerald Wealth",
+          "50": "#ecfdf5",
+          "100": "#d1fae5",
+          "200": "#a7f3d0",
+          "300": "#6ee7b7",
+          "400": "#34d399",
+          "500": "#10b981",
+          "600": "#059669",
+          "700": "#047857",
+          "800": "#065f46",
+          "900": "#064e3b",
+          "DEFAULT": "#10b981"
+        },
+        "semantic": {
+          "background": "bg-slate-50 dark:bg-slate-950",
+          "surface": "bg-white dark:bg-slate-900",
+          "surface-hover": "hover:bg-slate-50 dark:hover:bg-slate-800",
+          "border": "border-slate-200 dark:border-slate-800",
+          "text-primary": "text-slate-900 dark:text-white",
+          "text-secondary": "text-slate-500 dark:text-slate-400",
+          "success": "text-emerald-600 bg-emerald-50 border-emerald-200",
+          "error": "text-red-600 bg-red-50 border-red-200"
+        }
+      },
+      "gradients": {
+        "hero": "bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900",
+        "accent-glow": "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 blur-xl"
+      }
+    },
+    "layout": {
+      "spacing": {
+        "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+        "section": "py-12 md:py-24",
+        "card-padding": "p-6 md:p-8"
+      },
+      "grid": {
+        "dashboard": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",
+        "calculator": "grid grid-cols-1 lg:grid-cols-12 gap-8"
+      },
+      "radius": {
+        "default": "rounded-xl",
+        "button": "rounded-lg",
+        "input": "rounded-md"
+      }
+    },
+    "components": {
+      "buttons": {
+        "primary": "bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 shadow-sm font-medium transition-all active:scale-95",
+        "secondary": "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:hover:bg-slate-800",
+        "ghost": "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+      },
+      "cards": {
+        "base": "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-all duration-300",
+        "interactive": "cursor-pointer hover:border-emerald-500/50 hover:ring-1 hover:ring-emerald-500/50"
+      },
+      "inputs": {
+        "base": "flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
+      }
+    },
+    "visual_enhancers": {
+      "shadows": {
+        "soft": "shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)]",
+        "glow": "shadow-[0_0_20px_-5px_rgba(16,185,129,0.3)]"
+      },
+      "glassmorphism": {
+        "header": "bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50"
+      }
+    },
+    "assets": {
+      "images": {
+        "hero_bg": "https://images.unsplash.com/photo-1765046255517-412341954c4c?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "advisor_portrait": "https://images.unsplash.com/photo-1738750908048-14200459c3c9?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "logo_placeholder": "https://via.placeholder.com/150x50?text=FinCore"
+      },
+      "icons": {
+        "library": "lucide-react",
+        "style": "stroke-width={1.5} className='w-5 h-5'"
+      }
+    }
+  },
+  "instructions_to_main_agent": [
+    "1. REMOVE all 'Playfair Display' and 'Inter' references. Install 'Manrope' and 'Public Sans' via Google Fonts in index.css.",
+    "2. REPLACE the entire color palette in tailwind.config.js with the 'Obsidian' and 'Emerald' palette defined above.",
+    "3. REFACTOR the Dashboard layout to use a Bento Grid (Grid Mode A).",
+    "4. UPDATE all Calculator layouts to use a Split View (Inputs Left 40%, Results Right 60%).",
+    "5. ENSURE all charts use the Emerald/Slate color scheme. No rainbow charts.",
+    "6. IMPLEMENT the 'Glassmorphism' header style.",
+    "7. ADD 'data-testid' to all interactive elements.",
+    "8. USE 'sonner' for all toast notifications.",
+    "9. DO NOT use gradients for backgrounds. Use solid colors or subtle noise textures.",
+    "10. KEEP the 'Dark/Light Mode' toggle but ensure the default is Light Mode for professional presentation."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI Slop': Do not use generic centered layouts.",
+    "Use 2-3x more spacing than typical designs.",
+    "Every interaction needs micro-animations.",
+    "Dark colors look good when used independently without gradients.",
+    "Never use AI assistant Emoji characters."
+  ]
+}
