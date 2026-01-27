@@ -102,6 +102,84 @@ const insuranceCalculators = [
   },
 ];
 
+const personalFinanceTools = [
+  {
+    id: 'tax-calculator',
+    title: 'Tax Calculator',
+    description: 'Calculate your income tax with deductions & credits',
+    icon: Receipt,
+    path: '/tax-calculator',
+    color: 'gold',
+    features: ['SA Tax Brackets', 'Medical Credits', 'Retirement Deductions'],
+  },
+  {
+    id: 'budget-planner',
+    title: 'Budget Planner',
+    description: 'Plan your budget using the 50/30/20 rule',
+    icon: Wallet,
+    path: '/budget-planner',
+    color: 'forest',
+    features: ['50/30/20 Rule', 'Expense Tracking', 'Savings Goals'],
+  },
+  {
+    id: 'net-worth',
+    title: 'Net Worth Tracker',
+    description: 'Track assets, liabilities, and overall wealth',
+    icon: Landmark,
+    path: '/net-worth',
+    color: 'navy',
+    features: ['Asset Tracking', 'Debt Analysis', 'Health Score'],
+  },
+  {
+    id: 'emergency-fund',
+    title: 'Emergency Fund',
+    description: 'Calculate how much you need for financial security',
+    icon: ShieldAlert,
+    path: '/emergency-fund',
+    color: 'gold',
+    features: ['Risk Analysis', 'Funding Progress', 'Savings Timeline'],
+  },
+  {
+    id: 'debt-payoff',
+    title: 'Debt Payoff',
+    description: 'Compare Snowball vs Avalanche payoff strategies',
+    icon: CreditCard,
+    path: '/debt-payoff',
+    color: 'forest',
+    features: ['Avalanche Method', 'Snowball Method', 'Interest Savings'],
+  },
+];
+
+const planningTools = [
+  {
+    id: 'estate-planning',
+    title: 'Estate Planning',
+    description: 'Calculate estate duty and beneficiary distributions',
+    icon: ScrollText,
+    path: '/estate-planning',
+    color: 'navy',
+    features: ['Estate Duty', 'Executor Fees', 'Liquidity Analysis'],
+  },
+  {
+    id: 'education-savings',
+    title: 'Education Savings',
+    description: 'Plan and save for your children\'s education',
+    icon: GraduationCap,
+    path: '/education-savings',
+    color: 'gold',
+    features: ['Cost Projection', 'Education Inflation', 'Funding Gap'],
+  },
+  {
+    id: 'risk-profile',
+    title: 'Risk Profile Quiz',
+    description: 'Discover your investment risk tolerance',
+    icon: ClipboardList,
+    path: '/risk-profile',
+    color: 'forest',
+    features: ['10 Questions', 'Asset Allocation', 'Portfolio Match'],
+  },
+];
+
 const features = [
   {
     icon: BarChart3,
