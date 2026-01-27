@@ -305,7 +305,7 @@ export const Dashboard = () => {
       </section>
 
       {/* Debt Calculators Section */}
-      <section className="bg-slate-50 dark:bg-navy-900/30 py-16">
+      <section className="bg-navy-900/30 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Debt"
