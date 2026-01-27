@@ -217,7 +217,7 @@ export const LandingPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-950 to-navy-900/50" />
         
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-white mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-6">
             Ready to Transform Your Practice?
           </h2>
           <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
