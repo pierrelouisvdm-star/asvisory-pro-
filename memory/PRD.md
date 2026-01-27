@@ -216,7 +216,7 @@ Each shortfall includes:
 - **AI Advisor**: GPT-5.2 chatbot for premium users
 
 ### Known Limitations
-- JSE indices (Top 40, All Share) not available from Yahoo Finance
+- JSE indices (Top 40, All Share) not directly available - using EZA ETF as SA market proxy
 - AI Advisor requires EMERGENT_LLM_KEY budget - users can top up via Profile > Universal Key
 
 ## Advanced Tools Suite (New - December 2025)
