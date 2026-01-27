@@ -15,37 +15,37 @@ const features = [
     icon: Calculator,
     title: '15+ Financial Calculators',
     description: 'Comprehensive tools for investments, insurance, retirement, tax, and more.',
-    color: 'text-blue-600 bg-blue-100 dark:bg-blue-900/30'
+    color: 'text-emerald-600 bg-emerald-500/10 dark:bg-emerald-500/20'
   },
   {
     icon: Users,
     title: 'Client Management',
     description: 'Manage your clients, track their financial data, and monitor progress.',
-    color: 'text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30'
+    color: 'text-navy-600 bg-navy-500/10 dark:text-blue-400 dark:bg-blue-500/20'
   },
   {
     icon: BarChart3,
     title: 'Financial Analysis',
     description: 'Identify shortfalls and get actionable recommendations for each client.',
-    color: 'text-purple-600 bg-purple-100 dark:bg-purple-900/30'
+    color: 'text-emerald-700 bg-emerald-500/10 dark:text-emerald-400 dark:bg-emerald-500/20'
   },
   {
     icon: TrendingUp,
     title: 'Live Market Tracker',
     description: 'Real-time data on indices, Gold, Silver, Bitcoin, and currency pairs.',
-    color: 'text-amber-600 bg-amber-100 dark:bg-amber-900/30'
+    color: 'text-gold-600 bg-gold-500/10 dark:text-gold-400 dark:bg-gold-500/20'
   },
   {
     icon: Bot,
     title: 'AI Assistant',
     description: 'GPT-5.2 powered chatbot for personalized financial guidance.',
-    color: 'text-cyan-600 bg-cyan-100 dark:bg-cyan-900/30'
+    color: 'text-navy-700 bg-navy-500/10 dark:text-blue-300 dark:bg-blue-500/20'
   },
   {
     icon: FileText,
     title: 'PDF Reports',
     description: 'Generate professional reports for your clients with one click.',
-    color: 'text-rose-600 bg-rose-100 dark:bg-rose-900/30'
+    color: 'text-emerald-600 bg-emerald-500/10 dark:bg-emerald-500/20'
   },
 ];
 
@@ -56,7 +56,7 @@ const tiers = [
     icon: Zap,
     description: '4 basic calculators to get started',
     features: ['Future Value Calculator', 'Compound Interest', 'Bond Calculator', 'Car Finance'],
-    color: 'border-slate-200'
+    color: 'border-slate-200 dark:border-slate-700'
   },
   {
     name: 'Standard',
@@ -65,7 +65,7 @@ const tiers = [
     icon: Sparkles,
     description: 'Full calculator suite for growing practices',
     features: ['All 15 calculators', 'Up to 5 clients', 'Live market tracker', 'PDF reports'],
-    color: 'border-blue-300 bg-blue-50/50 dark:bg-blue-950/20'
+    color: 'border-navy-200 bg-navy-50/50 dark:border-navy-700 dark:bg-navy-900/30'
   },
   {
     name: 'Premium',
@@ -75,18 +75,22 @@ const tiers = [
     description: 'Complete toolkit for established advisors',
     features: ['Everything in Standard', 'Unlimited clients', 'AI Assistant', 'Advanced analytics'],
     popular: true,
-    color: 'border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/20'
+    color: 'border-emerald-400 bg-emerald-50/50 dark:border-emerald-600 dark:bg-emerald-950/30'
   },
 ];
 
 export const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="min-h-screen bg-white dark:bg-navy-950">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,transparent,black)] dark:bg-grid-slate-800" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-navy-900 via-navy-950 to-slate-900">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NCAwLTE4IDguMDYtMTggMTgiIHN0cm9rZT0icmdiYSgxNiwgMTg1LCAxMjksIDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz48L2c+PC9zdmc+')] opacity-40" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        {/* Glow effect */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-emerald-500/10 rounded-full blur-3xl" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36">
           <div className="text-center">
             <Badge className="mb-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
               Built by Financial Professionals, for Financial Professionals
