@@ -34,6 +34,13 @@ import { SubscriptionSuccessPage } from "@/pages/SubscriptionSuccessPage";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { SubscriptionProvider } from "@/context/SubscriptionContext";
+import { CalculatorGate } from "@/components/FeatureGate";
+
+// Wrap a calculator with feature gate
+const GatedCalculator = ({ path, children }) => (
+  <CalculatorGate path={path}>{children}</CalculatorGate>
+);
 
 // Layout wrapper to conditionally show header/footer
 const AppLayout = ({ children }) => {
