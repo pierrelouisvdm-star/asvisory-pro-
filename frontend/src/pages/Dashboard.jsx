@@ -369,13 +369,13 @@ export const Dashboard = () => {
       </section>
 
       {/* Features Section */}
-      <section className="border-t border-slate-200 dark:border-slate-800 py-16">
+      <section className="border-t border-navy-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">
               Built for Advisors
             </h2>
-            <p className="text-slate-500 dark:text-slate-400">
+            <p className="text-slate-400">
               Every feature designed to enhance your client presentations
             </p>
           </div>
@@ -386,16 +386,16 @@ export const Dashboard = () => {
               return (
                 <div 
                   key={feature.title}
-                  className="text-center p-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 animate-fade-in"
+                  className="text-center p-6 rounded-xl border border-navy-700 bg-navy-900/60 animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20 mb-4">
-                    <Icon className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-500/20 mb-4">
+                    <Icon className="h-5 w-5 text-emerald-400" />
                   </div>
-                  <h3 className="font-display text-sm font-semibold text-slate-900 dark:text-white mb-1.5">
+                  <h3 className="font-display text-sm font-semibold text-white mb-1.5">
                     {feature.title}
                   </h3>
-                  <p className="text-slate-500 dark:text-slate-400 text-sm">
+                  <p className="text-slate-400 text-sm">
                     {feature.description}
                   </p>
                 </div>
@@ -406,9 +406,9 @@ export const Dashboard = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-slate-900 dark:bg-slate-950 py-16">
+      <section className="bg-navy-900/50 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4 tracking-tight">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-4 tracking-tight">
             Ready to elevate your client presentations?
           </h2>
           <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
@@ -416,7 +416,7 @@ export const Dashboard = () => {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/future-value">
-              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-6" data-testid="cta-explore-btn">
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold rounded-lg px-6" data-testid="cta-explore-btn">
                 Explore Calculators
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
