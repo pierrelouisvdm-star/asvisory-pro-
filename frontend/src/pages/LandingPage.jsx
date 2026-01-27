@@ -255,38 +255,42 @@ export const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <Card className="bg-gradient-to-r from-emerald-600 to-teal-600 border-0 text-white">
-          <CardContent className="p-12 text-center">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-4">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-navy-950 to-slate-900 border border-navy-700">
+          {/* Glow effect */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+          
+          <div className="relative p-12 md:p-16 text-center">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white">
               Ready to Transform Your Practice?
             </h2>
-            <p className="text-lg text-emerald-100 max-w-2xl mx-auto mb-8">
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-10">
               Join thousands of financial advisors who trust AdvisoryPro to 
               deliver exceptional service to their clients.
             </p>
             <Link to="/auth">
-              <Button size="lg" variant="secondary" className="text-lg px-8">
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-10 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all hover:-translate-y-0.5">
                 Get Started Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12">
+      <footer className="bg-navy-950 text-slate-400 py-16 border-t border-navy-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">A</span>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-11 h-11 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                  <span className="text-navy-950 font-bold text-xl">A</span>
                 </div>
-                <span className="text-white font-bold text-xl">AdvisoryPro</span>
+                <span className="text-white font-bold text-2xl">AdvisoryPro</span>
               </div>
-              <p className="text-sm mb-4 max-w-md">
+              <p className="text-sm mb-6 max-w-md leading-relaxed">
                 Built by financial professionals, for financial professionals. We understand the 
                 challenges you face because we've faced them too. Our mission is to empower advisors 
                 with the tools they need to deliver exceptional client outcomes.
@@ -298,22 +302,22 @@ export const LandingPage = () => {
             </div>
             
             <div>
-              <h4 className="text-white font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-sm">
-                <li><Link to="/auth" className="hover:text-white transition-colors">Calculators</Link></li>
-                <li><Link to="/auth" className="hover:text-white transition-colors">Client Management</Link></li>
-                <li><Link to="/auth" className="hover:text-white transition-colors">Market Tracker</Link></li>
-                <li><Link to="/auth" className="hover:text-white transition-colors">AI Assistant</Link></li>
+              <h4 className="text-white font-semibold mb-5">Product</h4>
+              <ul className="space-y-3 text-sm">
+                <li><Link to="/auth" className="hover:text-emerald-400 transition-colors">Calculators</Link></li>
+                <li><Link to="/auth" className="hover:text-emerald-400 transition-colors">Client Management</Link></li>
+                <li><Link to="/auth" className="hover:text-emerald-400 transition-colors">Market Tracker</Link></li>
+                <li><Link to="/auth" className="hover:text-emerald-400 transition-colors">AI Assistant</Link></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-white font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm">
-                <li><span className="hover:text-white transition-colors cursor-pointer">About Us</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Contact</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Privacy Policy</span></li>
-                <li><span className="hover:text-white transition-colors cursor-pointer">Terms of Service</span></li>
+              <h4 className="text-white font-semibold mb-5">Company</h4>
+              <ul className="space-y-3 text-sm">
+                <li><span className="hover:text-emerald-400 transition-colors cursor-pointer">About Us</span></li>
+                <li><span className="hover:text-emerald-400 transition-colors cursor-pointer">Contact</span></li>
+                <li><span className="hover:text-emerald-400 transition-colors cursor-pointer">Privacy Policy</span></li>
+                <li><span className="hover:text-emerald-400 transition-colors cursor-pointer">Terms of Service</span></li>
               </ul>
             </div>
           </div>
