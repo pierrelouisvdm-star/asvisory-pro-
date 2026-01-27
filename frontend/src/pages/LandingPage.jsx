@@ -157,8 +157,8 @@ export const LandingPage = () => {
       </section>
 
       {/* Features Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="text-center mb-16">
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
             Everything You Need to Succeed
           </h2>
@@ -167,18 +167,18 @@ export const LandingPage = () => {
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="border-slate-200 dark:border-slate-800 hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
+            <Card key={index} className="border-slate-200 dark:border-navy-700 bg-white dark:bg-navy-900/50 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-300 hover:-translate-y-1">
+              <CardContent className="p-8">
                 <div className={cn(
-                  "flex h-12 w-12 items-center justify-center rounded-xl mb-4",
+                  "flex h-14 w-14 items-center justify-center rounded-xl mb-5",
                   feature.color
                 )}>
-                  <feature.icon className="h-6 w-6" />
+                  <feature.icon className="h-7 w-7" />
                 </div>
-                <h3 className="font-semibold text-lg mb-2">{feature.title}</h3>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
+                <h3 className="font-semibold text-lg mb-3 text-slate-900 dark:text-white">{feature.title}</h3>
+                <p className="text-slate-500 dark:text-slate-400">
                   {feature.description}
                 </p>
               </CardContent>
@@ -188,9 +188,9 @@ export const LandingPage = () => {
       </section>
 
       {/* Pricing Preview */}
-      <section className="bg-slate-100 dark:bg-slate-900/50 py-20">
+      <section className="bg-slate-50 dark:bg-navy-900/30 py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-16">
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-4">
               Simple, Transparent Pricing
             </h2>
@@ -199,14 +199,14 @@ export const LandingPage = () => {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {tiers.map((tier, index) => (
               <Card 
                 key={index} 
                 className={cn(
-                  "relative overflow-hidden transition-all hover:shadow-lg",
+                  "relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 bg-white dark:bg-navy-900/50",
                   tier.color,
-                  tier.popular && "ring-2 ring-emerald-500"
+                  tier.popular && "ring-2 ring-emerald-500 shadow-lg shadow-emerald-500/10"
                 )}
               >
                 {tier.popular && (
