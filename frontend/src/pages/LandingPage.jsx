@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
-  Bot, PieChart, FileText, CheckCircle2, ArrowRight,
-  Sparkles, Crown, Zap
+  Bot, FileText, CheckCircle2, ArrowRight
 } from 'lucide-react';
 
 const features = [
@@ -41,28 +40,13 @@ const features = [
   },
 ];
 
-const tiers = [
-  {
-    name: 'Free',
-    price: 'R0',
-    icon: Zap,
-    features: ['4 Basic Calculators', 'Future Value', 'Compound Interest', 'Bond & Vehicle Finance'],
-  },
-  {
-    name: 'Standard',
-    price: 'R49',
-    period: '/mo',
-    icon: Sparkles,
-    features: ['All 15 Calculators', 'Up to 5 Clients', 'Live Market Tracker', 'PDF Reports'],
-  },
-  {
-    name: 'Premium',
-    price: 'R149',
-    period: '/mo',
-    icon: Crown,
-    features: ['Everything in Standard', 'Unlimited Clients', 'AI Assistant', 'Advanced Analytics'],
-    popular: true,
-  },
+const allFeatures = [
+  'All 15+ Financial Calculators',
+  'Unlimited Client Management',
+  'Live Market Tracker',
+  'AI Financial Assistant',
+  'PDF Report Generation',
+  'Advanced Analytics Tools',
 ];
 
 export const LandingPage = () => {
@@ -70,10 +54,7 @@ export const LandingPage = () => {
     <div className="min-h-screen bg-navy-950">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-950 to-slate-900" />
-        
-        {/* Glow effects */}
         <div className="absolute top-20 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
         
@@ -150,64 +131,32 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
+      {/* Free Access Banner */}
       <section className="relative py-20 bg-navy-900/30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
-              Simple Pricing
+              100% Free Access
             </h2>
-            <p className="text-slate-400">Start free, upgrade as you grow.</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {tiers.map((tier, index) => (
-              <div 
-                key={index} 
-                className={`relative p-6 rounded-2xl border transition-all duration-300 ${
-                  tier.popular 
-                    ? 'bg-emerald-500/10 border-emerald-500 shadow-lg shadow-emerald-500/10' 
-                    : 'bg-navy-900/60 border-navy-700 hover:border-navy-600'
-                }`}
-              >
-                {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-emerald-500 text-navy-950 font-bold">POPULAR</Badge>
-                  </div>
-                )}
-                
-                <div className="flex items-center gap-2 mb-4">
-                  <tier.icon className={`h-5 w-5 ${tier.popular ? 'text-emerald-400' : 'text-slate-400'}`} />
-                  <span className="font-semibold text-white">{tier.name}</span>
+            <p className="text-slate-300 mb-8">
+              All features unlocked. No credit card required. No hidden fees.
+            </p>
+            
+            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
+              {allFeatures.map((feature, i) => (
+                <div key={i} className="flex items-center gap-2 text-left">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                  <span className="text-slate-300">{feature}</span>
                 </div>
-                
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-white">{tier.price}</span>
-                  {tier.period && <span className="text-slate-400">{tier.period}</span>}
-                </div>
-                
-                <ul className="space-y-3 mb-6">
-                  {tier.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2 text-sm text-slate-300">
-                      <CheckCircle2 className={`h-4 w-4 ${tier.popular ? 'text-emerald-400' : 'text-slate-500'}`} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <Link to="/auth" className="block">
-                  <Button 
-                    className={`w-full ${
-                      tier.popular 
-                        ? 'bg-emerald-500 hover:bg-emerald-400 text-navy-950' 
-                        : 'bg-navy-800 hover:bg-navy-700 text-white border border-navy-600'
-                    }`}
-                  >
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
-            ))}
+              ))}
+            </div>
+            
+            <Link to="/auth">
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-10">
+                Start Now - It's Free
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -246,7 +195,6 @@ export const LandingPage = () => {
             <div className="flex items-center gap-6 text-sm text-slate-400">
               <Link to="/auth" className="hover:text-emerald-400 transition-colors">Calculators</Link>
               <Link to="/auth" className="hover:text-emerald-400 transition-colors">Clients</Link>
-              <Link to="/pricing" className="hover:text-emerald-400 transition-colors">Pricing</Link>
             </div>
             
             <p className="text-sm text-slate-500">
