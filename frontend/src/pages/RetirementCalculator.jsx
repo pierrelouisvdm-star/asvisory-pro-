@@ -39,7 +39,7 @@ const defaultScenario = () => ({
   monthlyContribution: 1000,
   currentIncome: 80000,
   desiredRetirementIncome: 60, // as percentage of current income
-  expectedReturn: 25,
+  expectedReturn: 10,
   inflationRate: 3,
   investmentFee: 1,
   socialSecurityBenefit: 2000, // monthly
