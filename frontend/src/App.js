@@ -45,6 +45,25 @@ const GatedCalculator = ({ path, children }) => (
   <CalculatorGate path={path}>{children}</CalculatorGate>
 );
 
+// Show landing page for non-authenticated users, dashboard for authenticated
+const AuthenticatedRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-slate-500">Loading...</div>
+      </div>
+    );
+  }
+  
+  if (!isAuthenticated) {
+    return <LandingPage />;
+  }
+  
+  return children;
+};
+
 // Layout wrapper to conditionally show header/footer
 const AppLayout = ({ children }) => {
   const location = useLocation();
