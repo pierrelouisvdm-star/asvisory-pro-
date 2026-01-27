@@ -92,37 +92,37 @@ export const LandingPage = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-36">
           <div className="text-center">
-            <Badge className="mb-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+            <Badge className="mb-6 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-4 py-1.5">
               Built by Financial Professionals, for Financial Professionals
             </Badge>
             
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-6">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
               Empower Your Practice with{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
                 AdvisoryPro
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-8">
+            <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto mb-10">
               Professional financial calculators, client management, AI-powered insights, 
               and live market data, everything you need to deliver exceptional advice.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button size="lg" className="btn-premium text-lg px-8">
+                <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all hover:-translate-y-0.5">
                   Get Started Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link to="/auth">
-                <Button size="lg" variant="outline" className="text-lg px-8">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-slate-600 text-white hover:bg-white/10 hover:border-slate-500">
                   Sign In
                 </Button>
               </Link>
             </div>
             
-            <p className="mt-4 text-sm text-slate-500">
+            <p className="mt-6 text-sm text-slate-400">
               No credit card required • 7-day free trial on paid plans
             </p>
           </div>
@@ -130,10 +130,10 @@ export const LandingPage = () => {
       </section>
 
       {/* About Us Section */}
-      <section className="bg-slate-100/50 dark:bg-slate-900/30 py-16">
+      <section className="bg-slate-50 dark:bg-navy-900/50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
-            <Badge className="mb-4 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+            <Badge className="mb-4 bg-gold-500/10 text-gold-600 dark:text-gold-400 border border-gold-500/20">
               About AdvisoryPro
             </Badge>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">
