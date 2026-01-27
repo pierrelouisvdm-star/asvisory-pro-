@@ -101,7 +101,7 @@ export const LandingPage = () => {
             
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-8">
               Professional financial calculators, client management, AI-powered insights, 
-              and live market data — everything you need to deliver exceptional advice.
+              and live market data, everything you need to deliver exceptional advice.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -138,14 +138,14 @@ export const LandingPage = () => {
             </h2>
             <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
               AdvisoryPro was born from the frustrations of practising financial advisors 
-              who needed better tools. We understand the daily challenges you face — from 
+              who needed better tools. We understand the daily challenges you face, from 
               complex calculations to client management, from staying compliant to delivering 
               exceptional service.
             </p>
             <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
               Our team combines financial planning experience with cutting-edge 
               technology. Every feature, every calculation, every workflow has been designed 
-              by people who've sat where you sit — across the desk from clients who trust you 
+              by people who've sat where you sit, across the desk from clients who trust you 
               with their financial futures.
             </p>
           </div>
