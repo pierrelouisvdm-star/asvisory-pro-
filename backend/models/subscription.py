@@ -11,6 +11,7 @@ class SubscriptionTier(str, Enum):
 class BillingCycle(str, Enum):
     MONTHLY = "monthly"
     ANNUAL = "annual"
+    LIFETIME = "lifetime"
 
 # Pricing configuration (in ZAR)
 PRICING = {
