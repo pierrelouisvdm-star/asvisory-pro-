@@ -136,9 +136,6 @@ async def fetch_market_data() -> dict:
         "commodities": commodities_data,
         "currencies": currencies_data
     }
-        "indices": indices_data,
-        "currencies": currencies_data
-    }
 
 async def get_cached_data() -> Optional[dict]:
     """Get cached market data if still valid"""
@@ -160,6 +157,7 @@ async def save_cache(data: dict):
     cache_data = {
         "type": "market_data",
         "indices": data["indices"],
+        "commodities": data.get("commodities", []),
         "currencies": data["currencies"],
         "last_updated": now,
         "next_update": now + timedelta(minutes=UPDATE_INTERVAL_MINUTES)
