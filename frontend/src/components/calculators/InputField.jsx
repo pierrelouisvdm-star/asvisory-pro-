@@ -113,7 +113,7 @@ export const SliderField = ({
           )}
         </div>
         {showValue && (
-          <span className="text-sm font-semibold text-gold tabular-nums">
+          <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums">
             {displayValue}
           </span>
         )}
@@ -125,9 +125,9 @@ export const SliderField = ({
         min={min}
         max={max}
         step={step}
-        className="[&_[role=slider]]:bg-gold [&_[role=slider]]:border-gold [&_[role=slider]]:shadow-gold [&_[role=slider]]:h-5 [&_[role=slider]]:w-5 [&_.relative]:bg-border [&_[data-orientation=horizontal]_.absolute]:bg-gold"
+        className="[&_[role=slider]]:bg-emerald-600 [&_[role=slider]]:border-emerald-600 [&_[role=slider]]:shadow-lg [&_[role=slider]]:h-5 [&_[role=slider]]:w-5 [&_.relative]:bg-slate-200 dark:[&_.relative]:bg-slate-700 [&_[data-orientation=horizontal]_.absolute]:bg-emerald-500"
       />
-      <div className="flex justify-between text-xs text-muted-foreground">
+      <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400">
         <span>{prefix}{min.toLocaleString()}{suffix}</span>
         <span>{prefix}{max.toLocaleString()}{suffix}</span>
       </div>
