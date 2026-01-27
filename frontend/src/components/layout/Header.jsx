@@ -196,6 +196,55 @@ export const Header = () => {
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
 
+            {/* Auth Actions */}
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="h-9 px-3 rounded-lg gap-2"
+                    data-testid="user-menu-btn"
+                  >
+                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                      {user?.full_name?.charAt(0) || 'U'}
+                    </div>
+                    <span className="hidden sm:inline text-sm font-medium text-slate-700 dark:text-slate-300">
+                      {user?.full_name?.split(' ')[0] || 'User'}
+                    </span>
+                    <ChevronDown className="h-3 w-3 text-slate-400" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <div className="px-2 py-1.5">
+                    <p className="text-sm font-medium">{user?.full_name}</p>
+                    <p className="text-xs text-slate-500">{user?.email}</p>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link to="/clients" className="flex items-center gap-2 cursor-pointer">
+                      <Users className="h-4 w-4" />
+                      My Clients
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    onClick={handleLogout}
+                    className="text-red-600 focus:text-red-600 cursor-pointer"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to="/auth">
+                <Button variant="outline" size="sm" className="gap-2" data-testid="login-btn">
+                  <LogIn className="h-4 w-4" />
+                  <span className="hidden sm:inline">Sign In</span>
+                </Button>
+              </Link>
+            )}
+
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
