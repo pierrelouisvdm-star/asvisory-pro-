@@ -5,7 +5,7 @@ import yfinance as yf
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
-from models.market import MarketIndex, CurrencyPair, MarketDataResponse
+from models.market import MarketIndex, CurrencyPair, Commodity, MarketDataResponse
 from server import db
 
 router = APIRouter(prefix="/market", tags=["Market Data"])
