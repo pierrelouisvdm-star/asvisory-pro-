@@ -160,11 +160,12 @@ code {
 /* Typography Classes */
 @layer components {
     .font-display {
-        font-family: 'Playfair Display', serif;
+        font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        font-weight: 700;
     }
     
     .font-body {
-        font-family: 'Public Sans', -apple-system, sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
     }
     
     .font-mono {
