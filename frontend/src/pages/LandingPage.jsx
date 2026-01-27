@@ -83,7 +83,7 @@ export const LandingPage = () => {
               Built by Financial Professionals, for Financial Professionals
             </Badge>
             
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight">
               Empower Your Practice with{' '}
               <span className="text-emerald-400">AdvisoryPro</span>
             </h1>
