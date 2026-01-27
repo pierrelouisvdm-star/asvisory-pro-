@@ -124,7 +124,7 @@ export const Header = () => {
               <Calculator className="h-5 w-5 text-white dark:text-slate-900" />
             </div>
             <span className="font-display text-xl font-bold tracking-tight text-slate-900 dark:text-white">
-              WealthCalc
+              AdvisoryPro
             </span>
           </Link>
 

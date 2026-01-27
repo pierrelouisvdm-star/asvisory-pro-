@@ -52,11 +52,11 @@ export const Footer = () => {
               <Calculator className="h-4 w-4 text-white dark:text-slate-900" />
             </div>
             <span className="font-display text-lg font-bold tracking-tight text-slate-900 dark:text-white">
-              WealthCalc
+              AdvisoryPro
             </span>
           </div>
           <p className="text-sm text-slate-500 dark:text-slate-400 text-center">
-            © {new Date().getFullYear()} WealthCalc. Professional Financial Calculator Suite.
+            © {new Date().getFullYear()} AdvisoryPro. Professional Financial Calculator Suite.
           </p>
           <div className="flex items-center gap-4 text-sm text-slate-500 dark:text-slate-400">
             <span className="hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors">Privacy</span>

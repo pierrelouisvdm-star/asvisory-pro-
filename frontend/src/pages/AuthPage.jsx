@@ -69,7 +69,7 @@ export const AuthPage = () => {
               <Calculator className="h-6 w-6 text-white dark:text-slate-900" />
             </div>
             <span className="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-              WealthCalc
+              AdvisoryPro
             </span>
           </div>
           <p className="text-slate-500 dark:text-slate-400">
