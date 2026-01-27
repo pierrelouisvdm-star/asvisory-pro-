@@ -114,7 +114,7 @@ export const Header = () => {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-transform group-hover:scale-105">
               <span className="text-navy-950 font-bold text-lg">A</span>
             </div>
-            <span className="font-display text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <span className="font-display text-xl font-bold tracking-tight text-white">
               AdvisoryPro
             </span>
           </Link>
