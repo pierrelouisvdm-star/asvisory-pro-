@@ -108,7 +108,7 @@ export const GrowthAreaChart = ({
 
 export const ComparisonBarChart = ({ 
   data, 
-  dataKeys = [{ key: 'value', name: 'Value', color: CHART_COLORS.gold }],
+  dataKeys = [{ key: 'value', name: 'Value', color: CHART_COLORS.emerald }],
   xAxisKey = 'name',
   height = 300,
   prefix = '$',
@@ -117,18 +117,18 @@ export const ComparisonBarChart = ({
   layout = 'horizontal',
 }) => {
   return (
-    <div className={cn("chart-container w-full", className)}>
+    <div className={cn("rounded-xl p-4 bg-slate-50/50 dark:bg-slate-800/30 w-full", className)}>
       <ResponsiveContainer width="100%" height={height}>
         <BarChart 
           data={data} 
           margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
           layout={layout}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={layout !== 'vertical'} horizontal={layout === 'vertical'} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:stroke-slate-700" vertical={layout !== 'vertical'} horizontal={layout === 'vertical'} />
           <XAxis 
             dataKey={layout === 'horizontal' ? xAxisKey : undefined}
             type={layout === 'horizontal' ? 'category' : 'number'}
-            stroke="hsl(var(--muted-foreground))"
+            stroke="#64748b"
             fontSize={12}
             tickLine={false}
             axisLine={false}
@@ -137,7 +137,7 @@ export const ComparisonBarChart = ({
           <YAxis 
             dataKey={layout === 'vertical' ? xAxisKey : undefined}
             type={layout === 'vertical' ? 'category' : 'number'}
-            stroke="hsl(var(--muted-foreground))"
+            stroke="#64748b"
             fontSize={12}
             tickLine={false}
             axisLine={false}
