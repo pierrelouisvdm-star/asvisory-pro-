@@ -63,6 +63,102 @@ CURRENCY_NAMES = {
 
 executor = ThreadPoolExecutor(max_workers=4)
 
+def fetch_jse_data() -> List[dict]:
+    """Scrape JSE indices from Moneyweb"""
+    url = "https://www.moneyweb.co.za/tools-and-data/click-a-company/"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+    }
+    
+    jse_data = []
+    
+    try:
+        response = requests.get(url, headers=headers, timeout=15)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.content, 'lxml')
+        
+        # Look for index data in the page
+        # Moneyweb shows JSE indices in their market summary
+        index_patterns = [
+            ('JSE All Share', r'All\s*Share[:\s]*([0-9,]+\.?\d*)'),
+            ('JSE Top 40', r'Top\s*40[:\s]*([0-9,]+\.?\d*)'),
+        ]
+        
+        page_text = soup.get_text()
+        
+        for index_name, pattern in index_patterns:
+            match = re.search(pattern, page_text, re.IGNORECASE)
+            if match:
+                try:
+                    price_str = match.group(1).replace(',', '')
+                    price = float(price_str)
+                    jse_data.append({
+                        "symbol": JSE_INDICES[index_name]["symbol"],
+                        "name": index_name,
+                        "value": price,
+                        "change": 0,  # Not easily available from scraping
+                        "change_percent": 0,
+                        "region": "ZA"
+                    })
+                except (ValueError, IndexError):
+                    continue
+        
+        # Alternative: Try to find in table format
+        if not jse_data:
+            tables = soup.find_all('table')
+            for table in tables:
+                rows = table.find_all('tr')
+                for row in rows:
+                    cells = row.find_all(['td', 'th'])
+                    if len(cells) >= 2:
+                        cell_text = cells[0].get_text().strip().lower()
+                        if 'all share' in cell_text or 'top 40' in cell_text:
+                            try:
+                                price_text = cells[1].get_text().strip().replace(',', '')
+                                price = float(re.sub(r'[^\d.]', '', price_text))
+                                name = "JSE All Share" if 'all share' in cell_text else "JSE Top 40"
+                                jse_data.append({
+                                    "symbol": JSE_INDICES[name]["symbol"],
+                                    "name": name,
+                                    "value": price,
+                                    "change": 0,
+                                    "change_percent": 0,
+                                    "region": "ZA"
+                                })
+                            except (ValueError, IndexError):
+                                continue
+                                
+    except Exception as e:
+        print(f"Error fetching JSE data from Moneyweb: {e}")
+    
+    # If scraping fails, try yfinance as fallback with .JO suffix
+    if not jse_data:
+        try:
+            # Try some major SA stocks as proxy
+            sa_etf = yf.Ticker("EZA")  # iShares MSCI South Africa ETF
+            hist = sa_etf.history(period="2d")
+            if len(hist) >= 1:
+                current_price = hist['Close'].iloc[-1]
+                prev_price = hist['Close'].iloc[-2] if len(hist) >= 2 else current_price
+                change = current_price - prev_price
+                change_percent = (change / prev_price) * 100 if prev_price else 0
+                
+                jse_data.append({
+                    "symbol": "EZA",
+                    "name": "SA Market (EZA ETF)",
+                    "value": float(current_price),
+                    "change": float(change),
+                    "change_percent": float(change_percent),
+                    "region": "ZA"
+                })
+        except Exception as e:
+            print(f"Error fetching EZA ETF: {e}")
+    
+    return jse_data
+
 def fetch_ticker_data(symbol: str) -> Optional[dict]:
     """Fetch data for a single ticker"""
     try:
