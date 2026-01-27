@@ -242,22 +242,22 @@ const SectionHeader = ({ badge, title, description, icon: Icon }) => (
 
 export const Dashboard = () => {
   return (
-    <div className="min-h-screen" data-testid="dashboard">
+    <div className="min-h-screen bg-navy-950" data-testid="dashboard">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      <section className="relative overflow-hidden bg-gradient-to-b from-navy-900 to-navy-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <div className="text-center max-w-3xl mx-auto">
-            <Badge className="mb-4 bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800 font-medium animate-fade-in">
+            <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 font-medium animate-fade-in">
               <Sparkles className="h-3 w-3 mr-1.5" />
               Professional Financial Tools
             </Badge>
             
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-5 tracking-tight animate-fade-in" style={{ animationDelay: '100ms' }}>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 tracking-tight animate-fade-in" style={{ animationDelay: '100ms' }}>
               Financial Calculations
-              <span className="block text-emerald-600 dark:text-emerald-400">Made Simple</span>
+              <span className="block text-emerald-400">Made Simple</span>
             </h1>
             
-            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
+            <p className="text-lg text-slate-400 mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
               A comprehensive suite of 15 professional calculators for financial advisors. 
               Help your clients make informed decisions with precision tools.
             </p>
