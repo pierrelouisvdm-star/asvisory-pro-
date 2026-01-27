@@ -47,6 +47,40 @@ api_router.include_router(market_router)
 async def health_check():
     return {"status": "healthy", "service": "advisorypro-api"}
 
+# Stripe webhook endpoint
+from fastapi import Request
+from emergentintegrations.payments.stripe.checkout import StripeCheckout
+
+@api_router.post("/webhook/stripe")
+async def stripe_webhook(request: Request):
+    """Handle Stripe webhook events"""
+    api_key = os.environ.get("STRIPE_API_KEY")
+    if not api_key:
+        return {"status": "error", "message": "Stripe not configured"}
+    
+    host_url = str(request.base_url).rstrip("/")
+    webhook_url = f"{host_url}/api/webhook/stripe"
+    stripe_checkout = StripeCheckout(api_key=api_key, webhook_url=webhook_url)
+    
+    body = await request.body()
+    signature = request.headers.get("Stripe-Signature")
+    
+    try:
+        webhook_response = await stripe_checkout.handle_webhook(body, signature)
+        
+        # Process the webhook event
+        if webhook_response.payment_status == "paid":
+            session_id = webhook_response.session_id
+            # Update transaction and subscription
+            db.payment_transactions.update_one(
+                {"session_id": session_id},
+                {"$set": {"payment_status": "paid", "status": "complete"}}
+            )
+        
+        return {"status": "success", "event_type": webhook_response.event_type}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 # Include the main router
 app.include_router(api_router)
 
