@@ -26,9 +26,9 @@ router = APIRouter(prefix="/subscriptions", tags=["Subscriptions"])
 # Trial period in days
 TRIAL_DAYS = 7
 
-def get_user_subscription(user_id: str) -> dict:
+async def get_user_subscription(user_id: str) -> dict:
     """Get user's current subscription or return free tier"""
-    subscription = db.subscriptions.find_one(
+    subscription = await db.subscriptions.find_one(
         {"user_id": user_id, "status": {"$in": ["active", "trialing"]}},
         {"_id": 0}
     )
@@ -41,9 +41,9 @@ def get_user_subscription(user_id: str) -> dict:
         "features": TIER_FEATURES[SubscriptionTier.FREE]
     }
 
-def check_feature_access(user_id: str, feature: str) -> bool:
+async def check_feature_access(user_id: str, feature: str) -> bool:
     """Check if user has access to a specific feature"""
-    subscription = get_user_subscription(user_id)
+    subscription = await get_user_subscription(user_id)
     tier = subscription.get("tier", SubscriptionTier.FREE)
     features = TIER_FEATURES.get(tier, TIER_FEATURES[SubscriptionTier.FREE])
     return features.get(feature, False)
@@ -52,7 +52,7 @@ def check_feature_access(user_id: str, feature: str) -> bool:
 async def get_current_subscription(current_user: dict = Depends(get_current_user)):
     """Get current user's subscription info"""
     user_id = current_user["id"]
-    subscription = get_user_subscription(user_id)
+    subscription = await get_user_subscription(user_id)
     tier = subscription.get("tier", SubscriptionTier.FREE)
     
     return UserSubscriptionInfo(
