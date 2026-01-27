@@ -172,7 +172,7 @@ async def save_cache(data: dict):
 @router.get("/data", response_model=MarketDataResponse)
 async def get_market_data():
     """
-    Get live market data for indices and currency pairs.
+    Get live market data for indices, commodities, and currency pairs.
     Data is cached and refreshed every 15 minutes.
     """
     # Check cache first
@@ -187,6 +187,15 @@ async def get_market_data():
                 change_percent=idx["change_percent"],
                 last_updated=cached["last_updated"]
             ) for idx in cached.get("indices", [])],
+            commodities=[Commodity(
+                symbol=com["symbol"],
+                name=com["name"],
+                value=com["value"],
+                change=com["change"],
+                change_percent=com["change_percent"],
+                unit=com["unit"],
+                last_updated=cached["last_updated"]
+            ) for com in cached.get("commodities", [])],
             currencies=[CurrencyPair(
                 pair=cur["pair"],
                 base=cur["base"],
@@ -214,6 +223,15 @@ async def get_market_data():
                 change_percent=idx["change_percent"],
                 last_updated=cached["last_updated"]
             ) for idx in data.get("indices", [])],
+            commodities=[Commodity(
+                symbol=com["symbol"],
+                name=com["name"],
+                value=com["value"],
+                change=com["change"],
+                change_percent=com["change_percent"],
+                unit=com["unit"],
+                last_updated=cached["last_updated"]
+            ) for com in data.get("commodities", [])],
             currencies=[CurrencyPair(
                 pair=cur["pair"],
                 base=cur["base"],
