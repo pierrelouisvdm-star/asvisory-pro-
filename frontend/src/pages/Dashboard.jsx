@@ -450,6 +450,142 @@ export const Dashboard = () => {
         </div>
       </section>
 
+      {/* Personal Finance Tools Section */}
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-12 animate-fade-in">
+          <Badge className="mb-4 bg-gold/10 text-gold border-gold/20">
+            <Wallet className="h-3 w-3 mr-1" />
+            Personal Finance
+          </Badge>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Personal Finance Tools
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Take control of your finances with powerful tools for budgeting, 
+            debt management, tax planning, and wealth tracking.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {personalFinanceTools.map((calc, index) => {
+            const Icon = calc.icon;
+            return (
+              <Link 
+                key={calc.id} 
+                to={calc.path}
+                className="group"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <Card className={cn(
+                  "h-full card-elevated overflow-hidden",
+                  "border-2 border-transparent hover:border-gold/30"
+                )}>
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between">
+                      <div className={cn(
+                        "flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ring-1",
+                        colorVariants[calc.color]
+                      )}>
+                        <Icon className={cn("h-6 w-6", iconColorVariants[calc.color])} />
+                      </div>
+                      <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-gold group-hover:translate-x-1 transition-all duration-300" />
+                    </div>
+                    <CardTitle className="font-display text-lg font-semibold mt-3 group-hover:text-gold transition-colors">
+                      {calc.title}
+                    </CardTitle>
+                    <CardDescription className="text-muted-foreground text-sm">
+                      {calc.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-1.5">
+                      {calc.features.map((feature) => (
+                        <Badge 
+                          key={feature} 
+                          variant="secondary"
+                          className="bg-muted/50 text-muted-foreground border-0 text-xs"
+                        >
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Planning Tools Section */}
+      <section className="bg-muted/20 py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 animate-fade-in">
+            <Badge className="mb-4 bg-navy-light/20 text-navy-light border-navy-light/20 dark:bg-gold/10 dark:text-gold dark:border-gold/20">
+              <Target className="h-3 w-3 mr-1" />
+              Planning Tools
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Future Planning
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Plan for major life events with estate planning, education savings, 
+              and discover your investment risk profile.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {planningTools.map((calc, index) => {
+              const Icon = calc.icon;
+              return (
+                <Link 
+                  key={calc.id} 
+                  to={calc.path}
+                  className="group"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <Card className={cn(
+                    "h-full card-elevated overflow-hidden",
+                    "border-2 border-transparent hover:border-navy-light/30 dark:hover:border-gold/30"
+                  )}>
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between">
+                        <div className={cn(
+                          "flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ring-1",
+                          colorVariants[calc.color]
+                        )}>
+                          <Icon className={cn("h-7 w-7", iconColorVariants[calc.color])} />
+                        </div>
+                        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-navy-light dark:group-hover:text-gold group-hover:translate-x-1 transition-all duration-300" />
+                      </div>
+                      <CardTitle className="font-display text-xl font-semibold mt-4 group-hover:text-navy-light dark:group-hover:text-gold transition-colors">
+                        {calc.title}
+                      </CardTitle>
+                      <CardDescription className="text-muted-foreground">
+                        {calc.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2">
+                        {calc.features.map((feature) => (
+                          <Badge 
+                            key={feature} 
+                            variant="secondary"
+                            className="bg-muted/50 text-muted-foreground border-0"
+                          >
+                            {feature}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="bg-muted/30 border-y border-border/40">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
