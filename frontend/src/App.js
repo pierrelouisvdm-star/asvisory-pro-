@@ -101,6 +101,10 @@ function App() {
                 <Route path="/monte-carlo" element={<MonteCarloSimulator />} />
                 <Route path="/loan-comparison" element={<LoanComparisonTool />} />
                 
+                {/* Pricing & Subscription */}
+                <Route path="/pricing" element={<PricingPage />} />
+                <Route path="/subscription/success" element={<SubscriptionSuccessPage />} />
+                
                 {/* Investment Calculators */}
                 <Route path="/future-value" element={<FutureValueCalculator />} />
                 <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
