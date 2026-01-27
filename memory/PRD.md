@@ -197,10 +197,13 @@ Each shortfall includes:
 ```
 
 ## Future Backlog
+- **P2**: Password reset functionality
+- **P2**: Multi-language support (Afrikaans, Zulu)
 - **P3**: Email notifications for review reminders
 - **P3**: Associate calculator results directly with client profiles
 - **P3**: Add alternative JSE data source (Yahoo Finance doesn't support JSE indices)
 - **P3**: Webhook handling for subscription renewals
+- **P3**: Secure a paid Moneyweb or JSE API for direct market data
 
 ## Status
 ✅ **Complete** - Full SaaS Platform with Subscription Monetization + AI Advisor
@@ -214,10 +217,18 @@ Each shortfall includes:
 - **Market Tracker**: Live indices, commodities (Gold/Silver/Bitcoin), currencies
 - **Feature Gating**: 4 free calculators, paid calculators gated
 - **AI Advisor**: GPT-5.2 chatbot for premium users
+- **Deployment Ready**: All environment variables properly configured, no hardcoded fallbacks
 
 ### Known Limitations
 - JSE indices (Top 40, All Share) not directly available - using EZA ETF as SA market proxy
 - AI Advisor requires EMERGENT_LLM_KEY budget - users can top up via Profile > Universal Key
+
+### January 2026 - Deployment Readiness & Landing Page Enhancement
+- Fixed deployment blocking issues: removed all hardcoded MongoDB fallback values from route files
+- Enhanced landing page with "Built by Financial Professionals, for Financial Professionals" messaging
+- Added new "About Us" section with company story, credentials (CFP, CFA, RFP badges), and statistics
+- Added professional footer with company info, product links, and compliance badges (POPIA, SSL, SA-Based)
+- All backend routes now use strict environment variable access (os.environ['KEY'] instead of os.environ.get with fallbacks)
 
 ## Advanced Tools Suite (New - December 2025)
 
