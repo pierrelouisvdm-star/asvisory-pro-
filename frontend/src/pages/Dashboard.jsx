@@ -184,7 +184,7 @@ const features = [
   {
     icon: BarChart3,
     title: 'Visual Analytics',
-    description: 'Interactive charts and graphs for clear client presentations',
+    description: 'Interactive charts for clear client presentations',
   },
   {
     icon: GitCompare,
@@ -194,7 +194,7 @@ const features = [
   {
     icon: FileText,
     title: 'Print Reports',
-    description: 'Generate professional PDF reports for clients',
+    description: 'Generate professional PDF reports',
   },
   {
     icon: DollarSign,
