@@ -29,10 +29,15 @@ import {
   GraduationCap,
   ScrollText,
   RefreshCw,
-  FileText
+  FileText,
+  Target,
+  CalendarCheck,
+  PieChart,
+  Download
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { reportsApi } from '@/services/api';
 
 const priorityColors = {
   critical: 'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800',
