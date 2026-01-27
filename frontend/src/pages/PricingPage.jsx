@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
-import { subscriptionApi } from '@/services/api';
+import { subscriptionApi, couponApi } from '@/services/api';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
   Check, X, Calculator, Users, FileText, BarChart3, 
-  Target, Calendar, PieChart, TrendingUp, Sparkles, Crown, Zap, PartyPopper
+  Target, Calendar, PieChart, TrendingUp, Sparkles, Crown, Zap, PartyPopper, Gift, Loader2
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
