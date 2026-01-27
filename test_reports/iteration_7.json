@@ -1,0 +1,88 @@
+{
+  "summary": "Frontend testing of registration and subscription selection flow for AdvisoryPro. All features tested and working correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "N/A (frontend only testing)",
+    "frontend": "100% (all features verified)"
+  },
+  "test_credentials": {
+    "email": "test_reg_10614@test.com",
+    "password": "TestPass123!",
+    "existing_user": {
+      "email": "test_ai_advisor@test.com",
+      "password": "TestPass123!"
+    }
+  },
+  "seed_data_creation": "Created new test user during registration flow testing",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Registration and subscription selection flow fully tested. Landing page shows for non-authenticated users at /. Auth page has Sign In and Create Account tabs with proper form fields. After registration, user is redirected to /pricing?welcome=true with toast message 'Account created! Choose your plan to get started.' Protected routes redirect to /auth when not logged in. After login, dashboard shows instead of landing page.",
+  "test_results": {
+    "landing_page_tests": {
+      "landing_page_shown_at_root_when_not_authenticated": "PASS",
+      "hero_text_empower_your_practice": "PASS",
+      "get_started_free_button_present": "PASS",
+      "sign_in_button_present": "PASS",
+      "features_section_present": "PASS",
+      "pricing_preview_section_present": "PASS"
+    },
+    "auth_page_tests": {
+      "auth_page_loads_at_auth_route": "PASS",
+      "sign_in_tab_present": "PASS - data-testid='login-tab'",
+      "create_account_tab_present": "PASS - data-testid='register-tab'",
+      "login_form_email_input": "PASS - data-testid='login-email-input'",
+      "login_form_password_input": "PASS - data-testid='login-password-input'",
+      "login_form_submit_button": "PASS - data-testid='login-submit-btn'",
+      "register_form_full_name_input": "PASS - data-testid='register-name-input'",
+      "register_form_email_input": "PASS - data-testid='register-email-input'",
+      "register_form_company_input": "PASS - data-testid='register-company-input'",
+      "register_form_password_input": "PASS - data-testid='register-password-input'",
+      "register_form_submit_button": "PASS - data-testid='register-submit-btn'"
+    },
+    "registration_flow_tests": {
+      "registration_form_submission": "PASS",
+      "redirect_to_pricing_after_registration": "PASS - /pricing?welcome=true",
+      "welcome_parameter_in_url": "PASS",
+      "toast_message_shown": "PASS - 'Account created! Choose your plan to get started.'"
+    },
+    "protected_routes_tests": {
+      "clients_route_redirects_to_auth": "PASS - /clients redirects to /auth when not logged in",
+      "future_value_route_redirects_to_auth": "PASS - /future-value redirects to /auth when not logged in"
+    },
+    "login_flow_tests": {
+      "login_form_submission": "PASS",
+      "redirect_to_clients_after_login": "PASS - redirects to /clients",
+      "welcome_back_toast_shown": "PASS",
+      "dashboard_shown_at_root_for_logged_in_user": "PASS - Dashboard shown instead of landing page"
+    },
+    "pricing_page_tests": {
+      "pricing_page_loads": "PASS - data-testid='pricing-page'",
+      "choose_your_plan_text": "PASS",
+      "three_tiers_displayed": "PASS - Free (R0), Standard (R49/month), Premium (R149/month)"
+    }
+  },
+  "features_verified": {
+    "landing_page_for_non_authenticated": true,
+    "get_started_free_button": true,
+    "sign_in_button": true,
+    "auth_page_sign_in_tab": true,
+    "auth_page_create_account_tab": true,
+    "create_account_form_fields": true,
+    "registration_redirects_to_pricing": true,
+    "pricing_page_welcome_message": true,
+    "protected_routes_redirect_to_auth": true,
+    "dashboard_shown_after_login": true
+  }
+}
