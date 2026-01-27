@@ -2,7 +2,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Helper to get auth headers
 const getHeaders = () => {
-  const token = localStorage.getItem('wealthcalc_token');
+  const token = localStorage.getItem('advisorypro_token');
   return {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }),
@@ -217,12 +217,12 @@ export const reviewsApi = {
 // Reports API
 export const reportsApi = {
   downloadAnalysis: (clientId, currency = 'ZAR') => {
-    const token = localStorage.getItem('wealthcalc_token');
+    const token = localStorage.getItem('advisorypro_token');
     return `${API_URL}/api/tools/reports/client/${clientId}/analysis?currency=${currency}&token=${token}`;
   },
 
   downloadGoals: (clientId, currency = 'ZAR') => {
-    const token = localStorage.getItem('wealthcalc_token');
+    const token = localStorage.getItem('advisorypro_token');
     return `${API_URL}/api/tools/reports/client/${clientId}/goals?currency=${currency}&token=${token}`;
   },
 };

@@ -14,12 +14,12 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('wealthcalc_token'));
+  const [token, setToken] = useState(localStorage.getItem('advisorypro_token'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Check if user is logged in on mount
-    const storedUser = localStorage.getItem('wealthcalc_user');
+    const storedUser = localStorage.getItem('advisorypro_user');
     if (storedUser && token) {
       setUser(JSON.parse(storedUser));
     }
@@ -41,8 +41,8 @@ export const AuthProvider = ({ children }) => {
     const data = await response.json();
     setToken(data.access_token);
     setUser(data.user);
-    localStorage.setItem('wealthcalc_token', data.access_token);
-    localStorage.setItem('wealthcalc_user', JSON.stringify(data.user));
+    localStorage.setItem('advisorypro_token', data.access_token);
+    localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
     return data;
   };
 
@@ -66,16 +66,16 @@ export const AuthProvider = ({ children }) => {
     const data = await response.json();
     setToken(data.access_token);
     setUser(data.user);
-    localStorage.setItem('wealthcalc_token', data.access_token);
-    localStorage.setItem('wealthcalc_user', JSON.stringify(data.user));
+    localStorage.setItem('advisorypro_token', data.access_token);
+    localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
     return data;
   };
 
   const logout = () => {
     setToken(null);
     setUser(null);
-    localStorage.removeItem('wealthcalc_token');
-    localStorage.removeItem('wealthcalc_user');
+    localStorage.removeItem('advisorypro_token');
+    localStorage.removeItem('advisorypro_user');
   };
 
   const value = {
