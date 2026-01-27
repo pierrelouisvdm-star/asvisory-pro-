@@ -89,6 +89,15 @@ function App() {
                 <Route path="/clients" element={<ClientsPage />} />
                 <Route path="/clients/:clientId" element={<ClientProfilePage />} />
                 <Route path="/clients/:clientId/analysis" element={<ClientProfilePage />} />
+                <Route path="/clients/:clientId/goals" element={<GoalPlannerPage />} />
+                <Route path="/clients/:clientId/meetings" element={<MeetingSchedulerPage />} />
+                <Route path="/clients/:clientId/reviews" element={<ReviewTrackerPage />} />
+                <Route path="/clients/:clientId/portfolio" element={<PortfolioTrackerPage />} />
+                
+                {/* Advanced Tools */}
+                <Route path="/cash-flow" element={<CashFlowProjector />} />
+                <Route path="/monte-carlo" element={<MonteCarloSimulator />} />
+                <Route path="/loan-comparison" element={<LoanComparisonTool />} />
                 
                 {/* Investment Calculators */}
                 <Route path="/future-value" element={<FutureValueCalculator />} />
