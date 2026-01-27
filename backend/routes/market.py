@@ -117,9 +117,9 @@ async def fetch_market_data() -> dict:
         "currencies": currencies_data
     }
 
-def get_cached_data() -> Optional[dict]:
+async def get_cached_data() -> Optional[dict]:
     """Get cached market data if still valid"""
-    cache = db.market_cache.find_one({"type": "market_data"}, {"_id": 0})
+    cache = await db.market_cache.find_one({"type": "market_data"}, {"_id": 0})
     if cache:
         last_updated = cache.get("last_updated")
         if last_updated:
@@ -131,7 +131,7 @@ def get_cached_data() -> Optional[dict]:
                 return cache
     return None
 
-def save_cache(data: dict):
+async def save_cache(data: dict):
     """Save market data to cache"""
     now = datetime.now(timezone.utc)
     cache_data = {
@@ -141,7 +141,7 @@ def save_cache(data: dict):
         "last_updated": now,
         "next_update": now + timedelta(minutes=UPDATE_INTERVAL_MINUTES)
     }
-    db.market_cache.update_one(
+    await db.market_cache.update_one(
         {"type": "market_data"},
         {"$set": cache_data},
         upsert=True
