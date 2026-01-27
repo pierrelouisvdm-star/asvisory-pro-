@@ -8,7 +8,11 @@ import { FutureValueCalculator } from "@/pages/FutureValueCalculator";
 import { CompoundInterestCalculator } from "@/pages/CompoundInterestCalculator";
 import { BondCalculator } from "@/pages/BondCalculator";
 import { CarFinanceCalculator } from "@/pages/CarFinanceCalculator";
+import { LifeInsuranceCalculator } from "@/pages/LifeInsuranceCalculator";
+import { IncomeDisabilityCalculator } from "@/pages/IncomeDisabilityCalculator";
+import { RetirementCalculator } from "@/pages/RetirementCalculator";
 import { Toaster } from "@/components/ui/sonner";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 
 function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -38,22 +42,27 @@ function App() {
   }, [isDark]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
-      <BrowserRouter>
-        <Header isDark={isDark} setIsDark={setIsDark} />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/future-value" element={<FutureValueCalculator />} />
-            <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
-            <Route path="/bond" element={<BondCalculator />} />
-            <Route path="/car-finance" element={<CarFinanceCalculator />} />
-          </Routes>
-        </main>
-        <Footer />
-        <Toaster position="top-right" />
-      </BrowserRouter>
-    </div>
+    <CurrencyProvider>
+      <div className="min-h-screen flex flex-col bg-background">
+        <BrowserRouter>
+          <Header isDark={isDark} setIsDark={setIsDark} />
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/future-value" element={<FutureValueCalculator />} />
+              <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
+              <Route path="/bond" element={<BondCalculator />} />
+              <Route path="/car-finance" element={<CarFinanceCalculator />} />
+              <Route path="/life-insurance" element={<LifeInsuranceCalculator />} />
+              <Route path="/income-disability" element={<IncomeDisabilityCalculator />} />
+              <Route path="/retirement" element={<RetirementCalculator />} />
+            </Routes>
+          </main>
+          <Footer />
+          <Toaster position="top-right" />
+        </BrowserRouter>
+      </div>
+    </CurrencyProvider>
   );
 }
 
