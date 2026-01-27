@@ -140,7 +140,7 @@ export const MarketTracker = ({ compact = false }) => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="indices">
-          <TabsList className="w-full mb-4 grid grid-cols-3">
+          <TabsList className="w-full mb-4 grid grid-cols-3 bg-navy-800">
             <TabsTrigger value="indices">
               <Globe className="h-4 w-4 mr-2" />
               Indices
