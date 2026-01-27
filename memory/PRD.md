@@ -180,15 +180,19 @@ Each shortfall includes:
 ## Future Backlog
 - **P3**: Email notifications for review reminders
 - **P3**: Associate calculator results directly with client profiles
+- **P3**: Add alternative JSE data source (Yahoo Finance doesn't support JSE indices)
+- **P3**: Webhook handling for subscription renewals
 
 ## Status
-✅ **Complete** - All 15 calculators + Backend + Client Management + Shortfall Analysis + Advanced Tools Suite
+✅ **Complete** - Full SaaS Platform with Subscription Monetization
 - Backend API: 100% pass rate (All endpoints tested)
 - Frontend: 100% pass rate
 - Auth flow: Working (register, login, logout)
 - Client CRUD: Working
 - Shortfall Analysis: Working with 8 categories
 - Advanced Tools: All 7 new tools working
+- **Subscription System**: 3 tiers with Stripe checkout
+- **Market Tracker**: Live indices and currencies (15-min refresh)
 
 ## Advanced Tools Suite (New - December 2025)
 
