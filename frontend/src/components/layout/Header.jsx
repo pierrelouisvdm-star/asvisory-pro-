@@ -196,16 +196,6 @@ export const Header = () => {
           {/* Right Side Actions */}
           <div className="flex items-center gap-2">
             <CurrencySelector />
-            
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleDarkMode}
-              data-testid="dark-mode-toggle"
-              className="h-9 w-9 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
-            >
-              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
 
             {/* Auth Actions */}
             {isAuthenticated ? (
