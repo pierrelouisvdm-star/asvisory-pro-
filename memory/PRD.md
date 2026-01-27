@@ -1,7 +1,7 @@
 # WealthCalc - Financial Advisor Suite PRD
 
 ## Overview
-A comprehensive frontend-only financial calculator suite for financial advisors, featuring 15 professional calculators with a modern, clean UI design.
+A comprehensive financial calculator suite for financial advisors with client management, financial plan analysis, and shortfall identification.
 
 ## Original Requirements
 1. Build a financial advisor application with various calculators
@@ -11,125 +11,182 @@ A comprehensive frontend-only financial calculator suite for financial advisors,
 5. Added: 8 new tools - Tax Calculator, Estate Planning, Emergency Fund, Debt Payoff, Education Savings, Budget Planner, Net Worth Tracker, Risk Profile Quiz
 6. Annual return slider max increased to 50%, default 25%
 7. ZAR set as default currency
-8. **UI Redesign**: Modern, clean, professional look requested
+8. **UI Redesign**: Modern, clean, professional look
+9. **Backend Integration**: User auth, client management
+10. **Financial Plan Shortfall Analysis**: Compile shortfalls and recommendations
 
 ## Tech Stack
 - **Frontend**: React.js with react-router-dom
+- **Backend**: FastAPI with Motor (async MongoDB)
+- **Database**: MongoDB
+- **Auth**: JWT with bcrypt password hashing
 - **Styling**: Tailwind CSS with custom design system
 - **Components**: shadcn/ui
-- **Charts**: recharts (with Emerald/Slate color scheme)
-- **Animation**: framer-motion
-- **State**: React Hooks + Context API (CurrencyContext)
-
-## Design System (Updated December 2025)
-
-### Typography
-- **Headings**: Manrope (500-800 weights) - Modern, clean sans-serif
-- **Body**: Public Sans (400-600 weights) - Highly readable
-- **Code**: JetBrains Mono - For financial formulas
-
-### Color Palette
-- **Primary**: Slate (900: #0f172a for text/UI, 50-100 for backgrounds)
-- **Accent**: Emerald (#10b981) - Success, CTAs, highlights
-- **Backgrounds**: Clean white/slate-50 (light), slate-900/950 (dark)
-- **Charts**: Emerald, Teal, Slate palette
-
-### UI Principles
-- High contrast, clean layouts
-- Rounded corners (xl for cards, lg for buttons)
-- Subtle shadows (shadow-sm, shadow-lg on hover)
-- Glassmorphism header with backdrop blur
-- Consistent spacing and typography hierarchy
+- **Charts**: recharts
 
 ## Features Implemented
 
 ### 15 Financial Calculators
+- **Investment**: Future Value, Compound Interest, Bond, Car Finance
+- **Insurance**: Life Insurance (DIME), Income Disability, Retirement
+- **Finance**: Tax Calculator, Budget Planner, Net Worth, Emergency Fund, Debt Payoff
+- **Planning**: Estate Planning, Education Savings, Risk Profile Quiz
 
-#### Investment Calculators (4)
-1. **Future Value Calculator** - Inflation & fee adjusted projections
-2. **Compound Interest** - Multiple compounding frequencies
-3. **Bond Calculator** - Pricing, yields, duration metrics
-4. **Car Finance** - Loan vs lease comparison
+### Backend API (New)
+- **Auth**: Register/Login with JWT tokens
+- **Clients CRUD**: Create, read, update, delete client profiles
+- **Financial Data**: Store and update client financial information
+- **Shortfall Analysis**: AI-powered analysis of financial gaps
 
-#### Insurance & Retirement (3)
-5. **Life Insurance Calculator** - DIME method coverage analysis
-6. **Income Disability** - Disability coverage calculator
-7. **Retirement Planner** - Funding ratio & income sources
+### Financial Plan Shortfall Analysis (New Feature)
+Analyzes client's financial data and identifies gaps across 8 categories:
 
-#### Personal Finance Tools (5)
-8. **Tax Calculator** - SA 2024/2025 tax brackets, deductions, medical credits
-9. **Budget Planner** - 50/30/20 rule analysis
-10. **Net Worth Tracker** - Assets, liabilities, health score
-11. **Emergency Fund** - Risk-based recommendations
-12. **Debt Payoff** - Avalanche vs Snowball strategies
+1. **Life Insurance Gap** - Compares coverage vs DIME-calculated need
+2. **Emergency Fund Deficit** - Checks 3-6 months expenses coverage
+3. **Retirement Shortfall** - Projects retirement savings adequacy
+4. **Debt-to-Asset Ratio** - Flags high debt levels (>50%)
+5. **Savings Rate** - Checks if saving 20%+ of income
+6. **Education Savings Gap** - Projects children's education funding
+7. **Estate Liquidity** - Checks liquid assets vs estate duty
+8. **Disability Coverage** - Ensures 75%+ income replacement
 
-#### Planning Tools (3)
-13. **Estate Planning** - Estate duty, executor fees, beneficiary distribution
-14. **Education Savings** - Cost projection with education inflation
-15. **Risk Profile Quiz** - 10-question assessment with portfolio allocation
+Each shortfall includes:
+- Priority level (Critical, High, Medium, Low)
+- Current vs Target values with gap amount
+- Specific recommendations
+- Actionable items
+- Estimated monthly cost to close gap
 
-### Core Features
-- Multi-currency support (ZAR/USD) with ZAR default
-- Dark/Light mode toggle
-- Print report functionality on all calculators
-- Responsive design with mobile navigation
-- Interactive charts and visualizations
-- Scenario comparison mode
+### Client Management
+- Client profiles with contact info
+- Financial data storage (income, assets, liabilities, insurance, etc.)
+- Calculation history per client
+- Shortfall analysis dashboard
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Create new advisor account
+- `POST /api/auth/login` - Login and get JWT token
+
+### Clients
+- `GET /api/clients` - List all clients (requires auth)
+- `POST /api/clients` - Create new client
+- `GET /api/clients/:id` - Get specific client
+- `PUT /api/clients/:id` - Update client info
+- `DELETE /api/clients/:id` - Delete client
+- `PUT /api/clients/:id/financial-data` - Update financial data
+- `GET /api/clients/:id/analysis` - Get shortfall analysis
+- `POST /api/clients/:id/analysis/refresh` - Force refresh analysis
+
+### Calculations
+- `POST /api/calculations` - Save calculation for client
+- `GET /api/calculations/client/:id` - Get client's calculations
 
 ## Architecture
 ```
-/app/frontend
-├── src
-│   ├── components
-│   │   ├── calculators/
-│   │   │   ├── CalculatorCard.jsx
-│   │   │   ├── InputField.jsx
-│   │   │   ├── ResultDisplay.jsx
-│   │   │   ├── GrowthChart.jsx
-│   │   │   ├── PrintReport.jsx
-│   │   │   └── ComparisonMode.jsx
-│   │   ├── layout/
-│   │   │   ├── Header.jsx (glassmorphism)
-│   │   │   └── Footer.jsx
-│   │   ├── ui/ (shadcn components)
-│   │   └── CurrencySelector.jsx
-│   ├── context/
-│   │   └── CurrencyContext.jsx
-│   ├── pages/
-│   │   ├── Dashboard.jsx
-│   │   └── (15 calculator pages)
-│   ├── App.js
-│   ├── index.css (design tokens)
-│   └── tailwind.config.js
+/app
+├── backend/
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── client.py
+│   │   ├── calculation.py
+│   │   └── financial_plan.py
+│   ├── routes/
+│   │   ├── auth.py
+│   │   ├── clients.py
+│   │   └── calculations.py
+│   ├── utils/
+│   │   ├── auth.py
+│   │   └── financial_analyzer.py
+│   └── server.py
+├── frontend/
+│   ├── src/
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx
+│   │   │   └── CurrencyContext.jsx
+│   │   ├── services/
+│   │   │   └── api.js
+│   │   ├── pages/
+│   │   │   ├── AuthPage.jsx
+│   │   │   ├── ClientsPage.jsx
+│   │   │   ├── ClientProfilePage.jsx
+│   │   │   └── (15 calculator pages)
+│   │   └── components/
+│   └── package.json
+```
+
+## Database Schema
+
+### Users Collection
+```json
+{
+  "id": "uuid",
+  "email": "string",
+  "full_name": "string",
+  "company": "string",
+  "hashed_password": "string",
+  "is_active": true,
+  "created_at": "datetime"
+}
+```
+
+### Clients Collection
+```json
+{
+  "id": "uuid",
+  "advisor_id": "uuid",
+  "first_name": "string",
+  "last_name": "string",
+  "email": "string",
+  "phone": "string",
+  "occupation": "string",
+  "financial_data": {
+    "monthly_income": 0,
+    "monthly_expenses": 0,
+    "total_assets": 0,
+    "total_liabilities": 0,
+    "life_insurance_coverage": 0,
+    "life_insurance_needed": 0,
+    "emergency_fund_current": 0,
+    "emergency_fund_needed": 0,
+    "retirement_savings": 0,
+    "retirement_goal": 0,
+    ...
+  }
+}
 ```
 
 ## Future Backlog
-- **P2**: Backend integration (user auth, save history, PDF reports)
-- **P2**: Client Management (CRM Lite)
+- **P2**: PDF report generation
+- **P2**: Save calculation results to client history
 - **P3**: Advanced simulations (Monte Carlo)
 - **P3**: Portfolio tracking
+- **P3**: Email notifications for review reminders
 
 ## Status
-✅ **Complete** - All 15 calculators implemented and integrated
-✅ **UI Redesign Complete** - Modern Manrope/Public Sans fonts, Emerald/Slate colors
-- Frontend testing: 100% pass rate
-- All navigation and routing working
-- Dashboard displays all 4 sections
-- Currency toggle functional
-- Dark/light mode working
+✅ **Complete** - All 15 calculators + Backend + Client Management + Shortfall Analysis
+- Backend API: 100% pass rate (21/21 tests)
+- Frontend: 100% pass rate
+- Auth flow: Working (register, login, logout)
+- Client CRUD: Working
+- Shortfall Analysis: Working with 8 categories
 
 ## Changelog
 
+### December 2025 - Backend & Client Management
+- Implemented FastAPI backend with MongoDB
+- Added JWT authentication (email/password)
+- Created client management system
+- Built financial plan shortfall analyzer
+- Added client profile with financial data forms
+- Integrated shortfall analysis display with priority cards
+
 ### December 2025 - UI Redesign
 - Replaced Playfair Display/Inter fonts with Manrope/Public Sans
-- Changed color scheme from Navy/Gold/Forest to Slate/Emerald
-- Updated all component styling for cleaner, more professional look
-- Implemented glassmorphism header
-- Updated chart colors to Emerald palette
-- Modernized all card, button, and form styling
+- Changed color scheme from Navy/Gold to Slate/Emerald
+- Modernized all components
 
 ### December 2025 - Initial Implementation
 - Implemented all 15 financial calculators
-- Added inflation/fee adjustments
-- Added currency toggle (ZAR/USD)
-- Created comprehensive dashboard with 4 sections
+- Added currency toggle and dark mode
