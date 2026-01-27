@@ -57,13 +57,24 @@ function App() {
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              {/* Investment Calculators */}
               <Route path="/future-value" element={<FutureValueCalculator />} />
               <Route path="/compound-interest" element={<CompoundInterestCalculator />} />
               <Route path="/bond" element={<BondCalculator />} />
               <Route path="/car-finance" element={<CarFinanceCalculator />} />
+              {/* Insurance & Planning */}
               <Route path="/life-insurance" element={<LifeInsuranceCalculator />} />
               <Route path="/income-disability" element={<IncomeDisabilityCalculator />} />
               <Route path="/retirement" element={<RetirementCalculator />} />
+              {/* Personal Finance Tools */}
+              <Route path="/tax-calculator" element={<TaxCalculator />} />
+              <Route path="/estate-planning" element={<EstatePlanningCalculator />} />
+              <Route path="/emergency-fund" element={<EmergencyFundCalculator />} />
+              <Route path="/debt-payoff" element={<DebtPayoffCalculator />} />
+              <Route path="/education-savings" element={<EducationSavingsCalculator />} />
+              <Route path="/budget-planner" element={<BudgetPlanner />} />
+              <Route path="/net-worth" element={<NetWorthTracker />} />
+              <Route path="/risk-profile" element={<RiskProfileQuiz />} />
             </Routes>
           </main>
           <Footer />
