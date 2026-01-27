@@ -60,31 +60,31 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-navy-950 px-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 dark:bg-white">
-              <Calculator className="h-6 w-6 text-white dark:text-slate-900" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500">
+              <span className="text-navy-950 font-bold text-xl">A</span>
             </div>
-            <span className="font-display text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <span className="font-display text-2xl font-bold tracking-tight text-white">
               AdvisoryPro
             </span>
           </div>
-          <p className="text-slate-500 dark:text-slate-400">
+          <p className="text-slate-400">
             Financial Advisor Suite
           </p>
         </div>
 
-        <Card className="border-slate-200 dark:border-slate-800 shadow-lg">
+        <Card className="border-navy-700 bg-navy-900/60 shadow-lg">
           <CardHeader className="text-center pb-2">
-            <CardTitle className="font-display text-xl">Welcome</CardTitle>
-            <CardDescription>Sign in to manage your clients</CardDescription>
+            <CardTitle className="font-display text-xl text-white">Welcome</CardTitle>
+            <CardDescription className="text-slate-400">Sign in to manage your clients</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsList className="grid w-full grid-cols-2 mb-6 bg-navy-800">
                 <TabsTrigger value="login" data-testid="login-tab">Sign In</TabsTrigger>
                 <TabsTrigger value="register" data-testid="register-tab">Create Account</TabsTrigger>
               </TabsList>
