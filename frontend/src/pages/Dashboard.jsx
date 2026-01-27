@@ -47,21 +47,40 @@ const investmentCalculators = [
     path: '/compound-interest',
     features: ['Monthly/Annual', 'Growth Chart', 'Comparison'],
   },
+];
+
+const debtCalculators = [
   {
     id: 'bond',
     title: 'Bond Calculator',
-    description: 'Analyze bond prices, yields, and duration',
+    description: 'Analyze home loan payments and amortization',
     icon: Building2,
     path: '/bond',
-    features: ['Yield Analysis', 'Duration', 'Price Sensitivity'],
+    features: ['Amortization', 'Extra Payments', 'Interest Savings'],
   },
   {
     id: 'car-finance',
-    title: 'Car Finance',
+    title: 'Vehicle Finance',
     description: 'Compare loan options and calculate payments',
     icon: Car,
     path: '/car-finance',
     features: ['Loan vs Lease', 'Total Cost', 'Payment Schedule'],
+  },
+  {
+    id: 'debt-payoff',
+    title: 'Debt Payoff',
+    description: 'Compare Snowball vs Avalanche strategies',
+    icon: CreditCard,
+    path: '/debt-payoff',
+    features: ['Avalanche', 'Snowball', 'Interest Savings'],
+  },
+  {
+    id: 'loan-comparison',
+    title: 'Loan Comparison',
+    description: 'Compare multiple loan options side by side',
+    icon: GitCompare,
+    path: '/loan-comparison',
+    features: ['Side-by-Side', 'Total Cost', 'Best Option'],
   },
 ];
 
