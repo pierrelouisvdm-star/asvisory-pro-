@@ -50,8 +50,24 @@ Three-tier pricing model:
 ### Live Market Tracker (NEW)
 Real-time market data refreshing every 15 minutes:
 - **Indices**: Nasdaq, S&P 500, Nifty 50, SA Property ETF
+- **Commodities**: Gold, Silver, Bitcoin
 - **Currency Pairs**: USD/ZAR, EUR/ZAR, GBP/ZAR, JPY/ZAR, AUD/ZAR, CHF/ZAR, CNY/ZAR, INR/ZAR
 - Data cached in MongoDB for performance
+
+### AI Financial Advisor (Premium)
+GPT-5.2 powered chatbot for premium users:
+- Personalized financial advice
+- Explains complex financial concepts
+- South African tax and investment expertise
+- Context-aware based on client data
+- Chat history persistence
+- Quick tips available for all users
+
+### Feature Gating
+Subscription-based feature access:
+- **Free Tier (4 calculators)**: Future Value, Compound Interest, Bond, Car Finance
+- **Standard+**: All 15 calculators + Market Tracker
+- **Premium**: AI Advisor + All client tools + Unlimited clients
 
 ### Backend API
 - **Auth**: Register/Login with JWT tokens
