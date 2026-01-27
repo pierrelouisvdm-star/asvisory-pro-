@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, PieChart, FileText, CheckCircle2, ArrowRight,
-  Sparkles, Crown, Zap
+  Sparkles, Crown, Zap, Award, Briefcase, Target
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
