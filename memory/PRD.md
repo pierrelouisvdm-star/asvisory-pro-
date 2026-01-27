@@ -251,6 +251,17 @@ Each shortfall includes:
 - Updated Header navigation with "Advanced" dropdown
 - Added quick action buttons on client profile page
 
+### January 2026 - Subscription & Market Tracker
+- Added 3-tier subscription system (Free, Standard R49, Premium R149)
+- Integrated Stripe checkout for payments
+- Added 7-day free trial functionality
+- Annual billing with 17% discount
+- Live Market Tracker with 15-minute refresh
+- Indices: Nasdaq, S&P 500, Nifty 50, SA Property ETF
+- Currency pairs: USD/ZAR, EUR/ZAR, GBP/ZAR, and 5 more
+- Pricing page with feature comparison
+- Subscription success page with status polling
+
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
 - Added JWT authentication (email/password)
