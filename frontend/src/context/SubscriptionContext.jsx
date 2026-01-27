@@ -27,69 +27,20 @@ export const SubscriptionProvider = ({ children }) => {
   const hasFeature = () => true;
   const canAccessCalculator = () => true;
   const canAddClient = () => true;
-
-  return (
-    <SubscriptionContext.Provider value={{
-      ...subscription,
-      hasFeature,
-      canAccessCalculator,
-      canAddClient,
-    }}>
-      {children}
-    </SubscriptionContext.Provider>
-  );
-};
-
-export const useSubscription = () => {
-  const context = useContext(SubscriptionContext);
-  if (!context) {
-    throw new Error('useSubscription must be used within a SubscriptionProvider');
-  }
-  return context;
-};
-      });
-    } catch (error) {
-      // If error, default to free tier
-      setSubscription({
-        tier: 'free',
-        status: 'active',
-        features: TIER_FEATURES.free,
-        loading: false,
-      });
-    }
-  };
-
-  const canAccessCalculator = (path) => {
-    const { features } = subscription;
-    if (features.calculators === 'all') return true;
-    return FREE_CALCULATORS.includes(path);
-  };
-
-  const canAccessFeature = (feature) => {
-    const { features } = subscription;
-    return features[feature] === true || features[feature] === 'all' || features[feature] === -1;
-  };
-
-  const canAddMoreClients = (currentCount) => {
-    const { features } = subscription;
-    if (features.maxClients === -1) return true; // unlimited
-    return currentCount < features.maxClients;
-  };
-
-  const getClientLimit = () => {
-    const { features } = subscription;
-    return features.maxClients;
-  };
-
-  const isPremium = () => subscription.tier === 'premium';
-  const isStandard = () => subscription.tier === 'standard';
-  const isFree = () => subscription.tier === 'free';
-  const isTrialing = () => subscription.status === 'trialing';
+  const canAccessFeature = () => true;
+  const canAddMoreClients = () => true;
+  const getClientLimit = () => -1;
+  const isPremium = () => true;
+  const isStandard = () => false;
+  const isFree = () => false;
+  const isTrialing = () => false;
 
   return (
     <SubscriptionContext.Provider value={{
       subscription,
+      hasFeature,
       canAccessCalculator,
+      canAddClient,
       canAccessFeature,
       canAddMoreClients,
       getClientLimit,
@@ -97,8 +48,8 @@ export const useSubscription = () => {
       isStandard,
       isFree,
       isTrialing,
-      refreshSubscription: fetchSubscription,
-      FREE_CALCULATORS,
+      refreshSubscription: () => {},
+      FREE_CALCULATORS: [],
     }}>
       {children}
     </SubscriptionContext.Provider>
