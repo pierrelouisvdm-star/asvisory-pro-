@@ -9,8 +9,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuSeparator,
-  DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 
 const investmentCalcs = [
@@ -40,219 +38,156 @@ const planningTools = [
   { path: '/risk-profile', label: 'Risk Profile Quiz', icon: ClipboardList },
 ];
 
-export const Header = ({ isDark, setIsDark }) => {
-  const location = useLocation();
+export const Header = () => {
+  const [isDark, setIsDark] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const location = useLocation();
+
+  React.useEffect(() => {
+    const isDarkMode = document.documentElement.classList.contains('dark');
+    setIsDark(isDarkMode);
+  }, []);
+
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle('dark');
+    setIsDark(!isDark);
+  };
+
+  const NavDropdown = ({ items, label, icon: Icon, isActive }) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          data-testid={`nav-dropdown-${label.toLowerCase()}`}
+          className={cn(
+            "gap-1.5 px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200",
+            isActive
+              ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
+              : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+          )}
+        >
+          <Icon className="h-4 w-4" />
+          <span>{label}</span>
+          <ChevronDown className="h-3 w-3 opacity-60" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-52 p-1">
+        {items.map((item) => {
+          const ItemIcon = item.icon;
+          return (
+            <DropdownMenuItem key={item.path} asChild>
+              <Link 
+                to={item.path} 
+                data-testid={`nav-link-${item.path.replace('/', '')}`}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-md transition-colors",
+                  location.pathname === item.path 
+                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
+                    : "hover:bg-slate-100 dark:hover:bg-slate-800"
+                )}
+              >
+                <ItemIcon className="h-4 w-4 opacity-70" />
+                <span className="font-medium">{item.label}</span>
+              </Link>
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-card/80 backdrop-blur-xl supports-[backdrop-filter]:bg-card/60">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 glass-header" data-testid="main-header">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-gold to-gold-dark shadow-gold transition-transform duration-300 group-hover:scale-105">
-              <Calculator className="h-5 w-5 text-primary" />
+          <Link 
+            to="/" 
+            className="flex items-center gap-3 group"
+            data-testid="logo-link"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 dark:bg-white transition-transform group-hover:scale-105">
+              <Calculator className="h-5 w-5 text-white dark:text-slate-900" />
             </div>
-            <div className="hidden sm:block">
-              <span className="font-display text-xl font-semibold text-foreground">
-                Wealth<span className="text-gold">Calc</span>
-              </span>
-              <p className="text-xs text-muted-foreground -mt-0.5">Financial Advisor Suite</p>
-            </div>
+            <span className="font-display text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+              WealthCalc
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             <Link
               to="/"
+              data-testid="nav-link-dashboard"
               className={cn(
-                "nav-link flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200",
+                "px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200",
                 location.pathname === '/'
-                  ? "bg-gold/10 text-gold" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
+                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
               )}
             >
-              <Calculator className="h-4 w-4" />
-              <span>Dashboard</span>
+              Dashboard
             </Link>
 
-            {/* Investment Calculators Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={cn(
-                    "gap-1 px-3 text-sm font-medium",
-                    investmentCalcs.some(c => c.path === location.pathname)
-                      ? "bg-gold/10 text-gold"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <TrendingUp className="h-4 w-4" />
-                  <span>Investment</span>
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                {investmentCalcs.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <DropdownMenuItem key={item.path} asChild>
-                      <Link to={item.path} className={cn(
-                        "flex items-center gap-2 cursor-pointer",
-                        location.pathname === item.path && "bg-gold/10 text-gold"
-                      )}>
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* Insurance & Planning Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={cn(
-                    "gap-1 px-3 text-sm font-medium",
-                    insuranceCalcs.some(c => c.path === location.pathname)
-                      ? "bg-gold/10 text-gold"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <Shield className="h-4 w-4" />
-                  <span>Insurance</span>
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                {insuranceCalcs.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <DropdownMenuItem key={item.path} asChild>
-                      <Link to={item.path} className={cn(
-                        "flex items-center gap-2 cursor-pointer",
-                        location.pathname === item.path && "bg-gold/10 text-gold"
-                      )}>
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* Personal Finance Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={cn(
-                    "gap-1 px-3 text-sm font-medium",
-                    personalFinanceTools.some(c => c.path === location.pathname)
-                      ? "bg-gold/10 text-gold"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <Wallet className="h-4 w-4" />
-                  <span>Finance</span>
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-48">
-                {personalFinanceTools.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <DropdownMenuItem key={item.path} asChild>
-                      <Link to={item.path} className={cn(
-                        "flex items-center gap-2 cursor-pointer",
-                        location.pathname === item.path && "bg-gold/10 text-gold"
-                      )}>
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            {/* Planning Tools Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={cn(
-                    "gap-1 px-3 text-sm font-medium",
-                    planningTools.some(c => c.path === location.pathname)
-                      ? "bg-gold/10 text-gold"
-                      : "text-muted-foreground hover:text-foreground"
-                  )}
-                >
-                  <ScrollText className="h-4 w-4" />
-                  <span>Planning</span>
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="w-52">
-                {planningTools.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <DropdownMenuItem key={item.path} asChild>
-                      <Link to={item.path} className={cn(
-                        "flex items-center gap-2 cursor-pointer",
-                        location.pathname === item.path && "bg-gold/10 text-gold"
-                      )}>
-                        <Icon className="h-4 w-4" />
-                        {item.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  );
-                })}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <NavDropdown 
+              items={investmentCalcs} 
+              label="Investment" 
+              icon={TrendingUp}
+              isActive={investmentCalcs.some(c => c.path === location.pathname)}
+            />
+            
+            <NavDropdown 
+              items={insuranceCalcs} 
+              label="Insurance" 
+              icon={Shield}
+              isActive={insuranceCalcs.some(c => c.path === location.pathname)}
+            />
+            
+            <NavDropdown 
+              items={personalFinanceTools} 
+              label="Finance" 
+              icon={Wallet}
+              isActive={personalFinanceTools.some(c => c.path === location.pathname)}
+            />
+            
+            <NavDropdown 
+              items={planningTools} 
+              label="Planning" 
+              icon={ScrollText}
+              isActive={planningTools.some(c => c.path === location.pathname)}
+            />
           </nav>
 
-          {/* Actions */}
+          {/* Right Side Actions */}
           <div className="flex items-center gap-2">
             <CurrencySelector />
             
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsDark(!isDark)}
-              className="rounded-lg"
+              onClick={toggleDarkMode}
+              data-testid="dark-mode-toggle"
+              className="h-9 w-9 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
             >
-              {isDark ? (
-                <Sun className="h-5 w-5 text-gold" />
-              ) : (
-                <Moon className="h-5 w-5 text-muted-foreground" />
-              )}
+              {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden rounded-lg"
+              className="lg:hidden h-9 w-9 rounded-lg"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              data-testid="mobile-menu-toggle"
             >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="lg:hidden py-4 border-t border-border/40 animate-fade-in max-h-[70vh] overflow-y-auto">
+          <nav className="lg:hidden py-4 border-t border-slate-200/50 dark:border-slate-800/50 animate-fade-in max-h-[70vh] overflow-y-auto" data-testid="mobile-nav">
             <div className="flex flex-col gap-1">
               <Link
                 to="/"
@@ -260,109 +195,46 @@ export const Header = ({ isDark, setIsDark }) => {
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200",
                   location.pathname === '/'
-                    ? "bg-gold/10 text-gold" 
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
                 )}
               >
                 <Calculator className="h-5 w-5" />
                 <span>Dashboard</span>
               </Link>
 
-              <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                Investment
-              </div>
-              {investmentCalcs.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ml-2",
-                      isActive 
-                        ? "bg-gold/10 text-gold" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
-
-              <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-2">
-                Insurance
-              </div>
-              {insuranceCalcs.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ml-2",
-                      isActive 
-                        ? "bg-gold/10 text-gold" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
-
-              <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-2">
-                Personal Finance
-              </div>
-              {personalFinanceTools.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ml-2",
-                      isActive 
-                        ? "bg-gold/10 text-gold" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
-
-              <div className="px-4 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wide mt-2">
-                Planning
-              </div>
-              {planningTools.map((item) => {
-                const Icon = item.icon;
-                const isActive = location.pathname === item.path;
-                return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={cn(
-                      "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ml-2",
-                      isActive 
-                        ? "bg-gold/10 text-gold" 
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
-                    )}
-                  >
-                    <Icon className="h-5 w-5" />
-                    <span>{item.label}</span>
-                  </Link>
-                );
-              })}
+              {[
+                { title: 'Investment', items: investmentCalcs },
+                { title: 'Insurance', items: insuranceCalcs },
+                { title: 'Personal Finance', items: personalFinanceTools },
+                { title: 'Planning', items: planningTools },
+              ].map((section) => (
+                <React.Fragment key={section.title}>
+                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-2">
+                    {section.title}
+                  </div>
+                  {section.items.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        onClick={() => setIsMenuOpen(false)}
+                        className={cn(
+                          "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200 ml-2",
+                          isActive 
+                            ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
+                            : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+                        )}
+                      >
+                        <Icon className="h-5 w-5 opacity-70" />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
             </div>
           </nav>
         )}
