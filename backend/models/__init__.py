@@ -8,10 +8,24 @@ from models.financial_plan import (
     ShortfallCategory,
     FinancialDataUpdate
 )
+from models.tools import (
+    FinancialGoal, GoalCreate, GoalUpdate, GoalCategory, GoalStatus,
+    MeetingNote, MeetingNoteCreate, MeetingType, ActionItem, ActionItemStatus,
+    ReviewSchedule, ReviewScheduleCreate, ReviewFrequency,
+    LoanOption, LoanComparison,
+    Portfolio, PortfolioHolding, AssetClass,
+    FeeCalculation, FeeStructure
+)
 
 __all__ = [
     "User", "UserCreate", "UserLogin", "UserInDB", "Token", "TokenData",
     "Client", "ClientCreate", "ClientUpdate", "ClientResponse", "FinancialData", "RiskProfile",
     "Calculation", "CalculationCreate", "CalculationResponse", "CalculatorType",
-    "FinancialPlanAnalysis", "Shortfall", "ShortfallPriority", "ShortfallCategory", "FinancialDataUpdate"
+    "FinancialPlanAnalysis", "Shortfall", "ShortfallPriority", "ShortfallCategory", "FinancialDataUpdate",
+    "FinancialGoal", "GoalCreate", "GoalUpdate", "GoalCategory", "GoalStatus",
+    "MeetingNote", "MeetingNoteCreate", "MeetingType", "ActionItem", "ActionItemStatus",
+    "ReviewSchedule", "ReviewScheduleCreate", "ReviewFrequency",
+    "LoanOption", "LoanComparison",
+    "Portfolio", "PortfolioHolding", "AssetClass",
+    "FeeCalculation", "FeeStructure"
 ]
