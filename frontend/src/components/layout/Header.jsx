@@ -120,8 +120,8 @@ export const Header = () => {
             className="flex items-center gap-3 group"
             data-testid="logo-link"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-900 dark:bg-white transition-transform group-hover:scale-105">
-              <Calculator className="h-5 w-5 text-white dark:text-slate-900" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 shadow-lg shadow-emerald-500/20 transition-transform group-hover:scale-105">
+              <span className="text-navy-950 font-bold text-lg">A</span>
             </div>
             <span className="font-display text-xl font-bold tracking-tight text-slate-900 dark:text-white">
               AdvisoryPro
