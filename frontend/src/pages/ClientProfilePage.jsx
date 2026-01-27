@@ -286,6 +286,44 @@ export const ClientProfilePage = () => {
           </div>
         </div>
 
+        {/* Quick Actions */}
+        <div className="mb-8 grid grid-cols-2 md:grid-cols-5 gap-3">
+          <Link to={`/clients/${clientId}/goals`}>
+            <Button variant="outline" className="w-full h-auto py-3 flex-col gap-1" data-testid="goals-link">
+              <Target className="h-5 w-5 text-emerald-600" />
+              <span className="text-xs">Goals</span>
+            </Button>
+          </Link>
+          <Link to={`/clients/${clientId}/meetings`}>
+            <Button variant="outline" className="w-full h-auto py-3 flex-col gap-1" data-testid="meetings-link">
+              <Calendar className="h-5 w-5 text-blue-600" />
+              <span className="text-xs">Meetings</span>
+            </Button>
+          </Link>
+          <Link to={`/clients/${clientId}/reviews`}>
+            <Button variant="outline" className="w-full h-auto py-3 flex-col gap-1" data-testid="reviews-link">
+              <CalendarCheck className="h-5 w-5 text-purple-600" />
+              <span className="text-xs">Reviews</span>
+            </Button>
+          </Link>
+          <Link to={`/clients/${clientId}/portfolio`}>
+            <Button variant="outline" className="w-full h-auto py-3 flex-col gap-1" data-testid="portfolio-link">
+              <PieChart className="h-5 w-5 text-amber-600" />
+              <span className="text-xs">Portfolio</span>
+            </Button>
+          </Link>
+          <a 
+            href={reportsApi.downloadAnalysis(clientId, currentCurrency.code)} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" className="w-full h-auto py-3 flex-col gap-1" data-testid="download-report-link">
+              <Download className="h-5 w-5 text-slate-600" />
+              <span className="text-xs">Report</span>
+            </Button>
+          </a>
+        </div>
+
         {/* Main Content */}
         <Tabs defaultValue="analysis" className="space-y-6">
           <TabsList>
