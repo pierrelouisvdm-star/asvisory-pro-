@@ -294,62 +294,77 @@ export const Dashboard = () => {
         <SectionHeader
           badge="Investment"
           title="Investment Calculators"
-          description="Powerful tools for projecting growth, calculating returns, and analyzing bonds."
+          description="Powerful tools for projecting growth and calculating returns."
           icon={TrendingUp}
         />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 gap-5">
           {investmentCalculators.map((calc, index) => (
             <CalculatorCard key={calc.id} calc={calc} index={index} />
           ))}
         </div>
       </section>
 
-      {/* Insurance Section */}
-      <section className="bg-slate-50 dark:bg-slate-900/50 py-16">
+      {/* Debt Calculators Section */}
+      <section className="bg-slate-50 dark:bg-navy-900/30 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="Insurance"
-            title="Insurance & Retirement"
-            description="Comprehensive tools for life insurance, disability coverage, and retirement planning."
-            icon={Shield}
+            badge="Debt"
+            title="Debt & Loan Calculators"
+            description="Analyze bonds, vehicle finance, and optimize debt repayment strategies."
+            icon={CreditCard}
           />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {insuranceCalculators.map((calc, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {debtCalculators.map((calc, index) => (
               <CalculatorCard key={calc.id} calc={calc} index={index} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Personal Finance Section */}
+      {/* Insurance Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <SectionHeader
-          badge="Personal Finance"
-          title="Personal Finance Tools"
-          description="Take control with budgeting, debt management, tax planning, and wealth tracking."
-          icon={Wallet}
+          badge="Insurance"
+          title="Insurance & Retirement"
+          description="Comprehensive tools for life insurance, disability coverage, and retirement planning."
+          icon={Shield}
         />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-          {personalFinanceTools.map((calc, index) => (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {insuranceCalculators.map((calc, index) => (
             <CalculatorCard key={calc.id} calc={calc} index={index} />
           ))}
         </div>
       </section>
 
-      {/* Planning Tools Section */}
-      <section className="bg-slate-50 dark:bg-slate-900/50 py-16">
+      {/* Personal Finance Section */}
+      <section className="bg-slate-50 dark:bg-navy-900/30 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
-            badge="Planning"
-            title="Future Planning"
-            description="Plan for major life events with estate planning, education savings, and risk assessment."
-            icon={ScrollText}
+            badge="Personal Finance"
+            title="Personal Finance Tools"
+            description="Take control with budgeting, tax planning, and wealth tracking."
+            icon={Wallet}
           />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {planningTools.map((calc, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {personalFinanceTools.map((calc, index) => (
               <CalculatorCard key={calc.id} calc={calc} index={index} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Planning Tools Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <SectionHeader
+          badge="Planning"
+          title="Future Planning"
+          description="Plan for major life events with estate planning and education savings."
+          icon={ScrollText}
+        />
+        <div className="grid sm:grid-cols-2 gap-5">
+          {planningTools.map((calc, index) => (
+            <CalculatorCard key={calc.id} calc={calc} index={index} />
+          ))}
         </div>
       </section>
 
