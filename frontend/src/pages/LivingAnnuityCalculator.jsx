@@ -399,6 +399,7 @@ export const LivingAnnuityCalculator = () => {
                   <ResultDisplay
                     label="Years Capital Will Last"
                     value={results.yearsLasting}
+                    prefix=""
                     suffix=" years"
                     size="xl"
                     variant={results.isDrawdownSustainable ? "success" : "muted"}
