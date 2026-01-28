@@ -28,30 +28,17 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    const response = await fetch(`${API_URL}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const text = await response.text();
-    let data;
     try {
-      data = JSON.parse(text);
-    } catch (e) {
-      console.error('Failed to parse response:', text);
-      throw new Error('Invalid server response');
+      const { data } = await axios.post(`${API_URL}/api/auth/login`, { email, password });
+      
+      setToken(data.access_token);
+      setUser(data.user);
+      localStorage.setItem('advisorypro_token', data.access_token);
+      localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
+      return data;
+    } catch (error) {
+      throw new Error(error.response?.data?.detail || 'Invalid email or password');
     }
-    
-    if (!response.ok) {
-      throw new Error(data?.detail || 'Invalid email or password');
-    }
-
-    setToken(data.access_token);
-    setUser(data.user);
-    localStorage.setItem('advisorypro_token', data.access_token);
-    localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
-    return data;
   };
 
   const register = async (email, password, fullName, company) => {
