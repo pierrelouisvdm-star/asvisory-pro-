@@ -81,7 +81,8 @@ async def login(credentials: UserLogin):
         email=user_doc["email"],
         full_name=user_doc.get("full_name"),
         company=user_doc.get("company"),
-        is_active=user_doc.get("is_active", True)
+        is_active=user_doc.get("is_active", True),
+        is_admin=user_doc.get("is_admin", False)
     )
     
     # Create access token
