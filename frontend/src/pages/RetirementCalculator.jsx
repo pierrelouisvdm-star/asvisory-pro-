@@ -487,10 +487,11 @@ export const RetirementCalculator = () => {
             >
               <div className="space-y-5">
                 <InputField
-                  label="Social Security (Monthly)"
-                  id="socialSecurityBenefit"
-                  value={currentScenario.socialSecurityBenefit}
-                  onChange={(val) => updateScenario(0, 'socialSecurityBenefit', val)}
+                  label="Government Pension (Monthly)"
+                  id="governmentPension"
+                  value={currentScenario.governmentPension}
+                  onChange={(val) => updateScenario(0, 'governmentPension', val)}
+                  tooltip="SA Old Age Grant or other government pension (means tested)"
                   prefix={symbol}
                   min={0}
                   step={100}
