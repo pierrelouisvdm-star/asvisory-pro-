@@ -217,7 +217,7 @@ export const CarFinanceCalculator = () => {
           id={`price-${scenario.id}`}
           value={scenario.vehiclePrice}
           onChange={(val) => updateScenario(index, 'vehiclePrice', val)}
-          prefix="$"
+          prefix={symbol}
           min={1000}
           step={1000}
         />
@@ -226,7 +226,7 @@ export const CarFinanceCalculator = () => {
           id={`down-${scenario.id}`}
           value={scenario.downPayment}
           onChange={(val) => updateScenario(index, 'downPayment', val)}
-          prefix="$"
+          prefix={symbol}
           min={0}
           step={500}
         />
@@ -356,7 +356,7 @@ export const CarFinanceCalculator = () => {
                   id="vehiclePrice"
                   value={currentScenario.vehiclePrice}
                   onChange={(val) => updateScenario(0, 'vehiclePrice', val)}
-                  prefix="$"
+                  prefix={symbol}
                   min={1000}
                   step={1000}
                   tooltip="The total price of the vehicle"
@@ -367,7 +367,7 @@ export const CarFinanceCalculator = () => {
                   id="downPayment"
                   value={currentScenario.downPayment}
                   onChange={(val) => updateScenario(0, 'downPayment', val)}
-                  prefix="$"
+                  prefix={symbol}
                   min={0}
                   step={500}
                 />
@@ -377,7 +377,7 @@ export const CarFinanceCalculator = () => {
                   id="tradeInValue"
                   value={currentScenario.tradeInValue}
                   onChange={(val) => updateScenario(0, 'tradeInValue', val)}
-                  prefix="$"
+                  prefix={symbol}
                   min={0}
                   step={500}
                 />
