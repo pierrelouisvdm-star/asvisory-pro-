@@ -61,6 +61,7 @@ export const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { login, register, isAuthenticated } = useAuth();
+  const { refreshSubscription } = useSubscription();
   const navigate = useNavigate();
 
   // Login form state
