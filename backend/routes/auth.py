@@ -69,11 +69,17 @@ async def login(credentials: UserLogin):
             detail="Invalid email or password"
         )
     
+    # Update last_login
+    await db.users.update_one(
+        {"id": user_doc["id"]},
+        {"$set": {"last_login": datetime.now(timezone.utc).isoformat()}}
+    )
+    
     # Create user response (without hashed password)
     user = User(
         id=user_doc["id"],
         email=user_doc["email"],
-        full_name=user_doc["full_name"],
+        full_name=user_doc.get("full_name"),
         company=user_doc.get("company"),
         is_active=user_doc.get("is_active", True)
     )
