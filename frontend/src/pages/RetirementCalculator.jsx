@@ -91,7 +91,7 @@ export const RetirementCalculator = () => {
     const inflatedGovernmentPension = governmentPension * Math.pow(1 + inflation, yearsToRetirement);
     const inflatedPension = pensionBenefit * Math.pow(1 + inflation, yearsToRetirement);
     const inflatedOther = otherRetirementIncome;
-    const totalOtherIncome = (inflatedSocialSecurity + inflatedPension + inflatedOther) * 12;
+    const totalOtherIncome = (inflatedGovernmentPension + inflatedPension + inflatedOther) * 12;
     
     // Gap that needs to be covered by savings
     const annualGap = annualIncomeNeeded - totalOtherIncome;
