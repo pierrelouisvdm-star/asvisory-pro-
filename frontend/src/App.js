@@ -135,6 +135,8 @@ function App() {
                   <Route path="/life-insurance" element={<ProtectedRoute><GatedCalculator path="/life-insurance"><LifeInsuranceCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-disability" element={<ProtectedRoute><GatedCalculator path="/income-disability"><IncomeDisabilityCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/retirement" element={<ProtectedRoute><GatedCalculator path="/retirement"><RetirementCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/living-annuity" element={<ProtectedRoute><GatedCalculator path="/living-annuity"><LivingAnnuityCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/retirement-tax" element={<ProtectedRoute><GatedCalculator path="/retirement-tax"><RetirementTaxCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/tax-calculator"><TaxCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/estate-planning" element={<ProtectedRoute><GatedCalculator path="/estate-planning"><EstatePlanningCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/emergency-fund" element={<ProtectedRoute><GatedCalculator path="/emergency-fund"><EmergencyFundCalculator /></GatedCalculator></ProtectedRoute>} />
