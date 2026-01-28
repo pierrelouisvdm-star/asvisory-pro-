@@ -33,12 +33,12 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json();
+    
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.detail || 'Login failed');
+      throw new Error(data.detail || 'Login failed');
     }
 
-    const data = await response.json();
     setToken(data.access_token);
     setUser(data.user);
     localStorage.setItem('advisorypro_token', data.access_token);
