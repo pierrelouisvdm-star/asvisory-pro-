@@ -82,9 +82,9 @@ async def login(credentials: UserLogin):
 
 
 @router.get("/me", response_model=User)
-async def get_current_user(user_id: str):
-    """Get current user profile (requires user_id from token)"""
-    user_doc = await db.users.find_one({"id": user_id}, {"_id": 0, "hashed_password": 0})
+async def get_current_user_profile(current_user: dict = Depends(get_current_user)):
+    """Get current user profile"""
+    user_doc = await db.users.find_one({"id": current_user["id"]}, {"_id": 0, "hashed_password": 0})
     if not user_doc:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
