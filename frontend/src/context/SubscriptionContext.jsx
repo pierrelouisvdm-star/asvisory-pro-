@@ -50,8 +50,14 @@ export const SubscriptionProvider = ({ children }) => {
     loading: true,
   });
 
-  const fetchSubscription = useCallback(async () => {
-    if (!isAuthenticated) {
+  const fetchSubscription = useCallback(async (forceRefresh = false) => {
+    // Check token directly from localStorage for explicit refreshes
+    // This handles the case where React state hasn't updated yet after registration
+    const hasToken = forceRefresh 
+      ? !!localStorage.getItem('advisorypro_token')
+      : isAuthenticated;
+    
+    if (!hasToken) {
       setSubscription({
         tier: 'free',
         status: 'active',
