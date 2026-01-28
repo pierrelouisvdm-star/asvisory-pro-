@@ -306,6 +306,25 @@ Each shortfall includes:
 - Feature gating: 4 free calculators, paid calculators require subscription
 - AI Assistant chatbot (GPT-5.2) for Premium users
 
+### January 28, 2026 - Analytics Dashboard & Subscription Tiers Re-enabled
+- **Analytics Dashboard**: New admin page at `/analytics` tracking user registrations and activity
+  - Total Users, New Today, This Week, Active Users stats
+  - 7-day activity chart (registrations vs logins)
+  - Recent Users table with details
+  - Accessible via header navigation for authenticated users
+- **Subscription Tiers Re-enabled**: Full tiered system restored
+  - Free (R0): 4 basic calculators, no client management
+  - Standard (R49/month): All 15 calculators, 5 clients, PDF reports, market tracker
+  - Premium (R149/month): Unlimited clients, all advanced tools
+- **Coupon System**: 50 active premium lifetime coupon codes generated
+  - Codes grant lifetime premium access upon redemption
+  - Validation endpoint: `/api/coupons/validate/{code}`
+  - Redemption endpoint: `/api/coupons/redeem`
+- **Bug Fixes**:
+  - Fixed analytics API route prefix (was `/api/api/analytics`, now `/api/analytics`)
+  - Fixed `/me` endpoint returning user data correctly
+  - Added `created_at` and `last_login` tracking to user model
+
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
 - Added JWT authentication (email/password)
