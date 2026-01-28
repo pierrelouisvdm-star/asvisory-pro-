@@ -11,8 +11,8 @@ import { Badge } from '@/components/ui/badge';
 import { Building2, LineChart, Wallet, Info, TrendingDown } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 
-// SA Prime Rate (as of 2024)
-const SA_PRIME_RATE = 11.75;
+// SA Prime Rate (as of 2025)
+const SA_PRIME_RATE = 10.25;
 
 const loanTermOptions = [
   { value: '10', label: '10 years' },
