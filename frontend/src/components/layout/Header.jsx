@@ -55,7 +55,7 @@ export const Header = () => {
     window.location.href = '/';
   };
 
-  const NavDropdown = ({ items, label, icon: Icon, isActive }) => (
+  const NavDropdown = ({ items, label, icon: Icon, isActive, grouped = false }) => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
@@ -73,27 +73,60 @@ export const Header = () => {
           <ChevronDown className="h-3 w-3 opacity-60" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="w-52 p-1">
-        {items.map((item) => {
-          const ItemIcon = item.icon;
-          return (
-            <DropdownMenuItem key={item.path} asChild>
-              <Link 
-                to={item.path} 
-                data-testid={`nav-link-${item.path.replace('/', '')}`}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-md transition-colors",
-                  location.pathname === item.path 
-                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
-                    : "hover:bg-slate-100 dark:hover:bg-slate-800"
-                )}
-              >
-                <ItemIcon className="h-4 w-4 opacity-70" />
-                <span className="font-medium">{item.label}</span>
-              </Link>
-            </DropdownMenuItem>
-          );
-        })}
+      <DropdownMenuContent align="start" className="w-56 p-1">
+        {grouped ? (
+          // Group items by section
+          <>
+            {[...new Set(items.map(i => i.section))].map((section, idx) => (
+              <React.Fragment key={section}>
+                {idx > 0 && <DropdownMenuSeparator />}
+                <DropdownMenuLabel className="text-xs text-slate-500 px-3 py-1">{section}</DropdownMenuLabel>
+                {items.filter(i => i.section === section).map((item) => {
+                  const ItemIcon = item.icon;
+                  return (
+                    <DropdownMenuItem key={item.path} asChild>
+                      <Link 
+                        to={item.path} 
+                        data-testid={`nav-link-${item.path.replace('/', '')}`}
+                        className={cn(
+                          "flex items-center gap-3 px-3 py-2 cursor-pointer rounded-md transition-colors",
+                          location.pathname === item.path 
+                            ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
+                            : "hover:bg-slate-100 dark:hover:bg-slate-800"
+                        )}
+                      >
+                        <ItemIcon className="h-4 w-4 opacity-70" />
+                        <span className="font-medium">{item.label}</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  );
+                })}
+              </React.Fragment>
+            ))}
+          </>
+        ) : (
+          // Simple list
+          items.map((item) => {
+            const ItemIcon = item.icon;
+            return (
+              <DropdownMenuItem key={item.path} asChild>
+                <Link 
+                  to={item.path} 
+                  data-testid={`nav-link-${item.path.replace('/', '')}`}
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2.5 cursor-pointer rounded-md transition-colors",
+                    location.pathname === item.path 
+                      ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
+                      : "hover:bg-slate-100 dark:hover:bg-slate-800"
+                  )}
+                >
+                  <ItemIcon className="h-4 w-4 opacity-70" />
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              </DropdownMenuItem>
+            );
+          })
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
