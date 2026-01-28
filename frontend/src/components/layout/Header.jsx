@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Calculator, TrendingUp, Percent, Car, Building2, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown, Receipt, ScrollText, ShieldAlert, CreditCard, GraduationCap, Wallet, Landmark, Users, LogIn, LogOut, User, BarChart3, GitCompare, ArrowRightLeft, Crown, LineChart, Briefcase, Target } from 'lucide-react';
+import { Calculator, TrendingUp, Percent, Car, Building2, Menu, X, Shield, Umbrella, PiggyBank, ChevronDown, Receipt, ScrollText, ShieldAlert, CreditCard, GraduationCap, Wallet, Landmark, Users, LogIn, LogOut, User, BarChart3, GitCompare, ArrowRightLeft, Crown, LineChart, Briefcase, Target, Wrench } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import { useAuth } from '@/context/AuthContext';
@@ -14,35 +14,43 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 
-// Category 1: Calculators (Investment & Debt)
-const calculators = [
-  { path: '/future-value', label: 'Future Value', icon: TrendingUp, section: 'Investment' },
-  { path: '/compound-interest', label: 'Compound Interest', icon: Percent, section: 'Investment' },
-  { path: '/bond', label: 'Bond Calculator', icon: Building2, section: 'Debt' },
-  { path: '/car-finance', label: 'Vehicle Finance', icon: Car, section: 'Debt' },
-  { path: '/debt-payoff', label: 'Debt Payoff', icon: CreditCard, section: 'Debt' },
-  { path: '/loan-comparison', label: 'Loan Comparison', icon: GitCompare, section: 'Debt' },
+// Category 1: Invest
+const investCalcs = [
+  { path: '/future-value', label: 'Future Value', icon: TrendingUp },
+  { path: '/compound-interest', label: 'Compound Interest', icon: Percent },
 ];
 
-// Category 2: Retirement (Dedicated Section)
-const retirementTools = [
-  { path: '/retirement', label: 'Retirement Planner', icon: PiggyBank },
-  { path: '/living-annuity', label: 'Living Annuity', icon: Wallet },
-  { path: '/retirement-tax', label: 'Tax Savings Calculator', icon: Receipt },
+// Category 2: Debt
+const debtCalcs = [
+  { path: '/bond', label: 'Bond Calculator', icon: Building2 },
+  { path: '/car-finance', label: 'Vehicle Finance', icon: Car },
+  { path: '/debt-payoff', label: 'Debt Payoff', icon: CreditCard },
+  { path: '/loan-comparison', label: 'Loan Comparison', icon: GitCompare },
+];
+
+// Category 3: Insurance
+const insuranceCalcs = [
   { path: '/life-insurance', label: 'Life Insurance', icon: Shield },
   { path: '/income-disability', label: 'Income Protection', icon: Umbrella },
 ];
 
-// Category 3: Tools & Planning
-const toolsAndPlanning = [
-  { path: '/tax-calculator', label: 'Tax Calculator', icon: Receipt, section: 'Personal Finance' },
-  { path: '/budget-planner', label: 'Budget Planner', icon: Wallet, section: 'Personal Finance' },
-  { path: '/net-worth', label: 'Net Worth Tracker', icon: Landmark, section: 'Personal Finance' },
-  { path: '/emergency-fund', label: 'Emergency Fund', icon: ShieldAlert, section: 'Personal Finance' },
-  { path: '/estate-planning', label: 'Estate Planning', icon: ScrollText, section: 'Planning' },
-  { path: '/education-savings', label: 'Education Savings', icon: GraduationCap, section: 'Planning' },
-  { path: '/cash-flow', label: 'Cash Flow Projector', icon: ArrowRightLeft, section: 'Advanced' },
-  { path: '/monte-carlo', label: 'Monte Carlo Simulator', icon: BarChart3, section: 'Advanced' },
+// Category 4: Retirement
+const retirementCalcs = [
+  { path: '/retirement', label: 'Retirement Planner', icon: PiggyBank },
+  { path: '/living-annuity', label: 'Living Annuity', icon: Wallet },
+  { path: '/retirement-tax', label: 'Tax Savings Calculator', icon: Receipt },
+];
+
+// Additional Tools
+const moreTools = [
+  { path: '/tax-calculator', label: 'Tax Calculator', icon: Receipt },
+  { path: '/budget-planner', label: 'Budget Planner', icon: Wallet },
+  { path: '/net-worth', label: 'Net Worth Tracker', icon: Landmark },
+  { path: '/emergency-fund', label: 'Emergency Fund', icon: ShieldAlert },
+  { path: '/estate-planning', label: 'Estate Planning', icon: ScrollText },
+  { path: '/education-savings', label: 'Education Savings', icon: GraduationCap },
+  { path: '/cash-flow', label: 'Cash Flow Projector', icon: ArrowRightLeft },
+  { path: '/monte-carlo', label: 'Monte Carlo Simulator', icon: BarChart3 },
 ];
 
 export const Header = () => {
