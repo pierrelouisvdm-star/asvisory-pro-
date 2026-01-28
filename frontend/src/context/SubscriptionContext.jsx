@@ -140,7 +140,7 @@ export const SubscriptionProvider = ({ children }) => {
     try {
       const result = await couponApi.redeem(code);
       if (result.success) {
-        await fetchSubscription(); // Refresh subscription
+        await fetchSubscription(true); // Refresh subscription with forceRefresh
       }
       return result;
     } catch (error) {
