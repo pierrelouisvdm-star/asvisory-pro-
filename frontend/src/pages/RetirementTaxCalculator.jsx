@@ -473,12 +473,14 @@ export const RetirementTaxCalculator = () => {
             <ResultDisplay
               label="Marginal Rate"
               value={results.marginalRate}
+              prefix=""
               suffix="%"
               variant="muted"
             />
             <ResultDisplay
               label="Effective Rate"
               value={results.effectiveTaxRateWithRA.toFixed(1)}
+              prefix=""
               suffix="%"
               variant="muted"
             />
