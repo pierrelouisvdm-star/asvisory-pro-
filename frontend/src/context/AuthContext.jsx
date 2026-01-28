@@ -63,33 +63,22 @@ export const AuthProvider = ({ children }) => {
       }),
     });
 
-    // Clone response to safely handle both success and error cases
-    const responseClone = response.clone();
-    
+    let data;
     try {
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.detail || 'Registration failed');
-      }
-
-      setToken(data.access_token);
-      setUser(data.user);
-      localStorage.setItem('advisorypro_token', data.access_token);
-      localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
-      return data;
-    } catch (parseError) {
-      // If JSON parsing fails, try to get error from clone
-      if (!response.ok) {
-        try {
-          const errorData = await responseClone.json();
-          throw new Error(errorData.detail || 'Registration failed');
-        } catch {
-          throw new Error('Registration failed');
-        }
-      }
-      throw parseError;
+      data = await response.json();
+    } catch (e) {
+      throw new Error('Invalid server response');
     }
+    
+    if (!response.ok) {
+      throw new Error(data?.detail || 'Registration failed');
+    }
+
+    setToken(data.access_token);
+    setUser(data.user);
+    localStorage.setItem('advisorypro_token', data.access_token);
+    localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
+    return data;
   };
 
   const logout = () => {
