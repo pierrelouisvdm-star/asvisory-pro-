@@ -172,8 +172,8 @@ async def get_all_users(
 
 
 @router.get("/stats", response_model=UserStats)
-async def get_user_stats(current_user: dict = Depends(get_current_user)):
-    """Get user statistics"""
+async def get_user_stats(current_user: dict = Depends(require_admin)):
+    """Get user statistics - Admin only"""
     
     now = datetime.now(timezone.utc)
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
