@@ -161,7 +161,7 @@ export const SubscriptionProvider = ({ children }) => {
       isStandard,
       isFree,
       isTrialing,
-      refreshSubscription: fetchSubscription,
+      refreshSubscription: () => fetchSubscription(true),
       redeemCoupon,
       FREE_CALCULATORS,
     }}>
