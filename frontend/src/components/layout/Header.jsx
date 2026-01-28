@@ -204,26 +204,38 @@ export const Header = () => {
             )}
 
             <NavDropdown 
-              items={calculators} 
-              label="Calculators" 
-              icon={Calculator}
-              isActive={calculators.some(c => c.path === location.pathname)}
-              grouped={true}
+              items={investCalcs} 
+              label="Invest" 
+              icon={TrendingUp}
+              isActive={investCalcs.some(c => c.path === location.pathname)}
             />
 
             <NavDropdown 
-              items={retirementTools} 
+              items={debtCalcs} 
+              label="Debt" 
+              icon={CreditCard}
+              isActive={debtCalcs.some(c => c.path === location.pathname)}
+            />
+
+            <NavDropdown 
+              items={insuranceCalcs} 
+              label="Insurance" 
+              icon={Shield}
+              isActive={insuranceCalcs.some(c => c.path === location.pathname)}
+            />
+
+            <NavDropdown 
+              items={retirementCalcs} 
               label="Retirement" 
               icon={PiggyBank}
-              isActive={retirementTools.some(c => c.path === location.pathname)}
+              isActive={retirementCalcs.some(c => c.path === location.pathname)}
             />
             
             <NavDropdown 
-              items={toolsAndPlanning} 
-              label="Tools" 
-              icon={Briefcase}
-              isActive={toolsAndPlanning.some(c => c.path === location.pathname)}
-              grouped={true}
+              items={moreTools} 
+              label="More" 
+              icon={Wrench}
+              isActive={moreTools.some(c => c.path === location.pathname)}
             />
           </nav>
 
