@@ -153,7 +153,7 @@ export const RetirementCalculator = () => {
     
     const incomeBreakdown = [
       { name: 'From Savings', value: sustainableWithdrawal, color: 'hsl(43, 74%, 49%)' },
-      { name: 'Social Security', value: inflatedSocialSecurity * 12, color: 'hsl(150, 45%, 35%)' },
+      { name: 'Government Pension', value: inflatedGovernmentPension * 12, color: 'hsl(150, 45%, 35%)' },
       { name: 'Pension', value: inflatedPension * 12, color: 'hsl(215, 50%, 35%)' },
       { name: 'Other Income', value: inflatedOther * 12, color: 'hsl(180, 45%, 40%)' },
     ].filter(item => item.value > 0);
