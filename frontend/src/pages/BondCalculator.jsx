@@ -8,7 +8,7 @@ import { ComparisonMode } from '@/components/calculators/ComparisonMode';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Building2, Calculator, GitCompare, BarChart3, LineChart } from 'lucide-react';
+import { Building2, Calculator, GitCompare, BarChart3, LineChart, Wallet } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 
 const paymentFrequencyOptions = [
