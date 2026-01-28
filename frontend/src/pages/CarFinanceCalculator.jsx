@@ -535,16 +535,16 @@ export const CarFinanceCalculator = () => {
                 <div className="grid grid-cols-3 gap-4 mb-4">
                   <div className="text-center p-4 rounded-lg bg-muted/30">
                     <p className="text-xs text-muted-foreground mb-1">Loan Monthly</p>
-                    <p className="text-lg font-bold text-foreground">${results.loanPayment.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-foreground">{symbol}{results.loanPayment.toFixed(2)}</p>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-muted/30">
                     <p className="text-xs text-muted-foreground mb-1">Lease Monthly</p>
-                    <p className="text-lg font-bold text-foreground">${results.leasePayment.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-foreground">{symbol}{results.leasePayment.toFixed(2)}</p>
                   </div>
                   <div className="text-center p-4 rounded-lg bg-gold/10 border border-gold/20">
                     <p className="text-xs text-muted-foreground mb-1">Difference</p>
                     <p className="text-lg font-bold text-gold">
-                      ${Math.abs(results.loanPayment - results.leasePayment).toFixed(2)}
+                      {symbol}{Math.abs(results.loanPayment - results.leasePayment).toFixed(2)}
                       <span className="text-xs font-normal">/mo</span>
                     </p>
                   </div>
