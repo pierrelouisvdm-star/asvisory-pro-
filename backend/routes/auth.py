@@ -26,7 +26,8 @@ async def register(user_data: UserCreate):
         )
     
     # Check if this is the owner/admin email
-    is_admin = user_data.email.lower() == "pierrelouisvdm@gmail.com"
+    admin_email = os.environ.get("ADMIN_EMAIL", "").lower()
+    is_admin = admin_email and user_data.email.lower() == admin_email
     
     # Create user
     user = User(
