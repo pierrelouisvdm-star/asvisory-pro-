@@ -196,45 +196,26 @@ export const Header = () => {
             )}
 
             <NavDropdown 
-              items={investmentCalcs} 
-              label="Investment" 
-              icon={TrendingUp}
-              isActive={investmentCalcs.some(c => c.path === location.pathname)}
+              items={calculators} 
+              label="Calculators" 
+              icon={Calculator}
+              isActive={calculators.some(c => c.path === location.pathname)}
+              grouped={true}
             />
 
             <NavDropdown 
-              items={debtCalcs} 
-              label="Debt" 
-              icon={CreditCard}
-              isActive={debtCalcs.some(c => c.path === location.pathname)}
+              items={retirementTools} 
+              label="Retirement" 
+              icon={PiggyBank}
+              isActive={retirementTools.some(c => c.path === location.pathname)}
             />
             
             <NavDropdown 
-              items={insuranceCalcs} 
-              label="Insurance" 
-              icon={Shield}
-              isActive={insuranceCalcs.some(c => c.path === location.pathname)}
-            />
-            
-            <NavDropdown 
-              items={personalFinanceTools} 
-              label="Finance" 
-              icon={Wallet}
-              isActive={personalFinanceTools.some(c => c.path === location.pathname)}
-            />
-            
-            <NavDropdown 
-              items={planningTools} 
-              label="Planning" 
-              icon={ScrollText}
-              isActive={planningTools.some(c => c.path === location.pathname)}
-            />
-
-            <NavDropdown 
-              items={advancedTools} 
-              label="Advanced" 
-              icon={BarChart3}
-              isActive={advancedTools.some(c => c.path === location.pathname)}
+              items={toolsAndPlanning} 
+              label="Tools" 
+              icon={Briefcase}
+              isActive={toolsAndPlanning.some(c => c.path === location.pathname)}
+              grouped={true}
             />
           </nav>
 
