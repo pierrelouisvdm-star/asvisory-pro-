@@ -431,12 +431,14 @@ export const LivingAnnuityCalculator = () => {
             <ResultDisplay
               label="Effective Tax Rate"
               value={results.effectiveTaxRate.toFixed(1)}
+              prefix=""
               suffix="%"
               variant="muted"
             />
             <ResultDisplay
               label="Sustainable Rate"
               value={results.sustainableRate.toFixed(1)}
+              prefix=""
               suffix="%"
               variant="success"
               tooltip="Recommended drawdown rate for your situation"
