@@ -44,6 +44,7 @@ const defaultScenario = () => ({
 });
 
 export const CarFinanceCalculator = () => {
+  const { symbol, formatCurrency } = useCurrency();
   const [mode, setMode] = useState('single');
   const [calculationType, setCalculationType] = useState('loan'); // 'loan' or 'lease'
   const [scenarios, setScenarios] = useState([defaultScenario()]);
