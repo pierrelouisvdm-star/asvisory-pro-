@@ -185,7 +185,7 @@ export const AuthPage = () => {
 
                   {/* Login Tab */}
                   <TabsContent value="login">
-                    <form onSubmit={handleLogin} className="space-y-4">
+                    <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="login-email">Email</Label>
                         <div className="relative">
@@ -228,7 +228,8 @@ export const AuthPage = () => {
                       )}
 
                       <Button 
-                        type="submit" 
+                        type="button"
+                        onClick={handleLogin}
                         className="w-full bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold" 
                         disabled={isLoading}
                         data-testid="login-submit-btn"
@@ -236,7 +237,7 @@ export const AuthPage = () => {
                         {isLoading ? 'Signing in...' : 'Sign In'}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
-                    </form>
+                    </div>
                   </TabsContent>
 
                   {/* Register Tab */}
