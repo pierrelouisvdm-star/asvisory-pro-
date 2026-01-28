@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Percent, Calculator, GitCompare, BarChart3, LineChart } from 'lucide-react';
+import { useCurrency } from '@/context/CurrencyContext';
 
 const compoundingOptions = [
   { value: '1', label: 'Annually' },
@@ -30,6 +31,7 @@ const defaultScenario = () => ({
 });
 
 export const CompoundInterestCalculator = () => {
+  const { symbol, formatCurrency } = useCurrency();
   const [mode, setMode] = useState('single');
   const [scenarios, setScenarios] = useState([defaultScenario()]);
 
