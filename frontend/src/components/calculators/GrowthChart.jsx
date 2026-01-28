@@ -17,6 +17,7 @@ import {
   Cell,
 } from 'recharts';
 import { cn } from '@/lib/utils';
+import { useCurrency } from '@/context/CurrencyContext';
 
 const CHART_COLORS = {
   emerald: '#10b981',
@@ -29,7 +30,7 @@ const CHART_COLORS = {
   cyan: '#06b6d4',
 };
 
-const CustomTooltip = ({ active, payload, label, prefix = '$', suffix = '' }) => {
+const CustomTooltip = ({ active, payload, label, prefix = 'R', suffix = '' }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-navy-900/60 border border-navy-700 rounded-lg shadow-lg p-4">
