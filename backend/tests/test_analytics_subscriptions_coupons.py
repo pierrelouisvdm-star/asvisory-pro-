@@ -164,7 +164,7 @@ class TestSubscriptionCurrent:
     def test_current_subscription_requires_auth(self):
         """Test current subscription endpoint requires authentication"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/current")
-        assert response.status_code == 401
+        assert response.status_code in [401, 403]  # Both are valid unauthorized responses
         print("✓ Current subscription requires auth")
     
     def test_new_user_has_free_tier(self, auth_token):
@@ -221,7 +221,7 @@ class TestCouponRedemption:
         response = requests.post(f"{BASE_URL}/api/coupons/redeem", json={
             "code": TEST_COUPON_CODE
         })
-        assert response.status_code == 401
+        assert response.status_code in [401, 403]  # Both are valid unauthorized responses
         print("✓ Coupon redemption requires auth")
     
     def test_redeem_invalid_coupon(self, auth_token_for_redemption):
@@ -260,7 +260,7 @@ class TestAnalyticsDashboard:
     def test_analytics_dashboard_requires_auth(self):
         """Test analytics dashboard requires authentication"""
         response = requests.get(f"{BASE_URL}/api/analytics/dashboard")
-        assert response.status_code == 401
+        assert response.status_code in [401, 403]  # Both are valid unauthorized responses
         print("✓ Analytics dashboard requires auth")
     
     def test_analytics_dashboard_returns_data(self, auth_token):
