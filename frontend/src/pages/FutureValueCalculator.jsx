@@ -48,66 +48,93 @@ export const FutureValueCalculator = () => {
   const calculateFutureValue = useCallback((scenario) => {
     const { principal, rate, years, contribution, contributionFrequency, compounding, inflationRate, investmentFee } = scenario;
     
-    // Net rate after fees
     const grossRate = rate / 100;
     const feeRate = investmentFee / 100;
-    const netRate = Math.max(0, grossRate - feeRate); // Ensure non-negative
     const inflation = inflationRate / 100;
-    const n = parseFloat(compounding);
+    const n = parseFloat(compounding); // compounding periods per year
     const contributionsPerYear = parseFloat(contributionFrequency);
+    const contributionPerPeriod = contribution; // contribution per period
     
-    // Future value with fees (net rate)
-    const fvPrincipal = principal * Math.pow(1 + netRate / n, n * years);
-    const periodicRate = netRate / contributionsPerYear;
-    const totalPeriods = contributionsPerYear * years;
+    // Calculate with ACCURATE fee deduction (fees charged on total assets annually)
+    // We'll simulate month by month for accuracy
+    const periodsPerYear = Math.max(n, contributionsPerYear);
+    const totalPeriods = periodsPerYear * years;
+    const periodicGrossRate = grossRate / periodsPerYear;
+    const periodicFeeRate = feeRate / periodsPerYear; // Fee charged each period
+    const contributionPeriods = contributionsPerYear;
     
-    let fvContributions = 0;
-    if (periodicRate > 0) {
-      fvContributions = contribution * ((Math.pow(1 + periodicRate, totalPeriods) - 1) / periodicRate);
-    } else {
-      fvContributions = contribution * totalPeriods;
+    // Simulation WITH fees (accurate method)
+    let balanceWithFees = principal;
+    let totalFeesDeducted = 0;
+    const yearlyData = [];
+    
+    // Add year 0
+    yearlyData.push({
+      year: 'Year 0',
+      nominal: principal,
+      real: principal,
+      principal: principal,
+      interest: 0,
+    });
+    
+    for (let year = 1; year <= years; year++) {
+      // Monthly simulation for this year
+      for (let month = 1; month <= 12; month++) {
+        // Add contribution at start of period (if this is a contribution period)
+        if (contributionsPerYear === 12 || 
+            (contributionsPerYear === 4 && month % 3 === 1) ||
+            (contributionsPerYear === 2 && month % 6 === 1) ||
+            (contributionsPerYear === 1 && month === 1)) {
+          balanceWithFees += contributionPerPeriod;
+        }
+        
+        // Apply monthly growth
+        const monthlyGrossRate = grossRate / 12;
+        balanceWithFees *= (1 + monthlyGrossRate);
+        
+        // Deduct monthly fee (based on current balance)
+        const monthlyFee = balanceWithFees * (feeRate / 12);
+        balanceWithFees -= monthlyFee;
+        totalFeesDeducted += monthlyFee;
+      }
+      
+      const totalContributedSoFar = principal + (contribution * contributionsPerYear * year);
+      const realBalance = balanceWithFees / Math.pow(1 + inflation, year);
+      
+      yearlyData.push({
+        year: `Year ${year}`,
+        nominal: balanceWithFees,
+        real: realBalance,
+        principal: totalContributedSoFar,
+        interest: balanceWithFees - totalContributedSoFar,
+      });
     }
     
-    const nominalFV = fvPrincipal + fvContributions;
+    const nominalFV = balanceWithFees;
     const totalContributed = principal + (contribution * contributionsPerYear * years);
     const totalInterest = nominalFV - totalContributed;
     
-    // Future value without fees (gross rate) for comparison
-    const fvPrincipalGross = principal * Math.pow(1 + grossRate / n, n * years);
-    const periodicRateGross = grossRate / contributionsPerYear;
-    
-    let fvContributionsGross = 0;
-    if (periodicRateGross > 0) {
-      fvContributionsGross = contribution * ((Math.pow(1 + periodicRateGross, totalPeriods) - 1) / periodicRateGross);
-    } else {
-      fvContributionsGross = contribution * totalPeriods;
+    // Calculate WITHOUT fees for comparison (same simulation but no fee deduction)
+    let balanceWithoutFees = principal;
+    for (let year = 1; year <= years; year++) {
+      for (let month = 1; month <= 12; month++) {
+        if (contributionsPerYear === 12 || 
+            (contributionsPerYear === 4 && month % 3 === 1) ||
+            (contributionsPerYear === 2 && month % 6 === 1) ||
+            (contributionsPerYear === 1 && month === 1)) {
+          balanceWithoutFees += contributionPerPeriod;
+        }
+        const monthlyGrossRate = grossRate / 12;
+        balanceWithoutFees *= (1 + monthlyGrossRate);
+      }
     }
     
-    const fvWithoutFees = fvPrincipalGross + fvContributionsGross;
-    const totalFeesPaid = Math.max(0, fvWithoutFees - nominalFV);
+    const fvWithoutFees = balanceWithoutFees;
+    const totalFeesPaid = totalFeesDeducted;
     
     // Real (inflation-adjusted) future value
     const realFV = nominalFV / Math.pow(1 + inflation, years);
     const purchasingPowerLoss = nominalFV - realFV;
-
-    // Generate yearly data for chart
-    const yearlyData = [];
-    for (let year = 0; year <= years; year++) {
-      const yearFvPrincipal = principal * Math.pow(1 + netRate / n, n * year);
-      const yearPeriods = contributionsPerYear * year;
-      const yearFvContributions = year === 0 ? 0 : contribution * ((Math.pow(1 + periodicRate, yearPeriods) - 1) / periodicRate);
-      const yearNominal = yearFvPrincipal + yearFvContributions;
-      const yearReal = yearNominal / Math.pow(1 + inflation, year);
-      const yearContributed = principal + (contribution * contributionsPerYear * year);
-      
-      yearlyData.push({
-        year: `Year ${year}`,
-        nominal: yearNominal,
-        real: yearReal,
-        principal: yearContributed,
-        interest: yearNominal - yearContributed,
-      });
-    }
 
     return {
       futureValue: nominalFV,
@@ -120,6 +147,7 @@ export const FutureValueCalculator = () => {
       effectiveReturn: (((nominalFV / totalContributed) - 1) * 100 / years).toFixed(2),
       yearlyData,
       finalValue: nominalFV,
+      fvWithoutFees,
     };
   }, []);
 
