@@ -5,7 +5,7 @@ import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 export const ResultDisplay = ({ 
   label, 
   value, 
-  prefix = '$', 
+  prefix = 'R', 
   suffix = '',
   trend,
   trendValue,
