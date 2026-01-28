@@ -33,6 +33,8 @@ import { LoanComparisonTool } from "@/pages/LoanComparisonTool";
 import { PricingPage } from "@/pages/PricingPage";
 import { SubscriptionSuccessPage } from "@/pages/SubscriptionSuccessPage";
 import { AnalyticsDashboard } from "@/pages/AnalyticsDashboard";
+import { LivingAnnuityCalculator } from "@/pages/LivingAnnuityCalculator";
+import { RetirementTaxCalculator } from "@/pages/RetirementTaxCalculator";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
