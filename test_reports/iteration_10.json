@@ -1,0 +1,79 @@
+{
+  "summary": "Completed frontend testing of AdvisoryPro bug fixes. All 7 requested features verified working: Bond Calculator loads with ZAR currency and SA Prime Rate (11.75%), Retirement Calculator shows 'Government Pension' label (not 'Social Security'), coupon code registration grants premium access, premium users can access gated calculators (/retirement, /life-insurance), free users are correctly blocked from premium calculators.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/test_reports/iteration_10.json"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "N/A (frontend only testing)",
+    "frontend": "100% (all 7 features verified)"
+  },
+  "test_credentials": {
+    "existing_free_user": {
+      "email": "test_ai_advisor@test.com",
+      "password": "TestPass123!"
+    },
+    "new_premium_user_created": {
+      "email": "test_coupon_32526@test.com",
+      "password": "TestPass123!",
+      "tier": "premium",
+      "coupon_used": "ADVPRO-17LE0LPO"
+    }
+  },
+  "seed_data_creation": "Created new premium user via coupon code registration",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All bug fixes verified working. Bond Calculator accessible at /bond for all users (free feature), shows SA Prime Rate 11.75% and ZAR currency. Retirement Calculator at /retirement is premium-gated, shows 'Government Pension' label in 'Other Income Sources' section. Coupon codes ADVPRO-17LE0LPO and ADVPRO-BSUA7O7X are now redeemed. SubscriptionContext forceRefresh parameter working correctly for immediate subscription state updates after registration.",
+  "test_results": {
+    "bond_calculator": {
+      "page_loads": "PASS",
+      "zar_currency_displayed": "PASS",
+      "sa_prime_rate_11_75_percent": "PASS",
+      "monthly_payment_calculation": "PASS",
+      "transfer_costs_displayed": "PASS",
+      "free_user_access": "PASS"
+    },
+    "retirement_calculator": {
+      "page_loads_for_premium": "PASS",
+      "government_pension_label": "PASS",
+      "social_security_removed": "PASS",
+      "calculations_working": "PASS",
+      "free_user_blocked": "PASS"
+    },
+    "coupon_registration": {
+      "coupon_validation": "PASS",
+      "coupon_applied_on_registration": "PASS",
+      "premium_access_granted": "PASS"
+    },
+    "subscription_gating": {
+      "premium_user_access_retirement": "PASS",
+      "premium_user_access_life_insurance": "PASS",
+      "free_user_blocked_retirement": "PASS",
+      "free_user_blocked_life_insurance": "PASS"
+    }
+  },
+  "features_verified": {
+    "bond_calculator_loads_with_zar": true,
+    "bond_calculator_shows_sa_prime_rate": true,
+    "retirement_calculator_government_pension_label": true,
+    "retirement_calculator_no_social_security": true,
+    "coupon_registration_grants_premium": true,
+    "premium_user_access_gated_calculators": true,
+    "free_user_blocked_from_premium": true
+  },
+  "coupon_codes_status": {
+    "ADVPRO-17LE0LPO": "redeemed (used in this test)",
+    "ADVPRO-BSUA7O7X": "redeemed (previously used)"
+  }
+}
