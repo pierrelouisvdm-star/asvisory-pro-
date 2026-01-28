@@ -290,34 +290,13 @@ export const BondCalculator = () => {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Input Section */}
         <div className="lg:col-span-1 space-y-6">
-          {mode === 'single' ? (
-            <CalculatorCard
-              title="Loan Details"
-              description="Enter your home loan parameters"
-              icon={Building2}
-            >
-              {renderScenarioInputs(currentScenario, 0)}
-            </CalculatorCard>
-          ) : (
-            scenarios.map((scenario, index) => (
-              <CalculatorCard
-                key={scenario.id}
-                title={`Scenario ${index + 1}`}
-                description={index === 0 ? "Base scenario" : "Comparison"}
-                icon={Building2}
-                onRemove={scenarios.length > 1 ? () => removeScenario(scenario.id) : undefined}
-              >
-                {renderScenarioInputs(scenario, index)}
-              </CalculatorCard>
-            ))
-          )}
-          
-          {mode === 'compare' && scenarios.length < 3 && (
-            <Button onClick={addScenario} variant="outline" className="w-full gap-2">
-              <GitCompare className="h-4 w-4" />
-              Add Scenario
-            </Button>
-          )}
+          <CalculatorCard
+            title="Loan Details"
+            description="Enter your home loan parameters"
+            icon={Building2}
+          >
+            {renderScenarioInputs(currentScenario, 0)}
+          </CalculatorCard>
 
           {/* LTV Warning */}
           {currentResults.ltv > 90 && (
