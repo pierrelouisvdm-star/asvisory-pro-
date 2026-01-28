@@ -65,10 +65,12 @@ export const AuthProvider = ({ children }) => {
       }),
     });
 
+    const text = await response.text();
     let data;
     try {
-      data = await response.json();
+      data = JSON.parse(text);
     } catch (e) {
+      console.error('Failed to parse response:', text);
       throw new Error('Invalid server response');
     }
     
