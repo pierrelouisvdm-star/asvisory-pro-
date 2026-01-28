@@ -29,6 +29,8 @@ const insuranceCalcs = [
   { path: '/life-insurance', label: 'Life Insurance', icon: Shield },
   { path: '/income-disability', label: 'Income Disability', icon: Umbrella },
   { path: '/retirement', label: 'Retirement Planner', icon: PiggyBank },
+  { path: '/living-annuity', label: 'Living Annuity', icon: Wallet },
+  { path: '/retirement-tax', label: 'Retirement Tax Savings', icon: Receipt },
 ];
 
 const personalFinanceTools = [
