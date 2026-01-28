@@ -311,6 +311,25 @@ Each shortfall includes:
 - Feature gating: 4 free calculators, paid calculators require subscription
 - AI Assistant chatbot (GPT-5.2) for Premium users
 
+### January 28, 2026 - Bug Fixes & Deployment Readiness
+- **BondCalculator Fixed**: Calculator now works as South African Home Loan (Bond) Calculator
+  - Uses SA Prime Rate (11.75%)
+  - Shows ZAR currency (R) by default
+  - Calculates monthly payments, total interest, transfer costs
+  - No longer shows blank page
+- **RetirementCalculator Localization**: Removed US-specific "Social Security" references
+  - Changed to "Government Pension" for SA context
+  - Fixed duplicate code causing syntax errors (lines 453-456)
+- **Coupon/Subscription Flow Fixed**: Users with coupon codes now get immediate premium access
+  - Fixed race condition where subscription context didn't refresh after registration
+  - Added `forceRefresh` parameter to `fetchSubscription()` to check localStorage directly
+  - Ensures premium access is available immediately after coupon redemption
+- **Deployment Ready**: Application passed deployment agent analysis
+  - No hardcoded values
+  - All environment variables properly configured
+  - Database queries optimized
+  - Supervisor configuration correct
+
 ### January 28, 2026 - Analytics Dashboard & Subscription Tiers Re-enabled
 - **Analytics Dashboard**: New admin page at `/analytics` tracking user registrations and activity
   - Total Users, New Today, This Week, Active Users stats
