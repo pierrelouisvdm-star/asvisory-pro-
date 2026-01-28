@@ -148,33 +148,50 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Free Access Banner */}
+      {/* Pricing Section */}
       <section className="relative py-20 bg-navy-900/30">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="p-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
-              100% Free Access
-            </h2>
-            <p className="text-slate-300 mb-8">
-              All features unlocked. No credit card required. No hidden fees.
-            </p>
-            
-            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-8">
-              {allFeatures.map((feature, i) => (
-                <div key={i} className="flex items-center gap-2 text-left">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                  <span className="text-slate-300">{feature}</span>
-                </div>
-              ))}
-            </div>
-            
-            <Link to="/auth">
-              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-10">
-                Start Now - It's Free
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
+            Simple, Transparent Pricing
+          </h2>
+          <p className="text-slate-400 mb-10">
+            Start free, upgrade as you grow. No hidden fees.
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-6 mb-10">
+            {pricingTiers.map((tier, i) => (
+              <div 
+                key={i} 
+                className={`p-6 rounded-2xl border ${
+                  tier.highlight 
+                    ? 'bg-emerald-500/10 border-emerald-500/50' 
+                    : 'bg-navy-900/60 border-navy-700'
+                }`}
+              >
+                <h3 className="font-display text-xl font-bold text-white mb-1">{tier.name}</h3>
+                <p className="text-3xl font-bold text-emerald-400 mb-4">{tier.price}</p>
+                <ul className="space-y-2 text-left">
+                  {tier.features.map((feature, j) => (
+                    <li key={j} className="flex items-center gap-2 text-sm text-slate-300">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+          
+          <p className="text-slate-400 text-sm mb-6">
+            Have a coupon code? Enter it during registration for instant Premium access!
+          </p>
+          
+          <Link to="/auth">
+            <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-10">
+              Get Started Free
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </section>
 
