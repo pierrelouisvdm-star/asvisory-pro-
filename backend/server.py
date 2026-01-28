@@ -34,6 +34,7 @@ from routes.subscriptions import router as subscriptions_router
 from routes.market import router as market_router
 from routes.ai_advisor import router as ai_advisor_router
 from routes.coupons import router as coupons_router
+from routes.analytics import router as analytics_router
 
 # Include route modules
 api_router.include_router(auth_router)
