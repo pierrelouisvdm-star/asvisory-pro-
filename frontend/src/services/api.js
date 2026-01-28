@@ -368,3 +368,27 @@ export const marketApi = {
     return handleResponse(response);
   },
 };
+
+// Analytics API
+export const analyticsApi = {
+  getDashboard: async () => {
+    const response = await fetch(`${API_URL}/api/analytics/dashboard`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  getUsers: async (limit = 100, skip = 0) => {
+    const response = await fetch(`${API_URL}/api/analytics/users?limit=${limit}&skip=${skip}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  getStats: async () => {
+    const response = await fetch(`${API_URL}/api/analytics/stats`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+};
