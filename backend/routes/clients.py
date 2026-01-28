@@ -43,7 +43,7 @@ async def get_clients(user_id: str = Depends(get_current_user_id)):
     clients = await db.clients.find(
         {"advisor_id": user_id}, 
         {"_id": 0}
-    ).sort("created_at", -1).to_list(1000)
+    ).sort("created_at", -1).to_list(100)
     
     return clients
 
