@@ -178,9 +178,9 @@ export const CarFinanceCalculator = () => {
   ];
 
   const printInputs = [
-    { label: 'Vehicle Price', value: `$${currentScenario.vehiclePrice.toLocaleString()}` },
-    { label: 'Down Payment', value: `$${currentScenario.downPayment.toLocaleString()}` },
-    { label: 'Trade-In Value', value: `$${currentScenario.tradeInValue.toLocaleString()}` },
+    { label: 'Vehicle Price', value: `${symbol}${currentScenario.vehiclePrice.toLocaleString()}` },
+    { label: 'Down Payment', value: `${symbol}${currentScenario.downPayment.toLocaleString()}` },
+    { label: 'Trade-In Value', value: `${symbol}${currentScenario.tradeInValue.toLocaleString()}` },
     { label: 'Sales Tax', value: `${currentScenario.salesTax}%` },
     ...(calculationType === 'loan' 
       ? [
@@ -196,16 +196,16 @@ export const CarFinanceCalculator = () => {
 
   const printResults = calculationType === 'loan' 
     ? [
-        { label: 'Monthly Payment', value: `$${results.loanPayment.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
-        { label: 'Total of Payments', value: `$${results.totalLoanPayments.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
-        { label: 'Total Interest', value: `$${results.totalLoanInterest.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
-        { label: 'Total Cost', value: `$${results.totalLoanCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
+        { label: 'Monthly Payment', value: formatCurrency(results.loanPayment) },
+        { label: 'Total of Payments', value: formatCurrency(results.totalLoanPayments) },
+        { label: 'Total Interest', value: formatCurrency(results.totalLoanInterest) },
+        { label: 'Total Cost', value: formatCurrency(results.totalLoanCost) },
       ]
     : [
-        { label: 'Monthly Payment', value: `$${results.leasePayment.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
-        { label: 'Total of Payments', value: `$${results.totalLeasePayments.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
-        { label: 'Residual Value', value: `$${results.residualValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
-        { label: 'Total Lease Cost', value: `$${results.totalLeaseCost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
+        { label: 'Monthly Payment', value: formatCurrency(results.leasePayment) },
+        { label: 'Total of Payments', value: formatCurrency(results.totalLeasePayments) },
+        { label: 'Residual Value', value: formatCurrency(results.residualValue) },
+        { label: 'Total Lease Cost', value: formatCurrency(results.totalLeaseCost) },
       ];
 
   const renderScenarioForm = (scenario, index) => {
