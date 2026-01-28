@@ -344,14 +344,31 @@ export const Dashboard = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <SectionHeader
           badge="Insurance"
-          title="Insurance & Retirement"
-          description="Comprehensive tools for life insurance, disability coverage, and retirement planning."
+          title="Insurance Calculators"
+          description="Comprehensive tools for life insurance and income protection planning."
           icon={Shield}
         />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid sm:grid-cols-2 gap-5">
           {insuranceCalculators.map((calc, index) => (
             <CalculatorCard key={calc.id} calc={calc} index={index} />
           ))}
+        </div>
+      </section>
+
+      {/* Retirement Section */}
+      <section className="bg-gradient-to-b from-emerald-900/20 to-navy-950 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            badge="Retirement"
+            title="Retirement Planning Suite"
+            description="Plan, optimize, and manage your retirement with SA-specific tools."
+            icon={PiggyBank}
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {retirementCalculators.map((calc, index) => (
+              <CalculatorCard key={calc.id} calc={calc} index={index} />
+            ))}
+          </div>
         </div>
       </section>
 
