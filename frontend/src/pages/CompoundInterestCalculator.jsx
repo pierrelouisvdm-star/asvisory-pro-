@@ -151,7 +151,7 @@ export const CompoundInterestCalculator = () => {
           id={`principal-${scenario.id}`}
           value={scenario.principal}
           onChange={(val) => updateScenario(index, 'principal', val)}
-          prefix="$"
+          prefix={symbol}
           min={0}
           step={1000}
         />
@@ -264,7 +264,7 @@ export const CompoundInterestCalculator = () => {
                   id="principal"
                   value={currentScenario.principal}
                   onChange={(val) => updateScenario(0, 'principal', val)}
-                  prefix="$"
+                  prefix={symbol}
                   min={0}
                   step={1000}
                   tooltip="The initial amount invested"
