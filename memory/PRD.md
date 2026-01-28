@@ -313,7 +313,7 @@ Each shortfall includes:
 
 ### January 28, 2026 - Bug Fixes & Deployment Readiness
 - **BondCalculator Fixed**: Calculator now works as South African Home Loan (Bond) Calculator
-  - Uses SA Prime Rate (11.75%)
+  - Uses SA Prime Rate (10.25%) - corrected from 11.75%
   - Shows ZAR currency (R) by default
   - Calculates monthly payments, total interest, transfer costs
   - No longer shows blank page
@@ -324,6 +324,10 @@ Each shortfall includes:
   - Fixed race condition where subscription context didn't refresh after registration
   - Added `forceRefresh` parameter to `fetchSubscription()` to check localStorage directly
   - Ensures premium access is available immediately after coupon redemption
+- **Login Error "body disturbed/locked" Fixed**: 
+  - Replaced native fetch API with axios in AuthContext.jsx
+  - Error handling now works correctly for invalid credentials
+  - Shows proper "Invalid email or password" message instead of cryptic stream errors
 - **Deployment Ready**: Application passed deployment agent analysis
   - No hardcoded values
   - All environment variables properly configured
