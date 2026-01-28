@@ -447,10 +447,7 @@ export const RetirementCalculator = () => {
                   value={currentScenario.expectedReturn}
                   onChange={(val) => updateScenario(0, 'expectedReturn', val)}
                   min={1}
-                  max={50}
-                  step={0.5}
-                  suffix="%"
-                />
+                  max={20}
                   step={0.5}
                   suffix="%"
                 />
