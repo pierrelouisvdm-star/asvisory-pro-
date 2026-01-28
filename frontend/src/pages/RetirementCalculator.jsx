@@ -57,7 +57,7 @@ export const RetirementCalculator = () => {
       currentAge, retirementAge, lifeExpectancy, currentSavings,
       monthlyContribution, currentIncome, desiredRetirementIncome,
       expectedReturn, inflationRate, investmentFee,
-      socialSecurityBenefit, pensionBenefit, otherRetirementIncome
+      governmentPension, pensionBenefit, otherRetirementIncome
     } = scenario;
     
     const retAge = parseFloat(retirementAge);
