@@ -42,35 +42,22 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (email, password, fullName, company) => {
-    const response = await fetch(`${API_URL}/api/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        email, 
-        password, 
-        full_name: fullName,
-        company 
-      }),
-    });
-
-    const text = await response.text();
-    let data;
     try {
-      data = JSON.parse(text);
-    } catch (e) {
-      console.error('Failed to parse response:', text);
-      throw new Error('Invalid server response');
+      const { data } = await axios.post(`${API_URL}/api/auth/register`, {
+        email,
+        password,
+        full_name: fullName,
+        company
+      });
+      
+      setToken(data.access_token);
+      setUser(data.user);
+      localStorage.setItem('advisorypro_token', data.access_token);
+      localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
+      return data;
+    } catch (error) {
+      throw new Error(error.response?.data?.detail || 'Registration failed');
     }
-    
-    if (!response.ok) {
-      throw new Error(data?.detail || 'Registration failed');
-    }
-
-    setToken(data.access_token);
-    setUser(data.user);
-    localStorage.setItem('advisorypro_token', data.access_token);
-    localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
-    return data;
   };
 
   const logout = () => {
