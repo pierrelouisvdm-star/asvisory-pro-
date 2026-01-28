@@ -107,31 +107,46 @@ async def get_analytics_dashboard(current_user: dict = Depends(require_admin)):
             is_active=user.get("is_active", True)
         ))
     
-    # Get activity for last 7 days
+    # Get activity for last 7 days using optimized aggregation
+    week_ago = now - timedelta(days=7)
+    week_ago_str = week_ago.isoformat()
+    
+    # Build activity data for last 7 days
     activity = []
+    activity_dict = {}
+    
+    # Initialize all 7 days with zero counts
     for i in range(7):
         day = now - timedelta(days=i)
-        day_start = day.replace(hour=0, minute=0, second=0, microsecond=0)
-        day_end = day_start + timedelta(days=1)
-        
-        registrations = await db.users.count_documents({
-            "created_at": {
-                "$gte": day_start.isoformat(),
-                "$lt": day_end.isoformat()
-            }
-        })
-        
-        logins = await db.users.count_documents({
-            "last_login": {
-                "$gte": day_start.isoformat(),
-                "$lt": day_end.isoformat()
-            }
-        })
-        
+        date_str = day.strftime("%Y-%m-%d")
+        activity_dict[date_str] = {"registrations": 0, "logins": 0}
+    
+    # Get registration counts per day
+    reg_pipeline = [
+        {"$match": {"created_at": {"$gte": week_ago_str}}},
+        {"$project": {"date": {"$substr": ["$created_at", 0, 10]}}},
+        {"$group": {"_id": "$date", "count": {"$sum": 1}}}
+    ]
+    async for doc in db.users.aggregate(reg_pipeline):
+        if doc["_id"] in activity_dict:
+            activity_dict[doc["_id"]]["registrations"] = doc["count"]
+    
+    # Get login counts per day
+    login_pipeline = [
+        {"$match": {"last_login": {"$gte": week_ago_str}}},
+        {"$project": {"date": {"$substr": ["$last_login", 0, 10]}}},
+        {"$group": {"_id": "$date", "count": {"$sum": 1}}}
+    ]
+    async for doc in db.users.aggregate(login_pipeline):
+        if doc["_id"] in activity_dict:
+            activity_dict[doc["_id"]]["logins"] = doc["count"]
+    
+    # Convert to sorted list (oldest first)
+    for date_str in sorted(activity_dict.keys()):
         activity.append(UserActivity(
-            date=day_start.strftime("%Y-%m-%d"),
-            registrations=registrations,
-            logins=logins
+            date=date_str,
+            registrations=activity_dict[date_str]["registrations"],
+            logins=activity_dict[date_str]["logins"]
         ))
     
     activity.reverse()  # Oldest first
