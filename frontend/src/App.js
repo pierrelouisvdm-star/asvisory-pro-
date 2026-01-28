@@ -141,6 +141,7 @@ function App() {
                   <Route path="/budget-planner" element={<ProtectedRoute><GatedCalculator path="/budget-planner"><BudgetPlanner /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/net-worth" element={<ProtectedRoute><GatedCalculator path="/net-worth"><NetWorthTracker /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/risk-profile" element={<ProtectedRoute><GatedCalculator path="/risk-profile"><RiskProfileQuiz /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />
