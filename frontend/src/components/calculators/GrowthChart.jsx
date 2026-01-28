@@ -55,7 +55,7 @@ export const GrowthAreaChart = ({
   dataKeys = [{ key: 'value', name: 'Value', color: CHART_COLORS.emerald }],
   xAxisKey = 'year',
   height = 300,
-  prefix = '$',
+  prefix = 'R',
   className,
   showLegend = true,
   gradientId = 'colorGradient',
@@ -112,7 +112,7 @@ export const ComparisonBarChart = ({
   dataKeys = [{ key: 'value', name: 'Value', color: CHART_COLORS.emerald }],
   xAxisKey = 'name',
   height = 300,
-  prefix = '$',
+  prefix = 'R',
   className,
   showLegend = true,
   layout = 'horizontal',
@@ -167,7 +167,7 @@ export const MultiLineChart = ({
   dataKeys = [{ key: 'value', name: 'Value', color: CHART_COLORS.emerald }],
   xAxisKey = 'year',
   height = 300,
-  prefix = '$',
+  prefix = 'R',
   className,
   showLegend = true,
 }) => {
@@ -215,7 +215,7 @@ export const BreakdownPieChart = ({
   height = 300,
   innerRadius = 60,
   outerRadius = 100,
-  prefix = '$',
+  prefix = 'R',
   className,
 }) => {
   const COLORS = [CHART_COLORS.emerald, CHART_COLORS.slate, CHART_COLORS.teal, CHART_COLORS.slateLight];
