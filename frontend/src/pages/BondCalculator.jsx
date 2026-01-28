@@ -2,14 +2,13 @@ import React, { useState, useCallback, useMemo } from 'react';
 import { CalculatorCard } from '@/components/calculators/CalculatorCard';
 import { ResultDisplay, ResultGrid } from '@/components/calculators/ResultDisplay';
 import { InputField, SliderField, SelectField } from '@/components/calculators/InputField';
-import { GrowthAreaChart, MultiLineChart, BreakdownPieChart } from '@/components/calculators/GrowthChart';
+import { MultiLineChart, BreakdownPieChart } from '@/components/calculators/GrowthChart';
 import { PrintReport } from '@/components/calculators/PrintReport';
-import { ComparisonMode } from '@/components/calculators/ComparisonMode';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Building2, Calculator, GitCompare, BarChart3, LineChart, Wallet, Info, TrendingDown } from 'lucide-react';
+import { Building2, LineChart, Wallet, Info, TrendingDown } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 
 // SA Prime Rate (as of 2024)
