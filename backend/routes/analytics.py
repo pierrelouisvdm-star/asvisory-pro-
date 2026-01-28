@@ -145,11 +145,11 @@ async def get_analytics_dashboard(current_user: dict = Depends(require_admin)):
 
 @router.get("/users", response_model=List[UserListItem])
 async def get_all_users(
-    current_user: dict = Depends(get_current_user),
+    current_user: dict = Depends(require_admin),
     limit: int = 100,
     skip: int = 0
 ):
-    """Get all users with pagination"""
+    """Get all users with pagination - Admin only"""
     
     users_cursor = db.users.find(
         {},
