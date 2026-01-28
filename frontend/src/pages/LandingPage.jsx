@@ -41,12 +41,29 @@ const features = [
 ];
 
 const allFeatures = [
-  'All 15+ Financial Calculators',
-  'Unlimited Client Management',
-  'Live Market Tracker',
-  'AI Financial Assistant',
-  'PDF Report Generation',
-  'Advanced Analytics Tools',
+  'Future Value & Compound Interest',
+  'Bond & Car Finance Calculators',
+  'Basic Financial Tools',
+  'No Credit Card Required',
+];
+
+const pricingTiers = [
+  {
+    name: 'Free',
+    price: 'R0',
+    features: ['4 Basic Calculators', 'Future Value & Compound Interest', 'Bond & Car Finance'],
+  },
+  {
+    name: 'Standard',
+    price: 'R49/mo',
+    features: ['All 17 Calculators', '5 Clients', 'PDF Reports', 'Market Tracker'],
+  },
+  {
+    name: 'Premium',
+    price: 'R149/mo',
+    features: ['Everything in Standard', 'Unlimited Clients', 'AI Assistant', 'Advanced Tools'],
+    highlight: true,
+  },
 ];
 
 export const LandingPage = () => {
