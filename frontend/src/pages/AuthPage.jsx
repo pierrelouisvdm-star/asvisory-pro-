@@ -79,8 +79,7 @@ export const AuthPage = () => {
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponResult, setCouponResult] = useState(null);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     setIsLoading(true);
     setError('');
 
