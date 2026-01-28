@@ -25,11 +25,15 @@ async def register(user_data: UserCreate):
             detail="Email already registered"
         )
     
+    # Check if this is the owner/admin email
+    is_admin = user_data.email.lower() == "pierrelouisvdm@gmail.com"
+    
     # Create user
     user = User(
         email=user_data.email,
         full_name=user_data.full_name,
-        company=user_data.company
+        company=user_data.company,
+        is_admin=is_admin
     )
     
     # Hash password and store
