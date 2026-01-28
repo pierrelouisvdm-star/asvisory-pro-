@@ -110,7 +110,10 @@ export const AuthPage = () => {
         try {
           await couponApi.redeem(couponCode);
           toast.success('Coupon redeemed! You now have Premium access.');
+          // Refresh subscription to update the context with new tier
+          await refreshSubscription();
         } catch (couponErr) {
+          console.error('Coupon redemption error:', couponErr);
           toast.info('You can redeem your coupon from the Pricing page.');
         }
       }
