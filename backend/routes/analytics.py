@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from server import db
 from utils.auth import get_current_user
 
-router = APIRouter(prefix="/api/analytics", tags=["analytics"])
+router = APIRouter(prefix="/analytics", tags=["analytics"])
 
 
 class UserStats(BaseModel):
