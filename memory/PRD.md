@@ -206,17 +206,19 @@ Each shortfall includes:
 - **P3**: Secure a paid Moneyweb or JSE API for direct market data
 
 ## Status
-✅ **Complete** - Full SaaS Platform with Subscription Monetization + AI Assistant
-- Backend API: 100% pass rate (35/35 tests)
+✅ **Complete** - Full SaaS Platform with Subscription Monetization + AI Assistant + Analytics
+- Backend API: 100% pass rate (21/21 analytics/subscription tests)
 - Frontend: 100% pass rate
 - Auth flow: Working (register, login, logout)
 - Client CRUD: Working
 - Shortfall Analysis: Working with 8 categories
 - Advanced Tools: All 7 new tools working
-- **Subscription System**: 3 tiers with Stripe checkout
+- **Subscription System**: 3 tiers (Free R0, Standard R49/month, Premium R149/month) with Stripe checkout
 - **Market Tracker**: Live indices, commodities (Gold/Silver/Bitcoin), currencies
 - **Feature Gating**: 4 free calculators, paid calculators gated
 - **AI Assistant**: GPT-5.2 chatbot for premium users
+- **Analytics Dashboard**: User tracking at /analytics
+- **Coupon System**: 50 active premium lifetime codes
 - **Deployment Ready**: All environment variables properly configured, no hardcoded fallbacks
 
 ### Known Limitations
