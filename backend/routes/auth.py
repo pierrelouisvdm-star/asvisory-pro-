@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 from models.user import User, UserCreate, UserLogin, UserInDB, Token
-from utils.auth import verify_password, get_password_hash, create_access_token
+from utils.auth import verify_password, get_password_hash, create_access_token, get_current_user
+from datetime import datetime, timezone
 import os
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -39,7 +40,9 @@ async def register(user_data: UserCreate):
     
     # Save to database
     user_dict = user_in_db.model_dump()
-    user_dict['created_at'] = user_dict['created_at'].isoformat()
+    now = datetime.now(timezone.utc)
+    user_dict['created_at'] = now.isoformat()
+    user_dict['last_login'] = now.isoformat()
     await db.users.insert_one(user_dict)
     
     # Create access token
