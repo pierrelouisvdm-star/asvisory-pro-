@@ -407,7 +407,7 @@ export const BondCalculator = () => {
             <Tabs defaultValue="cashflow" className="w-full">
               <TabsList className="w-full justify-start">
                 <TabsTrigger value="cashflow" className="gap-2">
-                  <DollarSign className="h-4 w-4" />
+                  <Wallet className="h-4 w-4" />
                   Cash Flows
                 </TabsTrigger>
                 <TabsTrigger value="sensitivity" className="gap-2">
