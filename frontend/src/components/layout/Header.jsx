@@ -135,19 +135,34 @@ export const Header = () => {
             </Link>
 
             {isAuthenticated && (
-              <Link
-                to="/clients"
-                data-testid="nav-link-clients"
-                className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5",
-                  location.pathname.startsWith('/clients')
-                    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
-                )}
-              >
-                <Users className="h-4 w-4" />
-                Clients
-              </Link>
+              <>
+                <Link
+                  to="/clients"
+                  data-testid="nav-link-clients"
+                  className={cn(
+                    "px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5",
+                    location.pathname.startsWith('/clients')
+                      ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+                  )}
+                >
+                  <Users className="h-4 w-4" />
+                  Clients
+                </Link>
+                <Link
+                  to="/analytics"
+                  data-testid="nav-link-analytics"
+                  className={cn(
+                    "px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5",
+                    location.pathname === '/analytics'
+                      ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+                  )}
+                >
+                  <LineChart className="h-4 w-4" />
+                  Analytics
+                </Link>
+              </>
             )}
 
             <NavDropdown 
