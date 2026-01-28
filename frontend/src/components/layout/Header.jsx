@@ -325,15 +325,49 @@ export const Header = () => {
                 <span>Dashboard</span>
               </Link>
 
+              {isAuthenticated && (
+                <>
+                  <Link
+                    to="/clients"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200",
+                      location.pathname.startsWith('/clients')
+                        ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
+                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+                    )}
+                  >
+                    <Users className="h-5 w-5" />
+                    <span>Clients</span>
+                  </Link>
+                  {user?.is_admin && (
+                    <Link
+                      to="/analytics"
+                      onClick={() => setIsMenuOpen(false)}
+                      className={cn(
+                        "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all duration-200",
+                        location.pathname === '/analytics'
+                          ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400" 
+                          : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800"
+                      )}
+                    >
+                      <LineChart className="h-5 w-5" />
+                      <span>Analytics</span>
+                    </Link>
+                  )}
+                </>
+              )}
+
               {[
-                { title: 'Investment', items: investmentCalcs },
-                { title: 'Insurance', items: insuranceCalcs },
-                { title: 'Personal Finance', items: personalFinanceTools },
-                { title: 'Planning', items: planningTools },
-                { title: 'Advanced Tools', items: advancedTools },
+                { title: 'Invest', items: investCalcs, icon: TrendingUp },
+                { title: 'Debt', items: debtCalcs, icon: CreditCard },
+                { title: 'Insurance', items: insuranceCalcs, icon: Shield },
+                { title: 'Retirement', items: retirementCalcs, icon: PiggyBank },
+                { title: 'More Tools', items: moreTools, icon: Wrench },
               ].map((section) => (
                 <React.Fragment key={section.title}>
-                  <div className="px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-2">
+                  <div className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-3">
+                    <section.icon className="h-4 w-4" />
                     {section.title}
                   </div>
                   {section.items.map((item) => {
