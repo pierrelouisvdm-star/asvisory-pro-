@@ -183,7 +183,7 @@ export const BondCalculator = () => {
           id={`faceValue-${scenario.id}`}
           value={scenario.faceValue}
           onChange={(val) => updateScenario(index, 'faceValue', val)}
-          prefix="$"
+          prefix={symbol}
           min={100}
           step={100}
         />
@@ -299,7 +299,7 @@ export const BondCalculator = () => {
                   id="faceValue"
                   value={currentScenario.faceValue}
                   onChange={(val) => updateScenario(0, 'faceValue', val)}
-                  prefix="$"
+                  prefix={symbol}
                   min={100}
                   step={100}
                   tooltip="The bond's value at maturity"
