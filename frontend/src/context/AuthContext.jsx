@@ -33,33 +33,22 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ email, password }),
     });
 
-    // Clone response to safely handle both success and error cases
-    const responseClone = response.clone();
-    
+    let data;
     try {
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.detail || 'Login failed');
-      }
-
-      setToken(data.access_token);
-      setUser(data.user);
-      localStorage.setItem('advisorypro_token', data.access_token);
-      localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
-      return data;
-    } catch (parseError) {
-      // If JSON parsing fails, try to get error from clone
-      if (!response.ok) {
-        try {
-          const errorData = await responseClone.json();
-          throw new Error(errorData.detail || 'Login failed');
-        } catch {
-          throw new Error('Login failed');
-        }
-      }
-      throw parseError;
+      data = await response.json();
+    } catch (e) {
+      throw new Error('Invalid server response');
     }
+    
+    if (!response.ok) {
+      throw new Error(data?.detail || 'Invalid email or password');
+    }
+
+    setToken(data.access_token);
+    setUser(data.user);
+    localStorage.setItem('advisorypro_token', data.access_token);
+    localStorage.setItem('advisorypro_user', JSON.stringify(data.user));
+    return data;
   };
 
   const register = async (email, password, fullName, company) => {
