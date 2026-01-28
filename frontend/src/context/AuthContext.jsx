@@ -58,12 +58,12 @@ export const AuthProvider = ({ children }) => {
       }),
     });
 
+    const data = await response.json();
+    
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.detail || 'Registration failed');
+      throw new Error(data.detail || 'Registration failed');
     }
 
-    const data = await response.json();
     setToken(data.access_token);
     setUser(data.user);
     localStorage.setItem('advisorypro_token', data.access_token);
