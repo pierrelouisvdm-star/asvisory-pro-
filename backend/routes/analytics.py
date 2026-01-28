@@ -8,6 +8,17 @@ from utils.auth import get_current_user
 router = APIRouter(prefix="/analytics", tags=["analytics"])
 
 
+# Helper to check if user is admin
+async def require_admin(current_user: dict = Depends(get_current_user)):
+    """Require admin access for analytics"""
+    if not current_user.get("is_admin", False):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Admin access required"
+        )
+    return current_user
+
+
 class UserStats(BaseModel):
     total_users: int
     new_users_today: int
@@ -39,8 +50,8 @@ class AnalyticsDashboard(BaseModel):
 
 
 @router.get("/dashboard", response_model=AnalyticsDashboard)
-async def get_analytics_dashboard(current_user: dict = Depends(get_current_user)):
-    """Get analytics dashboard data"""
+async def get_analytics_dashboard(current_user: dict = Depends(require_admin)):
+    """Get analytics dashboard data - Admin only"""
     
     now = datetime.now(timezone.utc)
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
