@@ -37,7 +37,7 @@ const defaultScenario = () => ({
   contributionFrequency: '12',
   compounding: '12',
   inflationRate: 3,
-  investmentFee: 1,
+  investmentFee: 2,
 });
 
 export const FutureValueCalculator = () => {
