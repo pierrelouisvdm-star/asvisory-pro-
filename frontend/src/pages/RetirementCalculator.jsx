@@ -88,7 +88,7 @@ export const RetirementCalculator = () => {
     const monthlyIncomeNeeded = annualIncomeNeeded / 12;
     
     // Inflation-adjusted other income sources
-    const inflatedSocialSecurity = socialSecurityBenefit * Math.pow(1 + inflation, yearsToRetirement);
+    const inflatedGovernmentPension = governmentPension * Math.pow(1 + inflation, yearsToRetirement);
     const inflatedPension = pensionBenefit * Math.pow(1 + inflation, yearsToRetirement);
     const inflatedOther = otherRetirementIncome;
     const totalOtherIncome = (inflatedSocialSecurity + inflatedPension + inflatedOther) * 12;
