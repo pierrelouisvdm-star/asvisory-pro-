@@ -262,19 +262,12 @@ export const BondCalculator = () => {
             Calculate your monthly bond repayments using SA prime rate ({SA_PRIME_RATE}%)
           </p>
         </div>
-        <div className="flex items-center gap-3">
-          <ComparisonMode 
-            mode={mode} 
-            onModeChange={setMode}
-            scenarioCount={scenarios.length}
-          />
-          <PrintReport
-            title="Home Loan Analysis"
-            calculatorType="bond"
-            inputs={printInputs}
-            results={printResults}
-          />
-        </div>
+        <PrintReport
+          title="Home Loan Analysis"
+          calculatorType="bond"
+          inputs={printInputs}
+          results={printResults}
+        />
       </div>
 
       {/* Prime Rate Info */}
