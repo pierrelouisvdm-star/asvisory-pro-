@@ -95,12 +95,15 @@ const insuranceCalculators = [
   },
   {
     id: 'income-disability',
-    title: 'Income Disability',
+    title: 'Income Protection',
     description: 'Protect your income with disability coverage',
     icon: Umbrella,
     path: '/income-disability',
     features: ['Waiting Period', 'Benefit Analysis', 'Premiums'],
   },
+];
+
+const retirementCalculators = [
   {
     id: 'retirement',
     title: 'Retirement Planner',
@@ -108,6 +111,22 @@ const insuranceCalculators = [
     icon: PiggyBank,
     path: '/retirement',
     features: ['Funding Ratio', 'Income Sources', 'Inflation'],
+  },
+  {
+    id: 'living-annuity',
+    title: 'Living Annuity',
+    description: 'Calculate sustainable drawdown rates (2.5%-17.5%)',
+    icon: Wallet,
+    path: '/living-annuity',
+    features: ['SA Regulations', 'Sustainability', 'Tax Impact'],
+  },
+  {
+    id: 'retirement-tax',
+    title: 'Tax Savings Calculator',
+    description: 'Maximize RA contribution tax benefits',
+    icon: Receipt,
+    path: '/retirement-tax',
+    features: ['27.5% Limit', 'Tax Savings', 'Net Cost'],
   },
 ];
 
