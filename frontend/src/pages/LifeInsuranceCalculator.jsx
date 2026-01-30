@@ -490,6 +490,14 @@ export const LifeInsuranceCalculator = () => {
                     size="xl"
                     variant="premium"
                   />
+                  {results.dependents > 0 && (
+                    <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                      <Info className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                      <p className="text-sm text-emerald-400">
+                        {results.recommendationNote}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
