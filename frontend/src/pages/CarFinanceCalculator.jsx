@@ -383,14 +383,15 @@ export const CarFinanceCalculator = () => {
                 />
                 
                 <SliderField
-                  label="Sales Tax Rate"
+                  label="VAT Rate"
                   id="salesTax"
                   value={currentScenario.salesTax}
                   onChange={(val) => updateScenario(0, 'salesTax', val)}
                   min={0}
-                  max={15}
-                  step={0.25}
+                  max={20}
+                  step={0.5}
                   suffix="%"
+                  tooltip="South Africa VAT is 15%"
                 />
 
                 {calculationType === 'loan' ? (
