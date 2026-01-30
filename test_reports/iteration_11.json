@@ -1,0 +1,118 @@
+{
+  "summary": "Completed SA compliance audit verification for 5 calculators. All SA-specific regulatory items verified: Car Finance (VAT Rate 15%), Bond (SA Prime Rate 10.25%, Transfer Duty), Tax (2024/25 brackets), Estate Planning (20%/25% rates, R3.5M abatement), Living Annuity (2.5%-17.5% drawdown range).",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/test_reports/iteration_11.json",
+    "/app/CALCULATOR_AUDIT_REPORT.md"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "N/A (frontend only testing)",
+    "frontend": "100% (all 5 SA compliance items verified)"
+  },
+  "test_credentials": {
+    "admin_user": {
+      "email": "pierrelouisvdm@gmail.com",
+      "password": "Admin123!",
+      "tier": "free"
+    },
+    "premium_user": {
+      "email": "test_coupon_32526@test.com",
+      "password": "TestPass123!",
+      "tier": "premium"
+    }
+  },
+  "seed_data_creation": "None - used existing test accounts",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All SA compliance items verified. Car Finance Calculator shows 'VAT Rate' label with 15% default (line 386-395 in CarFinanceCalculator.jsx). Bond Calculator shows SA Prime Rate 10.25% and correct transfer duty brackets. Tax Calculator shows 2024/25 SA tax brackets with correct rates (18%-45%). Estate Planning Calculator uses R3.5M abatement and 20%/25% estate duty rates. Living Annuity Calculator enforces 2.5%-17.5% drawdown range per ASISA guidelines.",
+  "test_results": {
+    "car_finance_calculator": {
+      "vat_rate_label": "PASS - 'VAT Rate' label displayed (not 'Sales Tax')",
+      "vat_default_15_percent": "PASS - Default value is 15%",
+      "sa_vat_tooltip": "PASS - Tooltip shows 'South Africa VAT is 15%'",
+      "zar_currency": "PASS - Currency displayed in ZAR (R)"
+    },
+    "bond_calculator": {
+      "sa_prime_rate": "PASS - SA Prime Rate 10.25% displayed",
+      "prime_rate_info_banner": "PASS - Info banner explains SA Prime Lending Rate",
+      "transfer_duty_calculation": "PASS - Transfer Duty correctly calculated (R12,000 for R1.5M property)",
+      "transfer_duty_brackets": "PASS - Uses correct 2024 SA transfer duty brackets",
+      "conveyancing_fees": "PASS - Conveyancing fees displayed",
+      "bond_registration_cost": "PASS - Bond registration cost displayed"
+    },
+    "tax_calculator": {
+      "tax_year_2024_25": "PASS - '2024/2025 tax year' displayed in header",
+      "tax_brackets_correct": "PASS - All 7 SA tax brackets displayed correctly",
+      "bracket_1_r237100_18_percent": "PASS - R0 - R237,100 at 18%",
+      "bracket_2_r370500_26_percent": "PASS - R237,101 - R370,500 at 26%",
+      "bracket_3_r512800_31_percent": "PASS - R370,501 - R512,800 at 31%",
+      "bracket_4_r673000_36_percent": "PASS - R512,801 - R673,000 at 36%",
+      "bracket_5_r857900_39_percent": "PASS - R673,001 - R857,900 at 39%",
+      "bracket_6_r1817000_41_percent": "PASS - R857,901 - R1,817,000 at 41%",
+      "bracket_7_above_45_percent": "PASS - R1,817,001+ at 45%",
+      "primary_rebate_r17235": "PASS - Primary rebate R17,235 displayed",
+      "medical_credits": "PASS - Medical credits calculated correctly"
+    },
+    "estate_planning_calculator": {
+      "estate_duty_section": "PASS - Estate Duty section displayed",
+      "r3_5m_abatement": "PASS - R3.5M threshold applied in calculations",
+      "estate_duty_rate_20_percent": "PASS - 20% rate for first R30M above threshold",
+      "estate_duty_rate_25_percent": "PASS - 25% rate for amounts above R30M",
+      "executor_fees": "PASS - Executor fees (3.5% + VAT) displayed",
+      "spouse_rollover": "PASS - Section 4(q) spouse rollover implemented",
+      "calculation_correct": "PASS - Estate duty R280,000 for R9.8M net estate with 50% spouse rollover"
+    },
+    "living_annuity_calculator": {
+      "drawdown_range_header": "PASS - '(SA regulations: 2.5% - 17.5%)' in header",
+      "sars_info_banner": "PASS - SARS regulatory info banner displayed",
+      "min_drawdown_2_5_percent": "PASS - 2.5% (Minimum) option available",
+      "max_drawdown_17_5_percent": "PASS - 17.5% (Maximum) option available",
+      "all_drawdown_options": "PASS - All 7 drawdown options (2.5%, 5%, 7.5%, 10%, 12.5%, 15%, 17.5%)",
+      "sustainable_rate_calculation": "PASS - Sustainable rate calculated (4.8%)",
+      "senior_tax_rebates_mention": "PASS - Mentions seniors (65+) receive additional tax rebates"
+    }
+  },
+  "sa_compliance_verification": {
+    "vat_rate": {
+      "expected": "15%",
+      "actual": "15%",
+      "status": "VERIFIED"
+    },
+    "sa_prime_rate": {
+      "expected": "10.25%",
+      "actual": "10.25%",
+      "status": "VERIFIED"
+    },
+    "tax_brackets_2024_25": {
+      "expected": "7 brackets (18%-45%)",
+      "actual": "7 brackets (18%-45%)",
+      "status": "VERIFIED"
+    },
+    "estate_duty_rates": {
+      "expected": "20% / 25%",
+      "actual": "20% / 25%",
+      "status": "VERIFIED"
+    },
+    "estate_duty_abatement": {
+      "expected": "R3,500,000",
+      "actual": "R3,500,000",
+      "status": "VERIFIED"
+    },
+    "living_annuity_drawdown": {
+      "expected": "2.5% - 17.5%",
+      "actual": "2.5% - 17.5%",
+      "status": "VERIFIED"
+    }
+  }
+}
