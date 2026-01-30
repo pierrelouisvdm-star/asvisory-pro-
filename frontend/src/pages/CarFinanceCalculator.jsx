@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Car, Calculator, GitCompare, BarChart3, Calendar, CreditCard, Wallet } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const loanTermOptions = [
   { value: '24', label: '24 months (2 years)' },

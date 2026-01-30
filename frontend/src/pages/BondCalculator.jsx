@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Building2, LineChart, Wallet, Info, TrendingDown } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 // SA Prime Rate (as of 2025)
 const SA_PRIME_RATE = 10.25;

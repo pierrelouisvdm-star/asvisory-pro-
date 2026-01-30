@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CreditCard, TrendingDown, Plus, Trash2, Target, Zap, Snowflake } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
