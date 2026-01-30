@@ -220,6 +220,21 @@ export const AuthPage = () => {
                         </div>
                       </div>
 
+                      {/* Remember Me Checkbox */}
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="remember-me"
+                          checked={rememberMe}
+                          onChange={(e) => setRememberMe(e.target.checked)}
+                          className="h-4 w-4 rounded border-slate-600 bg-navy-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-navy-900"
+                          data-testid="remember-me-checkbox"
+                        />
+                        <Label htmlFor="remember-me" className="text-sm text-slate-400 cursor-pointer">
+                          Remember me for 30 days
+                        </Label>
+                      </div>
+
                       {error && (
                         <div className="flex items-center gap-2 text-red-400 text-sm">
                           <AlertCircle className="h-4 w-4" />
