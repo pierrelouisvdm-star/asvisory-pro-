@@ -83,7 +83,7 @@ export const LandingPage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
                 <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25">
-                  Get Started Free
+                  Get Started
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
