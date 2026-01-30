@@ -31,6 +31,7 @@ import { CashFlowProjector } from "@/pages/CashFlowProjector";
 import { MonteCarloSimulator } from "@/pages/MonteCarloSimulator";
 import { LoanComparisonTool } from "@/pages/LoanComparisonTool";
 import { PricingPage } from "@/pages/PricingPage";
+import { PaymentSuccessPage } from "@/pages/PaymentSuccessPage";
 import { SubscriptionSuccessPage } from "@/pages/SubscriptionSuccessPage";
 import { AnalyticsDashboard } from "@/pages/AnalyticsDashboard";
 import { LivingAnnuityCalculator } from "@/pages/LivingAnnuityCalculator";
