@@ -144,10 +144,10 @@ export const PricingPage = () => {
             </div>
             <CardTitle className="text-2xl text-white">Premium Plan</CardTitle>
             <div className="mt-4">
-              <span className="text-5xl font-bold text-white">R{PREMIUM_PRICE.toLocaleString()}</span>
-              <span className="text-slate-400 ml-2">once-off</span>
+              <span className="text-5xl font-bold text-white">R{PREMIUM_PRICE}</span>
+              <span className="text-slate-400 ml-2">/month</span>
             </div>
-            <p className="text-emerald-400 text-sm mt-2">Pay once, access forever</p>
+            <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
           </CardHeader>
 
           <CardContent className="pb-8">
