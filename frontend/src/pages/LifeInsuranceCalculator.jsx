@@ -33,7 +33,7 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const defaultScenario = () => ({
   id: generateId(),
-  annualIncome: 75000,
+  annualIncome: 360000, // R30,000 per month
   coverageMultiplier: '10',
   customCoverage: 750000,
   age: 35,
