@@ -73,7 +73,9 @@ async def get_current_user_id(credentials: HTTPAuthorizationCredentials = Depend
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> dict:
-    """Get the current user info from the JWT token"""
+    """Get the current user info from the database using JWT token"""
+    from server import db  # Import here to avoid circular imports
+    
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -87,12 +89,14 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         raise credentials_exception
     
     user_id: str = payload.get("sub")
-    email: str = payload.get("email")
     
     if user_id is None:
         raise credentials_exception
     
-    return {
-        "id": user_id,
-        "email": email
-    }
+    # Fetch full user data from database to get is_admin status
+    user = await db.users.find_one({"id": user_id}, {"_id": 0, "hashed_password": 0})
+    
+    if user is None:
+        raise credentials_exception
+    
+    return user
