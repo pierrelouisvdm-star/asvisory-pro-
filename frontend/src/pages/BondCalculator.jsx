@@ -270,6 +270,8 @@ export const BondCalculator = () => {
         />
       </div>
 
+      <Disclaimer />
+
       {/* Prime Rate Info */}
       <Card className="mb-6 border-blue-500/30 bg-blue-500/5">
         <CardContent className="p-4">
