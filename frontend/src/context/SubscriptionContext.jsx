@@ -95,10 +95,9 @@ export const SubscriptionProvider = ({ children }) => {
     fetchSubscription();
   }, [fetchSubscription]);
 
-  // Check if user has access to a specific feature
+  // Check if user has access to a specific feature - ALL features enabled
   const hasFeature = (featureName) => {
-    const features = subscription.features || TIER_FEATURES.free;
-    return !!features[featureName];
+    return true; // All features available to everyone
   };
 
   // Check if user can access a specific calculator - ALL users can access ALL calculators
