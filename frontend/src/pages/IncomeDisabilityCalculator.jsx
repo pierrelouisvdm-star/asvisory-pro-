@@ -215,8 +215,8 @@ export const IncomeDisabilityCalculator = () => {
           id={`coverage-${scenario.id}`}
           value={scenario.coveragePercent}
           onChange={(val) => updateScenario(index, 'coveragePercent', val)}
-          min={40}
-          max={70}
+          min={50}
+          max={100}
           step={5}
           suffix="%"
         />
