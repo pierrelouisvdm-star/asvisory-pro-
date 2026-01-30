@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { GraduationCap, Calendar, Target, TrendingUp, Baby, School, Building2, BookOpen, Shirt, Bus, Apple, Laptop, Plus, Minus, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 import { cn } from '@/lib/utils';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 // Education stages with SA-specific costs (annual fees in ZAR)
 const educationStages = {

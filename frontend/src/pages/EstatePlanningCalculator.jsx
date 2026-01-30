@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollText, Users, Building, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 // SA Estate Duty rates
 const ESTATE_DUTY_THRESHOLD = 3500000; // First R3.5M exempt

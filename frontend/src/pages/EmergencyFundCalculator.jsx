@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ShieldAlert, Wallet, Target, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const jobSecurityOptions = [
   { value: 'very_stable', label: 'Very Stable (Government/Tenured)' },
