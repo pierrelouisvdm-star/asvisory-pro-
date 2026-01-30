@@ -380,6 +380,19 @@ Each shortfall includes:
   - Added styled checkbox with label "Remember me for 30 days"
 - **Test Results**: `/app/test_reports/iteration_12.json` - 100% pass rate (17/17 tests)
 
+### January 2026 - Simplified Pricing & PayFast Integration (COMPLETE)
+- **Removed Subscription Tiers**: All authenticated users now have full premium access
+- **New Pricing Page** (`/app/frontend/src/pages/PricingPage.jsx`):
+  - Single premium plan: R2,999 once-off lifetime access
+  - PayFast payment integration (South African payment gateway)
+  - Supports Cards, EFT, SnapScan and more
+  - Coupon code redemption option
+  - Bulk licensing contact link
+- **Payment Success Page**: `/app/frontend/src/pages/PaymentSuccessPage.jsx`
+- **Feature Gating Removed**: 
+  - `SubscriptionContext.jsx`: All features enabled for everyone
+  - `FeatureGate.jsx`: Simplified to always allow access
+
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
 - Added JWT authentication (email/password)
