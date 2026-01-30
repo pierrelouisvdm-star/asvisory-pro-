@@ -31,12 +31,12 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const defaultScenario = () => ({
   id: generateId(),
-  vehiclePrice: 45000,
-  downPayment: 5000,
+  vehiclePrice: 450000,
+  downPayment: 50000,
   tradeInValue: 0,
   loanTerm: '60',
-  interestRate: 6.5,
-  salesTax: 8,
+  interestRate: 11.5,
+  salesTax: 15, // SA VAT rate
   // Lease specific
   residualPercent: 55,
   leaseTerm: '36',
