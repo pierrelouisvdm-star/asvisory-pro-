@@ -16,9 +16,10 @@ BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 # Test credentials
 ADMIN_EMAIL = "pierrelouisvdm@gmail.com"
 ADMIN_PASSWORD = "Admin123!"
-VALID_COUPON_1 = "ADVPRO-T9SW13LB"
-VALID_COUPON_2 = "ADVPRO-L9PGXTOW"
-VALID_COUPON_3 = "ADVPRO-C4NZOFO7"
+# Using fresh active coupons for testing
+VALID_COUPON_1 = "ADVPRO-TAU36O9T"
+VALID_COUPON_2 = "ADVPRO-SWG76A6I"
+VALID_COUPON_3 = "ADVPRO-JJW5TA0F"
 
 
 class TestHealthCheck:
