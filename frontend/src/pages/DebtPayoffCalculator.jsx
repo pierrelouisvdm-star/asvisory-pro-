@@ -190,6 +190,8 @@ export const DebtPayoffCalculator = () => {
         />
       </div>
 
+      <Disclaimer />
+
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Input Section */}
         <div className="lg:col-span-1 space-y-6">
