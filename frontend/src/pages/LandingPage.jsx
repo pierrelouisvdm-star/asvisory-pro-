@@ -49,19 +49,9 @@ const allFeatures = [
 
 const pricingTiers = [
   {
-    name: 'Free',
-    price: 'R0',
-    features: ['4 Basic Calculators', 'Future Value & Compound Interest', 'Bond & Car Finance'],
-  },
-  {
-    name: 'Standard',
-    price: 'R49/mo',
-    features: ['All 17 Calculators', '5 Clients', 'PDF Reports', 'Market Tracker'],
-  },
-  {
     name: 'Premium',
     price: 'R149/mo',
-    features: ['Everything in Standard', 'Unlimited Clients', 'AI Assistant', 'Advanced Tools'],
+    features: ['All 15 Financial Calculators', 'Unlimited Clients', 'PDF Reports', 'AI Assistant', 'Live Market Tracker', 'Advanced Tools'],
     highlight: true,
   },
 ];
