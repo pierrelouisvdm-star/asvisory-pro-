@@ -105,23 +105,21 @@ export const SubscriptionProvider = ({ children }) => {
     return true; // All calculators available to everyone
   };
 
-  // Check if user can add more clients
+  // Check if user can add more clients - unlimited for all
   const canAddMoreClients = (currentClientCount = 0) => {
-    const maxClients = subscription.features?.maxClients ?? 0;
-    if (maxClients === -1) return true; // Unlimited
-    return currentClientCount < maxClients;
+    return true; // Unlimited clients for everyone
   };
 
-  // Get client limit
+  // Get client limit - unlimited
   const getClientLimit = () => {
-    return subscription.features?.maxClients ?? 0;
+    return -1; // Unlimited
   };
 
-  // Check subscription tier
-  const isPremium = () => subscription.tier === 'premium';
-  const isStandard = () => subscription.tier === 'standard';
-  const isFree = () => subscription.tier === 'free';
-  const isTrialing = () => subscription.status === 'trialing';
+  // Check subscription tier - everyone is premium
+  const isPremium = () => true;
+  const isStandard = () => false;
+  const isFree = () => false;
+  const isTrialing = () => false;
 
   // Redeem coupon code
   const redeemCoupon = async (code) => {
