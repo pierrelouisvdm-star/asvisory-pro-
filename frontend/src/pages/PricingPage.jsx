@@ -130,10 +130,10 @@ export const PricingPage = () => {
             Premium Access
           </Badge>
           <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Get Lifetime Premium Access
+            Get Premium Access
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-            Unlock all features with a single payment. No subscriptions, no recurring fees.
+            Unlock all features for just R149/month. Cancel anytime.
           </p>
         </div>
 
