@@ -191,6 +191,8 @@ export const EstatePlanningCalculator = () => {
         />
       </div>
 
+      <Disclaimer />
+
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Input Cards */}
         <div className="lg:col-span-1 space-y-6">
