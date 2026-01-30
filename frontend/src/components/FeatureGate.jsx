@@ -52,46 +52,8 @@ export const FeatureGate = ({
 };
 
 export const CalculatorGate = ({ path, children }) => {
-  const { canAccessCalculator, isFree } = useSubscription();
-
-  if (canAccessCalculator(path)) {
-    return children;
-  }
-
-  return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4">
-      <Card className="max-w-md w-full">
-        <CardContent className="py-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/30 dark:to-amber-800/30 mb-4">
-            <Lock className="h-8 w-8 text-amber-600" />
-          </div>
-          <Badge className="mb-4 bg-amber-100 text-amber-700">
-            Premium Calculator
-          </Badge>
-          <h2 className="font-display text-2xl font-bold mb-2">
-            Upgrade Required
-          </h2>
-          <p className="text-slate-500 mb-6">
-            This calculator is available on Standard and Premium plans. 
-            Upgrade to access all 15 professional financial calculators.
-          </p>
-          <div className="space-y-3">
-            <Link to="/pricing">
-              <Button className="w-full btn-premium">
-                <Sparkles className="h-4 w-4 mr-2" />
-                View Plans
-              </Button>
-            </Link>
-            <Link to="/">
-              <Button variant="outline" className="w-full">
-                Back to Dashboard
-              </Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+  // All calculators available to everyone - no gating
+  return children;
 };
 
 export const LockedOverlay = ({ message = "Upgrade to unlock" }) => (
