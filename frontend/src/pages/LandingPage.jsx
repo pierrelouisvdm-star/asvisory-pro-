@@ -171,7 +171,6 @@ export const LandingPage = () => {
               </div>
             ))}
           </div>
-          
           <p className="text-slate-400 text-sm mb-6">
             Have a coupon code? Enter it during registration for instant access!
           </p>
