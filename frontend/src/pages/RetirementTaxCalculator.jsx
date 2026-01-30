@@ -261,6 +261,8 @@ export const RetirementTaxCalculator = () => {
         />
       </div>
 
+      <Disclaimer />
+
       {/* Info Banner */}
       <Card className="mb-6 border-emerald-500/30 bg-emerald-500/5">
         <CardContent className="p-4">
