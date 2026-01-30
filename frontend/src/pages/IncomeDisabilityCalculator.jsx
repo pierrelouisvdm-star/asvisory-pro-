@@ -67,7 +67,7 @@ export const IncomeDisabilityCalculator = () => {
     // Calculate monthly benefit needed
     const monthlyBenefitNeeded = monthlyIncome * (coveragePercent / 100);
     const monthlyGap = Math.max(0, monthlyExpenses - existingDisabilityCoverage);
-    const recommendedBenefit = Math.min(monthlyBenefitNeeded, monthlyIncome * 0.7); // Most policies cap at 60-70%
+    const recommendedBenefit = monthlyBenefitNeeded; // Allow up to 100% coverage
     
     // Calculate coverage gap during waiting period
     const waitingPeriodMonths = parseFloat(waitingPeriod) / 30;
