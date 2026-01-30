@@ -109,6 +109,7 @@ function App() {
                   
                   {/* Pricing - accessible to all but shows different content */}
                   <Route path="/pricing" element={<PricingPage />} />
+                  <Route path="/payment/success" element={<PaymentSuccessPage />} />
                   <Route path="/subscription/success" element={<SubscriptionSuccessPage />} />
                   
                   {/* Protected Routes - require authentication */}
