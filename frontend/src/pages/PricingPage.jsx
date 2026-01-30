@@ -89,8 +89,13 @@ export const PricingPage = () => {
       email_address: user?.email || '',
       m_payment_id: `AP-${Date.now()}`,
       amount: PREMIUM_PRICE.toFixed(2),
-      item_name: 'AdvisoryPro Lifetime Premium',
-      item_description: 'Lifetime access to all premium features',
+      item_name: 'AdvisoryPro Premium Monthly',
+      item_description: 'Monthly premium subscription',
+      subscription_type: '1', // 1 = subscription
+      billing_date: new Date().getDate().toString(),
+      recurring_amount: PREMIUM_PRICE.toFixed(2),
+      frequency: '3', // 3 = Monthly
+      cycles: '0', // 0 = indefinite
       custom_str1: user?.id || '',
     };
 
