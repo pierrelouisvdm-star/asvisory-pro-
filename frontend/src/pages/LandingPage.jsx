@@ -173,12 +173,12 @@ export const LandingPage = () => {
           </div>
           
           <p className="text-slate-400 text-sm mb-6">
-            Have a coupon code? Enter it during registration for instant Premium access!
+            Have a coupon code? Enter it during registration for instant access!
           </p>
           
           <Link to="/auth">
             <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-10">
-              Get Started Free
+              Get Started
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
