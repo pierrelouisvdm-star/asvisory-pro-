@@ -4,27 +4,27 @@ import { subscriptionApi, couponApi } from '@/services/api';
 
 const SubscriptionContext = createContext(null);
 
-// Feature configuration by tier
+// All users have full premium access - no tiers
 const TIER_FEATURES = {
   free: {
-    calculators: ['future_value', 'compound_interest', 'bond', 'car_finance'],
-    maxClients: 0,
-    pdfReports: false,
-    advancedTools: false,
-    marketTracker: false,
-    goalPlanner: false,
-    meetingScheduler: false,
-    portfolioTracker: false,
+    calculators: 'all',
+    maxClients: -1,
+    pdfReports: true,
+    advancedTools: true,
+    marketTracker: true,
+    goalPlanner: true,
+    meetingScheduler: true,
+    portfolioTracker: true,
   },
   standard: {
     calculators: 'all',
-    maxClients: 5,
+    maxClients: -1,
     pdfReports: true,
-    advancedTools: false,
+    advancedTools: true,
     marketTracker: true,
-    goalPlanner: false,
-    meetingScheduler: false,
-    portfolioTracker: false,
+    goalPlanner: true,
+    meetingScheduler: true,
+    portfolioTracker: true,
   },
   premium: {
     calculators: 'all',
@@ -38,8 +38,8 @@ const TIER_FEATURES = {
   },
 };
 
-// Free calculators available to all
-const FREE_CALCULATORS = ['/future-value', '/compound-interest', '/bond', '/car-finance'];
+// All calculators are free
+const FREE_CALCULATORS = 'all';
 
 export const SubscriptionProvider = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
