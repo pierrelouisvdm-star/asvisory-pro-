@@ -305,6 +305,8 @@ export const FutureValueCalculator = () => {
         </div>
       </div>
 
+      <Disclaimer />
+
       {mode === 'compare' ? (
         <ComparisonMode
           scenarios={scenarios}

@@ -240,6 +240,8 @@ export const CompoundInterestCalculator = () => {
         </div>
       </div>
 
+      <Disclaimer />
+
       {mode === 'compare' ? (
         <ComparisonMode
           scenarios={scenarios}
