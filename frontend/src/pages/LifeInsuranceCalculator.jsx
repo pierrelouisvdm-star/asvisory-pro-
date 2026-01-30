@@ -84,7 +84,14 @@ export const LifeInsuranceCalculator = () => {
     // Needs-based calculation
     const totalNeeds = debtCoverage + incomeCoverage + educationCoverage + emergencyFund;
     const coverageGap = Math.max(0, totalNeeds - existingLifeInsurance);
-    const recommendedCoverage = Math.max(incomeReplacementNeed, dimeTotal);
+    
+    // Use the higher of: user-selected coverage, DIME method, or 10-15x income recommendation
+    const recommendedCoverage = Math.max(incomeReplacementNeed, dimeTotal, incomeBasedRecommendation);
+    
+    // Recommendation text based on dependants
+    const recommendationNote = dependents > 0 
+      ? `With ${dependents} dependant${dependents > 1 ? 's' : ''}, we recommend 10-15x annual income (${formatCurrency(annualIncome * 10)} - ${formatCurrency(annualIncome * 15)})`
+      : 'Consider 10x annual income as a baseline';
     
     // Estimate premium (simplified - actual would need actuarial tables)
     const baseRate = 0.0012; // Base rate per $1000
