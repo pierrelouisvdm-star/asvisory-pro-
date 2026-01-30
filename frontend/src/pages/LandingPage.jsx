@@ -145,14 +145,14 @@ export const LandingPage = () => {
             Simple, Transparent Pricing
           </h2>
           <p className="text-slate-400 mb-10">
-            Start free, upgrade as you grow. No hidden fees.
+            One plan, all features. R149/month.
           </p>
           
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
+          <div className="flex justify-center mb-10">
             {pricingTiers.map((tier, i) => (
               <div 
                 key={i} 
-                className={`p-6 rounded-2xl border ${
+                className={`p-6 rounded-2xl border max-w-md w-full ${
                   tier.highlight 
                     ? 'bg-emerald-500/10 border-emerald-500/50' 
                     : 'bg-navy-900/60 border-navy-700'
