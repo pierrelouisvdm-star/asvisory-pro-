@@ -229,6 +229,8 @@ export const LivingAnnuityCalculator = () => {
         />
       </div>
 
+      <Disclaimer />
+
       {/* Info Banner */}
       <Card className="mb-6 border-blue-500/30 bg-blue-500/5">
         <CardContent className="p-4">

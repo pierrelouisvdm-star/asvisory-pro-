@@ -337,6 +337,8 @@ export const EducationSavingsCalculator = () => {
         />
       </div>
 
+      <Disclaimer />
+
       <Tabs defaultValue="stages" className="space-y-6">
         <TabsList className="w-full justify-start flex-wrap h-auto gap-1 p-1">
           <TabsTrigger value="stages" className="gap-2">
