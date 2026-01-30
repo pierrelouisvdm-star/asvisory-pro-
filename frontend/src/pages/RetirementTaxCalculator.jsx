@@ -12,6 +12,7 @@ import {
   CheckCircle, Calculator, Percent, Building2
 } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 // SA Tax Year 2024/25 Constants
 const TAX_YEAR = '2024/25';
