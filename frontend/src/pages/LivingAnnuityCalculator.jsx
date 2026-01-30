@@ -13,6 +13,7 @@ import {
   Percent, Calendar, PiggyBank, Info
 } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 // SA Living Annuity drawdown limits (SARS regulated)
 const MIN_DRAWDOWN = 2.5;

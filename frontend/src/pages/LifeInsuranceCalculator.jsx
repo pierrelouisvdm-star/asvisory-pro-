@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Shield, Calculator, GitCompare, Users, Heart, Baby, Info, AlertCircle } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const coverageMultiplierOptions = [
   { value: '5', label: '5x Annual Income' },

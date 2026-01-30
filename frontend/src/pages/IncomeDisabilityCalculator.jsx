@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Umbrella, Calculator, GitCompare, AlertTriangle, Clock, Wallet, TrendingDown } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const waitingPeriodOptions = [
   { value: '30', label: '30 Days' },

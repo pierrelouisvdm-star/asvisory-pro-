@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { PiggyBank, Calculator, GitCompare, Target, TrendingUp, TrendingDown, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const retirementAgeOptions = [
   { value: '55', label: '55 Years' },
