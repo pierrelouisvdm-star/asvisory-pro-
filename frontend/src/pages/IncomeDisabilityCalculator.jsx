@@ -285,6 +285,8 @@ export const IncomeDisabilityCalculator = () => {
         </div>
       </div>
 
+      <Disclaimer />
+
       {mode === 'compare' ? (
         <ComparisonMode
           scenarios={scenarios}

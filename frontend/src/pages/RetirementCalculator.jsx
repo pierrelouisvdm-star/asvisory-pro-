@@ -345,6 +345,8 @@ export const RetirementCalculator = () => {
         </div>
       </div>
 
+      <Disclaimer />
+
       {mode === 'compare' ? (
         <ComparisonMode
           scenarios={scenarios}
