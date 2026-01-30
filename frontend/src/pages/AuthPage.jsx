@@ -315,7 +315,7 @@ export const AuthPage = () => {
                         disabled={isLoading}
                         data-testid="register-submit-btn"
                       >
-                        {isLoading ? 'Creating account...' : 'Create Free Account'}
+                        {isLoading ? 'Creating account...' : 'Create Account'}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </form>
