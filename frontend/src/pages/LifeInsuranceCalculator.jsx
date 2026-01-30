@@ -126,6 +126,8 @@ export const LifeInsuranceCalculator = () => {
     return {
       recommendedCoverage,
       incomeReplacementNeed,
+      incomeBasedRecommendation,
+      recommendationNote,
       dimeTotal,
       debtCoverage,
       incomeCoverage,
@@ -138,8 +140,9 @@ export const LifeInsuranceCalculator = () => {
       breakdownData,
       yearlyData,
       finalValue: recommendedCoverage,
+      dependents,
     };
-  }, []);
+  }, [formatCurrency]);
 
   const currentScenario = scenarios[0];
   const results = useMemo(() => calculateLifeInsurance(currentScenario), [currentScenario, calculateLifeInsurance]);
