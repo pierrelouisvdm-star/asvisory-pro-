@@ -101,20 +101,9 @@ export const SubscriptionProvider = ({ children }) => {
     return !!features[featureName];
   };
 
-  // Check if user can access a specific calculator
+  // Check if user can access a specific calculator - ALL users can access ALL calculators
   const canAccessCalculator = (path) => {
-    // Free calculators available to all
-    if (FREE_CALCULATORS.includes(path)) return true;
-    
-    const tier = subscription.tier || 'free';
-    const features = TIER_FEATURES[tier] || TIER_FEATURES.free;
-    
-    // If calculators is 'all', user has access to all
-    if (features.calculators === 'all') return true;
-    
-    // Check if path is in allowed calculators
-    const calcName = path.replace('/', '').replace(/-/g, '_');
-    return Array.isArray(features.calculators) && features.calculators.includes(calcName);
+    return true; // All calculators available to everyone
   };
 
   // Check if user can add more clients
