@@ -390,14 +390,6 @@ export const AuthPage = () => {
                   tier.highlight ? 'border-emerald-500/50 ring-1 ring-emerald-500/20' : ''
                 }`}
               >
-                {tier.highlight && (
-                  <div className="absolute top-0 right-0">
-                    <Badge className="rounded-none rounded-bl-lg bg-emerald-500 text-navy-950 font-semibold">
-                      <Crown className="h-3 w-3 mr-1" />
-                      Popular
-                    </Badge>
-                  </div>
-                )}
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
