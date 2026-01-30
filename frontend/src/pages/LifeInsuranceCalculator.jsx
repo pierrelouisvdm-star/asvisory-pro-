@@ -76,6 +76,11 @@ export const LifeInsuranceCalculator = () => {
     
     const dimeTotal = debtCoverage + incomeCoverage + educationCoverage + emergencyFund;
     
+    // Recommended coverage: 10-15x annual income if dependants exist
+    // Use 12.5x as the middle ground (average of 10-15x)
+    const recommendedMultiplier = dependents > 0 ? 12.5 : 10;
+    const incomeBasedRecommendation = annualIncome * recommendedMultiplier;
+    
     // Needs-based calculation
     const totalNeeds = debtCoverage + incomeCoverage + educationCoverage + emergencyFund;
     const coverageGap = Math.max(0, totalNeeds - existingLifeInsurance);
