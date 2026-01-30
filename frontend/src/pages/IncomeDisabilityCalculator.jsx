@@ -39,13 +39,13 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const defaultScenario = () => ({
   id: generateId(),
-  monthlyIncome: 6000,
+  monthlyIncome: 30000,
   age: 40,
   occupationClass: '1',
   waitingPeriod: '90',
   benefitPeriod: '65',
   coveragePercent: 60,
-  monthlyExpenses: 4500,
+  monthlyExpenses: 25000,
   emergencySavings: 15000,
   existingDisabilityCoverage: 0,
   inflationProtection: true,
