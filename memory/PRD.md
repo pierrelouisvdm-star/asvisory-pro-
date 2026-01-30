@@ -363,6 +363,7 @@ Each shortfall includes:
   - Living Annuity: 2.5%-17.5% drawdown range (ASISA compliance)
   - Car Finance: Changed "Sales Tax" to "VAT Rate" with 15% default
 - **All Formulas Verified**: Standard PMT, compound interest, Fisher equation, DIME method, etc.
+- **Disclaimer Added**: "For illustrative purposes only" banner added to all 14 calculator pages
 - **Test Results**: `/app/test_reports/iteration_11.json` - 100% pass rate on SA compliance verification
 
 ### December 2025 - Backend & Client Management
