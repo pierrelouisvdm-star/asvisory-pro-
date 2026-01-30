@@ -379,8 +379,8 @@ export const AuthPage = () => {
           {/* Right Side - Pricing Tiers */}
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
-              <h2 className="text-xl font-display font-bold text-white mb-1">Choose Your Plan</h2>
-              <p className="text-slate-400 text-sm">Start free, upgrade anytime</p>
+              <h2 className="text-xl font-display font-bold text-white mb-1">Premium Plan</h2>
+              <p className="text-slate-400 text-sm">R149/month • Cancel anytime</p>
             </div>
 
             {tiers.map((tier) => (
