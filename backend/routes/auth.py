@@ -90,8 +90,14 @@ async def login(credentials: UserLogin):
         is_admin=user_doc.get("is_admin", False)
     )
     
-    # Create access token
-    access_token = create_access_token(data={"sub": user.id})
+    # Create access token - 30 days if remember_me, else 7 days
+    from datetime import timedelta
+    if credentials.remember_me:
+        expires_delta = timedelta(days=30)
+    else:
+        expires_delta = timedelta(days=7)
+    
+    access_token = create_access_token(data={"sub": user.id}, expires_delta=expires_delta)
     
     return Token(access_token=access_token, user=user)
 
