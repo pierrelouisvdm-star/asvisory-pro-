@@ -67,6 +67,7 @@ export const AuthPage = () => {
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(true); // Default to true for convenience
 
   // Register form state
   const [registerEmail, setRegisterEmail] = useState('');
@@ -84,7 +85,7 @@ export const AuthPage = () => {
     setError('');
 
     try {
-      await login(loginEmail, loginPassword);
+      await login(loginEmail, loginPassword, rememberMe);
       toast.success('Welcome back!');
       navigate('/');
     } catch (err) {
