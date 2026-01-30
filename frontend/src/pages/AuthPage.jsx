@@ -17,41 +17,17 @@ import { couponApi } from '@/services/api';
 
 const tiers = [
   {
-    name: 'Free',
-    price: 'R0',
-    period: '/month',
-    description: 'Get started with basic tools',
-    features: [
-      '4 Basic Calculators',
-      'Future Value & Compound Interest',
-      'Bond & Car Finance',
-    ],
-    highlight: false,
-  },
-  {
-    name: 'Standard',
-    price: 'R49',
-    period: '/month',
-    description: 'For growing advisors',
-    features: [
-      'All 17 Calculators',
-      '5 Client Profiles',
-      'PDF Reports',
-      'Live Market Tracker',
-    ],
-    highlight: false,
-  },
-  {
     name: 'Premium',
     price: 'R149',
     period: '/month',
     description: 'Full professional suite',
     features: [
-      'Everything in Standard',
+      'All 15 Financial Calculators',
       'Unlimited Clients',
+      'PDF Reports',
+      'Live Market Tracker',
       'AI Assistant',
       'Advanced Tools',
-      'Priority Support',
     ],
     highlight: true,
   },
