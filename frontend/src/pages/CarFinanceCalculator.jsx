@@ -305,6 +305,8 @@ export const CarFinanceCalculator = () => {
         </div>
       </div>
 
+      <Disclaimer />
+
       {mode === 'compare' ? (
         <ComparisonMode
           scenarios={scenarios}
