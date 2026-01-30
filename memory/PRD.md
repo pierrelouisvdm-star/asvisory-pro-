@@ -353,6 +353,18 @@ Each shortfall includes:
   - Fixed `/me` endpoint returning user data correctly
   - Added `created_at` and `last_login` tracking to user model
 
+### January 2026 - Calculator Risk & Compliance Audit (COMPLETE)
+- **Full Audit Completed**: All 15 financial calculators reviewed for mathematical accuracy and SA regulatory compliance
+- **Audit Report**: `/app/CALCULATOR_AUDIT_REPORT.md` documents all findings
+- **SA-Specific Verifications**:
+  - Tax Calculator: 2024/25 SARS tax brackets (18%-45%), rebates, medical credits
+  - Bond Calculator: SA Prime Rate 10.25%, transfer duty brackets per SARS 2024/25
+  - Estate Planning: R3.5M abatement, 20%/25% estate duty rates, executor fees 3.5%+VAT
+  - Living Annuity: 2.5%-17.5% drawdown range (ASISA compliance)
+  - Car Finance: Changed "Sales Tax" to "VAT Rate" with 15% default
+- **All Formulas Verified**: Standard PMT, compound interest, Fisher equation, DIME method, etc.
+- **Test Results**: `/app/test_reports/iteration_11.json` - 100% pass rate on SA compliance verification
+
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
 - Added JWT authentication (email/password)
