@@ -135,7 +135,7 @@ export const PricingPage = () => {
         {/* Main Card */}
         <Card className="border-emerald-500/50 bg-gradient-to-b from-navy-900 to-navy-950 overflow-hidden">
           <div className="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
-            LIFETIME ACCESS
+            MONTHLY SUBSCRIPTION
           </div>
           
           <CardHeader className="text-center pt-10 pb-6">
