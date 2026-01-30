@@ -32,7 +32,7 @@ const PAYFAST_CONFIG = {
   sandboxMode: true, // Set to false in production
 };
 
-const PREMIUM_PRICE = 2999; // R2,999 once-off lifetime access
+const PREMIUM_PRICE = 149; // R149 per month
 
 export const PricingPage = () => {
   const navigate = useNavigate();
