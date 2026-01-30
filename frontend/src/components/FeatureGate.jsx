@@ -14,41 +14,8 @@ export const FeatureGate = ({
   fallback = null,
   showUpgradePrompt = true 
 }) => {
-  const { canAccessFeature, subscription } = useSubscription();
-
-  if (canAccessFeature(feature)) {
-    return children;
-  }
-
-  if (fallback) {
-    return fallback;
-  }
-
-  if (!showUpgradePrompt) {
-    return null;
-  }
-
-  return (
-    <Card className="border-dashed border-2 border-slate-200 dark:border-slate-700">
-      <CardContent className="py-8 text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 mb-4">
-          <Lock className="h-6 w-6 text-slate-400" />
-        </div>
-        <h3 className="font-semibold text-lg mb-2">
-          {requiredTier === 'premium' ? 'Premium Feature' : 'Standard Feature'}
-        </h3>
-        <p className="text-slate-500 mb-4">
-          Upgrade to {requiredTier} to unlock this feature
-        </p>
-        <Link to="/pricing">
-          <Button className="btn-premium">
-            <Crown className="h-4 w-4 mr-2" />
-            Upgrade Now
-          </Button>
-        </Link>
-      </CardContent>
-    </Card>
-  );
+  // All features available to everyone - no gating
+  return children;
 };
 
 export const CalculatorGate = ({ path, children }) => {
