@@ -181,7 +181,7 @@ export const CarFinanceCalculator = () => {
     { label: 'Vehicle Price', value: `${symbol}${currentScenario.vehiclePrice.toLocaleString()}` },
     { label: 'Down Payment', value: `${symbol}${currentScenario.downPayment.toLocaleString()}` },
     { label: 'Trade-In Value', value: `${symbol}${currentScenario.tradeInValue.toLocaleString()}` },
-    { label: 'Sales Tax', value: `${currentScenario.salesTax}%` },
+    { label: 'VAT', value: `${currentScenario.salesTax}%` },
     ...(calculationType === 'loan' 
       ? [
           { label: 'Loan Term', value: `${currentScenario.loanTerm} months` },
