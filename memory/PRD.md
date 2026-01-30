@@ -366,6 +366,20 @@ Each shortfall includes:
 - **Disclaimer Added**: "For illustrative purposes only" banner added to all 14 calculator pages
 - **Test Results**: `/app/test_reports/iteration_11.json` - 100% pass rate on SA compliance verification
 
+### January 2026 - Auth Enhancements (COMPLETE)
+- **Remember Me Feature**: Added "Remember me for 30 days" checkbox to login form
+  - Checkbox defaults to checked (true) for user convenience
+  - When checked: JWT token expires in 30 days
+  - When unchecked: JWT token expires in 7 days
+- **Backend Changes**: 
+  - Added `remember_me: bool` field to `UserLogin` model
+  - Modified `/api/auth/login` to accept and process remember_me parameter
+- **Frontend Changes**:
+  - Added rememberMe state to AuthPage.jsx
+  - Updated AuthContext.login() to accept rememberMe parameter
+  - Added styled checkbox with label "Remember me for 30 days"
+- **Test Results**: `/app/test_reports/iteration_12.json` - 100% pass rate (17/17 tests)
+
 ### December 2025 - Backend & Client Management
 - Implemented FastAPI backend with MongoDB
 - Added JWT authentication (email/password)
