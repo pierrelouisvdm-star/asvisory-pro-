@@ -67,7 +67,7 @@ async def create_snapshot(
     """Save a net worth snapshot"""
     snapshot = {
         "id": str(uuid.uuid4()),
-        "user_id": current_user.id,
+        "user_id": current_user["id"],
         "date": datetime.now(timezone.utc).isoformat(),
         "assets": snapshot_data.get("assets", []),
         "liabilities": snapshot_data.get("liabilities", []),
@@ -81,7 +81,7 @@ async def create_snapshot(
     await db.net_worth_snapshots.insert_one(snapshot)
     
     # Check for milestone achievements
-    await check_milestones(current_user.id, snapshot["net_worth"])
+    await check_milestones(current_user["id"], snapshot["net_worth"])
     
     return {"message": "Snapshot saved successfully", "snapshot_id": snapshot["id"]}
 
@@ -92,7 +92,7 @@ async def get_snapshots(
 ):
     """Get user's net worth snapshots"""
     snapshots = await db.net_worth_snapshots.find(
-        {"user_id": current_user.id},
+        {"user_id": current_user["id"]},
         {"_id": 0}
     ).sort("date", -1).limit(limit).to_list(length=limit)
     
@@ -118,7 +118,7 @@ async def get_snapshot_history(
         months = 1200  # ~100 years for "all"
     
     snapshots = await db.net_worth_snapshots.find(
-        {"user_id": current_user.id},
+        {"user_id": current_user["id"]},
         {"_id": 0, "date": 1, "net_worth": 1, "total_assets": 1, "total_liabilities": 1}
     ).sort("date", 1).to_list(length=1000)
     
@@ -147,7 +147,7 @@ async def delete_snapshot(
     """Delete a snapshot"""
     result = await db.net_worth_snapshots.delete_one({
         "id": snapshot_id,
-        "user_id": current_user.id
+        "user_id": current_user["id"]
     })
     
     if result.deleted_count == 0:
@@ -164,7 +164,7 @@ async def create_goal(
     """Create a net worth goal"""
     goal_doc = {
         "id": str(uuid.uuid4()),
-        "user_id": current_user.id,
+        "user_id": current_user["id"],
         "target_amount": goal.target_amount,
         "target_date": goal.target_date,
         "name": goal.name or "Net Worth Goal",
@@ -183,7 +183,7 @@ async def get_goals(
 ):
     """Get user's net worth goals"""
     goals = await db.net_worth_goals.find(
-        {"user_id": current_user.id},
+        {"user_id": current_user["id"]},
         {"_id": 0}
     ).sort("created_at", -1).to_list(length=20)
     
@@ -196,7 +196,7 @@ async def mark_goal_achieved(
 ):
     """Mark a goal as achieved"""
     result = await db.net_worth_goals.update_one(
-        {"id": goal_id, "user_id": current_user.id},
+        {"id": goal_id, "user_id": current_user["id"]},
         {"$set": {
             "is_achieved": True,
             "achieved_at": datetime.now(timezone.utc).isoformat()
@@ -216,7 +216,7 @@ async def delete_goal(
     """Delete a goal"""
     result = await db.net_worth_goals.delete_one({
         "id": goal_id,
-        "user_id": current_user.id
+        "user_id": current_user["id"]
     })
     
     if result.deleted_count == 0:
@@ -264,7 +264,7 @@ async def get_milestones(
 ):
     """Get user's achieved milestones"""
     milestones = await db.net_worth_milestones.find(
-        {"user_id": current_user.id},
+        {"user_id": current_user["id"]},
         {"_id": 0}
     ).sort("amount", 1).to_list(length=50)
     
@@ -276,7 +276,7 @@ async def get_all_milestones(
 ):
     """Get all possible milestones with achievement status"""
     achieved = await db.net_worth_milestones.find(
-        {"user_id": current_user.id},
+        {"user_id": current_user["id"]},
         {"_id": 0, "amount": 1, "achieved_at": 1}
     ).to_list(length=50)
     
