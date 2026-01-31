@@ -50,7 +50,7 @@ const allFeatures = [
 const pricingTiers = [
   {
     name: 'Premium',
-    price: 'R149/mo',
+    price: 'R299/mo',
     features: ['All 15 Financial Calculators', 'Unlimited Clients', 'PDF Reports', 'AI Assistant', 'Live Market Tracker', 'Advanced Tools'],
     highlight: true,
   },
@@ -145,7 +145,7 @@ export const LandingPage = () => {
             Simple, Transparent Pricing
           </h2>
           <p className="text-slate-400 mb-10">
-            One plan, all features. R149/month.
+            One plan, all features. R299/month.
           </p>
           
           <div className="flex justify-center mb-10">

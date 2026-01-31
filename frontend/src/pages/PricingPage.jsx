@@ -32,7 +32,7 @@ const PAYFAST_CONFIG = {
   sandboxMode: true, // Set to false in production
 };
 
-const PREMIUM_PRICE = 149; // R149 per month
+const PREMIUM_PRICE = 299; // R299 per month
 
 export const PricingPage = () => {
   const navigate = useNavigate();
@@ -133,7 +133,7 @@ export const PricingPage = () => {
             Get Premium Access
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-            Unlock all features for just R149/month. Cancel anytime.
+            Unlock all features for just R299/month. Cancel anytime.
           </p>
         </div>
 

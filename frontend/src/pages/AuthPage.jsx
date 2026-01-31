@@ -18,7 +18,7 @@ import { couponApi } from '@/services/api';
 const tiers = [
   {
     name: 'Premium',
-    price: 'R149',
+    price: 'R299',
     period: '/month',
     description: 'Full professional suite',
     features: [
@@ -380,7 +380,7 @@ export const AuthPage = () => {
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-white mb-1">Premium Plan</h2>
-              <p className="text-slate-400 text-sm">R149/month • Cancel anytime</p>
+              <p className="text-slate-400 text-sm">R299/month • Cancel anytime</p>
             </div>
 
             {tiers.map((tier) => (
