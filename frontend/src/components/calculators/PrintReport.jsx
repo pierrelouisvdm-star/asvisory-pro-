@@ -152,7 +152,7 @@ export const PrintReport = ({
           {/* Header */}
           <div className="header flex justify-between items-center mb-6 pb-4 border-b-2 border-gold">
             <div className="logo font-display text-xl font-semibold">
-              Wealth<span className="text-gold">Calc</span>
+              Advisory<span className="text-gold">Pro</span>
             </div>
             <div className="date text-sm text-muted-foreground">
               {currentDate}
