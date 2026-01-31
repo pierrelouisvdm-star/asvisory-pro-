@@ -35,6 +35,7 @@ from routes.market import router as market_router
 from routes.ai_advisor import router as ai_advisor_router
 from routes.coupons import router as coupons_router
 from routes.analytics import router as analytics_router
+from routes.net_worth import router as net_worth_router
 
 # Include route modules
 api_router.include_router(auth_router)
@@ -47,6 +48,7 @@ api_router.include_router(market_router)
 api_router.include_router(ai_advisor_router)
 api_router.include_router(coupons_router)
 api_router.include_router(analytics_router)
+api_router.include_router(net_worth_router)
 
 # Health check endpoint
 @api_router.get("/health")
