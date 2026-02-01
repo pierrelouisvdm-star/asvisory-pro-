@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
 import { Printer, Download, FileText, Calculator } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export const PrintReport = ({ 
   title, 
@@ -13,6 +14,7 @@ export const PrintReport = ({
   className 
 }) => {
   const printRef = useRef(null);
+  const { currency, currentCurrency } = useCurrency();
 
   const handlePrint = () => {
     const printContent = printRef.current;
