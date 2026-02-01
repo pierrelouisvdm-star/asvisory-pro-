@@ -95,28 +95,6 @@ const keyFeatures = [
   },
 ];
 
-// Testimonials
-const testimonials = [
-  {
-    quote: "AdvisoryPro has transformed how I present financial plans to my clients. The calculators are accurate and the reports look professional.",
-    author: "Financial Advisor",
-    role: "Cape Town",
-    rating: 5,
-  },
-  {
-    quote: "Finally, a tool built for South African advisors. The tax calculations and estate planning features save me hours every week.",
-    author: "Wealth Manager",
-    role: "Johannesburg",
-    rating: 5,
-  },
-  {
-    quote: "My clients love the visual net worth tracker. It helps them see their progress and stay motivated toward their financial goals.",
-    author: "Independent Advisor",
-    role: "Durban",
-    rating: 5,
-  },
-];
-
 // Stats
 const stats = [
   { value: '15+', label: 'Financial Calculators' },
@@ -347,41 +325,6 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="relative py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-purple-500/20 text-purple-400 border-purple-500/30">
-              <Star className="h-3 w-3 mr-2" />
-              Trusted by Advisors
-            </Badge>
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
-              What Financial Advisors Say
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-navy-900/60 border-navy-700">
-                <CardContent className="p-6">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                    ))}
-                  </div>
-                  <Quote className="h-8 w-8 text-emerald-500/30 mb-2" />
-                  <p className="text-slate-300 mb-4 italic">"{testimonial.quote}"</p>
-                  <div>
-                    <p className="font-medium text-white">{testimonial.author}</p>
-                    <p className="text-sm text-slate-500">{testimonial.role}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Pricing Section */}
       <section className="relative py-20 bg-gradient-to-b from-navy-900/50 to-navy-950">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -459,12 +402,12 @@ export const LandingPage = () => {
           </p>
           <Link to="/auth">
             <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-xl px-12 h-16 shadow-lg shadow-emerald-500/25">
-              Start Your Free Trial
+              Get Started Now
               <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
           </Link>
           <p className="mt-4 text-slate-500">
-            No credit card required to start
+            R299/month • Cancel anytime
           </p>
         </div>
       </section>
