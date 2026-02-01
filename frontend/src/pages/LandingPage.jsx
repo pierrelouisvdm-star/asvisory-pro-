@@ -120,13 +120,16 @@ export const LandingPage = () => {
               Built by Financial Advisors, for Financial Advisors
             </Badge>
             
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight">
-              The Complete Toolkit for{' '}
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-4 tracking-tight">
+              Empower Your Practice with{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
-                South African
-              </span>{' '}
-              Financial Advisors
+                AdvisoryPro
+              </span>
             </h1>
+            
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
+              The Complete Toolkit for South African Financial Advisors
+            </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
               Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">15+ professional calculators</span>, 
