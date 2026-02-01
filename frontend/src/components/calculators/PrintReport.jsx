@@ -156,8 +156,13 @@ export const PrintReport = ({
             <div className="logo font-display text-xl font-semibold">
               Advisory<span className="text-gold">Pro</span>
             </div>
-            <div className="date text-sm text-muted-foreground">
-              {currentDate}
+            <div className="text-right">
+              <div className="date text-sm text-muted-foreground">
+                {currentDate}
+              </div>
+              <div className="text-xs text-muted-foreground mt-1">
+                Currency: {currentCurrency?.name || 'South African Rand'} ({currency || 'ZAR'})
+              </div>
             </div>
           </div>
 
