@@ -118,6 +118,21 @@ export const Header = () => {
           // Simple list
           items.map((item) => {
             const ItemIcon = item.icon;
+            if (item.comingSoon) {
+              return (
+                <DropdownMenuItem key={item.label} disabled className="opacity-60 cursor-not-allowed">
+                  <div className="flex items-center justify-between w-full px-3 py-2.5">
+                    <div className="flex items-center gap-3">
+                      <ItemIcon className="h-4 w-4 opacity-70" />
+                      <span className="font-medium">{item.label}</span>
+                    </div>
+                    <span className="text-[10px] bg-amber-500/20 text-amber-500 px-1.5 py-0.5 rounded font-medium">
+                      SOON
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              );
+            }
             return (
               <DropdownMenuItem key={item.path} asChild>
                 <Link 
