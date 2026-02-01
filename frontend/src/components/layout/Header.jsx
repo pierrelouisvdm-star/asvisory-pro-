@@ -51,6 +51,8 @@ const moreTools = [
   { path: '/education-savings', label: 'Education Savings', icon: GraduationCap },
   { path: '/cash-flow', label: 'Cash Flow Projector', icon: ArrowRightLeft },
   { path: '/monte-carlo', label: 'Monte Carlo Simulator', icon: BarChart3 },
+  { path: '#', label: 'Portfolio Tracker', icon: Briefcase, comingSoon: true },
+  { path: '#', label: 'Fee Comparison Tool', icon: GitCompare, comingSoon: true },
 ];
 
 export const Header = () => {
