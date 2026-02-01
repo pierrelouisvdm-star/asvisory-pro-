@@ -8,7 +8,7 @@ import {
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
   PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
   LineChart, Target, Clock, Zap, Award, Globe,
-  ChevronRight, Play, Star, Quote
+  ChevronRight, Play
 } from 'lucide-react';
 
 // Calculator categories with detailed descriptions
@@ -168,7 +168,7 @@ export const LandingPage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
                 <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25 h-14">
-                  Start Your Free Trial
+                  Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
