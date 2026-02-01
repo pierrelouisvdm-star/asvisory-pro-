@@ -130,7 +130,7 @@ export const LandingPage = () => {
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
               Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">15+ professional calculators</span>, 
-              client management, AI insights, and instant PDF reports — all localized for SA regulations and the latest tax brackets.
+              client management, AI insights, and instant PDF reports, all localized for SA regulations and the latest tax brackets.
             </p>
 
             {/* Stats Row */}
@@ -457,13 +457,10 @@ export const LandingPage = () => {
             </div>
           </div>
           
-          <div className="pt-8 border-t border-navy-800 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="pt-8 border-t border-navy-800 flex justify-center items-center">
             <p className="text-sm text-slate-500">
-              © {new Date().getFullYear()} AdvisoryPro. All rights reserved.
+              © 2026 AdvisoryPro. All rights reserved.
             </p>
-            <div className="flex items-center gap-6 text-sm text-slate-500">
-              <span>Built with ❤️ in South Africa</span>
-            </div>
           </div>
         </div>
       </footer>
