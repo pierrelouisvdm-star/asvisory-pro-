@@ -39,7 +39,6 @@ const withdrawalTypes = [
 
 const TaxDirectiveSimulator = () => {
   const { formatCurrency, currency } = useCurrency();
-  const printRef = useRef();
   
   const [withdrawalType, setWithdrawalType] = useState('retirement');
   const [currentAmount, setCurrentAmount] = useState('');
@@ -48,7 +47,6 @@ const TaxDirectiveSimulator = () => {
   const [newPrevRetirement, setNewPrevRetirement] = useState('');
   const [newPrevEarly, setNewPrevEarly] = useState('');
   const [results, setResults] = useState(null);
-  const [showReport, setShowReport] = useState(false);
 
   const addPreviousRetirement = () => {
     if (newPrevRetirement && parseFloat(newPrevRetirement) > 0) {
