@@ -36,9 +36,12 @@ async def log_client_access(user_id: str, user_email: str, action: AuditAction, 
 @router.post("", response_model=Client)
 async def create_client(
     client_data: ClientCreate,
-    user_id: str = Depends(get_current_user_id)
+    request: Request,
+    current_user: dict = Depends(get_current_user)
 ):
     """Create a new client for the advisor"""
+    user_id = current_user["id"]
+    
     client_obj = Client(
         **client_data.model_dump(),
         advisor_id=user_id
@@ -50,14 +53,24 @@ async def create_client(
     client_dict['updated_at'] = client_dict['updated_at'].isoformat()
     await db.clients.insert_one(client_dict)
     
+    # Log audit event
+    await log_client_access(
+        user_id=user_id,
+        user_email=current_user["email"],
+        action=AuditAction.CLIENT_CREATE,
+        client_id=client_obj.id,
+        details={"client_name": f"{client_data.first_name} {client_data.last_name}"},
+        request=request
+    )
+    
     return client_obj
 
 
 @router.get("", response_model=List[Client])
-async def get_clients(user_id: str = Depends(get_current_user_id)):
+async def get_clients(current_user: dict = Depends(get_current_user)):
     """Get all clients for the advisor"""
     clients = await db.clients.find(
-        {"advisor_id": user_id}, 
+        {"advisor_id": current_user["id"]}, 
         {"_id": 0}
     ).sort("created_at", -1).to_list(100)
     
@@ -67,11 +80,12 @@ async def get_clients(user_id: str = Depends(get_current_user_id)):
 @router.get("/{client_id}", response_model=Client)
 async def get_client(
     client_id: str,
-    user_id: str = Depends(get_current_user_id)
+    request: Request,
+    current_user: dict = Depends(get_current_user)
 ):
     """Get a specific client"""
     client_doc = await db.clients.find_one(
-        {"id": client_id, "advisor_id": user_id},
+        {"id": client_id, "advisor_id": current_user["id"]},
         {"_id": 0}
     )
     
@@ -81,6 +95,15 @@ async def get_client(
             detail="Client not found"
         )
     
+    # Log audit event
+    await log_client_access(
+        user_id=current_user["id"],
+        user_email=current_user["email"],
+        action=AuditAction.CLIENT_VIEW,
+        client_id=client_id,
+        request=request
+    )
+    
     return Client(**client_doc)
 
 
@@ -88,9 +111,12 @@ async def get_client(
 async def update_client(
     client_id: str,
     update_data: ClientUpdate,
-    user_id: str = Depends(get_current_user_id)
+    request: Request,
+    current_user: dict = Depends(get_current_user)
 ):
     """Update client information"""
+    user_id = current_user["id"]
+    
     # Check client exists
     existing = await db.clients.find_one(
         {"id": client_id, "advisor_id": user_id}
@@ -110,6 +136,16 @@ async def update_client(
         {"$set": update_dict}
     )
     
+    # Log audit event
+    await log_client_access(
+        user_id=user_id,
+        user_email=current_user["email"],
+        action=AuditAction.CLIENT_UPDATE,
+        client_id=client_id,
+        details={"updated_fields": list(update_dict.keys())},
+        request=request
+    )
+    
     # Return updated client
     updated = await db.clients.find_one({"id": client_id}, {"_id": 0})
     return Client(**updated)
@@ -118,9 +154,12 @@ async def update_client(
 @router.delete("/{client_id}")
 async def delete_client(
     client_id: str,
-    user_id: str = Depends(get_current_user_id)
+    request: Request,
+    current_user: dict = Depends(get_current_user)
 ):
     """Delete a client and all associated data"""
+    user_id = current_user["id"]
+    
     # Check client exists
     existing = await db.clients.find_one(
         {"id": client_id, "advisor_id": user_id}
@@ -130,6 +169,16 @@ async def delete_client(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Client not found"
         )
+    
+    # Log audit event BEFORE deletion
+    await log_client_access(
+        user_id=user_id,
+        user_email=current_user["email"],
+        action=AuditAction.CLIENT_DELETE,
+        client_id=client_id,
+        details={"client_name": f"{existing.get('first_name', '')} {existing.get('last_name', '')}"},
+        request=request
+    )
     
     # Delete client and associated calculations
     await db.clients.delete_one({"id": client_id})
