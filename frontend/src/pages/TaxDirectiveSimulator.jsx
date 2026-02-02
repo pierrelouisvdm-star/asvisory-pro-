@@ -626,27 +626,6 @@ const TaxDirectiveSimulator = () => {
         </div>
       </div>
 
-      {/* Print Report */}
-      {results && (
-        <PrintReport
-          title="Tax Directive Simulation"
-          calculatorType="Tax Directive"
-          inputs={[
-            { label: 'Withdrawal Type', value: withdrawalTypes.find(t => t.value === results.withdrawalType)?.label || '' },
-            { label: 'Withdrawal Amount', value: formatCurrency(results.currentAmount) },
-            { label: 'Previous Withdrawals', value: formatCurrency(results.totalPrevious) },
-            { label: 'Tax Table Applied', value: results.taxTable },
-          ]}
-          results={[
-            { label: 'Tax-Free Threshold', value: formatCurrency(results.taxFreeThreshold) },
-            { label: 'Remaining Tax-Free', value: formatCurrency(results.remainingTaxFree) },
-            { label: 'Taxable Amount', value: formatCurrency(results.taxableOnCurrent) },
-            { label: 'Estimated Tax', value: formatCurrency(results.currentTax) },
-            { label: 'Net Amount After Tax', value: formatCurrency(results.netAmount) },
-            { label: 'Effective Tax Rate', value: `${results.effectiveRate.toFixed(2)}%` },
-          ]}
-        />
-      )}
     </div>
   );
 };
