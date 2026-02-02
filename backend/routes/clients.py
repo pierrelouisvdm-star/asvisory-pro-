@@ -1,11 +1,12 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Request
 from motor.motor_asyncio import AsyncIOMotorClient
 from typing import List
 from datetime import datetime, timezone
 from models.client import Client, ClientCreate, ClientUpdate, FinancialData
 from models.financial_plan import FinancialPlanAnalysis, FinancialDataUpdate
-from utils.auth import get_current_user_id
+from utils.auth import get_current_user_id, get_current_user
 from utils.financial_analyzer import analyze_financial_plan
+from utils.security import AuditAction, get_client_ip
 import os
 
 router = APIRouter(prefix="/clients", tags=["Clients"])
@@ -15,6 +16,21 @@ mongo_url = os.environ['MONGO_URL']
 db_name = os.environ['DB_NAME']
 client = AsyncIOMotorClient(mongo_url)
 db = client[db_name]
+
+
+async def log_client_access(user_id: str, user_email: str, action: AuditAction, client_id: str = None, details: dict = None, request: Request = None):
+    """Helper to log client data access"""
+    from routes.audit import log_audit_event
+    await log_audit_event(
+        user_id=user_id,
+        user_email=user_email,
+        action=action,
+        resource_type="client",
+        resource_id=client_id,
+        ip_address=get_client_ip(request) if request else None,
+        user_agent=request.headers.get("User-Agent") if request else None,
+        details=details
+    )
 
 
 @router.post("", response_model=Client)
