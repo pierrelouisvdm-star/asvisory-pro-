@@ -294,6 +294,12 @@ export const Header = () => {
                       My Clients
                     </Link>
                   </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/security" className="flex items-center gap-2 cursor-pointer">
+                      <Shield className="h-4 w-4" />
+                      Security & Privacy
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem 
                     onClick={handleLogout}
