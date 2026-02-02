@@ -38,6 +38,7 @@ import { LivingAnnuityCalculator } from "@/pages/LivingAnnuityCalculator";
 import { RetirementTaxCalculator } from "@/pages/RetirementTaxCalculator";
 import TaxDirectiveSimulator from "@/pages/TaxDirectiveSimulator";
 import FinancialLiteracyQuiz from "@/pages/FinancialLiteracyQuiz";
+import SecurityPage from "@/pages/SecurityPage";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
@@ -151,6 +152,7 @@ function App() {
                   <Route path="/net-worth" element={<ProtectedRoute><GatedCalculator path="/net-worth"><NetWorthTracker /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/risk-profile" element={<ProtectedRoute><GatedCalculator path="/risk-profile"><RiskProfileQuiz /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/financial-literacy" element={<ProtectedRoute><GatedCalculator path="/financial-literacy"><FinancialLiteracyQuiz /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/security" element={<ProtectedRoute><SecurityPage /></ProtectedRoute>} />
                   <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
