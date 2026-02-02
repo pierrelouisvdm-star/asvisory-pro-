@@ -39,6 +39,7 @@ const retirementCalcs = [
   { path: '/retirement', label: 'Retirement Planner', icon: PiggyBank },
   { path: '/living-annuity', label: 'Living Annuity', icon: Wallet },
   { path: '/retirement-tax', label: 'Tax Savings Calculator', icon: Receipt },
+  { path: '/tax-directive', label: 'Tax Directive Simulator', icon: Target },
 ];
 
 // Additional Tools

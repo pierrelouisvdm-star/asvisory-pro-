@@ -36,6 +36,7 @@ import { SubscriptionSuccessPage } from "@/pages/SubscriptionSuccessPage";
 import { AnalyticsDashboard } from "@/pages/AnalyticsDashboard";
 import { LivingAnnuityCalculator } from "@/pages/LivingAnnuityCalculator";
 import { RetirementTaxCalculator } from "@/pages/RetirementTaxCalculator";
+import TaxDirectiveSimulator from "@/pages/TaxDirectiveSimulator";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
@@ -139,6 +140,7 @@ function App() {
                   <Route path="/retirement" element={<ProtectedRoute><GatedCalculator path="/retirement"><RetirementCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/living-annuity" element={<ProtectedRoute><GatedCalculator path="/living-annuity"><LivingAnnuityCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/retirement-tax" element={<ProtectedRoute><GatedCalculator path="/retirement-tax"><RetirementTaxCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/tax-directive" element={<ProtectedRoute><GatedCalculator path="/tax-directive"><TaxDirectiveSimulator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/tax-calculator"><TaxCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/estate-planning" element={<ProtectedRoute><GatedCalculator path="/estate-planning"><EstatePlanningCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/emergency-fund" element={<ProtectedRoute><GatedCalculator path="/emergency-fund"><EmergencyFundCalculator /></GatedCalculator></ProtectedRoute>} />
