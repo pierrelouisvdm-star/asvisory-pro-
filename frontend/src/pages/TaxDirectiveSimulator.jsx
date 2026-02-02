@@ -12,8 +12,8 @@ import {
   Download, PiggyBank, Briefcase, Heart, UserMinus
 } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
-import PrintReport from '../components/calculators/PrintReport';
-import Disclaimer from '../components/calculators/Disclaimer';
+import { PrintReport } from '../components/calculators/PrintReport';
+import { Disclaimer } from '../components/calculators/Disclaimer';
 
 // SARS Tax Tables 2024/25
 const RETIREMENT_TAX_TABLE = [
