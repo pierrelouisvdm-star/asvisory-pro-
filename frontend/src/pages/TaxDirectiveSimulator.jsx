@@ -216,15 +216,24 @@ const TaxDirectiveSimulator = () => {
           </p>
         </div>
         {results && (
-          <Button 
-            variant="outline" 
-            onClick={() => setShowReport(true)}
-            className="border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10"
-            data-testid="generate-report-btn"
-          >
-            <FileText className="h-4 w-4 mr-2" />
-            Generate Report
-          </Button>
+          <PrintReport
+            title="Tax Directive Simulation"
+            calculatorType="Tax Directive"
+            inputs={[
+              { label: 'Withdrawal Type', value: withdrawalTypes.find(t => t.value === results.withdrawalType)?.label || '' },
+              { label: 'Withdrawal Amount', value: formatCurrency(results.currentAmount) },
+              { label: 'Previous Withdrawals', value: formatCurrency(results.totalPrevious) },
+              { label: 'Tax Table Applied', value: results.taxTable },
+            ]}
+            results={[
+              { label: 'Tax-Free Threshold', value: formatCurrency(results.taxFreeThreshold) },
+              { label: 'Remaining Tax-Free', value: formatCurrency(results.remainingTaxFree) },
+              { label: 'Taxable Amount', value: formatCurrency(results.taxableOnCurrent) },
+              { label: 'Estimated Tax', value: formatCurrency(results.currentTax) },
+              { label: 'Net Amount After Tax', value: formatCurrency(results.netAmount) },
+              { label: 'Effective Tax Rate', value: `${results.effectiveRate.toFixed(2)}%` },
+            ]}
+          />
         )}
       </div>
 
