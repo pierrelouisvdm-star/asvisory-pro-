@@ -192,9 +192,12 @@ async def delete_client(
 async def update_financial_data(
     client_id: str,
     financial_update: FinancialDataUpdate,
-    user_id: str = Depends(get_current_user_id)
+    request: Request,
+    current_user: dict = Depends(get_current_user)
 ):
     """Update client's financial data from calculator results"""
+    user_id = current_user["id"]
+    
     # Check client exists
     existing = await db.clients.find_one(
         {"id": client_id, "advisor_id": user_id},
@@ -216,6 +219,16 @@ async def update_financial_data(
         {"$set": update_dict}
     )
     
+    # Log audit event
+    await log_client_access(
+        user_id=user_id,
+        user_email=current_user["email"],
+        action=AuditAction.FINANCIAL_DATA_UPDATE,
+        client_id=client_id,
+        details={"updated_fields": list(financial_update.model_dump().keys())},
+        request=request
+    )
+    
     # Return updated client
     updated = await db.clients.find_one({"id": client_id}, {"_id": 0})
     return Client(**updated)
@@ -224,9 +237,12 @@ async def update_financial_data(
 @router.get("/{client_id}/analysis", response_model=FinancialPlanAnalysis)
 async def get_financial_analysis(
     client_id: str,
-    user_id: str = Depends(get_current_user_id)
+    request: Request,
+    current_user: dict = Depends(get_current_user)
 ):
     """Get or generate financial plan analysis for a client"""
+    user_id = current_user["id"]
+    
     # Get client
     client_doc = await db.clients.find_one(
         {"id": client_id, "advisor_id": user_id},
@@ -255,13 +271,24 @@ async def get_financial_analysis(
         upsert=True
     )
     
+    # Log audit event
+    await log_client_access(
+        user_id=user_id,
+        user_email=current_user["email"],
+        action=AuditAction.FINANCIAL_DATA_VIEW,
+        client_id=client_id,
+        details={"analysis_type": "financial_plan"},
+        request=request
+    )
+    
     return analysis
 
 
 @router.post("/{client_id}/analysis/refresh", response_model=FinancialPlanAnalysis)
 async def refresh_financial_analysis(
     client_id: str,
-    user_id: str = Depends(get_current_user_id)
+    request: Request,
+    current_user: dict = Depends(get_current_user)
 ):
     """Force refresh the financial plan analysis"""
-    return await get_financial_analysis(client_id, user_id)
+    return await get_financial_analysis(client_id, request, current_user)
