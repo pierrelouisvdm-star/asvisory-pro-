@@ -620,94 +620,25 @@ const TaxDirectiveSimulator = () => {
       </div>
 
       {/* Print Report */}
-      {showReport && results && (
+      {results && (
         <PrintReport
           title="Tax Directive Simulation"
-          onClose={() => setShowReport(false)}
-        >
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <h3 className="font-semibold text-gray-700 mb-2">Withdrawal Details</h3>
-                <table className="w-full text-sm">
-                  <tbody>
-                    <tr>
-                      <td className="py-1 text-gray-600">Type:</td>
-                      <td className="py-1 font-medium">{withdrawalTypes.find(t => t.value === results.withdrawalType)?.label}</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1 text-gray-600">Amount:</td>
-                      <td className="py-1 font-medium">{formatCurrency(results.currentAmount)}</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1 text-gray-600">Previous Withdrawals:</td>
-                      <td className="py-1 font-medium">{formatCurrency(results.totalPrevious)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-700 mb-2">Tax Calculation</h3>
-                <table className="w-full text-sm">
-                  <tbody>
-                    <tr>
-                      <td className="py-1 text-gray-600">Tax-Free Threshold:</td>
-                      <td className="py-1 font-medium">{formatCurrency(results.taxFreeThreshold)}</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1 text-gray-600">Remaining Tax-Free:</td>
-                      <td className="py-1 font-medium">{formatCurrency(results.remainingTaxFree)}</td>
-                    </tr>
-                    <tr>
-                      <td className="py-1 text-gray-600">Taxable Amount:</td>
-                      <td className="py-1 font-medium">{formatCurrency(results.taxableOnCurrent)}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="font-semibold text-gray-700 mb-3">Summary</h3>
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <p className="text-sm text-gray-600">Gross Withdrawal</p>
-                  <p className="text-xl font-bold text-gray-800">{formatCurrency(results.currentAmount)}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Estimated Tax</p>
-                  <p className="text-xl font-bold text-red-600">{formatCurrency(results.currentTax)}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">Net Amount</p>
-                  <p className="text-xl font-bold text-green-600">{formatCurrency(results.netAmount)}</p>
-                </div>
-              </div>
-              <div className="mt-3 pt-3 border-t border-gray-300 flex justify-between text-sm">
-                <span className="text-gray-600">Effective Tax Rate:</span>
-                <span className="font-medium">{results.effectiveRate.toFixed(2)}%</span>
-              </div>
-            </div>
-
-            {results.suggestions.length > 0 && (
-              <div>
-                <h3 className="font-semibold text-gray-700 mb-2">Recommendations</h3>
-                <ul className="text-sm space-y-2">
-                  {results.suggestions.map((suggestion, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-emerald-600">•</span>
-                      <span><strong>{suggestion.title}:</strong> {suggestion.description}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <div className="text-xs text-gray-500 mt-4 pt-4 border-t">
-              <p><strong>Note:</strong> This is a simulation only. Actual tax payable may differ based on SARS records of previous withdrawals. Always verify with SARS or a tax professional before making withdrawal decisions.</p>
-            </div>
-          </div>
-        </PrintReport>
+          calculatorType="Tax Directive"
+          inputs={[
+            { label: 'Withdrawal Type', value: withdrawalTypes.find(t => t.value === results.withdrawalType)?.label || '' },
+            { label: 'Withdrawal Amount', value: formatCurrency(results.currentAmount) },
+            { label: 'Previous Withdrawals', value: formatCurrency(results.totalPrevious) },
+            { label: 'Tax Table Applied', value: results.taxTable },
+          ]}
+          results={[
+            { label: 'Tax-Free Threshold', value: formatCurrency(results.taxFreeThreshold) },
+            { label: 'Remaining Tax-Free', value: formatCurrency(results.remainingTaxFree) },
+            { label: 'Taxable Amount', value: formatCurrency(results.taxableOnCurrent) },
+            { label: 'Estimated Tax', value: formatCurrency(results.currentTax) },
+            { label: 'Net Amount After Tax', value: formatCurrency(results.netAmount) },
+            { label: 'Effective Tax Rate', value: `${results.effectiveRate.toFixed(2)}%` },
+          ]}
+        />
       )}
     </div>
   );
