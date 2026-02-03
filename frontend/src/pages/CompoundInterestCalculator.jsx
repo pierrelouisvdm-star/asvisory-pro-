@@ -154,6 +154,7 @@ export const CompoundInterestCalculator = () => {
 
   const pieData = [
     { name: 'Principal', value: currentScenario.principal, color: 'hsl(215, 50%, 35%)' },
+    { name: 'Contributions', value: results.totalContributed - currentScenario.principal, color: 'hsl(150, 45%, 35%)' },
     { name: 'Interest Earned', value: results.totalInterest, color: 'hsl(43, 74%, 49%)' },
   ];
 
