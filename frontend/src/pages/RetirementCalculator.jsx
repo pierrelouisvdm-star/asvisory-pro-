@@ -292,6 +292,16 @@ export const RetirementCalculator = () => {
           min={0}
           step={100}
         />
+        <SliderField
+          label="Annual Contribution Increase"
+          id={`contributionIncrease-${scenario.id}`}
+          value={scenario.contributionIncrease}
+          onChange={(val) => updateScenario(index, 'contributionIncrease', val)}
+          min={0}
+          max={15}
+          step={0.5}
+          suffix="%"
+        />
         
         <div className="pt-4 border-t border-border space-y-2">
           <ResultDisplay
