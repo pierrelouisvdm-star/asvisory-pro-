@@ -38,7 +38,7 @@ const defaultScenario = () => ({
   contributionIncrease: 0,
   contributionFrequency: '12',
   compounding: '12',
-  inflationRate: 3,
+  inflationRate: 4,
   investmentFee: 2,
 });
 

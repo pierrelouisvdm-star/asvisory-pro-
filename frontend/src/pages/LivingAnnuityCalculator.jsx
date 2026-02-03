@@ -44,8 +44,8 @@ export const LivingAnnuityCalculator = () => {
     drawdownRate: '5',
     paymentFrequency: '12',
     expectedReturn: 8,
-    inflationRate: 5,
-    investmentFee: 1.5,
+    inflationRate: 4,
+    investmentFee: 2,
     currentAge: 65,
     lifeExpectancy: 90,
   });

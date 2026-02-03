@@ -42,7 +42,7 @@ const defaultScenario = () => ({
   currentIncome: 80000,
   desiredRetirementIncome: 60, // as percentage of current income
   expectedReturn: 10,
-  inflationRate: 5, // SA inflation typically higher
+  inflationRate: 4,
   investmentFee: 2,
   governmentPension: 2000, // SA Old Age Grant (means tested)
   pensionBenefit: 0,
