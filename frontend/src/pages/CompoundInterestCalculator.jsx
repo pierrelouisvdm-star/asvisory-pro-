@@ -39,44 +39,68 @@ export const CompoundInterestCalculator = () => {
   const [scenarios, setScenarios] = useState([defaultScenario()]);
 
   const calculateCompoundInterest = useCallback((scenario) => {
-    const { principal, rate, years, compounding } = scenario;
+    const { principal, rate, years, contribution, contributionIncrease, compounding } = scenario;
     const r = rate / 100;
     const n = parseFloat(compounding);
+    const annualIncrease = contributionIncrease / 100;
     
-    // Compound interest formula: A = P(1 + r/n)^(nt)
-    const finalAmount = principal * Math.pow(1 + r / n, n * years);
-    const totalInterest = finalAmount - principal;
-    const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
+    // Calculate with escalating contributions
+    let totalValue = principal;
+    let totalContributed = principal;
+    let currentContribution = contribution;
     
-    // Simple interest for comparison
-    const simpleInterest = principal * r * years;
-    const simpleTotal = principal + simpleInterest;
-    const compoundBenefit = finalAmount - simpleTotal;
-
-    // Generate yearly data
-    const yearlyData = [];
-    for (let year = 0; year <= years; year++) {
-      const compound = principal * Math.pow(1 + r / n, n * year);
-      const simple = principal + (principal * r * year);
+    const yearlyData = [{
+      year: 'Year 0',
+      compound: principal,
+      simple: principal,
+      difference: 0,
+    }];
+    
+    for (let year = 1; year <= years; year++) {
+      // Compound interest on existing balance
+      totalValue = totalValue * Math.pow(1 + r / n, n);
+      
+      // Add annual contributions with partial year growth
+      const yearContributions = currentContribution * 12; // Monthly contributions
+      const contributionGrowth = yearContributions * (Math.pow(1 + r / n, n) - 1) / 2;
+      totalValue += yearContributions + contributionGrowth;
+      totalContributed += yearContributions;
+      
+      // Simple interest comparison (no contribution escalation for fair comparison)
+      const simpleValue = principal + (principal * r * year) + (contribution * 12 * year);
       
       yearlyData.push({
         year: `Year ${year}`,
-        compound,
-        simple,
-        difference: compound - simple,
+        compound: totalValue,
+        simple: simpleValue,
+        difference: totalValue - simpleValue,
+        contribution: currentContribution,
       });
+      
+      // Increase contribution for next year
+      currentContribution = currentContribution * (1 + annualIncrease);
     }
+    
+    const finalAmount = totalValue;
+    const totalInterest = finalAmount - totalContributed;
+    const effectiveRate = (Math.pow(1 + r / n, n) - 1) * 100;
+    
+    // Simple interest for comparison (without escalation)
+    const simpleInterest = principal * r * years;
+    const simpleContributions = contribution * 12 * years;
+    const simpleTotal = principal + simpleInterest + simpleContributions;
+    const compoundBenefit = finalAmount - simpleTotal;
 
     // Generate interest accumulation data
     const interestData = [];
     let previousValue = principal;
     for (let year = 1; year <= years; year++) {
-      const currentValue = principal * Math.pow(1 + r / n, n * year);
-      const yearlyInterest = currentValue - previousValue;
+      const currentValue = yearlyData[year].compound;
+      const yearlyInterest = currentValue - previousValue - (yearlyData[year].contribution || contribution) * 12;
       interestData.push({
         year: `Year ${year}`,
-        interest: yearlyInterest,
-        cumulative: currentValue - principal,
+        interest: Math.max(0, yearlyInterest),
+        cumulative: currentValue - totalContributed,
       });
       previousValue = currentValue;
     }
@@ -84,6 +108,7 @@ export const CompoundInterestCalculator = () => {
     return {
       finalAmount,
       totalInterest,
+      totalContributed,
       effectiveRate: effectiveRate.toFixed(2),
       simpleTotal,
       simpleInterest,
@@ -91,6 +116,7 @@ export const CompoundInterestCalculator = () => {
       yearlyData,
       interestData,
       finalValue: finalAmount,
+      finalContribution: currentContribution / (1 + annualIncrease),
     };
   }, []);
 
