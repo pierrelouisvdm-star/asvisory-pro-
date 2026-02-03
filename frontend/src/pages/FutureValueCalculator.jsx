@@ -48,62 +48,65 @@ export const FutureValueCalculator = () => {
   const [scenarios, setScenarios] = useState([defaultScenario()]);
 
   const calculateFutureValue = useCallback((scenario) => {
-    const { principal, rate, years, contribution, contributionFrequency, compounding, inflationRate, investmentFee } = scenario;
+    const { principal, rate, years, contribution, contributionIncrease, contributionFrequency, compounding, inflationRate, investmentFee } = scenario;
     
     const grossRate = rate / 100;
     const feeRate = investmentFee / 100;
     const inflation = inflationRate / 100;
+    const annualIncrease = contributionIncrease / 100;
     const n = parseFloat(compounding);
     const contributionsPerYear = parseFloat(contributionFrequency);
     
-    // Calculate future value at gross rate (before fees)
-    const fvPrincipal = principal * Math.pow(1 + grossRate / n, n * years);
-    const periodicRate = grossRate / contributionsPerYear;
-    const totalPeriods = contributionsPerYear * years;
+    // Calculate future value with escalating contributions
+    let totalValue = principal;
+    let totalContributed = principal;
+    let currentContribution = contribution;
     
-    let fvContributions = 0;
-    if (periodicRate > 0) {
-      fvContributions = contribution * ((Math.pow(1 + periodicRate, totalPeriods) - 1) / periodicRate);
-    } else {
-      fvContributions = contribution * totalPeriods;
-    }
+    const yearlyData = [{
+      year: 'Year 0',
+      nominal: principal,
+      real: principal,
+      principal: principal,
+      interest: 0,
+    }];
     
-    const fvWithoutFees = fvPrincipal + fvContributions;
-    
-    // Simple fee calculation: annual fee as percentage of final value
-    const totalFeesPaid = fvWithoutFees * feeRate;
-    const nominalFV = fvWithoutFees - totalFeesPaid;
-    
-    const totalContributed = principal + (contribution * contributionsPerYear * years);
-    const totalInterest = nominalFV - totalContributed;
-    
-    // Real (inflation-adjusted) future value
-    const realFV = nominalFV / Math.pow(1 + inflation, years);
-    const purchasingPowerLoss = nominalFV - realFV;
-
-    // Generate yearly data for chart
-    const yearlyData = [];
-    for (let year = 0; year <= years; year++) {
-      const yearFvPrincipal = principal * Math.pow(1 + grossRate / n, n * year);
-      const yearPeriods = contributionsPerYear * year;
-      let yearFvContributions = 0;
-      if (year > 0 && periodicRate > 0) {
-        yearFvContributions = contribution * ((Math.pow(1 + periodicRate, yearPeriods) - 1) / periodicRate);
-      }
-      const yearGross = yearFvPrincipal + yearFvContributions;
-      const yearFee = yearGross * feeRate;
-      const yearNominal = yearGross - yearFee;
+    for (let year = 1; year <= years; year++) {
+      // Apply interest growth to existing balance
+      totalValue = totalValue * Math.pow(1 + grossRate / n, n);
+      
+      // Add contributions for this year (at current contribution level)
+      const yearContributions = currentContribution * contributionsPerYear;
+      
+      // For simplicity, assume contributions made at start of year and grow for the year
+      const contributionGrowth = yearContributions * (Math.pow(1 + grossRate / n, n) - 1) / 2; // Average growth
+      totalValue += yearContributions + contributionGrowth;
+      totalContributed += yearContributions;
+      
+      // Apply fees
+      const yearFee = totalValue * feeRate;
+      const yearNominal = totalValue - yearFee;
       const yearReal = yearNominal / Math.pow(1 + inflation, year);
-      const yearContributed = principal + (contribution * contributionsPerYear * year);
       
       yearlyData.push({
         year: `Year ${year}`,
         nominal: yearNominal,
         real: yearReal,
-        principal: yearContributed,
-        interest: yearNominal - yearContributed,
+        principal: totalContributed,
+        interest: yearNominal - totalContributed,
+        contribution: currentContribution,
       });
+      
+      // Increase contribution for next year
+      currentContribution = currentContribution * (1 + annualIncrease);
     }
+    
+    // Final values
+    const fvWithoutFees = totalValue;
+    const totalFeesPaid = fvWithoutFees * feeRate;
+    const nominalFV = fvWithoutFees - totalFeesPaid;
+    const totalInterest = nominalFV - totalContributed;
+    const realFV = nominalFV / Math.pow(1 + inflation, years);
+    const purchasingPowerLoss = nominalFV - realFV;
 
     return {
       futureValue: nominalFV,
@@ -117,6 +120,7 @@ export const FutureValueCalculator = () => {
       yearlyData,
       finalValue: nominalFV,
       fvWithoutFees,
+      finalContribution: currentContribution / (1 + annualIncrease), // Last actual contribution
     };
   }, []);
 
