@@ -238,6 +238,7 @@ export const RetirementCalculator = () => {
     { label: 'Retirement Age', value: `${currentScenario.retirementAge} years` },
     { label: 'Current Savings', value: formatCurrency(currentScenario.currentSavings) },
     { label: 'Monthly Contribution', value: formatCurrency(currentScenario.monthlyContribution) },
+    { label: 'Annual Contribution Increase', value: `${currentScenario.contributionIncrease}%` },
     { label: 'Current Income', value: formatCurrency(currentScenario.currentIncome) },
     { label: 'Expected Return', value: `${currentScenario.expectedReturn}%` },
     { label: 'Inflation Rate', value: `${currentScenario.inflationRate}%` },
