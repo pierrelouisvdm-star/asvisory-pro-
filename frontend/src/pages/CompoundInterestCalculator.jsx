@@ -28,6 +28,8 @@ const defaultScenario = () => ({
   principal: 25000,
   rate: 10,
   years: 15,
+  contribution: 1000,
+  contributionIncrease: 5,
   compounding: '12',
 });
 
