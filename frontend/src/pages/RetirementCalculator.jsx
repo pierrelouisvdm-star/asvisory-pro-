@@ -36,15 +36,15 @@ const defaultScenario = () => ({
   currentAge: 35,
   retirementAge: '65',
   lifeExpectancy: '90',
-  currentSavings: 50000,
-  monthlyContribution: 1000,
+  currentSavings: 0,
+  monthlyContribution: 0,
   contributionIncrease: 0,
-  currentIncome: 80000,
+  currentIncome: 0,
   desiredRetirementIncome: 60, // as percentage of current income
   expectedReturn: 10,
   inflationRate: 4,
   investmentFee: 2,
-  governmentPension: 2000, // SA Old Age Grant (means tested)
+  governmentPension: 0,
   pensionBenefit: 0,
   otherRetirementIncome: 0,
 });
