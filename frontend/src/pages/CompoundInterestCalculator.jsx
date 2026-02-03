@@ -403,6 +403,11 @@ export const CompoundInterestCalculator = () => {
             {/* Secondary Results */}
             <ResultGrid columns={4}>
               <ResultDisplay
+                label="Total Contributed"
+                value={results.totalContributed}
+                variant="muted"
+              />
+              <ResultDisplay
                 label="Total Interest"
                 value={results.totalInterest}
                 variant="success"
@@ -412,11 +417,6 @@ export const CompoundInterestCalculator = () => {
                 value={results.effectiveRate}
                 prefix=""
                 suffix="%"
-                variant="muted"
-              />
-              <ResultDisplay
-                label="Simple Interest"
-                value={results.simpleInterest}
                 variant="muted"
               />
               <ResultDisplay
