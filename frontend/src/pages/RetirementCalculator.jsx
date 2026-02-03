@@ -57,7 +57,7 @@ export const RetirementCalculator = () => {
   const calculateRetirement = useCallback((scenario) => {
     const {
       currentAge, retirementAge, lifeExpectancy, currentSavings,
-      monthlyContribution, currentIncome, desiredRetirementIncome,
+      monthlyContribution, contributionIncrease, currentIncome, desiredRetirementIncome,
       expectedReturn, inflationRate, investmentFee,
       governmentPension, pensionBenefit, otherRetirementIncome
     } = scenario;
@@ -66,6 +66,7 @@ export const RetirementCalculator = () => {
     const lifeExp = parseFloat(lifeExpectancy);
     const yearsToRetirement = retAge - currentAge;
     const retirementYears = lifeExp - retAge;
+    const annualIncrease = contributionIncrease / 100;
     
     // Net return after fees
     const grossReturn = expectedReturn / 100;
@@ -74,16 +75,38 @@ export const RetirementCalculator = () => {
     const inflation = inflationRate / 100;
     const realReturn = ((1 + netReturn) / (1 + inflation)) - 1;
     
-    // Calculate future value of current savings
-    const fvCurrentSavings = currentSavings * Math.pow(1 + netReturn, yearsToRetirement);
+    // Calculate future value with escalating contributions
+    let totalNestEgg = currentSavings;
+    let totalContributed = currentSavings;
+    let currentMonthlyContribution = monthlyContribution;
     
-    // Calculate future value of monthly contributions
-    const monthlyReturn = netReturn / 12;
-    const totalContributionMonths = yearsToRetirement * 12;
-    const fvContributions = monthlyContribution * ((Math.pow(1 + monthlyReturn, totalContributionMonths) - 1) / monthlyReturn);
+    const projectionData = [{
+      year: `Age ${currentAge}`,
+      balance: currentSavings,
+      contributions: 0,
+      target: 0,
+    }];
     
-    // Total retirement nest egg at retirement
-    const totalNestEgg = fvCurrentSavings + fvContributions;
+    for (let year = 1; year <= yearsToRetirement; year++) {
+      // Apply growth to existing balance
+      totalNestEgg = totalNestEgg * (1 + netReturn);
+      
+      // Add annual contributions with partial year growth
+      const annualContributions = currentMonthlyContribution * 12;
+      const contributionGrowth = annualContributions * ((1 + netReturn) - 1) / 2;
+      totalNestEgg += annualContributions + contributionGrowth;
+      totalContributed += annualContributions;
+      
+      projectionData.push({
+        year: `Age ${currentAge + year}`,
+        balance: totalNestEgg,
+        contributions: totalContributed - currentSavings,
+        monthlyContribution: currentMonthlyContribution,
+      });
+      
+      // Increase contribution for next year
+      currentMonthlyContribution = currentMonthlyContribution * (1 + annualIncrease);
+    }
     
     // Calculate needed retirement income (inflation-adjusted)
     const annualIncomeNeeded = (currentIncome * (desiredRetirementIncome / 100)) * Math.pow(1 + inflation, yearsToRetirement);
@@ -105,12 +128,19 @@ export const RetirementCalculator = () => {
       : retirementYears;
     const neededNestEgg = annualGap * pvFactor;
     
+    // Add target line to projection data
+    projectionData.forEach((data, index) => {
+      data.target = neededNestEgg * (index / yearsToRetirement);
+    });
+    
     // Retirement readiness
     const fundingRatio = (totalNestEgg / neededNestEgg) * 100;
     const shortfall = Math.max(0, neededNestEgg - totalNestEgg);
     const surplus = Math.max(0, totalNestEgg - neededNestEgg);
     
-    // Calculate additional monthly savings needed to close gap
+    // Calculate additional monthly savings needed to close gap (simplified)
+    const monthlyReturn = netReturn / 12;
+    const totalContributionMonths = yearsToRetirement * 12;
     const additionalMonthlyNeeded = shortfall > 0 
       ? (shortfall / ((Math.pow(1 + monthlyReturn, totalContributionMonths) - 1) / monthlyReturn))
       : 0;
@@ -122,23 +152,9 @@ export const RetirementCalculator = () => {
     // Years money will last at desired withdrawal
     let yearsMoneyLasts = 0;
     let balance = totalNestEgg;
-    const monthlyWithdrawalNeeded = annualGap / 12;
     while (balance > 0 && yearsMoneyLasts < 100) {
       balance = balance * (1 + realReturn) - annualGap;
       yearsMoneyLasts++;
-    }
-    
-    // Generate projection data
-    const projectionData = [];
-    let projectedBalance = currentSavings;
-    for (let year = 0; year <= yearsToRetirement; year++) {
-      projectionData.push({
-        year: `Age ${currentAge + year}`,
-        balance: projectedBalance,
-        contributions: monthlyContribution * 12 * year,
-        target: neededNestEgg * (year / yearsToRetirement),
-      });
-      projectedBalance = projectedBalance * (1 + netReturn) + monthlyContribution * 12;
     }
     
     // Retirement phase projection
@@ -163,6 +179,7 @@ export const RetirementCalculator = () => {
     return {
       totalNestEgg,
       neededNestEgg,
+      totalContributed,
       fundingRatio: Math.min(fundingRatio, 200),
       shortfall,
       surplus,
@@ -175,13 +192,12 @@ export const RetirementCalculator = () => {
       monthlyWithdrawal,
       yearsMoneyLasts,
       totalOtherIncome,
-      fvCurrentSavings,
-      fvContributions,
       projectionData,
       retirementData,
       incomeBreakdown,
       isOnTrack: fundingRatio >= 100,
       finalValue: totalNestEgg,
+      finalContribution: currentMonthlyContribution / (1 + annualIncrease),
     };
   }, []);
 
