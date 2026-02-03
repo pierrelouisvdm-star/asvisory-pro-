@@ -463,6 +463,18 @@ export const RetirementCalculator = () => {
                 />
                 
                 <SliderField
+                  label="Annual Contribution Increase"
+                  id="contributionIncrease"
+                  value={currentScenario.contributionIncrease}
+                  onChange={(val) => updateScenario(0, 'contributionIncrease', val)}
+                  min={0}
+                  max={15}
+                  step={0.5}
+                  suffix="%"
+                  tooltip="Annual percentage increase in contributions (e.g., with salary increases)"
+                />
+                
+                <SliderField
                   label="Expected Annual Return"
                   id="expectedReturn"
                   value={currentScenario.expectedReturn}
