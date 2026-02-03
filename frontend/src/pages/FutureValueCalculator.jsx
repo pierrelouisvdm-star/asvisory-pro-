@@ -227,6 +227,16 @@ export const FutureValueCalculator = () => {
           step={100}
         />
         <SliderField
+          label="Annual Contribution Increase"
+          id={`contributionIncrease-${scenario.id}`}
+          value={scenario.contributionIncrease}
+          onChange={(val) => updateScenario(index, 'contributionIncrease', val)}
+          min={0}
+          max={15}
+          step={0.5}
+          suffix="%"
+        />
+        <SliderField
           label="Inflation Rate"
           id={`inflation-${scenario.id}`}
           value={scenario.inflationRate}
