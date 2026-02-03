@@ -159,17 +159,20 @@ export const CompoundInterestCalculator = () => {
   ];
 
   const printInputs = [
-    { label: 'Principal Amount', value: `$${currentScenario.principal.toLocaleString()}` },
+    { label: 'Principal Amount', value: formatCurrency(currentScenario.principal) },
     { label: 'Annual Interest Rate', value: `${currentScenario.rate}%` },
     { label: 'Investment Period', value: `${currentScenario.years} years` },
+    { label: 'Monthly Contribution', value: formatCurrency(currentScenario.contribution) },
+    { label: 'Annual Contribution Increase', value: `${currentScenario.contributionIncrease}%` },
     { label: 'Compounding Frequency', value: compoundingOptions.find(o => o.value === currentScenario.compounding)?.label },
   ];
 
   const printResults = [
-    { label: 'Final Amount', value: `$${results.finalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
-    { label: 'Total Interest Earned', value: `$${results.totalInterest.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
+    { label: 'Final Amount', value: formatCurrency(results.finalAmount) },
+    { label: 'Total Contributed', value: formatCurrency(results.totalContributed) },
+    { label: 'Total Interest Earned', value: formatCurrency(results.totalInterest) },
     { label: 'Effective Annual Rate', value: `${results.effectiveRate}%` },
-    { label: 'Compound vs Simple Benefit', value: `$${results.compoundBenefit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` },
+    { label: 'Compound vs Simple Benefit', value: formatCurrency(results.compoundBenefit) },
   ];
 
   const renderScenarioForm = (scenario, index) => {
