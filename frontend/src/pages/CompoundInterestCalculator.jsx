@@ -328,6 +328,29 @@ export const CompoundInterestCalculator = () => {
                   suffix=" years"
                 />
                 
+                <InputField
+                  label="Monthly Contribution"
+                  id="contribution"
+                  value={currentScenario.contribution}
+                  onChange={(val) => updateScenario(0, 'contribution', val)}
+                  prefix={symbol}
+                  min={0}
+                  step={100}
+                  tooltip="Amount added to your investment each month"
+                />
+                
+                <SliderField
+                  label="Annual Contribution Increase"
+                  id="contributionIncrease"
+                  value={currentScenario.contributionIncrease}
+                  onChange={(val) => updateScenario(0, 'contributionIncrease', val)}
+                  min={0}
+                  max={15}
+                  step={0.5}
+                  suffix="%"
+                  tooltip="Annual percentage increase in contributions (e.g., with salary increases)"
+                />
+                
                 <SelectField
                   label="Compounding Frequency"
                   id="compounding"
