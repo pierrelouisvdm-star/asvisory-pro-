@@ -168,6 +168,7 @@ export const FutureValueCalculator = () => {
     { label: 'Annual Interest Rate', value: `${currentScenario.rate}%` },
     { label: 'Investment Period', value: `${currentScenario.years} years` },
     { label: 'Regular Contribution', value: formatCurrency(currentScenario.contribution) },
+    { label: 'Annual Contribution Increase', value: `${currentScenario.contributionIncrease}%` },
     { label: 'Contribution Frequency', value: contributionFrequencyOptions.find(o => o.value === currentScenario.contributionFrequency)?.label },
     { label: 'Compounding Frequency', value: compoundingOptions.find(o => o.value === currentScenario.compounding)?.label },
     { label: 'Inflation Rate', value: `${currentScenario.inflationRate}%` },
