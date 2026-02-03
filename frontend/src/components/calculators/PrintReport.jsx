@@ -33,8 +33,15 @@ export const PrintReport = ({
             body { 
               font-family: 'Inter', -apple-system, sans-serif; 
               padding: 40px; 
-              color: #1a2332;
+              background: #0f172a;
+              color: #e2e8f0;
               line-height: 1.6;
+            }
+            .report-container {
+              background: #1e293b;
+              border-radius: 12px;
+              padding: 40px;
+              border: 1px solid #334155;
             }
             .header { 
               display: flex; 
@@ -42,75 +49,99 @@ export const PrintReport = ({
               align-items: center;
               margin-bottom: 30px; 
               padding-bottom: 20px; 
-              border-bottom: 2px solid #c9a227; 
+              border-bottom: 2px solid #10b981; 
             }
             .logo { 
               font-family: 'Playfair Display', Georgia, serif;
-              font-size: 24px; 
-              font-weight: 600; 
+              font-size: 28px; 
+              font-weight: 700;
+              color: #ffffff;
             }
-            .logo span { color: #c9a227; }
-            .date { color: #6b7280; font-size: 14px; }
+            .logo span { color: #10b981; }
+            .date { color: #94a3b8; font-size: 14px; }
+            .currency { color: #64748b; font-size: 12px; margin-top: 4px; }
             .title { 
               font-family: 'Playfair Display', Georgia, serif;
               font-size: 28px; 
-              font-weight: 600; 
+              font-weight: 600;
+              color: #ffffff;
               margin-bottom: 8px; 
             }
-            .subtitle { color: #6b7280; margin-bottom: 30px; }
+            .subtitle { color: #94a3b8; margin-bottom: 30px; }
             .section { margin-bottom: 30px; }
             .section-title { 
-              font-size: 16px; 
+              font-size: 14px; 
               font-weight: 600; 
-              color: #1a2332; 
+              color: #10b981;
+              text-transform: uppercase;
+              letter-spacing: 1px;
               margin-bottom: 15px;
               padding-bottom: 8px;
-              border-bottom: 1px solid #e5e7eb;
+              border-bottom: 1px solid #334155;
             }
             .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .item { 
-              padding: 15px; 
-              background: #faf8f5; 
+              padding: 16px; 
+              background: #0f172a;
               border-radius: 8px;
-              border-left: 3px solid #c9a227;
+              border-left: 3px solid #3b82f6;
             }
             .item-label { 
-              font-size: 12px; 
-              color: #6b7280; 
+              font-size: 11px; 
+              color: #94a3b8; 
               text-transform: uppercase;
               letter-spacing: 0.5px;
-              margin-bottom: 4px;
+              margin-bottom: 6px;
             }
             .item-value { 
               font-size: 18px; 
               font-weight: 600; 
-              color: #1a2332; 
+              color: #ffffff; 
             }
-            .result-item { border-left-color: #166534; background: #f0fdf4; }
+            .result-item { 
+              border-left-color: #10b981; 
+              background: linear-gradient(135deg, #064e3b 0%, #0f172a 100%);
+            }
+            .result-item .item-value {
+              color: #10b981;
+            }
             .footer { 
               margin-top: 40px; 
               padding-top: 20px; 
-              border-top: 1px solid #e5e7eb; 
+              border-top: 1px solid #334155; 
               font-size: 12px; 
-              color: #6b7280; 
+              color: #64748b; 
               text-align: center;
             }
             .disclaimer {
-              background: #fef3c7;
-              padding: 15px;
+              background: linear-gradient(135deg, #1e3a5f 0%, #1e293b 100%);
+              padding: 16px;
               border-radius: 8px;
               font-size: 12px;
-              color: #92400e;
+              color: #94a3b8;
               margin-top: 30px;
+              border: 1px solid #334155;
+            }
+            .disclaimer strong {
+              color: #f59e0b;
             }
             @media print {
-              body { padding: 20px; }
+              body { 
+                padding: 0; 
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+              .report-container {
+                border: none;
+              }
               .no-print { display: none !important; }
             }
           </style>
         </head>
         <body>
-          ${printContent.innerHTML}
+          <div class="report-container">
+            ${printContent.innerHTML}
+          </div>
         </body>
       </html>
     `);
