@@ -8,41 +8,8 @@ import {
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
   PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
   LineChart, Target, Clock, Zap, Award, Globe,
-  ChevronRight, Play, Receipt, Brain, Lock, Rocket,
-  Star, Trophy, Lightbulb
+  ChevronRight, Play, Receipt
 } from 'lucide-react';
-
-// NEW: What's New section features
-const whatsNew = [
-  {
-    icon: Receipt,
-    title: 'Tax Planning Hub',
-    description: 'Comprehensive 2025/2026 tax planning suite with Income Tax, CGT, Medical Credits, Provisional Tax calculators all in one place.',
-    tag: 'NEW',
-    color: 'emerald'
-  },
-  {
-    icon: Target,
-    title: 'Withdrawal Tax Simulator',
-    description: 'Simulate tax on retirement fund withdrawals with SARS tax directive calculations. Perfect for retirement planning.',
-    tag: 'NEW',
-    color: 'blue'
-  },
-  {
-    icon: Brain,
-    title: 'Financial Literacy Quiz',
-    description: 'COFI-compliant 10-question assessment to gauge client financial knowledge. Generate professional reports.',
-    tag: 'NEW',
-    color: 'amber'
-  },
-  {
-    icon: Lock,
-    title: 'Security & Privacy Hub',
-    description: 'Enterprise-grade security with audit trails, POPIA compliance, and complete data isolation per client.',
-    tag: 'NEW',
-    color: 'purple'
-  },
-];
 
 // Calculator categories with detailed descriptions
 const calculatorCategories = [
@@ -60,10 +27,9 @@ const calculatorCategories = [
     title: 'Tax Planning',
     icon: Receipt,
     color: 'blue',
-    badge: 'ENHANCED',
     calculators: [
       { name: 'Tax Planning Hub', desc: 'Complete 2025/2026 tax suite' },
-      { name: 'Withdrawal Tax Simulator', desc: 'SARS tax directive calculations' },
+      { name: 'Income Tax Calculator', desc: 'SARS tax bracket calculations' },
       { name: 'RA Tax Savings', desc: 'Maximize contributions' },
     ]
   },
