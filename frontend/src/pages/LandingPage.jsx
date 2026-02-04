@@ -92,40 +92,40 @@ const calculatorCategories = [
 // Key features with detailed benefits
 const keyFeatures = [
   {
+    icon: Receipt,
+    title: 'Tax Planning Hub',
+    description: 'Complete 2025/2026 tax planning suite. Income tax, CGT, medical credits, provisional tax, and RA deductibility calculators - all with helpful tooltips explaining SA tax concepts.',
+    highlights: ['2025/2026 Tax Brackets', 'Capital Gains Tax', 'Medical Aid Credits'],
+  },
+  {
     icon: Calculator,
-    title: '15+ Professional Calculators',
+    title: '17+ Professional Calculators',
     description: 'From retirement planning to estate duty, every calculation a financial advisor needs. All localized for South African regulations, tax brackets, and the current Prime Rate.',
-    highlights: ['SA Tax Brackets 2024/25', 'Estate Duty Calculations', 'Living Annuity Limits'],
+    highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
+  },
+  {
+    icon: Brain,
+    title: 'Financial Literacy Assessment',
+    description: 'COFI-compliant quiz to assess client financial knowledge. 10 carefully crafted questions with scoring, explanations, and professional PDF reports.',
+    highlights: ['COFI Compliant', 'Instant Scoring', 'PDF Reports'],
   },
   {
     icon: LineChart,
     title: 'Net Worth Tracker',
     description: 'Help clients visualize their financial journey. Track assets, liabilities, set goals, and celebrate milestones. Generate beautiful progress reports.',
-    highlights: ['Historical Snapshots', 'Goal Progress Tracking', 'Smart Insights & Recommendations'],
+    highlights: ['Historical Snapshots', 'Goal Tracking', 'Smart Insights'],
   },
   {
-    icon: Users,
-    title: 'Client Management',
-    description: 'Keep all your client information organized. Track their financial profiles, store notes, and monitor their progress toward financial goals.',
-    highlights: ['Unlimited Clients', 'Financial Profiles', 'Progress Monitoring'],
+    icon: Lock,
+    title: 'Enterprise Security',
+    description: 'Bank-level security with POPIA compliance, audit trails for all data access, and complete data isolation. Your client data is always protected.',
+    highlights: ['POPIA Compliant', 'Audit Trails', 'Data Isolation'],
   },
   {
     icon: Bot,
     title: 'AI Financial Assistant',
     description: 'Get intelligent insights powered by advanced AI. Answer complex financial questions, generate explanations, and provide guidance to your clients.',
     highlights: ['GPT-Powered', 'SA Context Aware', 'Client-Ready Explanations'],
-  },
-  {
-    icon: TrendingUp,
-    title: 'Live Market Data',
-    description: 'Stay informed with real-time market information. Track global indices, commodities, currencies, and keep your finger on the pulse of the markets.',
-    highlights: ['Global Indices', 'Currency Rates', 'Commodity Prices'],
-  },
-  {
-    icon: FileText,
-    title: 'Professional PDF Reports',
-    description: 'Generate polished, branded reports instantly. Every calculator can produce a client-ready PDF with your calculations and recommendations.',
-    highlights: ['Branded Reports', 'Instant Generation', 'Professional Layout'],
   },
 ];
 
