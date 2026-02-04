@@ -486,7 +486,7 @@ const TaxPlanningHub = () => {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid grid-cols-6 bg-navy-800 h-auto p-1">
           <TabsTrigger value="income" className="data-[state=active]:bg-emerald-500/20 flex flex-col py-2">
-            <DollarSign className="h-4 w-4 mb-1" />
+            <span className="text-sm font-bold mb-1">R</span>
             <span className="text-xs">Income Tax</span>
           </TabsTrigger>
           <TabsTrigger value="cgt" className="data-[state=active]:bg-emerald-500/20 flex flex-col py-2">
