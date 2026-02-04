@@ -78,19 +78,34 @@ export const AuthPage = () => {
     setError('');
 
     try {
-      await register(registerEmail, registerPassword, registerName, registerCompany);
+      const registerData = await register(registerEmail, registerPassword, registerName, registerCompany);
       toast.success('Account created! Welcome to AdvisoryPro.');
       
       // If coupon was validated, try to redeem it after registration
       if (couponResult?.valid && couponCode) {
         try {
-          await couponApi.redeem(couponCode);
-          toast.success('Coupon redeemed! You now have Premium access.');
-          // Refresh subscription to update the context with new tier
-          await refreshSubscription();
+          // Use the token directly from registration response
+          const token = registerData.access_token;
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/coupons/redeem`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ code: couponCode })
+          });
+          
+          if (response.ok) {
+            toast.success('Coupon redeemed! You now have Premium access.');
+            // Refresh subscription to update the context with new tier
+            await refreshSubscription();
+          } else {
+            const errorData = await response.json();
+            throw new Error(errorData.detail || 'Coupon redemption failed');
+          }
         } catch (couponErr) {
           console.error('Coupon redemption error:', couponErr);
-          toast.info('You can redeem your coupon from the Pricing page.');
+          toast.error(`Coupon error: ${couponErr.message}`);
         }
       }
       
