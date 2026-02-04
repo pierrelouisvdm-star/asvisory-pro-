@@ -484,7 +484,7 @@ const TaxPlanningHub = () => {
 
       {/* Main Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid grid-cols-5 bg-navy-800 h-auto p-1">
+        <TabsList className="grid grid-cols-6 bg-navy-800 h-auto p-1">
           <TabsTrigger value="income" className="data-[state=active]:bg-emerald-500/20 flex flex-col py-2">
             <DollarSign className="h-4 w-4 mb-1" />
             <span className="text-xs">Income Tax</span>
@@ -504,6 +504,10 @@ const TaxPlanningHub = () => {
           <TabsTrigger value="provisional" className="data-[state=active]:bg-emerald-500/20 flex flex-col py-2">
             <Briefcase className="h-4 w-4 mb-1" />
             <span className="text-xs">Provisional</span>
+          </TabsTrigger>
+          <TabsTrigger value="irp5" className="data-[state=active]:bg-emerald-500/20 flex flex-col py-2">
+            <FileText className="h-4 w-4 mb-1" />
+            <span className="text-xs">IRP5</span>
           </TabsTrigger>
         </TabsList>
 
