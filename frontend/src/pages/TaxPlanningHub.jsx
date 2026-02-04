@@ -442,7 +442,12 @@ const TaxPlanningHub = () => {
 
   const InputField = ({ label, id, value, onChange, prefix, suffix, min = 0, step = 1, tooltip }) => (
     <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm text-slate-300">{label}</Label>
+      <div className="flex items-center gap-2">
+        <Label htmlFor={id} className="text-sm text-slate-300">{label}</Label>
+        {tooltip && (
+          <InfoTooltip content={tooltip} size="xs" iconClassName="text-slate-500 hover:text-slate-300" />
+        )}
+      </div>
       <div className="relative">
         {prefix && (
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
