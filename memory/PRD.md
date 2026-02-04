@@ -66,6 +66,18 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
   - Individual field tooltips explaining each input
 - Tooltips provide context-aware explanations for SA tax concepts
 
+#### 6. Tax Hub Input Fix ✅
+- Fixed input fields losing focus after each keystroke
+- Moved InputField component outside main component to prevent re-renders
+
+#### 7. Landing Page Redesign ✅
+- New "What's New in AdvisoryPro" section showcasing 4 new features
+- Animated badges and hover effects
+- Updated stats: 17+ calculators, 2025/26 Tax Year, POPIA Compliant
+- New hero with gradient text and "Try Tax Hub" CTA button
+- "ENHANCED" badge on Tax Planning category
+- Coupon highlight in amber color
+
 ### Previously Implemented Features
 
 #### Financial Calculators (17 total)
