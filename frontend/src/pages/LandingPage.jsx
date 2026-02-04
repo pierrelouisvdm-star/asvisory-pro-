@@ -149,32 +149,33 @@ export const LandingPage = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <Badge className="mb-6 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-4 py-1.5 text-sm">
-              <Sparkles className="h-3 w-3 mr-2" />
-              Built by Financial Advisors, for Financial Advisors
+            <Badge className="mb-6 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 text-emerald-400 border border-emerald-500/30 px-4 py-1.5 text-sm animate-pulse">
+              <Rocket className="h-3 w-3 mr-2" />
+              Now with Tax Planning Hub & Financial Literacy Quiz
             </Badge>
             
             <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-4 tracking-tight">
-              Empower Your Practice with{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
-                AdvisoryPro
+              Your Complete{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-300 to-blue-400">
+                Financial Advisory
               </span>
+              {' '}Toolkit
             </h1>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-              The Complete Toolkit for South African Financial Advisors
+              Built by South African Advisors, for South African Advisors
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">15+ professional calculators</span>, 
-              client management, AI insights, and instant PDF reports, all localized for SA regulations and the latest tax brackets.
+              <span className="text-white font-medium">17+ professional calculators</span>, comprehensive tax planning, 
+              client management, AI insights, and instant PDF reports - all with <span className="text-emerald-400">2025/2026 SARS tax brackets</span> built-in.
             </p>
 
             {/* Stats Row */}
             <div className="flex flex-wrap justify-center gap-8 mb-10">
               {stats.map((stat, idx) => (
-                <div key={idx} className="text-center">
-                  <p className="text-3xl font-bold text-emerald-400">{stat.value}</p>
+                <div key={idx} className="text-center group">
+                  <p className="text-3xl font-bold text-emerald-400 group-hover:scale-110 transition-transform">{stat.value}</p>
                   <p className="text-sm text-slate-500">{stat.label}</p>
                 </div>
               ))}
@@ -182,21 +183,62 @@ export const LandingPage = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25 h-14">
-                  Get Started Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25 h-14 group">
+                  Start Free Today
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link to="/pricing">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-slate-600 text-white hover:bg-white/10 h-14">
-                  View Pricing
+              <Link to="/tax-planning">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 h-14">
+                  <Receipt className="mr-2 h-5 w-5" />
+                  Try Tax Hub
                 </Button>
               </Link>
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R299/month • Cancel anytime • Have a coupon? Apply at signup
+              R299/month • Cancel anytime • <span className="text-amber-400">Have a coupon? Apply at signup!</span>
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* What's New Section */}
+      <section className="relative py-16 bg-gradient-to-r from-emerald-500/10 via-navy-900/50 to-blue-500/10 border-y border-emerald-500/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <Badge className="mb-4 bg-amber-500/20 text-amber-400 border-amber-500/30 animate-bounce">
+              <Star className="h-3 w-3 mr-2" />
+              Just Released
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">
+              What's New in AdvisoryPro
+            </h2>
+            <p className="text-slate-400">Powerful new features to supercharge your practice</p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {whatsNew.map((feature, index) => (
+              <Card key={index} className="bg-navy-900/80 border-navy-700 hover:border-emerald-500/50 transition-all duration-300 group hover:-translate-y-1">
+                <CardContent className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-xl transition-colors
+                      ${feature.color === 'emerald' ? 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30' : ''}
+                      ${feature.color === 'blue' ? 'bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30' : ''}
+                      ${feature.color === 'amber' ? 'bg-amber-500/20 text-amber-400 group-hover:bg-amber-500/30' : ''}
+                      ${feature.color === 'purple' ? 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500/30' : ''}
+                    `}>
+                      <feature.icon className="h-6 w-6" />
+                    </div>
+                    <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
+                      {feature.tag}
+                    </Badge>
+                  </div>
+                  <h3 className="font-semibold text-lg text-white mb-2 group-hover:text-emerald-400 transition-colors">{feature.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
