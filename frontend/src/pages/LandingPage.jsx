@@ -241,7 +241,7 @@ export const LandingPage = () => {
               Every Calculation You Need
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
-              From retirement planning to estate duty, all localized for South African regulations with the latest 2025/2026 SARS tax brackets and Prime Rate.
+              From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.
             </p>
           </div>
           
