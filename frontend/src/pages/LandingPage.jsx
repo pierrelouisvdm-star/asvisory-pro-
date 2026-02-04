@@ -249,20 +249,13 @@ export const LandingPage = () => {
             {calculatorCategories.map((category, index) => (
               <Card key={index} className="bg-navy-900/60 border-navy-700 hover:border-emerald-500/50 transition-all duration-300 group hover:-translate-y-1">
                 <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-xl transition-colors
-                      ${category.color === 'emerald' ? 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30' : ''}
-                      ${category.color === 'blue' ? 'bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30' : ''}
-                      ${category.color === 'amber' ? 'bg-amber-500/20 text-amber-400 group-hover:bg-amber-500/30' : ''}
-                      ${category.color === 'purple' ? 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500/30' : ''}
-                    `}>
-                      <category.icon className="h-6 w-6" />
-                    </div>
-                    {category.badge && (
-                      <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
-                        {category.badge}
-                      </Badge>
-                    )}
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-xl mb-4 transition-colors
+                    ${category.color === 'emerald' ? 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30' : ''}
+                    ${category.color === 'blue' ? 'bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30' : ''}
+                    ${category.color === 'amber' ? 'bg-amber-500/20 text-amber-400 group-hover:bg-amber-500/30' : ''}
+                    ${category.color === 'purple' ? 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500/30' : ''}
+                  `}>
+                    <category.icon className="h-6 w-6" />
                   </div>
                   <h3 className="font-semibold text-lg text-white mb-3 group-hover:text-emerald-400 transition-colors">{category.title}</h3>
                   <ul className="space-y-2">
