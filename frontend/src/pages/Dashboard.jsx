@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MarketTracker } from '@/components/MarketTracker';
+import { QuickActionsWidget } from '@/components/QuickActionsWidget';
+import { useAuth } from '@/context/AuthContext';
 import { 
   Calculator, 
   TrendingUp, 
