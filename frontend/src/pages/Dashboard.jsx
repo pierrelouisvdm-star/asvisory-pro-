@@ -309,7 +309,16 @@ export const Dashboard = () => {
 
       {/* Live Market Tracker Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <MarketTracker />
+        <div className={`grid gap-6 ${isAuthenticated ? 'lg:grid-cols-3' : ''}`}>
+          <div className={isAuthenticated ? 'lg:col-span-2' : ''}>
+            <MarketTracker />
+          </div>
+          {isAuthenticated && (
+            <div className="lg:col-span-1">
+              <QuickActionsWidget />
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Investment Calculators Section */}
