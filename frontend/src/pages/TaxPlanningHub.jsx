@@ -520,7 +520,7 @@ const TaxPlanningHub = () => {
               <Card className="bg-navy-900/60 border-navy-700">
                 <CardHeader>
                   <CardTitle className="text-lg text-white flex items-center gap-2">
-                    <DollarSign className="h-5 w-5 text-emerald-400" />
+                    <span className="flex h-5 w-5 items-center justify-center rounded bg-emerald-500/20 text-emerald-400 text-xs font-bold">R</span>
                     Income Sources
                   </CardTitle>
                 </CardHeader>
