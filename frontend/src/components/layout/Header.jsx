@@ -412,7 +412,9 @@ export const Header = () => {
                 { title: 'Debt', items: debtCalcs, icon: CreditCard },
                 { title: 'Insurance', items: insuranceCalcs, icon: Shield },
                 { title: 'Retirement', items: retirementCalcs, icon: PiggyBank },
-                { title: 'More Tools', items: moreTools, icon: Wrench },
+                { title: 'Tax', items: taxCalcs, icon: Receipt },
+                { title: 'Planning', items: planningTools, icon: Target },
+                { title: 'More', items: moreTools, icon: Wrench },
               ].map((section) => (
                 <React.Fragment key={section.title}>
                   <div className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-slate-500 uppercase tracking-wider mt-3">
