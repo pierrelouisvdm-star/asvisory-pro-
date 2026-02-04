@@ -131,9 +131,9 @@ const keyFeatures = [
 
 // Stats
 const stats = [
-  { value: '15+', label: 'Financial Calculators' },
-  { value: 'SA', label: 'Localized for South Africa' },
-  { value: '24/7', label: 'Access Anywhere' },
+  { value: '17+', label: 'Financial Calculators' },
+  { value: '2025/26', label: 'Tax Year Ready' },
+  { value: 'POPIA', label: 'Compliant & Secure' },
   { value: 'PDF', label: 'Instant Reports' },
 ];
 
