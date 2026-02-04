@@ -208,3 +208,132 @@ async def get_user_stats(current_user: dict = Depends(require_admin)):
         new_users_month=new_month,
         active_users_week=active_week
     )
+
+
+
+# Quick Actions models
+class RecentCalculation(BaseModel):
+    id: str
+    client_name: str
+    client_id: str
+    calculator_type: str
+    created_at: str
+
+
+class UpcomingReview(BaseModel):
+    client_id: str
+    client_name: str
+    next_review_date: str
+    days_until: int
+
+
+class QuickActionsResponse(BaseModel):
+    recent_calculations: List[RecentCalculation]
+    upcoming_reviews: List[UpcomingReview]
+    total_clients: int
+    calculations_this_month: int
+
+
+@router.get("/quick-actions", response_model=QuickActionsResponse)
+async def get_quick_actions(current_user: dict = Depends(get_current_user)):
+    """Get quick actions data for the dashboard - for logged-in users"""
+    user_id = current_user["id"]
+    now = datetime.now(timezone.utc)
+    month_ago = now - timedelta(days=30)
+    
+    # Get recent calculations (last 5)
+    recent_calcs = []
+    calc_cursor = db.calculations.find(
+        {"advisor_id": user_id},
+        {"_id": 0}
+    ).sort("created_at", -1).limit(5)
+    
+    # Get client map for names
+    client_ids = set()
+    calcs_list = []
+    async for calc in calc_cursor:
+        calcs_list.append(calc)
+        client_ids.add(calc.get("client_id"))
+    
+    # Fetch client names
+    client_map = {}
+    if client_ids:
+        async for client in db.clients.find(
+            {"id": {"$in": list(client_ids)}, "advisor_id": user_id},
+            {"_id": 0, "id": 1, "first_name": 1, "last_name": 1}
+        ):
+            client_map[client["id"]] = f"{client.get('first_name', '')} {client.get('last_name', '')}".strip()
+    
+    for calc in calcs_list:
+        client_id = calc.get("client_id", "")
+        recent_calcs.append(RecentCalculation(
+            id=calc.get("id", ""),
+            client_name=client_map.get(client_id, "Unknown Client"),
+            client_id=client_id,
+            calculator_type=calc.get("calculator_type", "unknown"),
+            created_at=calc.get("created_at", "")
+        ))
+    
+    # Get upcoming reviews (clients with next_review_date in the next 30 days)
+    upcoming_reviews = []
+    review_cursor = db.reviews.find(
+        {
+            "advisor_id": user_id,
+            "next_review_date": {
+                "$gte": now.isoformat(),
+                "$lte": (now + timedelta(days=30)).isoformat()
+            }
+        },
+        {"_id": 0}
+    ).sort("next_review_date", 1).limit(5)
+    
+    review_client_ids = set()
+    reviews_list = []
+    async for review in review_cursor:
+        reviews_list.append(review)
+        review_client_ids.add(review.get("client_id"))
+    
+    # Fetch review client names
+    review_client_map = {}
+    if review_client_ids:
+        async for client in db.clients.find(
+            {"id": {"$in": list(review_client_ids)}, "advisor_id": user_id},
+            {"_id": 0, "id": 1, "first_name": 1, "last_name": 1}
+        ):
+            review_client_map[client["id"]] = f"{client.get('first_name', '')} {client.get('last_name', '')}".strip()
+    
+    for review in reviews_list:
+        client_id = review.get("client_id", "")
+        review_date_str = review.get("next_review_date", "")
+        
+        # Calculate days until review
+        days_until = 0
+        if review_date_str:
+            try:
+                review_date = datetime.fromisoformat(review_date_str.replace("Z", "+00:00"))
+                days_until = (review_date - now).days
+            except:
+                pass
+        
+        upcoming_reviews.append(UpcomingReview(
+            client_id=client_id,
+            client_name=review_client_map.get(client_id, "Unknown Client"),
+            next_review_date=review_date_str,
+            days_until=max(0, days_until)
+        ))
+    
+    # Get total clients count
+    total_clients = await db.clients.count_documents({"advisor_id": user_id})
+    
+    # Get calculations this month
+    calculations_this_month = await db.calculations.count_documents({
+        "advisor_id": user_id,
+        "created_at": {"$gte": month_ago.isoformat()}
+    })
+    
+    return QuickActionsResponse(
+        recent_calculations=recent_calcs,
+        upcoming_reviews=upcoming_reviews,
+        total_clients=total_clients,
+        calculations_this_month=calculations_this_month
+    )
