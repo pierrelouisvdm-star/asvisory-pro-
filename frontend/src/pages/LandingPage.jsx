@@ -401,7 +401,7 @@ export const LandingPage = () => {
             Ready to Elevate Your Practice?
           </h2>
           <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
-            Join hundreds of South African financial advisors who use AdvisoryPro to deliver exceptional service to their clients.
+            Start delivering exceptional service to your clients with AdvisoryPro's professional financial tools.
           </p>
           <Link to="/auth">
             <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-xl px-12 h-16 shadow-lg shadow-emerald-500/25">
