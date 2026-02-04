@@ -311,13 +311,13 @@ export const LandingPage = () => {
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-blue-500/20 text-blue-400 border-blue-500/30">
               <Calculator className="h-3 w-3 mr-2" />
-              15+ Professional Calculators
+              17+ Professional Calculators
             </Badge>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
               Every Calculation You Need
             </h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
-              From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.
+              From retirement planning to estate duty, all localized for South African regulations with the latest 2025/2026 SARS tax brackets and Prime Rate.
             </p>
           </div>
           
