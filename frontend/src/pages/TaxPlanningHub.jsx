@@ -523,6 +523,15 @@ const TaxPlanningHub = () => {
                   <CardTitle className="text-lg text-white flex items-center gap-2">
                     <span className="flex h-5 w-5 items-center justify-center rounded bg-emerald-500/20 text-emerald-400 text-xs font-bold">R</span>
                     Income Sources
+                    <SectionInfo
+                      title="Income Sources"
+                      description="Enter all your taxable income for the tax year. This includes salary, rental income, interest, and any other earnings that SARS considers taxable."
+                      tips={[
+                        "Include your total annual salary before tax (gross)",
+                        "Local dividends are tax-free but foreign dividends are taxable",
+                        "Interest under R23,800 (under 65) or R34,500 (65+) is tax-free"
+                      ]}
+                    />
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -533,6 +542,7 @@ const TaxPlanningHub = () => {
                     onChange={(val) => setIncomeData({...incomeData, grossIncome: val})}
                     prefix={symbol}
                     step={1000}
+                    tooltip="Your total annual salary before any deductions (before PAYE)"
                   />
                   <div className="grid grid-cols-2 gap-4">
                     <InputField
@@ -541,6 +551,7 @@ const TaxPlanningHub = () => {
                       value={incomeData.otherIncome}
                       onChange={(val) => setIncomeData({...incomeData, otherIncome: val})}
                       prefix={symbol}
+                      tooltip="Freelance income, commissions, bonuses not included in salary"
                     />
                     <InputField
                       label="Rental Income"
@@ -548,6 +559,7 @@ const TaxPlanningHub = () => {
                       value={incomeData.rentalIncome}
                       onChange={(val) => setIncomeData({...incomeData, rentalIncome: val})}
                       prefix={symbol}
+                      tooltip="Net rental income after allowable deductions (rates, repairs, interest)"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
@@ -557,6 +569,7 @@ const TaxPlanningHub = () => {
                       value={incomeData.interestIncome}
                       onChange={(val) => setIncomeData({...incomeData, interestIncome: val})}
                       prefix={symbol}
+                      tooltip="Interest from savings, fixed deposits. First R23,800 is exempt (R34,500 if 65+)"
                     />
                     <InputField
                       label="Dividend Income (Foreign)"
@@ -564,6 +577,7 @@ const TaxPlanningHub = () => {
                       value={incomeData.dividendIncome}
                       onChange={(val) => setIncomeData({...incomeData, dividendIncome: val})}
                       prefix={symbol}
+                      tooltip="Foreign dividends are taxable. Local SA dividends are exempt from income tax"
                     />
                   </div>
                 </CardContent>
