@@ -652,6 +652,15 @@ const TaxPlanningHub = () => {
                   <CardTitle className="text-lg text-white flex items-center gap-2">
                     <Heart className="h-5 w-5 text-emerald-400" />
                     Medical Aid
+                    <SectionInfo
+                      title="Medical Tax Credits"
+                      description="Medical tax credits directly reduce your tax payable. You get a fixed monthly credit per member, plus additional credits for out-of-pocket medical expenses."
+                      tips={[
+                        "R364/month for main member and first dependent",
+                        "R246/month for additional dependents",
+                        "Keep medical receipts for additional credits"
+                      ]}
+                    />
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
