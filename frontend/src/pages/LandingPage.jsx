@@ -60,8 +60,8 @@ const keyFeatures = [
   {
     icon: Receipt,
     title: 'Tax Planning Hub',
-    description: 'Complete 2025/2026 tax planning suite. Income tax, CGT, medical credits, provisional tax, and RA deductibility calculators - all with helpful tooltips explaining SA tax concepts.',
-    highlights: ['2025/2026 Tax Brackets', 'Capital Gains Tax', 'Medical Aid Credits'],
+    description: 'Complete tax planning suite. Income tax, CGT, medical credits, provisional tax, and RA deductibility calculators - all with helpful tooltips explaining SA tax concepts.',
+    highlights: ['Tax Brackets', 'Capital Gains Tax', 'Medical Aid Credits'],
   },
   {
     icon: Calculator,
@@ -70,7 +70,7 @@ const keyFeatures = [
     highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
   },
   {
-    icon: Brain,
+    icon: GraduationCap,
     title: 'Financial Literacy Assessment',
     description: 'COFI-compliant quiz to assess client financial knowledge. 10 carefully crafted questions with scoring, explanations, and professional PDF reports.',
     highlights: ['COFI Compliant', 'Instant Scoring', 'PDF Reports'],
@@ -82,7 +82,7 @@ const keyFeatures = [
     highlights: ['Historical Snapshots', 'Goal Tracking', 'Smart Insights'],
   },
   {
-    icon: Lock,
+    icon: Shield,
     title: 'Enterprise Security',
     description: 'Bank-level security with POPIA compliance, audit trails for all data access, and complete data isolation. Your client data is always protected.',
     highlights: ['POPIA Compliant', 'Audit Trails', 'Data Isolation'],
