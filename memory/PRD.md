@@ -56,6 +56,16 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 - Empty state with CTA for new users
 - Backend endpoint: `/api/analytics/quick-actions`
 
+#### 5. Info Tooltips System ✅
+- Created reusable `InfoTooltip` and `SectionInfo` components
+- Added tooltips throughout Tax Planning Hub:
+  - Income Sources section with tips
+  - Deductions & Contributions section
+  - Medical Aid section
+  - CGT Calculator section
+  - Individual field tooltips explaining each input
+- Tooltips provide context-aware explanations for SA tax concepts
+
 ### Previously Implemented Features
 
 #### Financial Calculators (17 total)
