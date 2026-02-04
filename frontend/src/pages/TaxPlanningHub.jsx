@@ -13,11 +13,13 @@ import {
   Calculator, FileText, TrendingUp, PiggyBank, Heart, 
   Briefcase, DollarSign, BarChart3, Shield, AlertTriangle,
   CheckCircle2, Info, Download, Upload, Plus, Trash2,
-  ChevronRight, Percent, Building, User, Users
+  ChevronRight, Percent, Building, User, Users, File,
+  Calendar, Eye, X
 } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
 import { PrintReport } from '../components/calculators/PrintReport';
 import { Disclaimer } from '../components/calculators/Disclaimer';
+import { toast } from 'sonner';
 
 // 2025/2026 South African Tax Tables
 const TAX_BRACKETS_2025 = [
