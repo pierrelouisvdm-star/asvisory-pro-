@@ -126,6 +126,60 @@ const TaxPlanningHub = () => {
     secondPayment: 0,
   });
 
+  // IRP5 Storage State
+  const [irp5Documents, setIrp5Documents] = useState([]);
+  const [newIrp5, setNewIrp5] = useState({
+    taxYear: '2025/2026',
+    employer: '',
+    grossIncome: 0,
+    paye: 0,
+    uif: 0,
+    pensionContributions: 0,
+    medicalAid: 0,
+    notes: '',
+  });
+
+  // Handle IRP5 file upload (simulated - stores metadata)
+  const handleAddIrp5 = () => {
+    if (!newIrp5.employer || newIrp5.grossIncome <= 0) {
+      toast.error('Please enter employer name and gross income');
+      return;
+    }
+    
+    const irp5Entry = {
+      id: Date.now().toString(),
+      ...newIrp5,
+      dateAdded: new Date().toISOString(),
+    };
+    
+    setIrp5Documents([...irp5Documents, irp5Entry]);
+    setNewIrp5({
+      taxYear: '2025/2026',
+      employer: '',
+      grossIncome: 0,
+      paye: 0,
+      uif: 0,
+      pensionContributions: 0,
+      medicalAid: 0,
+      notes: '',
+    });
+    toast.success('IRP5 record added successfully');
+  };
+
+  const handleDeleteIrp5 = (id) => {
+    setIrp5Documents(irp5Documents.filter(doc => doc.id !== id));
+    toast.success('IRP5 record deleted');
+  };
+
+  // Calculate IRP5 totals
+  const irp5Totals = irp5Documents.reduce((acc, doc) => ({
+    grossIncome: acc.grossIncome + doc.grossIncome,
+    paye: acc.paye + doc.paye,
+    uif: acc.uif + doc.uif,
+    pensionContributions: acc.pensionContributions + doc.pensionContributions,
+    medicalAid: acc.medicalAid + doc.medicalAid,
+  }), { grossIncome: 0, paye: 0, uif: 0, pensionContributions: 0, medicalAid: 0 });
+
   // Calculate Income Tax
   const calculateIncomeTax = useCallback(() => {
     const {
