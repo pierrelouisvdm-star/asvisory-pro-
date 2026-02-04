@@ -42,9 +42,15 @@ const retirementCalcs = [
   { path: '/tax-directive', label: 'Tax Directive Simulator', icon: Target },
 ];
 
+// Category 5: Tax Planning
+const taxCalcs = [
+  { path: '/tax-planning', label: 'Tax Planning Hub', icon: Receipt },
+  { path: '/tax-calculator', label: 'Income Tax Calculator', icon: Calculator },
+  { path: '/tax-directive', label: 'Tax Directive Simulator', icon: Target },
+];
+
 // Additional Tools
 const moreTools = [
-  { path: '/tax-calculator', label: 'Tax Calculator', icon: Receipt },
   { path: '/budget-planner', label: 'Budget Planner', icon: Wallet },
   { path: '/net-worth', label: 'Net Worth Tracker', icon: Landmark },
   { path: '/emergency-fund', label: 'Emergency Fund', icon: ShieldAlert },
