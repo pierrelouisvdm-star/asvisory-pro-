@@ -262,6 +262,8 @@ const SectionHeader = ({ badge, title, description, icon: Icon }) => (
 );
 
 export const Dashboard = () => {
+  const { isAuthenticated } = useAuth();
+  
   return (
     <div className="min-h-screen bg-navy-950" data-testid="dashboard">
       {/* Hero Section */}
