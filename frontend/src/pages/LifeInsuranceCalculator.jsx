@@ -477,7 +477,7 @@ export const LifeInsuranceCalculator = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <Badge variant="secondary" className="bg-gold/10 text-gold border-gold/20">
                       <Shield className="h-3 w-3 mr-1" />
-                      Recommended Coverage
+                      Recommended Coverage (10x Annual Salary)
                     </Badge>
                   </div>
                   <ResultDisplay
@@ -487,14 +487,13 @@ export const LifeInsuranceCalculator = () => {
                     size="xl"
                     variant="premium"
                   />
-                  {results.dependents > 0 && (
-                    <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                      <Info className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-emerald-400">
-                        {results.recommendationNote}
-                      </p>
-                    </div>
-                  )}
+                  {/* Guideline Notice */}
+                  <div className="mt-4 flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                    <Info className="h-4 w-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <p className="text-sm text-amber-400">
+                      This is just a guideline. Your actual life insurance needs may vary based on your specific circumstances, financial obligations, and family situation.
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
