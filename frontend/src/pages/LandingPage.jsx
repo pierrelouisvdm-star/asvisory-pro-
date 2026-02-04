@@ -115,26 +115,25 @@ export const LandingPage = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <Badge className="mb-6 bg-gradient-to-r from-emerald-500/20 to-blue-500/20 text-emerald-400 border border-emerald-500/30 px-4 py-1.5 text-sm animate-pulse">
-              <Rocket className="h-3 w-3 mr-2" />
-              Now with Tax Planning Hub & Financial Literacy Quiz
+            <Badge className="mb-6 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-4 py-1.5 text-sm">
+              <Sparkles className="h-3 w-3 mr-2" />
+              Built for Financial Advisors
             </Badge>
             
             <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-4 tracking-tight">
-              Your Complete{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-300 to-blue-400">
-                Financial Advisory
+              Empower Your Practice with{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
+                AdvisoryPro
               </span>
-              {' '}Toolkit
             </h1>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-              Built by South African Advisors, for South African Advisors
+              The Complete Toolkit for South African Financial Advisors
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              <span className="text-white font-medium">17+ professional calculators</span>, comprehensive tax planning, 
-              client management, AI insights, and instant PDF reports - all with <span className="text-emerald-400">2025/2026 SARS tax brackets</span> built-in.
+              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">17+ professional calculators</span>, 
+              client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
             </p>
 
             {/* Stats Row */}
@@ -149,21 +148,20 @@ export const LandingPage = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-emerald-300 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25 h-14 group">
-                  Start Free Today
+                <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25 h-14 group">
+                  Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link to="/tax-planning">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10 h-14">
-                  <Receipt className="mr-2 h-5 w-5" />
-                  Try Tax Hub
+              <Link to="/pricing">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-slate-600 text-white hover:bg-white/10 h-14">
+                  View Pricing
                 </Button>
               </Link>
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R299/month • Cancel anytime • <span className="text-amber-400">Have a coupon? Apply at signup!</span>
+              R299/month • Cancel anytime • Have a coupon? Apply at signup
             </p>
           </div>
         </div>
