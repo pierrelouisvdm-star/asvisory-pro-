@@ -19,6 +19,7 @@ import {
 import { useCurrency } from '../context/CurrencyContext';
 import { PrintReport } from '../components/calculators/PrintReport';
 import { Disclaimer } from '../components/calculators/Disclaimer';
+import { InfoTooltip, SectionInfo } from '../components/ui/info-tooltip';
 import { toast } from 'sonner';
 
 // 2025/2026 South African Tax Tables
