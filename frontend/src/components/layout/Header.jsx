@@ -257,6 +257,13 @@ export const Header = () => {
               icon={PiggyBank}
               isActive={retirementCalcs.some(c => c.path === location.pathname)}
             />
+
+            <NavDropdown 
+              items={taxCalcs} 
+              label="Tax" 
+              icon={Receipt}
+              isActive={taxCalcs.some(c => c.path === location.pathname)}
+            />
             
             <NavDropdown 
               items={moreTools} 
