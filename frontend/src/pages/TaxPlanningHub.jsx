@@ -821,6 +821,15 @@ const TaxPlanningHub = () => {
                   <CardTitle className="text-lg text-white flex items-center gap-2">
                     <TrendingUp className="h-5 w-5 text-emerald-400" />
                     Asset Details
+                    <SectionInfo
+                      title="Capital Gains Tax (CGT)"
+                      description="CGT is payable when you sell an asset for more than you paid. Only 40% of the gain is included in your taxable income."
+                      tips={[
+                        "R40,000 annual exclusion applies to your total gains",
+                        "Primary residence up to R2m profit is exempt",
+                        "Keep proof of purchase price and improvement costs"
+                      ]}
+                    />
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -848,6 +857,7 @@ const TaxPlanningHub = () => {
                       value={cgtData.purchasePrice}
                       onChange={(val) => setCgtData({...cgtData, purchasePrice: val})}
                       prefix={symbol}
+                      tooltip="Original cost including transfer costs and stamp duty"
                     />
                     <InputField
                       label="Sale Price"
