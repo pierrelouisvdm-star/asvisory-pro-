@@ -14,13 +14,14 @@ import {
   DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
 
-// Category 1: Invest
+// Category 1: Invest & Grow
 const investCalcs = [
   { path: '/future-value', label: 'Future Value', icon: TrendingUp },
   { path: '/compound-interest', label: 'Compound Interest', icon: Percent },
+  { path: '/monte-carlo', label: 'Monte Carlo Simulator', icon: BarChart3 },
 ];
 
-// Category 2: Debt
+// Category 2: Debt Management
 const debtCalcs = [
   { path: '/bond', label: 'Bond Calculator', icon: Building2 },
   { path: '/car-finance', label: 'Vehicle Finance', icon: Car },
@@ -28,37 +29,40 @@ const debtCalcs = [
   { path: '/loan-comparison', label: 'Loan Comparison', icon: GitCompare },
 ];
 
-// Category 3: Insurance
+// Category 3: Insurance & Protection
 const insuranceCalcs = [
   { path: '/life-insurance', label: 'Life Insurance', icon: Shield },
   { path: '/income-disability', label: 'Income Protection', icon: Umbrella },
+  { path: '/emergency-fund', label: 'Emergency Fund', icon: ShieldAlert },
 ];
 
-// Category 4: Retirement
+// Category 4: Retirement Planning
 const retirementCalcs = [
   { path: '/retirement', label: 'Retirement Planner', icon: PiggyBank },
   { path: '/living-annuity', label: 'Living Annuity', icon: Wallet },
-  { path: '/retirement-tax', label: 'Tax Savings Calculator', icon: Receipt },
-  { path: '/tax-directive', label: 'Tax Directive Simulator', icon: Target },
+  { path: '/retirement-tax', label: 'RA Tax Savings', icon: Receipt },
+  { path: '/tax-directive', label: 'Withdrawal Tax Simulator', icon: Target },
 ];
 
-// Category 5: Tax Planning
+// Category 5: Tax Planning (consolidated hub)
 const taxCalcs = [
   { path: '/tax-planning', label: 'Tax Planning Hub', icon: Receipt },
   { path: '/tax-calculator', label: 'Income Tax Calculator', icon: Calculator },
-  { path: '/tax-directive', label: 'Tax Directive Simulator', icon: Target },
 ];
 
-// Additional Tools
-const moreTools = [
-  { path: '/budget-planner', label: 'Budget Planner', icon: Wallet },
+// Category 6: Wealth & Planning Tools
+const planningTools = [
   { path: '/net-worth', label: 'Net Worth Tracker', icon: Landmark },
-  { path: '/emergency-fund', label: 'Emergency Fund', icon: ShieldAlert },
+  { path: '/budget-planner', label: 'Budget Planner', icon: Wallet },
+  { path: '/cash-flow', label: 'Cash Flow Projector', icon: ArrowRightLeft },
   { path: '/estate-planning', label: 'Estate Planning', icon: ScrollText },
   { path: '/education-savings', label: 'Education Savings', icon: GraduationCap },
-  { path: '/cash-flow', label: 'Cash Flow Projector', icon: ArrowRightLeft },
-  { path: '/monte-carlo', label: 'Monte Carlo Simulator', icon: BarChart3 },
+];
+
+// Category 7: More Resources
+const moreTools = [
   { path: '/financial-literacy', label: 'Financial Literacy Quiz', icon: GraduationCap },
+  { path: '/security', label: 'Security & Privacy', icon: ShieldAlert },
   { path: '#', label: 'Portfolio Builder & Xray', icon: Briefcase, comingSoon: true },
   { path: '#', label: 'Fee Comparison Tool', icon: GitCompare, comingSoon: true },
 ];
