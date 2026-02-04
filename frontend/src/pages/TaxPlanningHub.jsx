@@ -11,7 +11,7 @@ import { Switch } from '@/components/ui/switch';
 import { Progress } from '@/components/ui/progress';
 import { 
   Calculator, FileText, TrendingUp, PiggyBank, Heart, 
-  Briefcase, DollarSign, BarChart3, Shield, AlertTriangle,
+  Briefcase, Banknote, BarChart3, Shield, AlertTriangle,
   CheckCircle2, Info, Download, Upload, Plus, Trash2,
   ChevronRight, Percent, Building, User, Users, File,
   Calendar, Eye, X
