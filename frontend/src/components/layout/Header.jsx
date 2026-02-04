@@ -268,6 +268,13 @@ export const Header = () => {
               icon={Receipt}
               isActive={taxCalcs.some(c => c.path === location.pathname)}
             />
+
+            <NavDropdown 
+              items={planningTools} 
+              label="Planning" 
+              icon={Target}
+              isActive={planningTools.some(c => c.path === location.pathname)}
+            />
             
             <NavDropdown 
               items={moreTools} 
