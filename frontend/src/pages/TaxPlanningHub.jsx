@@ -1294,6 +1294,243 @@ const TaxPlanningHub = () => {
             </div>
           </div>
         </TabsContent>
+
+        {/* IRP5 Storage */}
+        <TabsContent value="irp5" className="space-y-6">
+          <div className="grid lg:grid-cols-2 gap-6">
+            {/* Add New IRP5 */}
+            <Card className="bg-navy-900/60 border-navy-700">
+              <CardHeader>
+                <CardTitle className="text-lg text-white flex items-center gap-2">
+                  <Plus className="h-5 w-5 text-emerald-400" />
+                  Add IRP5 Record
+                </CardTitle>
+                <CardDescription>Store your IRP5 tax certificate details securely</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label className="text-sm text-slate-300">Tax Year</Label>
+                    <Select 
+                      value={newIrp5.taxYear} 
+                      onValueChange={(val) => setNewIrp5({...newIrp5, taxYear: val})}
+                    >
+                      <SelectTrigger className="bg-navy-800 border-navy-600 text-white">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="2025/2026">2025/2026</SelectItem>
+                        <SelectItem value="2024/2025">2024/2025</SelectItem>
+                        <SelectItem value="2023/2024">2023/2024</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sm text-slate-300">Employer Name</Label>
+                    <Input
+                      value={newIrp5.employer}
+                      onChange={(e) => setNewIrp5({...newIrp5, employer: e.target.value})}
+                      className="bg-navy-800 border-navy-600 text-white"
+                      placeholder="Company name"
+                    />
+                  </div>
+                </div>
+
+                <InputField
+                  label="Gross Income (Code 3601/3697)"
+                  id="irp5GrossIncome"
+                  value={newIrp5.grossIncome}
+                  onChange={(val) => setNewIrp5({...newIrp5, grossIncome: val})}
+                  prefix={symbol}
+                />
+
+                <div className="grid grid-cols-2 gap-4">
+                  <InputField
+                    label="PAYE Deducted (Code 4102)"
+                    id="irp5Paye"
+                    value={newIrp5.paye}
+                    onChange={(val) => setNewIrp5({...newIrp5, paye: val})}
+                    prefix={symbol}
+                  />
+                  <InputField
+                    label="UIF Deducted (Code 4141)"
+                    id="irp5Uif"
+                    value={newIrp5.uif}
+                    onChange={(val) => setNewIrp5({...newIrp5, uif: val})}
+                    prefix={symbol}
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <InputField
+                    label="Pension/RA Contributions (Code 4001/4003)"
+                    id="irp5Pension"
+                    value={newIrp5.pensionContributions}
+                    onChange={(val) => setNewIrp5({...newIrp5, pensionContributions: val})}
+                    prefix={symbol}
+                  />
+                  <InputField
+                    label="Medical Aid (Code 4005)"
+                    id="irp5Medical"
+                    value={newIrp5.medicalAid}
+                    onChange={(val) => setNewIrp5({...newIrp5, medicalAid: val})}
+                    prefix={symbol}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm text-slate-300">Notes (Optional)</Label>
+                  <Input
+                    value={newIrp5.notes}
+                    onChange={(e) => setNewIrp5({...newIrp5, notes: e.target.value})}
+                    className="bg-navy-800 border-navy-600 text-white"
+                    placeholder="Additional notes..."
+                  />
+                </div>
+
+                <Button 
+                  onClick={handleAddIrp5}
+                  className="w-full bg-emerald-600 hover:bg-emerald-500"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add IRP5 Record
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* IRP5 Summary & Records */}
+            <div className="space-y-6">
+              {/* Totals Summary */}
+              <Card className="bg-gradient-to-br from-blue-500/10 to-navy-900 border-blue-500/30">
+                <CardHeader>
+                  <CardTitle className="text-lg text-white flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-blue-400" />
+                    IRP5 Summary
+                  </CardTitle>
+                  <CardDescription>Combined totals from all stored IRP5s</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-navy-800/50 rounded-lg">
+                      <p className="text-sm text-slate-400">Total Gross Income</p>
+                      <p className="text-xl font-bold text-white">{formatCurrency(irp5Totals.grossIncome)}</p>
+                    </div>
+                    <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                      <p className="text-sm text-emerald-400">Total PAYE Paid</p>
+                      <p className="text-xl font-bold text-emerald-400">{formatCurrency(irp5Totals.paye)}</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="p-3 bg-navy-800/50 rounded-lg text-center">
+                      <p className="text-xs text-slate-400">UIF</p>
+                      <p className="text-sm font-medium text-white">{formatCurrency(irp5Totals.uif)}</p>
+                    </div>
+                    <div className="p-3 bg-navy-800/50 rounded-lg text-center">
+                      <p className="text-xs text-slate-400">Pension/RA</p>
+                      <p className="text-sm font-medium text-white">{formatCurrency(irp5Totals.pensionContributions)}</p>
+                    </div>
+                    <div className="p-3 bg-navy-800/50 rounded-lg text-center">
+                      <p className="text-xs text-slate-400">Medical Aid</p>
+                      <p className="text-sm font-medium text-white">{formatCurrency(irp5Totals.medicalAid)}</p>
+                    </div>
+                  </div>
+                  <div className="pt-2 border-t border-navy-700">
+                    <p className="text-sm text-slate-400">
+                      <span className="text-white font-medium">{irp5Documents.length}</span> IRP5 record(s) stored
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Stored IRP5s */}
+              <Card className="bg-navy-900/60 border-navy-700">
+                <CardHeader>
+                  <CardTitle className="text-lg text-white">Stored IRP5 Records</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {irp5Documents.length === 0 ? (
+                    <div className="text-center py-8 text-slate-400">
+                      <FileText className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                      <p>No IRP5 records stored yet</p>
+                      <p className="text-sm">Add your first IRP5 to get started</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {irp5Documents.map((doc) => (
+                        <div 
+                          key={doc.id}
+                          className="p-4 bg-navy-800/50 rounded-lg border border-navy-700"
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <Badge variant="outline" className="border-blue-500/50 text-blue-400 text-xs">
+                                  {doc.taxYear}
+                                </Badge>
+                                <span className="font-medium text-white">{doc.employer}</span>
+                              </div>
+                              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+                                <div className="flex justify-between">
+                                  <span className="text-slate-400">Gross:</span>
+                                  <span className="text-white">{formatCurrency(doc.grossIncome)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-slate-400">PAYE:</span>
+                                  <span className="text-emerald-400">{formatCurrency(doc.paye)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-slate-400">Pension/RA:</span>
+                                  <span className="text-white">{formatCurrency(doc.pensionContributions)}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-slate-400">Medical:</span>
+                                  <span className="text-white">{formatCurrency(doc.medicalAid)}</span>
+                                </div>
+                              </div>
+                              {doc.notes && (
+                                <p className="text-xs text-slate-500 mt-2 italic">{doc.notes}</p>
+                              )}
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDeleteIrp5(doc.id)}
+                              className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* RA Tax Benefit Info */}
+              <Card className="bg-emerald-500/10 border-emerald-500/30">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <PiggyBank className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-medium text-emerald-400 mb-1">RA Contribution Tax Benefit</h4>
+                      <p className="text-sm text-slate-300 mb-2">
+                        Retirement Annuity contributions are tax-deductible up to:
+                      </p>
+                      <ul className="text-sm text-slate-300 space-y-1">
+                        <li>• <strong>27.5%</strong> of your taxable income, OR</li>
+                        <li>• <strong>R350,000</strong> per year (whichever is lower)</li>
+                      </ul>
+                      <p className="text-xs text-slate-400 mt-2">
+                        At a 36% marginal rate, a R100,000 RA contribution saves R36,000 in tax!
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );
