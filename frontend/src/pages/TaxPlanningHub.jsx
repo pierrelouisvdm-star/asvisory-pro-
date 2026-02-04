@@ -589,6 +589,15 @@ const TaxPlanningHub = () => {
                   <CardTitle className="text-lg text-white flex items-center gap-2">
                     <PiggyBank className="h-5 w-5 text-emerald-400" />
                     Deductions & Contributions
+                    <SectionInfo
+                      title="Tax Deductions"
+                      description="These contributions reduce your taxable income, lowering your tax bill. Retirement contributions are limited to 27.5% of taxable income or R350,000."
+                      tips={[
+                        "Pension + RA contributions combined are capped at 27.5%",
+                        "Home office must be regularly and exclusively used for work",
+                        "Keep records of all deductions for SARS audits"
+                      ]}
+                    />
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -599,6 +608,7 @@ const TaxPlanningHub = () => {
                       value={incomeData.retirementContributions}
                       onChange={(val) => setIncomeData({...incomeData, retirementContributions: val})}
                       prefix={symbol}
+                      tooltip="Your contributions to employer pension/provident fund (check your payslip)"
                     />
                     <InputField
                       label="RA Contributions"
@@ -606,6 +616,7 @@ const TaxPlanningHub = () => {
                       value={incomeData.raContributions}
                       onChange={(val) => setIncomeData({...incomeData, raContributions: val})}
                       prefix={symbol}
+                      tooltip="Private Retirement Annuity contributions you make yourself"
                     />
                   </div>
                   <InputField
@@ -614,6 +625,7 @@ const TaxPlanningHub = () => {
                     value={incomeData.homeOfficeDeduction}
                     onChange={(val) => setIncomeData({...incomeData, homeOfficeDeduction: val})}
                     prefix={symbol}
+                    tooltip="Portion of rent/bond, utilities for dedicated home office space"
                   />
                   <div className="space-y-2">
                     <Label className="text-sm text-slate-300">Age Group</Label>
