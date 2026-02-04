@@ -52,6 +52,7 @@ api_router.include_router(coupons_router)
 api_router.include_router(analytics_router)
 api_router.include_router(net_worth_router)
 api_router.include_router(audit_router)
+api_router.include_router(payments_router)
 
 # Health check endpoint
 @api_router.get("/health")
