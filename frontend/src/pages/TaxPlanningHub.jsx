@@ -22,6 +22,35 @@ import { Disclaimer } from '../components/calculators/Disclaimer';
 import { InfoTooltip, SectionInfo } from '../components/ui/info-tooltip';
 import { toast } from 'sonner';
 
+// Standalone InputField component to prevent re-rendering issues
+const TaxInputField = ({ label, id, value, onChange, prefix, suffix, min = 0, step = 1, tooltip }) => (
+  <div className="space-y-2">
+    <div className="flex items-center gap-2">
+      <Label htmlFor={id} className="text-sm text-slate-300">{label}</Label>
+      {tooltip && (
+        <InfoTooltip content={tooltip} size="xs" iconClassName="text-slate-500 hover:text-slate-300" />
+      )}
+    </div>
+    <div className="relative">
+      {prefix && (
+        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
+      )}
+      <Input
+        id={id}
+        type="number"
+        value={value || ''}
+        onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
+        className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
+        min={min}
+        step={step}
+      />
+      {suffix && (
+        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
+      )}
+    </div>
+  </div>
+);
+
 // 2025/2026 South African Tax Tables
 const TAX_BRACKETS_2025 = [
   { min: 0, max: 237100, rate: 0.18, base: 0 },
