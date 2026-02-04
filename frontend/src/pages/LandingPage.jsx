@@ -167,46 +167,6 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* What's New Section */}
-      <section className="relative py-16 bg-gradient-to-r from-emerald-500/10 via-navy-900/50 to-blue-500/10 border-y border-emerald-500/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <Badge className="mb-4 bg-amber-500/20 text-amber-400 border-amber-500/30 animate-bounce">
-              <Star className="h-3 w-3 mr-2" />
-              Just Released
-            </Badge>
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-2">
-              What's New in AdvisoryPro
-            </h2>
-            <p className="text-slate-400">Powerful new features to supercharge your practice</p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {whatsNew.map((feature, index) => (
-              <Card key={index} className="bg-navy-900/80 border-navy-700 hover:border-emerald-500/50 transition-all duration-300 group hover:-translate-y-1">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-xl transition-colors
-                      ${feature.color === 'emerald' ? 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30' : ''}
-                      ${feature.color === 'blue' ? 'bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30' : ''}
-                      ${feature.color === 'amber' ? 'bg-amber-500/20 text-amber-400 group-hover:bg-amber-500/30' : ''}
-                      ${feature.color === 'purple' ? 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500/30' : ''}
-                    `}>
-                      <feature.icon className="h-6 w-6" />
-                    </div>
-                    <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs">
-                      {feature.tag}
-                    </Badge>
-                  </div>
-                  <h3 className="font-semibold text-lg text-white mb-2 group-hover:text-emerald-400 transition-colors">{feature.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Problem/Solution Section */}
       <section className="relative bg-navy-900/50 border-y border-navy-800 py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
