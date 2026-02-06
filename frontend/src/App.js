@@ -94,26 +94,21 @@ const AppLayout = ({ children }) => {
 };
 
 function App() {
-  // Use light theme by default
-  useEffect(() => {
-    document.documentElement.classList.remove('dark');
-    localStorage.setItem('theme', 'light');
-  }, []);
-
   return (
-    <AuthProvider>
-      <CurrencyProvider>
-        <SubscriptionProvider>
-          <div className="min-h-screen flex flex-col bg-background">
-            <BrowserRouter>
-              <AppLayout>
-                <Routes>
-                  {/* Public Routes */}
-                  <Route path="/" element={<AuthenticatedRoute><Dashboard /></AuthenticatedRoute>} />
-                  <Route path="/auth" element={<AuthPage />} />
-                  <Route path="/welcome" element={<LandingPage />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <CurrencyProvider>
+          <SubscriptionProvider>
+            <div className="min-h-screen flex flex-col bg-background">
+              <BrowserRouter>
+                <AppLayout>
+                  <Routes>
+                    {/* Public Routes */}
+                    <Route path="/" element={<AuthenticatedRoute><Dashboard /></AuthenticatedRoute>} />
+                    <Route path="/auth" element={<AuthPage />} />
+                    <Route path="/welcome" element={<LandingPage />} />
                   
-                  {/* Pricing - accessible to all but shows different content */}
+                    {/* Pricing - accessible to all but shows different content */}
                   <Route path="/pricing" element={<PricingPage />} />
                   <Route path="/payment/success" element={<PaymentSuccessPage />} />
                   <Route path="/subscription/success" element={<SubscriptionSuccessPage />} />
