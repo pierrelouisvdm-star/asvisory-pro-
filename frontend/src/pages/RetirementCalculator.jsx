@@ -622,7 +622,7 @@ export const RetirementCalculator = () => {
             </div>
 
             {/* Secondary Results */}
-            <ResultGrid columns={4}>
+            <ResultGrid columns={3}>
               <ResultDisplay
                 label="Needed for Retirement"
                 value={results.neededNestEgg}
@@ -630,11 +630,22 @@ export const RetirementCalculator = () => {
                 variant="muted"
               />
               <ResultDisplay
-                label="Monthly Income (Ret.)"
+                label="Monthly Income (Future)"
                 value={results.monthlyWithdrawal + results.totalOtherIncome / 12}
                 prefix={symbol}
                 variant="success"
+                tooltip="Monthly income at retirement in future Rands"
               />
+              <ResultDisplay
+                label="Monthly Income (Today's Value)"
+                value={results.monthlyWithdrawalToday + (results.totalOtherIncome / 12) / Math.pow(1 + currentScenario.inflationRate / 100, results.yearsToRetirement)}
+                prefix={symbol}
+                variant="premium"
+                tooltip="What your retirement income is worth in today's purchasing power"
+              />
+            </ResultGrid>
+            
+            <ResultGrid columns={3}>
               <ResultDisplay
                 label="Years Money Lasts"
                 value={results.yearsMoneyLasts}
@@ -647,6 +658,12 @@ export const RetirementCalculator = () => {
                 value={results.shortfall > 0 ? results.shortfall : results.surplus}
                 prefix={symbol}
                 variant={results.shortfall > 0 ? "muted" : "success"}
+              />
+              <ResultDisplay
+                label="Total Contributions"
+                value={results.totalContributed}
+                prefix={symbol}
+                variant="muted"
               />
             </ResultGrid>
 
