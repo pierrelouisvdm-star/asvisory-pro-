@@ -149,6 +149,9 @@ export const RetirementCalculator = () => {
     const sustainableWithdrawal = totalNestEgg / pvFactor;
     const monthlyWithdrawal = sustainableWithdrawal / 12;
     
+    // Monthly income in today's terms (present value of future income)
+    const monthlyWithdrawalToday = monthlyWithdrawal / Math.pow(1 + inflation, yearsToRetirement);
+    
     // Years money will last at desired withdrawal
     let yearsMoneyLasts = 0;
     let balance = totalNestEgg;
