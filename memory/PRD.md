@@ -14,7 +14,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 3. **Clients** - End beneficiaries of the calculations (not direct users)
 
 ## Core Requirements
-- Modern, clean, professional UI with dark theme
+- Modern, clean, professional UI with **white and navy blue theme** (light mode)
 - ZAR currency with South African tax calculations
 - PDF report generation for all calculators
 - Client management system
@@ -23,6 +23,24 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ---
 
 ## What's Been Implemented
+
+### Session: February 6, 2026
+
+#### 1. Theme Change to White & Navy Blue ✅
+- Complete application-wide theme overhaul from dark to light mode
+- Updated CSS variables in `index.css` and `tailwind.config.js`:
+  - Background: Light gray/white (`210 40% 98%`)
+  - Primary: Navy blue (`220 70% 25%`)
+  - Cards: Pure white with subtle borders
+- Files updated for theme consistency:
+  - `App.js` - Changed from dark to light mode initialization
+  - `LandingPage.jsx` - Full refactor with theme variables
+  - `Dashboard.jsx` - Updated all sections with `bg-background`, `text-foreground`
+  - `AuthPage.jsx` - Light theme with navy accents
+  - `Header.jsx` - Already using theme variables
+  - `QuickActionsWidget.jsx` - Updated to use theme-aware classes
+  - `MarketTracker.jsx` - Updated card and text styling
+- Removed hardcoded dark colors (`bg-navy-950`, `text-white`) in favor of CSS variables (`bg-background`, `text-foreground`, `bg-card`, `text-primary`)
 
 ### Session: February 4, 2026
 
