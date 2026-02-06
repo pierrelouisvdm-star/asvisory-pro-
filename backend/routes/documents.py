@@ -185,15 +185,6 @@ async def analyze_document(
             'mime': mime_types.get(file_ext, 'image/jpeg')
         })
     
-    # Determine mime type
-    mime_types = {
-        '.png': 'image/png',
-        '.jpg': 'image/jpeg',
-        '.jpeg': 'image/jpeg',
-        '.webp': 'image/webp'
-    }
-    mime_type = mime_types.get(file_ext, 'image/jpeg')
-    
     try:
         # Initialize LLM chat with vision capability
         api_key = os.environ.get('EMERGENT_LLM_KEY')
@@ -208,13 +199,21 @@ async def analyze_document(
             system_message=DOCUMENT_ANALYSIS_PROMPT
         ).with_model("openai", "gpt-4o")  # Using GPT-4o for vision
         
-        # Create image content
-        image_content = ImageContent(image_base64=image_base64)
+        # Create image content(s) - support multiple pages from PDF
+        image_contents = []
+        for img in images_base64:
+            image_contents.append(ImageContent(image_base64=img['data']))
         
-        # Send message with image
+        # Build message based on number of pages
+        if len(images_base64) > 1:
+            msg_text = f"Please analyze this financial document ({len(images_base64)} pages) and extract all relevant information as structured JSON. Combine information from all pages into a single comprehensive analysis."
+        else:
+            msg_text = "Please analyze this financial document and extract all relevant information as structured JSON."
+        
+        # Send message with image(s)
         user_message = UserMessage(
-            text="Please analyze this financial document and extract all relevant information as structured JSON.",
-            image_contents=[image_content]
+            text=msg_text,
+            image_contents=image_contents
         )
         
         response = await chat.send_message(user_message)
