@@ -61,6 +61,7 @@ const planningTools = [
 
 // Category 7: More Resources
 const moreTools = [
+  { path: '/document-reader', label: 'AI Document Reader', icon: FileText },
   { path: '/financial-literacy', label: 'Financial Literacy Quiz', icon: GraduationCap },
   { path: '/security', label: 'Security & Privacy', icon: ShieldAlert },
   { path: '#', label: 'Portfolio Builder & Xray', icon: Briefcase, comingSoon: true },
