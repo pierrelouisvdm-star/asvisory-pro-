@@ -12,6 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import { useAuth } from '@/context/AuthContext';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 // All calculators organized by category for the mega menu
 const allCalculators = [
