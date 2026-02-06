@@ -218,24 +218,24 @@ const CalculatorCard = ({ calc, index }) => {
       data-testid={`calculator-card-${calc.id}`}
       style={{ animationDelay: `${index * 50}ms` }}
     >
-      <div className="h-full rounded-xl border border-navy-700 bg-navy-900/60 p-5 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg animate-fade-in">
+      <div className="h-full rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/50 hover:shadow-lg animate-fade-in">
         <div className="flex items-start justify-between mb-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-navy-800 transition-colors group-hover:bg-emerald-500/20">
-            <Icon className="h-5 w-5 text-slate-400 group-hover:text-emerald-400 transition-colors" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20">
+            <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </div>
-          <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all duration-300" />
+          <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
         </div>
-        <h3 className="font-display text-base font-semibold text-white mb-1.5 group-hover:text-emerald-400 transition-colors">
+        <h3 className="font-display text-base font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors">
           {calc.title}
         </h3>
-        <p className="text-sm text-slate-400 mb-3 line-clamp-2">
+        <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
           {calc.description}
         </p>
         <div className="flex flex-wrap gap-1.5">
           {calc.features.map((feature) => (
             <span 
               key={feature} 
-              className="inline-flex text-xs px-2 py-0.5 rounded-full bg-navy-800 text-slate-400"
+              className="inline-flex text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
             >
               {feature}
             </span>
@@ -248,14 +248,14 @@ const CalculatorCard = ({ calc, index }) => {
 
 const SectionHeader = ({ badge, title, description, icon: Icon }) => (
   <div className="text-center mb-10">
-    <Badge className="mb-3 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 font-medium">
+    <Badge className="mb-3 bg-primary/10 text-primary border-primary/30 font-medium">
       <Icon className="h-3 w-3 mr-1.5" />
       {badge}
     </Badge>
-    <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">
+    <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-3 tracking-tight">
       {title}
     </h2>
-    <p className="text-slate-400 max-w-2xl mx-auto">
+    <p className="text-muted-foreground max-w-2xl mx-auto">
       {description}
     </p>
   </div>
@@ -265,29 +265,29 @@ export const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   
   return (
-    <div className="min-h-screen bg-navy-950" data-testid="dashboard">
+    <div className="min-h-screen bg-background" data-testid="dashboard">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-navy-900 to-navy-950">
+      <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <div className="text-center max-w-3xl mx-auto">
-            <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 font-medium animate-fade-in">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/30 font-medium animate-fade-in">
               <Sparkles className="h-3 w-3 mr-1.5" />
               Professional Financial Tools
             </Badge>
             
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-5 tracking-tight animate-fade-in" style={{ animationDelay: '100ms' }}>
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-5 tracking-tight animate-fade-in" style={{ animationDelay: '100ms' }}>
               Financial Calculations
-              <span className="block text-emerald-400">Made Simple</span>
+              <span className="block text-primary">Made Simple</span>
             </h1>
             
-            <p className="text-lg text-slate-400 mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
+            <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
               A comprehensive suite of 15 professional calculators for financial advisors. 
               Help your clients make informed decisions with precision tools.
             </p>
             
             <div className="flex flex-wrap justify-center gap-3 animate-fade-in" style={{ animationDelay: '300ms' }}>
               <Link to="/future-value">
-                <Button size="lg" className="btn-premium rounded-lg px-6" data-testid="get-started-btn">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-6" data-testid="get-started-btn">
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
@@ -296,7 +296,7 @@ export const Dashboard = () => {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="rounded-lg px-6 border-slate-300 dark:border-slate-700"
+                  className="rounded-lg px-6 border-border"
                   data-testid="take-quiz-btn"
                 >
                   Take Risk Quiz
