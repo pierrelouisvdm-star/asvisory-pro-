@@ -5,6 +5,7 @@ Supports: Investment statements, Bank statements, Pension statements, IRP5 certi
 import os
 import base64
 import uuid
+import io
 from datetime import datetime, timezone
 from typing import Optional, List
 from fastapi import APIRouter, HTTPException, Depends, UploadFile, File, Form
@@ -12,6 +13,9 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 
 load_dotenv()
+
+import fitz  # PyMuPDF for PDF handling
+from PIL import Image
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
 from utils.auth import get_current_user
@@ -21,7 +25,40 @@ router = APIRouter(prefix="/documents", tags=["Documents"])
 
 # Supported file types
 ALLOWED_EXTENSIONS = {'.pdf', '.png', '.jpg', '.jpeg', '.webp'}
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+MAX_FILE_SIZE = 20 * 1024 * 1024  # 20MB for PDFs
+
+
+def convert_pdf_to_images(pdf_content: bytes, max_pages: int = 3) -> List[bytes]:
+    """
+    Convert PDF pages to PNG images.
+    Returns list of image bytes (PNG format).
+    """
+    images = []
+    try:
+        # Open PDF from bytes
+        pdf_document = fitz.open(stream=pdf_content, filetype="pdf")
+        
+        # Process up to max_pages
+        num_pages = min(len(pdf_document), max_pages)
+        
+        for page_num in range(num_pages):
+            page = pdf_document[page_num]
+            
+            # Render page to image with good resolution
+            # zoom = 2 gives us 144 DPI (72 * 2)
+            zoom = 2
+            mat = fitz.Matrix(zoom, zoom)
+            pix = page.get_pixmap(matrix=mat)
+            
+            # Convert to PIL Image then to bytes
+            img_data = pix.tobytes("png")
+            images.append(img_data)
+        
+        pdf_document.close()
+        return images
+        
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error processing PDF: {str(e)}")
 
 # Document analysis system prompt
 DOCUMENT_ANALYSIS_PROMPT = """You are a financial document analyzer for South African financial advisors. 
