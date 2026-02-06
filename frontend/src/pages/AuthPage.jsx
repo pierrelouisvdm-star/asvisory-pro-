@@ -142,19 +142,19 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-navy-950 px-4 py-8">
+    <div className="min-h-screen bg-background px-4 py-8">
       <div className="max-w-6xl mx-auto">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500">
-              <span className="text-navy-950 font-bold text-xl">A</span>
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
+              <span className="text-primary-foreground font-bold text-xl">A</span>
             </div>
-            <span className="font-display text-2xl font-bold tracking-tight text-white">
+            <span className="font-display text-2xl font-bold tracking-tight text-foreground">
               AdvisoryPro
             </span>
           </div>
-          <p className="text-slate-400">
+          <p className="text-muted-foreground">
             Professional Financial Advisor Suite
           </p>
         </div>
@@ -162,14 +162,14 @@ export const AuthPage = () => {
         <div className="grid lg:grid-cols-2 gap-8 items-start">
           {/* Left Side - Auth Form */}
           <div>
-            <Card className="border-navy-700 bg-navy-900/60 shadow-lg">
+            <Card className="border-border bg-card shadow-lg">
               <CardHeader className="text-center pb-2">
-                <CardTitle className="font-display text-xl text-white">Welcome</CardTitle>
-                <CardDescription className="text-slate-400">Sign in or create an account to get started</CardDescription>
+                <CardTitle className="font-display text-xl text-foreground">Welcome</CardTitle>
+                <CardDescription className="text-muted-foreground">Sign in or create an account to get started</CardDescription>
               </CardHeader>
               <CardContent>
                 <Tabs defaultValue="register" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2 mb-6 bg-navy-800">
+                  <TabsList className="grid w-full grid-cols-2 mb-6 bg-muted">
                     <TabsTrigger value="login" data-testid="login-tab">Sign In</TabsTrigger>
                     <TabsTrigger value="register" data-testid="register-tab">Create Account</TabsTrigger>
                   </TabsList>
@@ -180,7 +180,7 @@ export const AuthPage = () => {
                       <div className="space-y-2">
                         <Label htmlFor="login-email">Email</Label>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             id="login-email"
                             type="email"
@@ -197,7 +197,7 @@ export const AuthPage = () => {
                       <div className="space-y-2">
                         <Label htmlFor="login-password">Password</Label>
                         <div className="relative">
-                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             id="login-password"
                             type="password"
@@ -218,16 +218,16 @@ export const AuthPage = () => {
                           id="remember-me"
                           checked={rememberMe}
                           onChange={(e) => setRememberMe(e.target.checked)}
-                          className="h-4 w-4 rounded border-slate-600 bg-navy-800 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-navy-900"
+                          className="h-4 w-4 rounded border-border bg-muted text-primary focus:ring-primary focus:ring-offset-background"
                           data-testid="remember-me-checkbox"
                         />
-                        <Label htmlFor="remember-me" className="text-sm text-slate-400 cursor-pointer">
+                        <Label htmlFor="remember-me" className="text-sm text-muted-foreground cursor-pointer">
                           Remember me for 30 days
                         </Label>
                       </div>
 
                       {error && (
-                        <div className="flex items-center gap-2 text-red-400 text-sm">
+                        <div className="flex items-center gap-2 text-destructive text-sm">
                           <AlertCircle className="h-4 w-4" />
                           {error}
                         </div>
@@ -236,7 +236,7 @@ export const AuthPage = () => {
                       <Button 
                         type="button"
                         onClick={handleLogin}
-                        className="w-full bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold" 
+                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" 
                         disabled={isLoading}
                         data-testid="login-submit-btn"
                       >
@@ -252,7 +252,7 @@ export const AuthPage = () => {
                       <div className="space-y-2">
                         <Label htmlFor="register-name">Full Name</Label>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             id="register-name"
                             type="text"
@@ -269,7 +269,7 @@ export const AuthPage = () => {
                       <div className="space-y-2">
                         <Label htmlFor="register-email">Email</Label>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             id="register-email"
                             type="email"
@@ -286,7 +286,7 @@ export const AuthPage = () => {
                       <div className="space-y-2">
                         <Label htmlFor="register-company">Company (Optional)</Label>
                         <div className="relative">
-                          <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                          <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             id="register-company"
                             type="text"
@@ -302,7 +302,7 @@ export const AuthPage = () => {
                       <div className="space-y-2">
                         <Label htmlFor="register-password">Password</Label>
                         <div className="relative">
-                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                           <Input
                             id="register-password"
                             type="password"
@@ -318,7 +318,7 @@ export const AuthPage = () => {
                       </div>
 
                       {error && (
-                        <div className="flex items-center gap-2 text-red-400 text-sm">
+                        <div className="flex items-center gap-2 text-destructive text-sm">
                           <AlertCircle className="h-4 w-4" />
                           {error}
                         </div>
@@ -326,7 +326,7 @@ export const AuthPage = () => {
 
                       <Button 
                         type="submit" 
-                        className="w-full bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold" 
+                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" 
                         disabled={isLoading}
                         data-testid="register-submit-btn"
                       >
@@ -338,10 +338,10 @@ export const AuthPage = () => {
                 </Tabs>
 
                 {/* Coupon Code Section */}
-                <div className="mt-6 pt-6 border-t border-navy-700">
+                <div className="mt-6 pt-6 border-t border-border">
                   <div className="flex items-center gap-2 mb-3">
-                    <Ticket className="h-4 w-4 text-amber-400" />
-                    <Label className="text-amber-400 font-medium">Have a coupon code?</Label>
+                    <Ticket className="h-4 w-4 text-amber-500" />
+                    <Label className="text-amber-600 font-medium">Have a coupon code?</Label>
                   </div>
                   <div className="flex gap-2">
                     <div className="relative flex-1">
@@ -361,14 +361,14 @@ export const AuthPage = () => {
                       variant="outline"
                       onClick={handleValidateCoupon}
                       disabled={couponLoading}
-                      className="border-amber-500/50 text-amber-400 hover:bg-amber-500/10"
+                      className="border-amber-500/50 text-amber-600 hover:bg-amber-500/10"
                       data-testid="validate-coupon-btn"
                     >
                       {couponLoading ? 'Checking...' : 'Apply'}
                     </Button>
                   </div>
                   {couponResult && (
-                    <div className={`mt-2 text-sm flex items-center gap-2 ${couponResult.valid ? 'text-emerald-400' : 'text-red-400'}`}>
+                    <div className={`mt-2 text-sm flex items-center gap-2 ${couponResult.valid ? 'text-emerald-600' : 'text-destructive'}`}>
                       {couponResult.valid ? (
                         <>
                           <Check className="h-4 w-4" />
@@ -386,7 +386,7 @@ export const AuthPage = () => {
               </CardContent>
             </Card>
 
-            <p className="text-center text-sm text-slate-500 mt-6">
+            <p className="text-center text-sm text-muted-foreground mt-6">
               By signing in, you agree to our Terms of Service and Privacy Policy
             </p>
           </div>
@@ -394,29 +394,29 @@ export const AuthPage = () => {
           {/* Right Side - Pricing Tiers */}
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
-              <h2 className="text-xl font-display font-bold text-white mb-1">Premium Plan</h2>
-              <p className="text-slate-400 text-sm">R299/month • Cancel anytime</p>
+              <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
+              <p className="text-muted-foreground text-sm">R299/month • Cancel anytime</p>
             </div>
 
             {tiers.map((tier) => (
               <Card 
                 key={tier.name}
-                className={`border-navy-700 bg-navy-900/40 relative overflow-hidden ${
-                  tier.highlight ? 'border-emerald-500/50 ring-1 ring-emerald-500/20' : ''
+                className={`border-border bg-card relative overflow-hidden ${
+                  tier.highlight ? 'border-primary/50 ring-1 ring-primary/20' : ''
                 }`}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-display font-bold text-white">{tier.name}</h3>
-                        {tier.name === 'Premium' && <Sparkles className="h-4 w-4 text-amber-400" />}
+                        <h3 className="font-display font-bold text-foreground">{tier.name}</h3>
+                        {tier.name === 'Premium' && <Sparkles className="h-4 w-4 text-amber-500" />}
                       </div>
-                      <p className="text-slate-400 text-xs mb-3">{tier.description}</p>
+                      <p className="text-muted-foreground text-xs mb-3">{tier.description}</p>
                       <ul className="space-y-1.5">
                         {tier.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center gap-2 text-sm text-slate-300">
-                            <Check className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+                          <li key={idx} className="flex items-center gap-2 text-sm text-foreground">
+                            <Check className="h-3.5 w-3.5 text-emerald-600 flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
@@ -424,8 +424,8 @@ export const AuthPage = () => {
                     </div>
                     <div className="text-right ml-4">
                       <div className="flex items-baseline">
-                        <span className="text-2xl font-bold text-white">{tier.price}</span>
-                        <span className="text-slate-400 text-sm">{tier.period}</span>
+                        <span className="text-2xl font-bold text-foreground">{tier.price}</span>
+                        <span className="text-muted-foreground text-sm">{tier.period}</span>
                       </div>
                     </div>
                   </div>
@@ -434,35 +434,35 @@ export const AuthPage = () => {
             ))}
 
             {/* Features Highlight */}
-            <Card className="border-navy-700 bg-gradient-to-br from-emerald-900/20 to-navy-900/40">
+            <Card className="border-border bg-gradient-to-br from-primary/5 to-card">
               <CardContent className="p-4">
-                <h4 className="font-medium text-white mb-3 flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-emerald-400" />
+                <h4 className="font-medium text-foreground mb-3 flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-primary" />
                   Premium Features Include
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Calculator className="h-3.5 w-3.5 text-emerald-400" />
+                  <div className="flex items-center gap-2 text-foreground">
+                    <Calculator className="h-3.5 w-3.5 text-primary" />
                     17 Calculators
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Users className="h-3.5 w-3.5 text-emerald-400" />
+                  <div className="flex items-center gap-2 text-foreground">
+                    <Users className="h-3.5 w-3.5 text-primary" />
                     Unlimited Clients
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <FileText className="h-3.5 w-3.5 text-emerald-400" />
+                  <div className="flex items-center gap-2 text-foreground">
+                    <FileText className="h-3.5 w-3.5 text-primary" />
                     PDF Reports
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+                  <div className="flex items-center gap-2 text-foreground">
+                    <TrendingUp className="h-3.5 w-3.5 text-primary" />
                     Live Market Data
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Bot className="h-3.5 w-3.5 text-emerald-400" />
+                  <div className="flex items-center gap-2 text-foreground">
+                    <Bot className="h-3.5 w-3.5 text-primary" />
                     AI Assistant
                   </div>
-                  <div className="flex items-center gap-2 text-slate-300">
-                    <Crown className="h-3.5 w-3.5 text-emerald-400" />
+                  <div className="flex items-center gap-2 text-foreground">
+                    <Crown className="h-3.5 w-3.5 text-primary" />
                     Priority Support
                   </div>
                 </div>
