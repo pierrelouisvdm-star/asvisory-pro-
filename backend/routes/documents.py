@@ -141,6 +141,7 @@ async def analyze_document(
     """
     Upload and analyze a financial document using AI.
     Supports PDF, PNG, JPG, JPEG, WEBP files.
+    PDFs are automatically converted to images for analysis.
     """
     # Validate file extension
     file_ext = os.path.splitext(file.filename)[1].lower()
@@ -155,19 +156,34 @@ async def analyze_document(
     
     # Check file size
     if len(content) > MAX_FILE_SIZE:
-        raise HTTPException(status_code=400, detail="File too large. Maximum size is 10MB")
+        raise HTTPException(status_code=400, detail="File too large. Maximum size is 20MB")
     
-    # For PDFs, we need to convert to image first or use a different approach
-    # For now, we'll handle images directly and note PDF limitation
+    # Prepare image(s) for analysis
+    images_base64 = []
+    
     if file_ext == '.pdf':
-        # Store PDF info but note we need image for vision API
-        raise HTTPException(
-            status_code=400, 
-            detail="PDF analysis requires conversion. Please upload an image (screenshot/photo) of the document, or use PNG/JPG format."
-        )
-    
-    # Encode image to base64
-    image_base64 = base64.b64encode(content).decode('utf-8')
+        # Convert PDF pages to images
+        try:
+            pdf_images = convert_pdf_to_images(content, max_pages=5)
+            for img_data in pdf_images:
+                images_base64.append({
+                    'data': base64.b64encode(img_data).decode('utf-8'),
+                    'mime': 'image/png'
+                })
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Error processing PDF: {str(e)}")
+    else:
+        # Single image file
+        mime_types = {
+            '.png': 'image/png',
+            '.jpg': 'image/jpeg',
+            '.jpeg': 'image/jpeg',
+            '.webp': 'image/webp'
+        }
+        images_base64.append({
+            'data': base64.b64encode(content).decode('utf-8'),
+            'mime': mime_types.get(file_ext, 'image/jpeg')
+        })
     
     # Determine mime type
     mime_types = {
