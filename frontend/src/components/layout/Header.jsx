@@ -100,8 +100,8 @@ export const Header = () => {
       className={cn(
         "flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
         isActive(to)
-          ? "bg-emerald-500/20 text-emerald-400"
-          : "text-slate-400 hover:text-white hover:bg-navy-800",
+          ? "bg-primary/10 text-primary"
+          : "text-muted-foreground hover:text-foreground hover:bg-muted",
         className
       )}
     >
@@ -111,15 +111,15 @@ export const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-navy-900/95 backdrop-blur-sm border-b border-navy-800">
+    <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-sm">
       <div className="max-w-full mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500 text-navy-950 font-bold text-lg group-hover:scale-105 transition-transform">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-lg group-hover:scale-105 transition-transform">
               A
             </div>
-            <span className="font-display text-xl font-bold text-white hidden sm:block">
+            <span className="font-display text-xl font-bold text-foreground hidden sm:block">
               AdvisoryPro
             </span>
           </Link>
@@ -136,8 +136,8 @@ export const Header = () => {
               className={cn(
                 "flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
                 showCalculators
-                  ? "bg-emerald-500/20 text-emerald-400"
-                  : "text-slate-400 hover:text-white hover:bg-navy-800"
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
               )}
             >
               <Grid3X3 className="h-4 w-4" />
@@ -156,7 +156,7 @@ export const Header = () => {
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
                 {user?.is_admin && (
-                  <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 hidden sm:flex">
+                  <Badge className="bg-amber-500/20 text-amber-600 border-amber-500/30 hidden sm:flex">
                     <Crown className="h-3 w-3 mr-1" />
                     Admin
                   </Badge>
@@ -165,23 +165,23 @@ export const Header = () => {
                   variant="ghost"
                   size="sm"
                   onClick={handleLogout}
-                  className="text-slate-400 hover:text-white"
+                  className="text-muted-foreground hover:text-foreground"
                 >
                   <LogOut className="h-4 w-4 mr-2" />
                   <span className="hidden sm:inline">Logout</span>
                 </Button>
-                <div className="flex items-center gap-2 pl-2 border-l border-navy-700">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400">
+                <div className="flex items-center gap-2 pl-2 border-l border-border">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <User className="h-4 w-4" />
                   </div>
-                  <span className="text-sm text-white hidden md:block">
+                  <span className="text-sm text-foreground hidden md:block">
                     {user?.name?.split(' ')[0] || user?.email?.split('@')[0]}
                   </span>
                 </div>
               </div>
             ) : (
               <Link to="/auth">
-                <Button className="bg-emerald-500 hover:bg-emerald-400 text-navy-950">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
                   <LogIn className="h-4 w-4 mr-2" />
                   Sign In
                 </Button>
@@ -191,7 +191,7 @@ export const Header = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-navy-800"
+              className="lg:hidden p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -201,19 +201,19 @@ export const Header = () => {
 
       {/* Calculator Mega Menu */}
       {showCalculators && (
-        <div className="hidden lg:block absolute left-0 right-0 top-16 bg-navy-900 border-b border-navy-800 shadow-xl">
+        <div className="hidden lg:block absolute left-0 right-0 top-16 bg-card border-b border-border shadow-lg">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="grid grid-cols-6 gap-6">
               {allCalculators.map((category) => (
                 <div key={category.category}>
                   <h3 className={cn(
                     "text-xs font-semibold uppercase tracking-wider mb-3",
-                    category.color === 'emerald' && "text-emerald-400",
-                    category.color === 'blue' && "text-blue-400",
-                    category.color === 'amber' && "text-amber-400",
-                    category.color === 'purple' && "text-purple-400",
-                    category.color === 'rose' && "text-rose-400",
-                    category.color === 'cyan' && "text-cyan-400",
+                    category.color === 'emerald' && "text-emerald-600",
+                    category.color === 'blue' && "text-blue-600",
+                    category.color === 'amber' && "text-amber-600",
+                    category.color === 'purple' && "text-purple-600",
+                    category.color === 'rose' && "text-rose-600",
+                    category.color === 'cyan' && "text-cyan-600",
                   )}>
                     {category.category}
                   </h3>
@@ -226,8 +226,8 @@ export const Header = () => {
                           className={cn(
                             "flex items-center gap-2 px-2 py-1.5 text-sm rounded-md transition-colors",
                             isActive(item.path)
-                              ? "bg-emerald-500/20 text-emerald-400"
-                              : "text-slate-400 hover:text-white hover:bg-navy-800"
+                              ? "bg-primary/10 text-primary"
+                              : "text-muted-foreground hover:text-foreground hover:bg-muted"
                           )}
                         >
                           <item.icon className="h-3.5 w-3.5" />
@@ -241,12 +241,12 @@ export const Header = () => {
             </div>
             
             {/* Quick Access Row */}
-            <div className="mt-6 pt-4 border-t border-navy-700 flex items-center gap-4">
-              <span className="text-xs text-slate-500 uppercase tracking-wider">Quick Access:</span>
+            <div className="mt-6 pt-4 border-t border-border flex items-center gap-4">
+              <span className="text-xs text-muted-foreground uppercase tracking-wider">Quick Access:</span>
               <Link
                 to="/security"
                 onClick={() => setShowCalculators(false)}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-400 hover:text-white rounded-md hover:bg-navy-800"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-muted"
               >
                 <ShieldAlert className="h-4 w-4" />
                 Security & Privacy
@@ -254,7 +254,7 @@ export const Header = () => {
               <Link
                 to="/financial-literacy"
                 onClick={() => setShowCalculators(false)}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-400 hover:text-white rounded-md hover:bg-navy-800"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground rounded-md hover:bg-muted"
               >
                 <GraduationCap className="h-4 w-4" />
                 Financial Literacy Quiz
@@ -266,63 +266,63 @@ export const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-16 z-40 bg-navy-950/95 backdrop-blur-sm overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 top-16 z-40 bg-background/95 backdrop-blur-sm overflow-y-auto">
           <div className="p-4 space-y-4">
             {/* Main Links */}
             <div className="space-y-1">
               <Link
                 to="/"
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-white rounded-lg hover:bg-navy-800"
+                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
               >
-                <Home className="h-5 w-5 text-emerald-400" />
+                <Home className="h-5 w-5 text-primary" />
                 Dashboard
               </Link>
               <Link
                 to="/clients"
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-white rounded-lg hover:bg-navy-800"
+                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
               >
-                <Users className="h-5 w-5 text-emerald-400" />
+                <Users className="h-5 w-5 text-primary" />
                 Clients
               </Link>
               <Link
                 to="/analytics"
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-white rounded-lg hover:bg-navy-800"
+                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
               >
-                <BarChart3 className="h-5 w-5 text-emerald-400" />
+                <BarChart3 className="h-5 w-5 text-primary" />
                 Analytics
               </Link>
               <Link
                 to="/document-reader"
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-white rounded-lg hover:bg-navy-800"
+                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
               >
-                <FileText className="h-5 w-5 text-emerald-400" />
+                <FileText className="h-5 w-5 text-primary" />
                 AI Document Reader
               </Link>
               <Link
                 to="/tax-planning"
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-white rounded-lg hover:bg-navy-800"
+                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
               >
-                <Receipt className="h-5 w-5 text-emerald-400" />
+                <Receipt className="h-5 w-5 text-primary" />
                 Tax Planning Hub
               </Link>
             </div>
 
             {/* Calculator Categories */}
             {allCalculators.map((category) => (
-              <div key={category.category} className="pt-4 border-t border-navy-800">
+              <div key={category.category} className="pt-4 border-t border-border">
                 <h3 className={cn(
                   "px-4 text-xs font-semibold uppercase tracking-wider mb-2",
-                  category.color === 'emerald' && "text-emerald-400",
-                  category.color === 'blue' && "text-blue-400",
-                  category.color === 'amber' && "text-amber-400",
-                  category.color === 'purple' && "text-purple-400",
-                  category.color === 'rose' && "text-rose-400",
-                  category.color === 'cyan' && "text-cyan-400",
+                  category.color === 'emerald' && "text-emerald-600",
+                  category.color === 'blue' && "text-blue-600",
+                  category.color === 'amber' && "text-amber-600",
+                  category.color === 'purple' && "text-purple-600",
+                  category.color === 'rose' && "text-rose-600",
+                  category.color === 'cyan' && "text-cyan-600",
                 )}>
                   {category.category}
                 </h3>
@@ -332,7 +332,7 @@ export const Header = () => {
                       key={item.path}
                       to={item.path}
                       onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2 text-slate-300 rounded-lg hover:bg-navy-800 hover:text-white"
+                      className="flex items-center gap-3 px-4 py-2 text-muted-foreground rounded-lg hover:bg-muted hover:text-foreground"
                     >
                       <item.icon className="h-4 w-4" />
                       {item.label}
@@ -343,14 +343,14 @@ export const Header = () => {
             ))}
 
             {/* More Tools */}
-            <div className="pt-4 border-t border-navy-800">
-              <h3 className="px-4 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+            <div className="pt-4 border-t border-border">
+              <h3 className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                 More Tools
               </h3>
               <Link
                 to="/financial-literacy"
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-2 text-slate-300 rounded-lg hover:bg-navy-800 hover:text-white"
+                className="flex items-center gap-3 px-4 py-2 text-muted-foreground rounded-lg hover:bg-muted hover:text-foreground"
               >
                 <GraduationCap className="h-4 w-4" />
                 Financial Literacy Quiz
@@ -358,7 +358,7 @@ export const Header = () => {
               <Link
                 to="/security"
                 onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-2 text-slate-300 rounded-lg hover:bg-navy-800 hover:text-white"
+                className="flex items-center gap-3 px-4 py-2 text-muted-foreground rounded-lg hover:bg-muted hover:text-foreground"
               >
                 <ShieldAlert className="h-4 w-4" />
                 Security & Privacy
