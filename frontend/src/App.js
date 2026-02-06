@@ -40,6 +40,7 @@ import TaxDirectiveSimulator from "@/pages/TaxDirectiveSimulator";
 import FinancialLiteracyQuiz from "@/pages/FinancialLiteracyQuiz";
 import SecurityPage from "@/pages/SecurityPage";
 import TaxPlanningHub from "@/pages/TaxPlanningHub";
+import DocumentReader from "@/pages/DocumentReader";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
