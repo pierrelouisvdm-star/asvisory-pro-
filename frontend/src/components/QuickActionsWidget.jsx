@@ -101,11 +101,11 @@ export const QuickActionsWidget = () => {
 
   if (loading) {
     return (
-      <Card className="bg-navy-900/60 border-navy-700">
+      <Card className="bg-card border-border">
         <CardContent className="p-6">
           <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-navy-700 rounded w-1/3"></div>
-            <div className="h-20 bg-navy-700 rounded"></div>
+            <div className="h-4 bg-muted rounded w-1/3"></div>
+            <div className="h-20 bg-muted rounded"></div>
           </div>
         </CardContent>
       </Card>
