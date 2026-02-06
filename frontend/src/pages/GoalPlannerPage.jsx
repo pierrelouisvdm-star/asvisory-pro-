@@ -416,6 +416,15 @@ export const GoalPlannerPage = () => {
                         </div>
                       </div>
 
+                      {goal.expected_return > 0 && (
+                        <div className="flex items-center gap-2 text-sm bg-emerald-50 dark:bg-emerald-900/20 px-3 py-2 rounded-lg">
+                          <TrendingUp className="h-4 w-4 text-emerald-600" />
+                          <span className="text-emerald-700 dark:text-emerald-400">
+                            Expected Return: <strong>{goal.expected_return}%</strong> p.a.
+                          </span>
+                        </div>
+                      )}
+
                       {goal.monthly_contribution > 0 && (
                         <div className="flex items-center gap-2 text-sm text-slate-500 pt-2 border-t">
                           <Calendar className="h-4 w-4" />
