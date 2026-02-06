@@ -157,6 +157,7 @@ function App() {
                   <Route path="/financial-literacy" element={<ProtectedRoute><GatedCalculator path="/financial-literacy"><FinancialLiteracyQuiz /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/security" element={<ProtectedRoute><SecurityPage /></ProtectedRoute>} />
                   <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
+                  <Route path="/document-reader" element={<ProtectedRoute><GatedCalculator path="/document-reader"><DocumentReader /></GatedCalculator></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />
