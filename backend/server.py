@@ -38,6 +38,7 @@ from routes.analytics import router as analytics_router
 from routes.net_worth import router as net_worth_router
 from routes.audit import router as audit_router
 from routes.payments import router as payments_router
+from routes.documents import router as documents_router
 
 # Include route modules
 api_router.include_router(auth_router)
