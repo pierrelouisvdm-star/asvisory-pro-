@@ -105,34 +105,33 @@ const stats = [
 
 export const LandingPage = () => {
   return (
-    <div className="min-h-screen bg-navy-950">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-950 to-slate-900" />
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-10 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-background" />
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <Badge className="mb-6 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-4 py-1.5 text-sm">
+            <Badge className="mb-6 bg-primary/10 text-primary border border-primary/30 px-4 py-1.5 text-sm">
               <Sparkles className="h-3 w-3 mr-2" />
               Built for Financial Advisors
             </Badge>
             
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-4 tracking-tight">
+            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-foreground mb-4 tracking-tight">
               Empower Your Practice with{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-300">
+              <span className="text-primary">
                 AdvisoryPro
               </span>
             </h1>
             
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-muted-foreground mb-6">
               The Complete Toolkit for South African Financial Advisors
             </h2>
             
-            <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">17+ professional calculators</span>, 
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
+              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-foreground font-medium">17+ professional calculators</span>, 
               client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
             </p>
 
@@ -140,27 +139,27 @@ export const LandingPage = () => {
             <div className="flex flex-wrap justify-center gap-8 mb-10">
               {stats.map((stat, idx) => (
                 <div key={idx} className="text-center group">
-                  <p className="text-3xl font-bold text-emerald-400 group-hover:scale-110 transition-transform">{stat.value}</p>
-                  <p className="text-sm text-slate-500">{stat.label}</p>
+                  <p className="text-3xl font-bold text-primary group-hover:scale-110 transition-transform">{stat.value}</p>
+                  <p className="text-sm text-muted-foreground">{stat.label}</p>
                 </div>
               ))}
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg px-8 shadow-lg shadow-emerald-500/25 h-14 group">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 shadow-lg shadow-primary/25 h-14 group">
                   Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/pricing">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-slate-600 text-white hover:bg-white/10 h-14">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-border h-14">
                   View Pricing
                 </Button>
               </Link>
             </div>
             
-            <p className="mt-4 text-sm text-slate-500">
+            <p className="mt-4 text-sm text-muted-foreground">
               R299/month • Cancel anytime • Have a coupon? Apply at signup
             </p>
           </div>
