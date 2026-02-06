@@ -119,15 +119,15 @@ export const QuickActionsWidget = () => {
   const hasActivity = data.recent_calculations?.length > 0 || data.upcoming_reviews?.length > 0;
 
   return (
-    <Card className="bg-gradient-to-br from-navy-900/80 to-navy-900/40 border-navy-700 overflow-hidden" data-testid="quick-actions-widget">
+    <Card className="bg-gradient-to-br from-card to-muted/30 border-border overflow-hidden" data-testid="quick-actions-widget">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg font-semibold text-white flex items-center gap-2">
-            <Sparkles className="h-5 w-5 text-emerald-400" />
+          <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-primary" />
             Quick Actions
           </CardTitle>
           <Link to="/clients">
-            <Button variant="ghost" size="sm" className="text-emerald-400 hover:text-emerald-300">
+            <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80">
               View All
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
@@ -138,29 +138,29 @@ export const QuickActionsWidget = () => {
       <CardContent className="space-y-4">
         {/* Stats Row */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-navy-800/50 rounded-lg p-3 border border-navy-700">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+          <div className="bg-muted/50 rounded-lg p-3 border border-border">
+            <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
               <Users className="h-3.5 w-3.5" />
               Total Clients
             </div>
-            <p className="text-2xl font-bold text-white">{data.total_clients || 0}</p>
+            <p className="text-2xl font-bold text-foreground">{data.total_clients || 0}</p>
           </div>
-          <div className="bg-navy-800/50 rounded-lg p-3 border border-navy-700">
-            <div className="flex items-center gap-2 text-slate-400 text-xs mb-1">
+          <div className="bg-muted/50 rounded-lg p-3 border border-border">
+            <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
               <Calculator className="h-3.5 w-3.5" />
               This Month
             </div>
-            <p className="text-2xl font-bold text-white">{data.calculations_this_month || 0}</p>
+            <p className="text-2xl font-bold text-foreground">{data.calculations_this_month || 0}</p>
           </div>
         </div>
 
         {!hasActivity ? (
           /* Empty State */
-          <div className="text-center py-6 px-4 bg-navy-800/30 rounded-lg border border-dashed border-navy-600">
-            <TrendingUp className="h-10 w-10 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400 text-sm mb-3">No recent activity yet</p>
+          <div className="text-center py-6 px-4 bg-muted/30 rounded-lg border border-dashed border-border">
+            <TrendingUp className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
+            <p className="text-muted-foreground text-sm mb-3">No recent activity yet</p>
             <Link to="/clients">
-              <Button size="sm" className="btn-premium">
+              <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
                 Add Your First Client
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
@@ -171,7 +171,7 @@ export const QuickActionsWidget = () => {
             {/* Recent Calculations */}
             {data.recent_calculations?.length > 0 && (
               <div>
-                <h4 className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-2">
                   <Clock className="h-3.5 w-3.5" />
                   Recent Calculations
                 </h4>
@@ -182,21 +182,21 @@ export const QuickActionsWidget = () => {
                       to={`/clients/${calc.client_id}`}
                       className="block"
                     >
-                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-navy-800/40 hover:bg-navy-800/70 border border-navy-700/50 transition-colors group">
+                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-muted/40 hover:bg-muted/70 border border-border/50 transition-colors group">
                         <div className="flex items-center gap-3 min-w-0">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400 flex-shrink-0">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
                             <Calculator className="h-4 w-4" />
                           </div>
                           <div className="min-w-0">
-                            <p className="text-sm font-medium text-white truncate group-hover:text-emerald-400 transition-colors">
+                            <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
                               {calc.client_name}
                             </p>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-muted-foreground">
                               {calcTypeLabels[calc.calculator_type] || calc.calculator_type}
                             </p>
                           </div>
                         </div>
-                        <span className="text-xs text-slate-500 flex-shrink-0 ml-2">
+                        <span className="text-xs text-muted-foreground flex-shrink-0 ml-2">
                           {formatTimeAgo(calc.created_at)}
                         </span>
                       </div>
@@ -209,7 +209,7 @@ export const QuickActionsWidget = () => {
             {/* Upcoming Reviews */}
             {data.upcoming_reviews?.length > 0 && (
               <div>
-                <h4 className="text-xs font-medium text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 flex items-center gap-2">
                   <CalendarCheck className="h-3.5 w-3.5" />
                   Upcoming Reviews
                 </h4>
@@ -220,20 +220,20 @@ export const QuickActionsWidget = () => {
                       to={`/clients/${review.client_id}`}
                       className="block"
                     >
-                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-navy-800/40 hover:bg-navy-800/70 border border-navy-700/50 transition-colors group">
+                      <div className="flex items-center justify-between p-2.5 rounded-lg bg-muted/40 hover:bg-muted/70 border border-border/50 transition-colors group">
                         <div className="flex items-center gap-3 min-w-0">
                           <div className={`flex h-8 w-8 items-center justify-center rounded-lg flex-shrink-0 ${
                             review.days_until <= 3 
-                              ? 'bg-amber-500/20 text-amber-400' 
-                              : 'bg-blue-500/20 text-blue-400'
+                              ? 'bg-amber-500/20 text-amber-600' 
+                              : 'bg-blue-500/20 text-blue-600'
                           }`}>
                             <CalendarCheck className="h-4 w-4" />
                           </div>
                           <div className="min-w-0">
-                            <p className="text-sm font-medium text-white truncate group-hover:text-emerald-400 transition-colors">
+                            <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
                               {review.client_name}
                             </p>
-                            <p className="text-xs text-slate-500">
+                            <p className="text-xs text-muted-foreground">
                               {formatDate(review.next_review_date)}
                             </p>
                           </div>
@@ -242,8 +242,8 @@ export const QuickActionsWidget = () => {
                           variant="outline" 
                           className={`text-xs flex-shrink-0 ml-2 ${
                             review.days_until <= 3 
-                              ? 'border-amber-500/50 text-amber-400' 
-                              : 'border-slate-600 text-slate-400'
+                              ? 'border-amber-500/50 text-amber-600' 
+                              : 'border-border text-muted-foreground'
                           }`}
                         >
                           {review.days_until === 0 ? 'Today' : 
