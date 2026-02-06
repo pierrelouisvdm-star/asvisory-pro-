@@ -162,6 +162,7 @@ function App() {
         </SubscriptionProvider>
       </CurrencyProvider>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 
