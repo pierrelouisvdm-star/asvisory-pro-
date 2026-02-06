@@ -17,65 +17,65 @@ code {
 
 @layer base {
     :root {
-        /* AdvisoryPro - Dark Navy Theme (Default) */
+        /* AdvisoryPro - Light Theme with Navy Blue Accents */
         
-        /* Primary */
-        --primary: 0 0% 98%;
-        --primary-foreground: 220 47% 10%;
+        /* Primary - Navy Blue */
+        --primary: 220 70% 25%;
+        --primary-foreground: 0 0% 100%;
         
-        /* Deep Navy Background */
-        --background: 220 47% 6%;
-        --foreground: 210 40% 98%;
+        /* White Background */
+        --background: 210 40% 98%;
+        --foreground: 220 47% 15%;
         
-        /* Navy Cards */
-        --card: 220 47% 10%;
-        --card-foreground: 210 40% 98%;
+        /* White Cards with subtle shadow */
+        --card: 0 0% 100%;
+        --card-foreground: 220 47% 15%;
         
         /* Popover */
-        --popover: 220 47% 10%;
-        --popover-foreground: 210 40% 98%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 220 47% 15%;
         
-        /* Secondary */
-        --secondary: 220 40% 14%;
-        --secondary-foreground: 210 40% 98%;
+        /* Secondary - Light Navy */
+        --secondary: 220 30% 96%;
+        --secondary-foreground: 220 47% 15%;
         
         /* Muted */
-        --muted: 220 40% 14%;
-        --muted-foreground: 215 20% 65%;
+        --muted: 220 20% 95%;
+        --muted-foreground: 220 20% 45%;
         
-        /* Accent - Emerald */
-        --accent: 160 84% 45%;
-        --accent-foreground: 220 47% 10%;
+        /* Accent - Navy Blue */
+        --accent: 220 70% 25%;
+        --accent-foreground: 0 0% 100%;
         
-        /* Success */
-        --success: 160 84% 45%;
-        --success-foreground: 220 47% 10%;
+        /* Success - Emerald */
+        --success: 160 84% 39%;
+        --success-foreground: 0 0% 100%;
         
         /* Destructive */
-        --destructive: 0 62% 50%;
-        --destructive-foreground: 210 40% 98%;
+        --destructive: 0 72% 50%;
+        --destructive-foreground: 0 0% 100%;
         
         /* Border & Input */
-        --border: 220 40% 18%;
-        --input: 220 40% 18%;
-        --ring: 160 84% 45%;
+        --border: 220 20% 88%;
+        --input: 220 20% 88%;
+        --ring: 220 70% 25%;
         
         /* Chart Colors */
-        --chart-1: 160 84% 45%;
-        --chart-2: 215 20% 65%;
-        --chart-3: 160 60% 55%;
+        --chart-1: 220 70% 35%;
+        --chart-2: 220 50% 55%;
+        --chart-3: 160 70% 40%;
         --chart-4: 43 74% 55%;
-        --chart-5: 220 40% 50%;
+        --chart-5: 220 40% 65%;
         
         /* Custom Tokens */
-        --emerald: 160 84% 45%;
-        --emerald-light: 160 84% 55%;
-        --emerald-dark: 161 94% 35%;
-        --navy: 220 47% 15%;
-        --navy-light: 220 35% 25%;
-        --gold: 43 74% 55%;
-        --slate-dark: 220 47% 10%;
-        --slate-medium: 220 40% 18%;
+        --emerald: 160 84% 39%;
+        --emerald-light: 160 84% 50%;
+        --emerald-dark: 161 94% 30%;
+        --navy: 220 70% 25%;
+        --navy-light: 220 50% 35%;
+        --gold: 43 74% 50%;
+        --slate-dark: 220 47% 15%;
+        --slate-medium: 220 30% 85%;
         
         --radius: 0.75rem;
         
