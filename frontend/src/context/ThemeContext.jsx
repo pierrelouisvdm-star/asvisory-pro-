@@ -4,12 +4,12 @@ const ThemeContext = createContext(undefined);
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    // Check localStorage first, default to 'light'
+    // Check localStorage first, default to 'dark'
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('theme');
-      return stored || 'light';
+      return stored || 'dark';
     }
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {
