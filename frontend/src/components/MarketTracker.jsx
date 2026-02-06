@@ -122,25 +122,25 @@ export const MarketTracker = ({ compact = false }) => {
   }
 
   return (
-    <Card data-testid="market-tracker" className="bg-navy-900/60 border-navy-700">
+    <Card data-testid="market-tracker" className="bg-card border-border">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-white">
-            <BarChart3 className="h-5 w-5 text-emerald-500" />
+          <CardTitle className="flex items-center gap-2 text-foreground">
+            <BarChart3 className="h-5 w-5 text-primary" />
             Live Market Tracker
           </CardTitle>
-          <Badge variant="outline" className="text-xs border-navy-600 text-slate-400">
+          <Badge variant="outline" className="text-xs border-border text-muted-foreground">
             <Clock className="h-3 w-3 mr-1" />
             Updated {formatTime(data?.last_updated)}
           </Badge>
         </div>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-muted-foreground">
           Refreshes every 15 minutes
         </p>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="indices">
-          <TabsList className="w-full mb-4 grid grid-cols-3 bg-navy-800">
+          <TabsList className="w-full mb-4 grid grid-cols-3 bg-muted">
             <TabsTrigger value="indices">
               <Globe className="h-4 w-4 mr-2" />
               Indices
