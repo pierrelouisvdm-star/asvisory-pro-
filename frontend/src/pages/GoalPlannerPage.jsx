@@ -80,6 +80,7 @@ export const GoalPlannerPage = () => {
     target_amount: '',
     current_amount: '',
     monthly_contribution: '',
+    expected_return: '8',
     target_date: '',
     priority: 1,
     notes: '',
