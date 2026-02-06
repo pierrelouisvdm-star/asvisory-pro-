@@ -310,7 +310,7 @@ export const GoalPlannerPage = () => {
                   <TrendingUp className="h-5 w-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{currencySymbol}{(totalCurrentAmount/1000).toFixed(0)}k</p>
+                  <p className="text-2xl font-bold">{currencySymbol}{totalCurrentAmount.toLocaleString('en-ZA')}</p>
                   <p className="text-sm text-slate-500">Saved</p>
                 </div>
               </div>
@@ -323,7 +323,7 @@ export const GoalPlannerPage = () => {
                   <Target className="h-5 w-5 text-amber-600" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">{currencySymbol}{(totalTargetAmount/1000).toFixed(0)}k</p>
+                  <p className="text-2xl font-bold">{currencySymbol}{totalTargetAmount.toLocaleString('en-ZA')}</p>
                   <p className="text-sm text-slate-500">Target</p>
                 </div>
               </div>
