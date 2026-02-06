@@ -228,40 +228,40 @@ export const LandingPage = () => {
 
       {/* Calculator Categories */}
       <section className="relative py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 to-navy-900/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background to-muted/30" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-blue-500/20 text-blue-400 border-blue-500/30">
+            <Badge className="mb-4 bg-blue-500/10 text-blue-600 border-blue-500/30">
               <Calculator className="h-3 w-3 mr-2" />
               17+ Professional Calculators
             </Badge>
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Every Calculation You Need
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.
             </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {calculatorCategories.map((category, index) => (
-              <Card key={index} className="bg-navy-900/60 border-navy-700 hover:border-emerald-500/50 transition-all duration-300 group hover:-translate-y-1">
+              <Card key={index} className="bg-card border-border hover:border-primary/50 transition-all duration-300 group hover:-translate-y-1">
                 <CardContent className="p-6">
                   <div className={`flex h-12 w-12 items-center justify-center rounded-xl mb-4 transition-colors
-                    ${category.color === 'emerald' ? 'bg-emerald-500/20 text-emerald-400 group-hover:bg-emerald-500/30' : ''}
-                    ${category.color === 'blue' ? 'bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30' : ''}
-                    ${category.color === 'amber' ? 'bg-amber-500/20 text-amber-400 group-hover:bg-amber-500/30' : ''}
-                    ${category.color === 'purple' ? 'bg-purple-500/20 text-purple-400 group-hover:bg-purple-500/30' : ''}
+                    ${category.color === 'emerald' ? 'bg-emerald-500/10 text-emerald-600 group-hover:bg-emerald-500/20' : ''}
+                    ${category.color === 'blue' ? 'bg-blue-500/10 text-blue-600 group-hover:bg-blue-500/20' : ''}
+                    ${category.color === 'amber' ? 'bg-amber-500/10 text-amber-600 group-hover:bg-amber-500/20' : ''}
+                    ${category.color === 'purple' ? 'bg-purple-500/10 text-purple-600 group-hover:bg-purple-500/20' : ''}
                   `}>
                     <category.icon className="h-6 w-6" />
                   </div>
-                  <h3 className="font-semibold text-lg text-white mb-3 group-hover:text-emerald-400 transition-colors">{category.title}</h3>
+                  <h3 className="font-semibold text-lg text-foreground mb-3 group-hover:text-primary transition-colors">{category.title}</h3>
                   <ul className="space-y-2">
                     {category.calculators.map((calc, idx) => (
                       <li key={idx} className="text-sm">
-                        <span className="text-slate-300">{calc.name}</span>
-                        <p className="text-slate-500 text-xs">{calc.desc}</p>
+                        <span className="text-foreground">{calc.name}</span>
+                        <p className="text-muted-foreground text-xs">{calc.desc}</p>
                       </li>
                     ))}
                   </ul>
@@ -271,7 +271,7 @@ export const LandingPage = () => {
           </div>
           
           <div className="text-center mt-8">
-            <p className="text-slate-400 text-sm">
+            <p className="text-muted-foreground text-sm">
               Plus: Education Savings, Estate Planning, Monte Carlo Simulations, Cash Flow Projections & more
             </p>
           </div>
