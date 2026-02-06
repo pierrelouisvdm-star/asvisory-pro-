@@ -193,6 +193,7 @@ export const RetirementCalculator = () => {
       monthlyIncomeNeeded,
       sustainableWithdrawal,
       monthlyWithdrawal,
+      monthlyWithdrawalToday,
       yearsMoneyLasts,
       totalOtherIncome,
       projectionData,
