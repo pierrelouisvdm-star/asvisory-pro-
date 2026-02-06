@@ -270,13 +270,23 @@ export const GoalPlannerPage = () => {
                         />
                       </div>
                       <div>
-                        <Label>Target Date</Label>
+                        <Label>Expected Return (%)</Label>
                         <Input
-                          type="date"
-                          value={newGoal.target_date}
-                          onChange={(e) => setNewGoal({...newGoal, target_date: e.target.value})}
+                          type="number"
+                          value={newGoal.expected_return}
+                          onChange={(e) => setNewGoal({...newGoal, expected_return: e.target.value})}
+                          placeholder="8"
+                          step="0.5"
                         />
                       </div>
+                    </div>
+                    <div>
+                      <Label>Target Date</Label>
+                      <Input
+                        type="date"
+                        value={newGoal.target_date}
+                        onChange={(e) => setNewGoal({...newGoal, target_date: e.target.value})}
+                      />
                     </div>
                   </div>
                   <DialogFooter>
