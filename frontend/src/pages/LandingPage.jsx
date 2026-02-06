@@ -392,47 +392,47 @@ export const LandingPage = () => {
 
       {/* Final CTA */}
       <section className="relative py-24">
-        <div className="absolute inset-0 bg-gradient-to-t from-navy-950 to-navy-900/50" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background to-muted/30" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-6">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground mb-6">
             Ready to Elevate Your Practice?
           </h2>
-          <p className="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             Start delivering exceptional service to your clients with AdvisoryPro's professional financial tools.
           </p>
           <Link to="/auth">
-            <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-xl px-12 h-16 shadow-lg shadow-emerald-500/25">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xl px-12 h-16 shadow-lg shadow-primary/25">
               Get Started Now
               <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
           </Link>
-          <p className="mt-4 text-slate-500">
+          <p className="mt-4 text-muted-foreground">
             R299/month • Cancel anytime
           </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-navy-800 py-12 bg-navy-950">
+      <footer className="border-t border-border py-12 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center">
-                  <span className="text-navy-950 font-bold text-lg">A</span>
+                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                  <span className="text-primary-foreground font-bold text-lg">A</span>
                 </div>
-                <span className="text-white font-bold text-xl">AdvisoryPro</span>
+                <span className="text-foreground font-bold text-xl">AdvisoryPro</span>
               </div>
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-muted-foreground">
                 Professional financial advisor tools built for South African regulations.
               </p>
             </div>
             
             <div>
-              <h4 className="font-semibold text-white mb-4">Calculators</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
+              <h4 className="font-semibold text-foreground mb-4">Calculators</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>Retirement Planning</li>
                 <li>Life Insurance</li>
                 <li>Bond Calculator</li>
@@ -441,8 +441,8 @@ export const LandingPage = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold text-white mb-4">Features</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
+              <h4 className="font-semibold text-foreground mb-4">Features</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>Net Worth Tracker</li>
                 <li>Client Management</li>
                 <li>AI Assistant</li>
@@ -451,16 +451,16 @@ export const LandingPage = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold text-white mb-4">Contact</h4>
-              <ul className="space-y-2 text-sm text-slate-400">
+              <h4 className="font-semibold text-foreground mb-4">Contact</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>support@advisorypro.co.za</li>
                 <li>bulk@advisorypro.co.za</li>
               </ul>
             </div>
           </div>
           
-          <div className="pt-8 border-t border-navy-800 flex justify-center items-center">
-            <p className="text-sm text-slate-500">
+          <div className="pt-8 border-t border-border flex justify-center items-center">
+            <p className="text-sm text-muted-foreground">
               © 2026 AdvisoryPro. All rights reserved.
             </p>
           </div>
