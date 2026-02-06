@@ -305,7 +305,7 @@ export const GoalPlannerPage = () => {
         </div>
 
         {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
@@ -341,6 +341,19 @@ export const GoalPlannerPage = () => {
                 <div>
                   <p className="text-2xl font-bold">{currencySymbol}{totalTargetAmount.toLocaleString('en-ZA')}</p>
                   <p className="text-sm text-slate-500">Target</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100 dark:bg-green-900/20">
+                  <TrendingUp className="h-5 w-5 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold">{avgExpectedReturn.toFixed(1)}%</p>
+                  <p className="text-sm text-slate-500">Avg Return</p>
                 </div>
               </div>
             </CardContent>
