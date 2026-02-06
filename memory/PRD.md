@@ -42,6 +42,16 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
   - `MarketTracker.jsx` - Updated card and text styling
 - Removed hardcoded dark colors (`bg-navy-950`, `text-white`) in favor of CSS variables (`bg-background`, `text-foreground`, `bg-card`, `text-primary`)
 
+#### 2. Theme Toggle Feature ✅
+- Created `ThemeContext.jsx` - Context provider for managing theme state
+- Created `ThemeToggle.jsx` - Sun/Moon icon button component
+- Integrated toggle into Header (next to currency selector)
+- Features:
+  - Persists user preference in localStorage
+  - Smooth icon transition animation (sun <-> moon)
+  - Light mode default for new users
+  - Works across all pages
+
 ### Session: February 4, 2026
 
 #### 1. Life Insurance Calculator Update ✅
