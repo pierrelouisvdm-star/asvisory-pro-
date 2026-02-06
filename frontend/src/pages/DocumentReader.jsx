@@ -491,7 +491,7 @@ export const DocumentReader = () => {
                     Drag & drop a document, or click to browse
                   </p>
                   <p className="text-sm text-slate-400 mb-4">
-                    Supports PNG, JPG, JPEG, WEBP • Max 10MB
+                    Supports PDF, PNG, JPG, JPEG, WEBP • Max 20MB
                   </p>
                   <div className="flex flex-wrap justify-center gap-2">
                     <Badge variant="outline" className="text-slate-400 border-slate-600">
