@@ -93,10 +93,10 @@ const AppLayout = ({ children }) => {
 };
 
 function App() {
-  // Always use dark mode
+  // Use light theme by default
   useEffect(() => {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('theme', 'dark');
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
   }, []);
 
   return (
