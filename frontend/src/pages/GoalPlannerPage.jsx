@@ -117,6 +117,7 @@ export const GoalPlannerPage = () => {
         target_amount: parseFloat(newGoal.target_amount) || 0,
         current_amount: parseFloat(newGoal.current_amount) || 0,
         monthly_contribution: parseFloat(newGoal.monthly_contribution) || 0,
+        expected_return: parseFloat(newGoal.expected_return) || 8,
         priority: parseInt(newGoal.priority) || 1,
       };
       const created = await goalsApi.create(goalData);
