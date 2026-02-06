@@ -167,57 +167,57 @@ export const LandingPage = () => {
       </section>
 
       {/* Problem/Solution Section */}
-      <section className="relative bg-navy-900/50 border-y border-navy-800 py-16">
+      <section className="relative bg-muted/50 border-y border-border py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="mb-4 bg-red-500/20 text-red-400 border-red-500/30">
+              <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/30">
                 The Problem
               </Badge>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
                 Tired of Outdated Spreadsheets?
               </h2>
-              <ul className="space-y-3 text-slate-400">
+              <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
-                  <span className="text-red-400 mt-1">✗</span>
+                  <span className="text-destructive mt-1">✗</span>
                   Manual calculations prone to errors
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-red-400 mt-1">✗</span>
+                  <span className="text-destructive mt-1">✗</span>
                   Generic tools not built for SA regulations
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-red-400 mt-1">✗</span>
+                  <span className="text-destructive mt-1">✗</span>
                   Hours spent creating client reports
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-red-400 mt-1">✗</span>
+                  <span className="text-destructive mt-1">✗</span>
                   No way to track client progress over time
                 </li>
               </ul>
             </div>
             <div>
-              <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+              <Badge className="mb-4 bg-emerald-500/10 text-emerald-600 border-emerald-500/30">
                 The Solution
               </Badge>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-white mb-4">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
                 AdvisoryPro Does It All
               </h2>
-              <ul className="space-y-3 text-slate-400">
+              <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
                   Accurate calculations with SA tax brackets & rates
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
                   Professional PDF reports in one click
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
                   Track client net worth with visual milestones
                 </li>
                 <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
                   AI assistant for complex financial questions
                 </li>
               </ul>
