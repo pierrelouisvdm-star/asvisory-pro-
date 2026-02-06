@@ -45,6 +45,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { SubscriptionProvider } from "@/context/SubscriptionContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { CalculatorGate } from "@/components/FeatureGate";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AIAdvisorButton } from "@/components/AIAdvisorChat";
