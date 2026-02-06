@@ -70,18 +70,18 @@ export const MarketTracker = ({ compact = false }) => {
   }
 
   const MarketItem = ({ name, value, change, changePercent, isIndex = true }) => (
-    <div className="flex items-center justify-between py-3 border-b border-navy-700 last:border-0">
+    <div className="flex items-center justify-between py-3 border-b border-border last:border-0">
       <div>
-        <p className="font-medium text-sm text-white">{name}</p>
-        <p className="text-lg font-bold text-slate-200">
+        <p className="font-medium text-sm text-foreground">{name}</p>
+        <p className="text-lg font-bold text-foreground">
           {isIndex ? formatNumber(value) : `R${value.toFixed(4)}`}
         </p>
       </div>
       <div className={cn(
         "flex items-center gap-1 px-2 py-1 rounded",
         change >= 0 
-          ? "bg-emerald-500/20 text-emerald-400"
-          : "bg-red-500/20 text-red-400"
+          ? "bg-emerald-500/10 text-emerald-600"
+          : "bg-red-500/10 text-red-600"
       )}>
         {change >= 0 ? (
           <TrendingUp className="h-3 w-3" />
