@@ -328,23 +328,23 @@ export const LandingPage = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="relative py-20 bg-gradient-to-b from-navy-900/50 to-navy-950">
+      <section className="relative py-20 bg-gradient-to-b from-muted/30 to-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+          <Badge className="mb-4 bg-primary/10 text-primary border-primary/30">
             Simple Pricing
           </Badge>
-          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
+          <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
             One Plan. Everything Included.
           </h2>
-          <p className="text-slate-400 mb-8 max-w-xl mx-auto">
+          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
             No hidden fees, no feature restrictions. Get full access to every tool for one simple monthly price.
           </p>
           
-          <Card className="bg-gradient-to-br from-emerald-500/10 to-navy-900 border-2 border-emerald-500/50 max-w-lg mx-auto">
+          <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
             <CardContent className="p-8">
               <div className="mb-6">
-                <span className="text-5xl font-bold text-white">R299</span>
-                <span className="text-slate-400 ml-2">/month</span>
+                <span className="text-5xl font-bold text-foreground">R299</span>
+                <span className="text-muted-foreground ml-2">/month</span>
               </div>
               
               <ul className="space-y-3 text-left mb-8">
@@ -358,31 +358,31 @@ export const LandingPage = () => {
                   'ZAR & USD Currency Support',
                   'SA Tax Brackets & Regulations',
                 ].map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-slate-300">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                  <li key={idx} className="flex items-center gap-3 text-foreground">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />
                     {feature}
                   </li>
                 ))}
               </ul>
               
               <Link to="/auth">
-                <Button size="lg" className="w-full bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold text-lg h-14">
+                <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg h-14">
                   Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               
-              <p className="mt-4 text-sm text-slate-500">
+              <p className="mt-4 text-sm text-muted-foreground">
                 Cancel anytime • Have a coupon code? Enter it at signup
               </p>
             </CardContent>
           </Card>
           
-          <div className="mt-8 p-4 rounded-lg bg-navy-800/50 border border-navy-700 inline-block">
-            <p className="text-slate-400 text-sm">
+          <div className="mt-8 p-4 rounded-lg bg-muted/50 border border-border inline-block">
+            <p className="text-muted-foreground text-sm">
               <Users className="h-4 w-4 inline mr-2" />
               Need licenses for your team?{' '}
-              <a href="mailto:bulk@advisorypro.co.za" className="text-emerald-400 hover:underline">
+              <a href="mailto:bulk@advisorypro.co.za" className="text-primary hover:underline">
                 Contact us for bulk licensing
               </a>
             </p>
