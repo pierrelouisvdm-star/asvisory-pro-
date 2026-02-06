@@ -253,8 +253,11 @@ export const RetirementCalculator = () => {
     { label: 'Projected Nest Egg', value: formatCurrency(results.totalNestEgg) },
     { label: 'Needed for Retirement', value: formatCurrency(results.neededNestEgg) },
     { label: 'Funding Ratio', value: `${results.fundingRatio.toFixed(1)}%` },
-    { label: 'Monthly Income in Retirement', value: formatCurrency(results.monthlyWithdrawal + results.totalOtherIncome / 12) },
+    { label: 'Monthly Income in Retirement (Future)', value: formatCurrency(results.monthlyWithdrawal + results.totalOtherIncome / 12) },
+    { label: 'Monthly Income (Today\'s Value)', value: formatCurrency(results.monthlyWithdrawalToday + (results.totalOtherIncome / 12) / Math.pow(1 + currentScenario.inflationRate / 100, results.yearsToRetirement)) },
     { label: 'Years Money Will Last', value: `${results.yearsMoneyLasts} years` },
+    { label: results.shortfall > 0 ? 'Shortfall' : 'Surplus', value: formatCurrency(results.shortfall > 0 ? results.shortfall : results.surplus) },
+    { label: 'Recommended Additional Monthly', value: results.additionalMonthlyNeeded > 0 ? formatCurrency(results.additionalMonthlyNeeded) : 'On Track - No additional needed' },
   ];
 
   const renderScenarioForm = (scenario, index) => {
