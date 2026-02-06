@@ -176,6 +176,9 @@ export const GoalPlannerPage = () => {
   const totalTargetAmount = goals.reduce((sum, g) => sum + g.target_amount, 0);
   const totalCurrentAmount = goals.reduce((sum, g) => sum + g.current_amount, 0);
   const overallProgress = totalTargetAmount > 0 ? (totalCurrentAmount / totalTargetAmount) * 100 : 0;
+  const avgExpectedReturn = goals.length > 0 
+    ? goals.reduce((sum, g) => sum + (g.expected_return || 0), 0) / goals.length 
+    : 0;
 
   return (
     <div className="min-h-screen bg-navy-950" data-testid="goal-planner-page">
