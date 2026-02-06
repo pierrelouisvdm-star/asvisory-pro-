@@ -279,17 +279,17 @@ export const LandingPage = () => {
       </section>
 
       {/* Feature Deep Dives */}
-      <section className="relative py-20 bg-navy-900/30">
+      <section className="relative py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-amber-500/20 text-amber-400 border-amber-500/30">
+            <Badge className="mb-4 bg-amber-500/10 text-amber-600 border-amber-500/30">
               <Zap className="h-3 w-3 mr-2" />
               Powerful Features
             </Badge>
-            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Built for How You Actually Work
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               Every feature designed to save you time and impress your clients
             </p>
           </div>
@@ -302,23 +302,23 @@ export const LandingPage = () => {
               >
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/20 text-emerald-400">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                       <feature.icon className="h-5 w-5" />
                     </div>
-                    <h3 className="font-display text-xl font-bold text-white">{feature.title}</h3>
+                    <h3 className="font-display text-xl font-bold text-foreground">{feature.title}</h3>
                   </div>
-                  <p className="text-slate-400 mb-4 leading-relaxed">{feature.description}</p>
+                  <p className="text-muted-foreground mb-4 leading-relaxed">{feature.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {feature.highlights.map((highlight, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs border-emerald-500/30 text-emerald-400">
+                      <Badge key={idx} variant="outline" className="text-xs border-primary/30 text-primary">
                         {highlight}
                       </Badge>
                     ))}
                   </div>
                 </div>
                 <div className="flex-1 w-full">
-                  <div className="bg-navy-800/50 border border-navy-700 rounded-2xl p-8 h-48 flex items-center justify-center">
-                    <feature.icon className="h-24 w-24 text-navy-700" />
+                  <div className="bg-muted/50 border border-border rounded-2xl p-8 h-48 flex items-center justify-center">
+                    <feature.icon className="h-24 w-24 text-muted-foreground/30" />
                   </div>
                 </div>
               </div>
