@@ -70,13 +70,25 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 - Fixed input fields losing focus after each keystroke
 - Moved InputField component outside main component to prevent re-renders
 
-#### 7. Landing Page Redesign ✅
-- New "What's New in AdvisoryPro" section showcasing 4 new features
-- Animated badges and hover effects
-- Updated stats: 17+ calculators, 2025/26 Tax Year, POPIA Compliant
-- New hero with gradient text and "Try Tax Hub" CTA button
-- "ENHANCED" badge on Tax Planning category
-- Coupon highlight in amber color
+#### 7. Landing Page Updates ✅
+- Restored "Empower Your Practice with AdvisoryPro" tagline
+- Changed badge to "Built for Financial Advisors"
+- Removed "What's New" section (hidden until public launch)
+- Removed "hundreds of advisors" text
+- Stats: 17+ calculators, SA localized, 24/7 access, PDF reports
+
+#### 8. AI Document Reader ✅
+- New feature at `/document-reader`
+- Drag & drop upload for financial documents (PNG, JPG, JPEG, WEBP)
+- GPT-4o Vision AI analysis for:
+  - Investment statements (Allan Gray, Coronation, etc.)
+  - Bank statements
+  - Pension/Provident fund statements
+  - IRP5 tax certificates
+- Extracts: Personal details, account balances, holdings, transactions, fees, tax info
+- Save extracted data to client profiles
+- View history of analyzed documents
+- Backend: `/api/documents/analyze`, `/api/documents/analyses`
 
 ### Previously Implemented Features
 
