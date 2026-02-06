@@ -337,7 +337,7 @@ export const Dashboard = () => {
       </section>
 
       {/* Debt Calculators Section */}
-      <section className="bg-navy-900/30 py-16">
+      <section className="bg-muted/50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Debt"
@@ -369,7 +369,7 @@ export const Dashboard = () => {
       </section>
 
       {/* Retirement Section */}
-      <section className="bg-gradient-to-b from-emerald-900/20 to-navy-950 py-16">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Retirement"
@@ -386,7 +386,7 @@ export const Dashboard = () => {
       </section>
 
       {/* Personal Finance Section */}
-      <section className="bg-navy-900/30 py-16">
+      <section className="bg-muted/50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Personal Finance"
@@ -418,13 +418,13 @@ export const Dashboard = () => {
       </section>
 
       {/* Features Section */}
-      <section className="border-t border-navy-800 py-16">
+      <section className="border-t border-border py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-3 tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-3 tracking-tight">
               Built for Advisors
             </h2>
-            <p className="text-slate-400">
+            <p className="text-muted-foreground">
               Every feature designed to enhance your client presentations
             </p>
           </div>
@@ -435,16 +435,16 @@ export const Dashboard = () => {
               return (
                 <div 
                   key={feature.title}
-                  className="text-center p-6 rounded-xl border border-navy-700 bg-navy-900/60 animate-fade-in"
+                  className="text-center p-6 rounded-xl border border-border bg-card animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-500/20 mb-4">
-                    <Icon className="h-5 w-5 text-emerald-400" />
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 mb-4">
+                    <Icon className="h-5 w-5 text-primary" />
                   </div>
-                  <h3 className="font-display text-sm font-semibold text-white mb-1.5">
+                  <h3 className="font-display text-sm font-semibold text-foreground mb-1.5">
                     {feature.title}
                   </h3>
-                  <p className="text-slate-400 text-sm">
+                  <p className="text-muted-foreground text-sm">
                     {feature.description}
                   </p>
                 </div>
@@ -455,17 +455,17 @@ export const Dashboard = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-navy-900/50 py-16">
+      <section className="bg-muted/50 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-white mb-4 tracking-tight">
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4 tracking-tight">
             Ready to elevate your client presentations?
           </h2>
-          <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             Start using our professional calculators today and help your clients make better financial decisions.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/future-value">
-              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold rounded-lg px-6" data-testid="cta-explore-btn">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg px-6" data-testid="cta-explore-btn">
                 Explore Calculators
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
@@ -474,7 +474,7 @@ export const Dashboard = () => {
               <Button 
                 size="lg" 
                 variant="outline" 
-                className="rounded-lg px-6 border-slate-600 text-white hover:bg-slate-800"
+                className="rounded-lg px-6 border-border"
                 data-testid="cta-quiz-btn"
               >
                 Start with Risk Quiz
