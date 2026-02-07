@@ -17,7 +17,7 @@ load_dotenv()
 import fitz  # PyMuPDF for PDF handling
 from PIL import Image
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage, FileContent
+from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
 from utils.auth import get_current_user
 from server import db
 
