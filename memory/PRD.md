@@ -168,16 +168,17 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ## Pending/In Progress
 
 ### P0 - Critical
-- [x] **Theme Change** - Completed white/navy blue theme ✅
+- [x] **Theme Change** - Completed white/navy blue theme ✅ (reverted to dark as default)
+- [x] **Theme Toggle** - Added sun/moon toggle in header ✅
 - [ ] **Verify coupon redemption flow** - Users reported "codes keep saying invalid"
 
 ### P1 - High Priority
-- [ ] **AI Document Reader E2E Test** - Backend/frontend exists but not tested end-to-end
+- [x] **AI Document Reader E2E Test** - Fixed ImageContent API usage, now working ✅
 - [ ] **IRP5 File Storage Backend** - UI exists but needs file upload/storage implementation
 - [ ] **Portfolio Builder & Xray Tool** - Placeholder in menu
 
 ### P2 - Medium Priority
-- [ ] **Client Creation API Debug** - `/api/clients/` endpoint returning redirect
+- [x] **Client Creation API** - Fixed! API expects `first_name` and `last_name`, not `name` ✅
 - [ ] **Fee Comparison Tool** - Placeholder in menu
 - [ ] **Password Reset Flow** - Standard "Forgot Password"
 
