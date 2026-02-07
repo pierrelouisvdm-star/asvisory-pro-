@@ -199,10 +199,13 @@ async def analyze_document(
             system_message=DOCUMENT_ANALYSIS_PROMPT
         ).with_model("openai", "gpt-4o")  # Using GPT-4o for vision
         
-        # Create image content(s) - support multiple pages from PDF
-        image_contents = []
+        # Create file content(s) - support multiple pages from PDF
+        file_contents = []
         for img in images_base64:
-            image_contents.append(ImageContent(image_base64=img['data']))
+            file_contents.append(FileContent(
+                content_type=img['mime'],
+                file_content_base64=img['data']
+            ))
         
         # Build message based on number of pages
         if len(images_base64) > 1:
@@ -210,10 +213,10 @@ async def analyze_document(
         else:
             msg_text = "Please analyze this financial document and extract all relevant information as structured JSON."
         
-        # Send message with image(s)
+        # Send message with file(s)
         user_message = UserMessage(
             text=msg_text,
-            image_contents=image_contents
+            file_contents=file_contents
         )
         
         response = await chat.send_message(user_message)
