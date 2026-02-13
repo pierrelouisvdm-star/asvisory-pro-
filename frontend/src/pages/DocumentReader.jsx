@@ -348,6 +348,19 @@ export const DocumentReader = () => {
   const [analyses, setAnalyses] = useState([]);
   const [clients, setClients] = useState([]);
   const [currentAnalysis, setCurrentAnalysis] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [customPrompt, setCustomPrompt] = useState('');
+  const [showPromptInput, setShowPromptInput] = useState(false);
+  
+  // Example prompts for users
+  const examplePrompts = [
+    { label: 'Calculate Total Fees', prompt: 'Calculate all fees and charges in this document. Break down management fees, admin fees, and any other costs. Show the total annual fee as a percentage.' },
+    { label: 'Rate of Return', prompt: 'Calculate the rate of return or investment performance shown in this document. Include any benchmark comparisons if available.' },
+    { label: 'Fund Breakdown', prompt: 'List all funds or holdings in this document with their values and allocation percentages. Identify the asset allocation (equity, bonds, cash, etc.).' },
+    { label: 'Tax Summary', prompt: 'Extract all tax-related information from this document including gross income, PAYE, pension contributions, and any deductions.' },
+    { label: 'Key Details Only', prompt: 'Extract only the most important details: account holder name, account number, total value, and statement date.' },
+    { label: 'Full Analysis', prompt: 'Provide a comprehensive analysis of this document including all personal details, account information, holdings, fees, transactions, and any key insights or concerns.' },
+  ];
   
   // Fetch existing analyses and clients
   useEffect(() => {
@@ -357,7 +370,7 @@ export const DocumentReader = () => {
           axios.get(`${API_URL}/api/documents/analyses`, {
             headers: { Authorization: `Bearer ${token}` }
           }),
-          axios.get(`${API_URL}/api/clients/`, {
+          axios.get(`${API_URL}/api/clients`, {
             headers: { Authorization: `Bearer ${token}` }
           })
         ]);
@@ -371,16 +384,28 @@ export const DocumentReader = () => {
     if (token) fetchData();
   }, [token]);
   
-  // Handle file drop
+  // Handle file drop - just store the file, don't analyze yet
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0];
     if (!file) return;
     
-    setUploading(true);
+    setSelectedFile(file);
+    setShowPromptInput(true);
     setCurrentAnalysis(null);
+  }, []);
+  
+  // Analyze with custom prompt
+  const handleAnalyze = async (prompt) => {
+    if (!selectedFile) return;
+    
+    setUploading(true);
+    setShowPromptInput(false);
     
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', selectedFile);
+    if (prompt) {
+      formData.append('custom_prompt', prompt);
+    }
     
     try {
       const response = await axios.post(
@@ -398,6 +423,8 @@ export const DocumentReader = () => {
         toast.success('Document analyzed successfully!');
         setCurrentAnalysis(response.data.document);
         setAnalyses(prev => [response.data.document, ...prev]);
+        setSelectedFile(null);
+        setCustomPrompt('');
       }
     } catch (error) {
       const message = error.response?.data?.detail || 'Failed to analyze document';
@@ -405,7 +432,7 @@ export const DocumentReader = () => {
     } finally {
       setUploading(false);
     }
-  }, [token]);
+  };
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -441,6 +468,13 @@ export const DocumentReader = () => {
       toast.error('Failed to delete');
     }
   };
+  
+  // Cancel file selection
+  const handleCancelFile = () => {
+    setSelectedFile(null);
+    setShowPromptInput(false);
+    setCustomPrompt('');
+  };
 
   return (
     <div className="min-h-screen bg-navy-950 py-8" data-testid="document-reader">
@@ -455,61 +489,141 @@ export const DocumentReader = () => {
           </p>
         </div>
         
-        {/* Upload Area */}
+        {/* Upload Area or Prompt Selection */}
         <Card className="bg-navy-900/60 border-navy-700 mb-8">
           <CardContent className="p-8">
-            <div
-              {...getRootProps()}
-              className={`
-                border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all
-                ${isDragActive 
-                  ? 'border-emerald-500 bg-emerald-500/10' 
-                  : 'border-navy-600 hover:border-emerald-500/50 hover:bg-navy-800/50'
-                }
-                ${uploading ? 'pointer-events-none opacity-50' : ''}
-              `}
-            >
-              <input {...getInputProps()} />
-              
-              {uploading ? (
-                <div className="flex flex-col items-center">
-                  <Loader2 className="h-16 w-16 text-emerald-400 animate-spin mb-4" />
-                  <p className="text-lg text-white mb-2">Analyzing document...</p>
-                  <p className="text-sm text-slate-400">This may take a few seconds</p>
-                </div>
-              ) : isDragActive ? (
-                <div className="flex flex-col items-center">
-                  <Upload className="h-16 w-16 text-emerald-400 mb-4" />
-                  <p className="text-lg text-white">Drop the file here</p>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center">
-                  <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-400 mb-4">
-                    <FileText className="h-10 w-10" />
+            {!showPromptInput ? (
+              /* File Upload Zone */
+              <div
+                {...getRootProps()}
+                className={`
+                  border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all
+                  ${isDragActive 
+                    ? 'border-emerald-500 bg-emerald-500/10' 
+                    : 'border-navy-600 hover:border-emerald-500/50 hover:bg-navy-800/50'
+                  }
+                  ${uploading ? 'pointer-events-none opacity-50' : ''}
+                `}
+              >
+                <input {...getInputProps()} />
+                
+                {uploading ? (
+                  <div className="flex flex-col items-center">
+                    <Loader2 className="h-16 w-16 text-emerald-400 animate-spin mb-4" />
+                    <p className="text-lg text-white mb-2">Analyzing document...</p>
+                    <p className="text-sm text-slate-400">This may take a few seconds</p>
                   </div>
-                  <p className="text-lg text-white mb-2">
-                    Drag & drop a document, or click to browse
-                  </p>
+                ) : isDragActive ? (
+                  <div className="flex flex-col items-center">
+                    <Upload className="h-16 w-16 text-emerald-400 mb-4" />
+                    <p className="text-lg text-white">Drop the file here</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center">
+                    <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-400 mb-4">
+                      <FileText className="h-10 w-10" />
+                    </div>
+                    <p className="text-lg text-white mb-2">
+                      Drag & drop a document, or click to browse
+                    </p>
+                    <p className="text-sm text-slate-400 mb-4">
+                      Supports PDF, PNG, JPG, JPEG, WEBP • Max 20MB
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      <Badge variant="outline" className="text-slate-400 border-slate-600">
+                        Investment Statements
+                      </Badge>
+                      <Badge variant="outline" className="text-slate-400 border-slate-600">
+                        Bank Statements
+                      </Badge>
+                      <Badge variant="outline" className="text-slate-400 border-slate-600">
+                        IRP5 Certificates
+                      </Badge>
+                      <Badge variant="outline" className="text-slate-400 border-slate-600">
+                        Pension Statements
+                      </Badge>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              /* Prompt Selection UI */
+              <div className="space-y-6">
+                {/* Selected File Info */}
+                <div className="flex items-center justify-between p-4 bg-navy-800/50 rounded-lg border border-navy-600">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
+                      <FileText className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <p className="text-white font-medium">{selectedFile?.name}</p>
+                      <p className="text-sm text-slate-400">
+                        {(selectedFile?.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="ghost" 
+                    className="text-slate-400 hover:text-white"
+                    onClick={handleCancelFile}
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Remove
+                  </Button>
+                </div>
+                
+                {/* What to Extract Section */}
+                <div>
+                  <h3 className="text-lg font-semibold text-white mb-2">What would you like to extract?</h3>
                   <p className="text-sm text-slate-400 mb-4">
-                    Supports PDF, PNG, JPG, JPEG, WEBP • Max 20MB
+                    Choose a preset analysis or write your own custom prompt
                   </p>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    <Badge variant="outline" className="text-slate-400 border-slate-600">
-                      Investment Statements
-                    </Badge>
-                    <Badge variant="outline" className="text-slate-400 border-slate-600">
-                      Bank Statements
-                    </Badge>
-                    <Badge variant="outline" className="text-slate-400 border-slate-600">
-                      IRP5 Certificates
-                    </Badge>
-                    <Badge variant="outline" className="text-slate-400 border-slate-600">
-                      Pension Statements
-                    </Badge>
+                  
+                  {/* Quick Presets */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                    {examplePrompts.map((example, idx) => (
+                      <Button
+                        key={idx}
+                        variant="outline"
+                        className="h-auto py-3 px-4 text-left border-navy-600 hover:border-emerald-500/50 hover:bg-emerald-500/10"
+                        onClick={() => handleAnalyze(example.prompt)}
+                      >
+                        <div className="w-full">
+                          <p className="text-sm font-medium text-white">{example.label}</p>
+                        </div>
+                      </Button>
+                    ))}
+                  </div>
+                  
+                  {/* Custom Prompt Input */}
+                  <div className="space-y-3">
+                    <Label className="text-white">Or write a custom prompt:</Label>
+                    <textarea
+                      value={customPrompt}
+                      onChange={(e) => setCustomPrompt(e.target.value)}
+                      placeholder="E.g., Calculate the effective annual cost of this investment including all fees. Also identify any red flags or concerns..."
+                      className="w-full h-32 px-4 py-3 rounded-lg bg-navy-800 border border-navy-600 text-white placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 resize-none"
+                    />
+                    <div className="flex justify-end gap-3">
+                      <Button
+                        variant="outline"
+                        className="border-slate-600"
+                        onClick={handleCancelFile}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        className="bg-emerald-500 hover:bg-emerald-400 text-navy-950"
+                        onClick={() => handleAnalyze(customPrompt || 'Provide a comprehensive analysis of this document including all personal details, account information, holdings, fees, transactions, and any key insights.')}
+                      >
+                        <TrendingUp className="h-4 w-4 mr-2" />
+                        Analyze Document
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </CardContent>
         </Card>
         
