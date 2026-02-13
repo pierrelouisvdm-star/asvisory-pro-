@@ -136,12 +136,14 @@ class SaveToClientRequest(BaseModel):
 async def analyze_document(
     file: UploadFile = File(...),
     client_id: Optional[str] = Form(None),
+    custom_prompt: Optional[str] = Form(None),
     current_user: dict = Depends(get_current_user)
 ):
     """
     Upload and analyze a financial document using AI.
     Supports PDF, PNG, JPG, JPEG, WEBP files.
     PDFs are automatically converted to images for analysis.
+    Optionally accepts a custom_prompt to customize the analysis.
     """
     # Validate file extension
     file_ext = os.path.splitext(file.filename)[1].lower()
@@ -206,11 +208,19 @@ async def analyze_document(
                 image_base64=img['data']
             ))
         
-        # Build message based on number of pages
-        if len(images_base64) > 1:
-            msg_text = f"Please analyze this financial document ({len(images_base64)} pages) and extract all relevant information as structured JSON. Combine information from all pages into a single comprehensive analysis."
+        # Build message based on custom prompt or default
+        if custom_prompt:
+            # User provided a custom prompt - use it with structured output request
+            if len(images_base64) > 1:
+                msg_text = f"Analyze this financial document ({len(images_base64)} pages).\n\nUser Request: {custom_prompt}\n\nProvide your analysis as structured JSON. If the user is asking for specific calculations (like fees, returns, etc.), include your calculations and working in the response."
+            else:
+                msg_text = f"Analyze this financial document.\n\nUser Request: {custom_prompt}\n\nProvide your analysis as structured JSON. If the user is asking for specific calculations (like fees, returns, etc.), include your calculations and working in the response."
         else:
-            msg_text = "Please analyze this financial document and extract all relevant information as structured JSON."
+            # Default comprehensive analysis
+            if len(images_base64) > 1:
+                msg_text = f"Please analyze this financial document ({len(images_base64)} pages) and extract all relevant information as structured JSON. Combine information from all pages into a single comprehensive analysis."
+            else:
+                msg_text = "Please analyze this financial document and extract all relevant information as structured JSON."
         
         # Send message with image(s)
         user_message = UserMessage(
