@@ -81,7 +81,8 @@ const AppLayout = ({ children }) => {
   const location = useLocation();
   const { isAuthenticated } = useAuth();
   const isPublicPage = ['/', '/auth', '/pricing'].includes(location.pathname) || location.pathname.startsWith('/subscription');
-  const hideLayout = location.pathname === '/auth' || (location.pathname === '/' && !isAuthenticated);
+  const isPasswordResetPage = location.pathname === '/request-password-reset' || location.pathname === '/reset-password';
+  const hideLayout = location.pathname === '/auth' || isPasswordResetPage || (location.pathname === '/' && !isAuthenticated);
   
   return (
     <>
