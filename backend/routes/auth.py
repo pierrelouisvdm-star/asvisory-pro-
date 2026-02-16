@@ -2,8 +2,11 @@ from fastapi import APIRouter, HTTPException, status, Depends
 from motor.motor_asyncio import AsyncIOMotorClient
 from models.user import User, UserCreate, UserLogin, UserInDB, Token
 from utils.auth import verify_password, get_password_hash, create_access_token, get_current_user
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+from pydantic import BaseModel, EmailStr
 import os
+import secrets
+import uuid
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
