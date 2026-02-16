@@ -62,8 +62,11 @@ async def register(user_data: UserCreate):
 @router.post("/login", response_model=Token)
 async def login(credentials: UserLogin):
     """Login with email and password"""
-    # Find user
-    user_doc = await db.users.find_one({"email": credentials.email}, {"_id": 0})
+    # Find user (case-insensitive email match)
+    user_doc = await db.users.find_one(
+        {"email": {"$regex": f"^{credentials.email}$", "$options": "i"}}, 
+        {"_id": 0}
+    )
     if not user_doc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
