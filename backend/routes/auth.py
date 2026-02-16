@@ -185,6 +185,10 @@ async def verify_reset_code(data: PasswordResetVerify):
     if isinstance(expires_at, str):
         expires_at = datetime.fromisoformat(expires_at.replace('Z', '+00:00'))
     
+    # Handle timezone-naive datetimes by assuming UTC
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    
     if datetime.now(timezone.utc) > expires_at:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
