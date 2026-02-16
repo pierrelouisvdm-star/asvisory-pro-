@@ -41,6 +41,8 @@ import FinancialLiteracyQuiz from "@/pages/FinancialLiteracyQuiz";
 import SecurityPage from "@/pages/SecurityPage";
 import TaxPlanningHub from "@/pages/TaxPlanningHub";
 import DocumentReader from "@/pages/DocumentReader";
+import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
+import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
@@ -106,6 +108,8 @@ function App() {
                     {/* Public Routes */}
                     <Route path="/" element={<AuthenticatedRoute><Dashboard /></AuthenticatedRoute>} />
                     <Route path="/auth" element={<AuthPage />} />
+                    <Route path="/request-password-reset" element={<RequestPasswordResetPage />} />
+                    <Route path="/reset-password" element={<ResetPasswordPage />} />
                     <Route path="/welcome" element={<LandingPage />} />
                   
                     {/* Pricing - accessible to all but shows different content */}

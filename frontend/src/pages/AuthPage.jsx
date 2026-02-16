@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -211,19 +211,28 @@ export const AuthPage = () => {
                         </div>
                       </div>
 
-                      {/* Remember Me Checkbox */}
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          id="remember-me"
-                          checked={rememberMe}
-                          onChange={(e) => setRememberMe(e.target.checked)}
-                          className="h-4 w-4 rounded border-border bg-muted text-primary focus:ring-primary focus:ring-offset-background"
-                          data-testid="remember-me-checkbox"
-                        />
-                        <Label htmlFor="remember-me" className="text-sm text-muted-foreground cursor-pointer">
-                          Remember me for 30 days
-                        </Label>
+                      {/* Remember Me and Forgot Password */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            id="remember-me"
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            className="h-4 w-4 rounded border-border bg-muted text-primary focus:ring-primary focus:ring-offset-background"
+                            data-testid="remember-me-checkbox"
+                          />
+                          <Label htmlFor="remember-me" className="text-sm text-muted-foreground cursor-pointer">
+                            Remember me for 30 days
+                          </Label>
+                        </div>
+                        <Link
+                          to="/request-password-reset"
+                          className="text-sm text-primary hover:text-primary/80 transition-colors"
+                          data-testid="forgot-password-link"
+                        >
+                          Forgot password?
+                        </Link>
                       </div>
 
                       {error && (
