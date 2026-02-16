@@ -14,7 +14,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 3. **Clients** - End beneficiaries of the calculations (not direct users)
 
 ## Core Requirements
-- Modern, clean, professional UI with **white and navy blue theme** (light mode)
+- Modern, clean, professional UI with **dark theme** (default) and optional light mode via toggle
 - ZAR currency with South African tax calculations
 - PDF report generation for all calculators
 - Client management system
@@ -24,99 +24,41 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 
 ## What's Been Implemented
 
+### Session: February 16, 2026
+
+#### 1. Password Reset Flow ✅
+- Created `/request-password-reset` page for users to enter their email
+- Created `/reset-password` page to enter reset code and new password
+- Backend endpoints:
+  - `POST /api/auth/forgot-password` - Generates 6-digit reset code (15 min expiry)
+  - `POST /api/auth/verify-reset-code` - Validates code and updates password
+- Features:
+  - Secure reset code generation (6 digits)
+  - Code expires after 15 minutes
+  - Code can only be used once
+  - Password validation (min 6 characters)
+  - Email enumeration protection (same response for valid/invalid emails)
+- "Forgot password?" link added to login form
+- Header/footer hidden on password reset pages
+- **Note**: Email sending is MOCKED - reset code returned in API response for testing
+
+#### 2. Bug Fix: Timezone Comparison ✅
+- Fixed `TypeError: can't compare offset-naive and offset-aware datetimes` in password reset
+- Added timezone awareness handling in `auth.py`
+
 ### Session: February 6, 2026
 
-#### 1. Theme Change to White & Navy Blue ✅
-- Complete application-wide theme overhaul from dark to light mode
-- Updated CSS variables in `index.css` and `tailwind.config.js`:
-  - Background: Light gray/white (`210 40% 98%`)
-  - Primary: Navy blue (`220 70% 25%`)
-  - Cards: Pure white with subtle borders
-- Files updated for theme consistency:
-  - `App.js` - Changed from dark to light mode initialization
-  - `LandingPage.jsx` - Full refactor with theme variables
-  - `Dashboard.jsx` - Updated all sections with `bg-background`, `text-foreground`
-  - `AuthPage.jsx` - Light theme with navy accents
-  - `Header.jsx` - Already using theme variables
-  - `QuickActionsWidget.jsx` - Updated to use theme-aware classes
-  - `MarketTracker.jsx` - Updated card and text styling
-- Removed hardcoded dark colors (`bg-navy-950`, `text-white`) in favor of CSS variables (`bg-background`, `text-foreground`, `bg-card`, `text-primary`)
-
-#### 2. Theme Toggle Feature ✅
+#### 1. Theme Toggle Feature ✅
 - Created `ThemeContext.jsx` - Context provider for managing theme state
 - Created `ThemeToggle.jsx` - Sun/Moon icon button component
 - Integrated toggle into Header (next to currency selector)
-- Features:
-  - Persists user preference in localStorage
-  - Smooth icon transition animation (sun <-> moon)
-  - Light mode default for new users
-  - Works across all pages
+- Dark mode is now the **default** (user preference)
+- Light mode available via toggle
 
-### Session: February 4, 2026
-
-#### 1. Life Insurance Calculator Update ✅
-- Changed recommended coverage to **10x annual salary** (was DIME method max)
-- Added guideline text: "This is just a guideline. Your actual life insurance needs may vary..."
-- Badge updated to show "Recommended Coverage (10x Annual Salary)"
-
-#### 2. PayFast Backend Webhook ✅
-- Created `/api/payments/payfast-notify` endpoint
-- Handles ITN (Instant Transaction Notification) from PayFast
-- Processes COMPLETE, PENDING, FAILED, CANCELLED statuses
-- Stores transactions in `payfast_transactions` collection
-- Auto-activates premium subscription on successful payment
-- Duplicate notification prevention
-
-#### 3. Menu Reorganization ✅
-- **Invest**: Future Value, Compound Interest, Monte Carlo Simulator
-- **Debt**: Bond, Vehicle Finance, Debt Payoff, Loan Comparison
-- **Insurance**: Life Insurance, Income Protection, Emergency Fund
-- **Retirement**: Retirement Planner, Living Annuity, RA Tax Savings, Withdrawal Tax Simulator
-- **Tax**: Tax Planning Hub, Income Tax Calculator
-- **Planning**: Net Worth Tracker, Budget Planner, Cash Flow Projector, Estate Planning, Education Savings
-- **More**: Financial Literacy Quiz, Security & Privacy, Coming Soon features
-
-#### 4. Quick Actions Dashboard Widget ✅
-- New widget showing recent client activity for logged-in users
-- Displays: Total Clients, Calculations This Month
-- Recent Calculations with client name, calculator type, and time ago
-- Upcoming Reviews with days until review date
-- Empty state with CTA for new users
-- Backend endpoint: `/api/analytics/quick-actions`
-
-#### 5. Info Tooltips System ✅
-- Created reusable `InfoTooltip` and `SectionInfo` components
-- Added tooltips throughout Tax Planning Hub:
-  - Income Sources section with tips
-  - Deductions & Contributions section
-  - Medical Aid section
-  - CGT Calculator section
-  - Individual field tooltips explaining each input
-- Tooltips provide context-aware explanations for SA tax concepts
-
-#### 6. Tax Hub Input Fix ✅
-- Fixed input fields losing focus after each keystroke
-- Moved InputField component outside main component to prevent re-renders
-
-#### 7. Landing Page Updates ✅
-- Restored "Empower Your Practice with AdvisoryPro" tagline
-- Changed badge to "Built for Financial Advisors"
-- Removed "What's New" section (hidden until public launch)
-- Removed "hundreds of advisors" text
-- Stats: 17+ calculators, SA localized, 24/7 access, PDF reports
-
-#### 8. AI Document Reader ✅
-- New feature at `/document-reader`
-- Drag & drop upload for financial documents (PNG, JPG, JPEG, WEBP)
-- GPT-4o Vision AI analysis for:
-  - Investment statements (Allan Gray, Coronation, etc.)
-  - Bank statements
-  - Pension/Provident fund statements
-  - IRP5 tax certificates
-- Extracts: Personal details, account balances, holdings, transactions, fees, tax info
-- Save extracted data to client profiles
-- View history of analyzed documents
-- Backend: `/api/documents/analyze`, `/api/documents/analyses`
+#### 2. AI Document Reader Enhanced ✅
+- Added custom prompt input field
+- Added preset analysis buttons (Calculate Fees, List Holdings, etc.)
+- Users can now choose what to extract from documents
 
 ### Previously Implemented Features
 
@@ -157,10 +99,11 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 - JWT authentication with "Remember Me"
 - Admin role support
 - Coupon code system (lifetime, annual, monthly)
+- Password reset flow ✅
 
 #### Payment Integration
 - PayFast frontend integration
-- PayFast backend ITN webhook ✅ NEW
+- PayFast backend ITN webhook
 - Stripe integration (legacy)
 
 ---
@@ -168,25 +111,24 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ## Pending/In Progress
 
 ### P0 - Critical
-- [x] **Theme Change** - Completed white/navy blue theme ✅ (reverted to dark as default)
-- [x] **Theme Toggle** - Added sun/moon toggle in header ✅
+- [x] **Password Reset Flow** - Completed ✅
 - [ ] **Verify coupon redemption flow** - Users reported "codes keep saying invalid"
 
 ### P1 - High Priority
-- [x] **AI Document Reader E2E Test** - Fixed ImageContent API usage, now working ✅
+- [x] **AI Document Reader E2E Test** - Working ✅
 - [ ] **IRP5 File Storage Backend** - UI exists but needs file upload/storage implementation
 - [ ] **Portfolio Builder & Xray Tool** - Placeholder in menu
 
 ### P2 - Medium Priority
-- [x] **Client Creation API** - Fixed! API expects `first_name` and `last_name`, not `name` ✅
+- [x] **Client Creation API** - Fixed ✅
 - [ ] **Fee Comparison Tool** - Placeholder in menu
-- [ ] **Password Reset Flow** - Standard "Forgot Password"
 
 ---
 
 ## Future/Backlog
 
 ### Features
+- [ ] Email integration for password reset (currently mocked)
 - [ ] Integrate paid JSE data API (EODHD) - awaiting API key from user
 - [ ] Multi-language support (Afrikaans, Zulu)
 - [ ] Email notifications for registration, subscription changes
@@ -196,6 +138,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 - [ ] Add comprehensive backend tests
 - [ ] Implement rate limiting
 - [ ] Add request validation middleware
+- [ ] Full light theme audit (some components may have hardcoded dark colors)
 
 ---
 
@@ -205,6 +148,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 - **Database**: MongoDB
 - **Auth**: JWT with bcrypt password hashing
 - **Payments**: PayFast (primary), Stripe (legacy)
+- **AI**: OpenAI GPT-4o via Emergent LLM Key
 
 ## Key Environment Variables
 - `MONGO_URL` - MongoDB connection string
@@ -214,8 +158,8 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 - `EMERGENT_LLM_KEY` - Universal LLM key
 
 ## Test Credentials
-- **Admin**: pierrelouisvdm@gmail.com / Admin123!
+- **Test User**: test@advisor.com / newpassword123
 
 ---
 
-*Last Updated: February 6, 2026*
+*Last Updated: February 16, 2026*
