@@ -116,3 +116,105 @@ async def get_current_user_profile(current_user: dict = Depends(get_current_user
         )
     
     return User(**user_doc)
+
+
+# Password Reset Models
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class PasswordResetVerify(BaseModel):
+    token: str
+    new_password: str
+
+
+@router.post("/forgot-password")
+async def forgot_password(request: PasswordResetRequest):
+    """Request a password reset token"""
+    user = await db.users.find_one({"email": request.email.lower()})
+    
+    # Always return success to prevent email enumeration
+    if not user:
+        return {"success": True, "message": "If an account exists with this email, a reset code has been generated."}
+    
+    # Generate a 6-digit reset code (easier for users to type)
+    reset_code = ''.join([str(secrets.randbelow(10)) for _ in range(6)])
+    
+    # Store reset token with expiry (15 minutes)
+    reset_data = {
+        "user_id": user.get("id"),
+        "email": request.email.lower(),
+        "code": reset_code,
+        "created_at": datetime.now(timezone.utc),
+        "expires_at": datetime.now(timezone.utc) + timedelta(minutes=15),
+        "used": False
+    }
+    
+    # Remove any existing reset tokens for this user
+    await db.password_resets.delete_many({"email": request.email.lower()})
+    
+    # Save new reset token
+    await db.password_resets.insert_one(reset_data)
+    
+    # In production, you would send an email here
+    # For now, we'll return the code (REMOVE IN PRODUCTION)
+    return {
+        "success": True, 
+        "message": "If an account exists with this email, a reset code has been generated.",
+        "reset_code": reset_code,  # REMOVE THIS IN PRODUCTION - only for testing
+        "expires_in_minutes": 15
+    }
+
+
+@router.post("/verify-reset-code")
+async def verify_reset_code(data: PasswordResetVerify):
+    """Verify reset code and set new password"""
+    # Find the reset token
+    reset_record = await db.password_resets.find_one({
+        "code": data.token,
+        "used": False
+    })
+    
+    if not reset_record:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid or expired reset code"
+        )
+    
+    # Check if expired
+    expires_at = reset_record.get("expires_at")
+    if isinstance(expires_at, str):
+        expires_at = datetime.fromisoformat(expires_at.replace('Z', '+00:00'))
+    
+    if datetime.now(timezone.utc) > expires_at:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Reset code has expired. Please request a new one."
+        )
+    
+    # Validate new password
+    if len(data.new_password) < 6:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Password must be at least 6 characters"
+        )
+    
+    # Update user's password
+    new_hash = get_password_hash(data.new_password)
+    result = await db.users.update_one(
+        {"id": reset_record["user_id"]},
+        {"$set": {"hashed_password": new_hash, "updated_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to update password"
+        )
+    
+    # Mark token as used
+    await db.password_resets.update_one(
+        {"_id": reset_record["_id"]},
+        {"$set": {"used": True}}
+    )
+    
+    return {"success": True, "message": "Password has been reset successfully. You can now log in."}
