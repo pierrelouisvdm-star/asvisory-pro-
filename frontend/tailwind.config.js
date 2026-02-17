@@ -14,6 +14,16 @@ module.exports = {
                 body: ['Inter', 'sans-serif'],
                 mono: ['JetBrains Mono', 'monospace'],
             },
+            spacing: {
+                '4.5': '1.125rem',
+                '5.5': '1.375rem',
+                '6.5': '1.625rem',
+                '7.5': '1.875rem',
+            },
+            lineHeight: {
+                'relaxed': '1.75',
+                'loose': '2',
+            },
             colors: {
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
