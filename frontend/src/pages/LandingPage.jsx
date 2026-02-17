@@ -582,7 +582,7 @@ export const LandingPage = () => {
               {[
                 { 
                   name: 'Denzil Ohlsen', 
-                  role: 'Chief Product & Legal',
+                  role: 'Chief Product & Legal Officer',
                   initials: 'DO',
                   color: 'bg-blue-500'
                 },
