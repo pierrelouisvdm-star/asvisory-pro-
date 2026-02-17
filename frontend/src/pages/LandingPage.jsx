@@ -395,6 +395,201 @@ export const LandingPage = () => {
         </div>
       </section>
 
+      {/* About Us Section */}
+      <section id="about" className="relative py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-emerald-500/10 text-emerald-600 border-emerald-500/30">
+              <Building2 className="h-3 w-3 mr-2" />
+              About Us
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
+              Empowering Financial Advisors Across South Africa
+            </h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
+              We understand the unique challenges faced by South African financial advisors. That's why we built AdvisoryPro - a comprehensive platform designed specifically for the local market.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
+            <div>
+              <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Mission</h3>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                To provide South African financial advisors with world-class tools that save time, reduce errors, and help deliver exceptional service to their clients. We believe that by empowering advisors with better technology, we can help more South Africans achieve financial security.
+              </p>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                Every feature in AdvisoryPro is built with the South African regulatory environment in mind - from SARS tax brackets to FSCA compliance requirements. We're not just another generic financial calculator - we're your partner in building a successful practice.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-muted/50 rounded-lg border border-border">
+                  <p className="text-3xl font-bold text-primary">2024</p>
+                  <p className="text-sm text-muted-foreground">Founded</p>
+                </div>
+                <div className="p-4 bg-muted/50 rounded-lg border border-border">
+                  <p className="text-3xl font-bold text-primary">SA</p>
+                  <p className="text-sm text-muted-foreground">Proudly South African</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-6">
+              <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Values</h3>
+              {[
+                { 
+                  icon: Target, 
+                  title: 'Accuracy First', 
+                  desc: 'Every calculation is verified against current SA regulations and tax laws.' 
+                },
+                { 
+                  icon: Shield, 
+                  title: 'Security & Privacy', 
+                  desc: 'POPIA compliant with bank-level security for all client data.' 
+                },
+                { 
+                  icon: Zap, 
+                  title: 'Continuous Innovation', 
+                  desc: 'Regular updates to stay current with regulatory changes and new features.' 
+                },
+                { 
+                  icon: Users, 
+                  title: 'Advisor-Centric', 
+                  desc: 'Built by advisors, for advisors. We listen to your feedback.' 
+                },
+              ].map((value, idx) => (
+                <div key={idx} className="flex items-start gap-4 p-4 bg-card rounded-lg border border-border hover:border-primary/30 transition-colors">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                    <value.icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground">{value.title}</h4>
+                    <p className="text-sm text-muted-foreground">{value.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="relative py-20 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-blue-500/10 text-blue-600 border-blue-500/30">
+              <Mail className="h-3 w-3 mr-2" />
+              Contact Us
+            </Badge>
+            <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
+              Get in Touch
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Have questions about AdvisoryPro? Want to discuss bulk licensing for your team? We'd love to hear from you.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <Card className="bg-card border-border">
+              <CardContent className="p-8">
+                <h3 className="font-display text-xl font-bold text-foreground mb-6">Send us a Message</h3>
+                <ContactForm />
+              </CardContent>
+            </Card>
+
+            {/* Contact Info */}
+            <div className="space-y-6">
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <h3 className="font-display text-lg font-bold text-foreground mb-4">Contact Information</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                        <Mail className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Email</p>
+                        <a href="mailto:support@advisorypro.co.za" className="text-muted-foreground hover:text-primary transition-colors">
+                          support@advisorypro.co.za
+                        </a>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                        <Phone className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Phone</p>
+                        <a href="tel:+27123456789" className="text-muted-foreground hover:text-primary transition-colors">
+                          +27 12 345 6789
+                        </a>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                        <MapPin className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Location</p>
+                        <p className="text-muted-foreground">
+                          Johannesburg, South Africa
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <h3 className="font-display text-lg font-bold text-foreground mb-4">Business Hours</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Monday - Friday</span>
+                      <span className="text-foreground">08:00 - 17:00</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Saturday</span>
+                      <span className="text-foreground">09:00 - 13:00</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Sunday</span>
+                      <span className="text-foreground">Closed</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-card border-border">
+                <CardContent className="p-6">
+                  <h3 className="font-display text-lg font-bold text-foreground mb-4">Follow Us</h3>
+                  <div className="flex gap-3">
+                    <a 
+                      href="https://linkedin.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <Linkedin className="h-5 w-5" />
+                    </a>
+                    <a 
+                      href="https://twitter.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                    >
+                      <Twitter className="h-5 w-5" />
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="relative py-24">
         <div className="absolute inset-0 bg-gradient-to-t from-background to-muted/30" />
