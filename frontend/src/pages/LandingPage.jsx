@@ -570,6 +570,61 @@ export const LandingPage = () => {
               ))}
             </div>
           </div>
+
+          {/* Team Section */}
+          <div className="mt-16">
+            <div className="text-center mb-10">
+              <h3 className="font-display text-2xl font-bold text-foreground mb-2">Meet Our Team</h3>
+              <p className="text-muted-foreground">The people behind AdvisoryPro</p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                { 
+                  name: 'Denzil Ohlsen', 
+                  role: 'Co-Founder',
+                  initials: 'DO',
+                  color: 'bg-blue-500'
+                },
+                { 
+                  name: 'Pierre Van der Merwe', 
+                  role: 'Co-Founder',
+                  initials: 'PV',
+                  color: 'bg-emerald-500'
+                },
+                { 
+                  name: 'William Doherty', 
+                  role: 'Co-Founder',
+                  initials: 'WD',
+                  color: 'bg-amber-500'
+                },
+              ].map((member, idx) => (
+                <Card key={idx} className="bg-card border-border text-center hover:border-primary/30 transition-colors">
+                  <CardContent className="pt-8 pb-6">
+                    <div className={`w-24 h-24 ${member.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                      <span className="text-white text-2xl font-bold">{member.initials}</span>
+                    </div>
+                    <h4 className="font-display text-lg font-semibold text-foreground">{member.name}</h4>
+                    <p className="text-sm text-muted-foreground">{member.role}</p>
+                    <div className="flex justify-center gap-2 mt-4">
+                      <a 
+                        href="#" 
+                        className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        <Linkedin className="h-4 w-4" />
+                      </a>
+                      <a 
+                        href="#" 
+                        className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        <Mail className="h-4 w-4" />
+                      </a>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
