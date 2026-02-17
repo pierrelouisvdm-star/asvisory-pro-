@@ -591,10 +591,10 @@ export const LandingPage = () => {
                 { 
                   name: 'Pierre Van der Merwe', 
                   role: 'Founder & CEO',
-                  credentials: '',
+                  credentials: 'Financial Advisor, 11+ Years Experience',
                   initials: 'PV',
                   color: 'bg-emerald-500',
-                  bio: ''
+                  bio: 'Pierre is a financial advisor with over 11 years of experience and the founder of Precision Wealth, a modern advisory practice focused on delivering smarter, more cost-effective financial solutions for South Africans. Driven by a strong passion for financial education, Pierre believes that access to clear, practical financial guidance is the foundation of long-term wealth creation. He specialises in retirement planning, tax-efficient investing, and building diversified portfolios using low-cost investment strategies designed to maximise real returns over time.'
                 },
                 { 
                   name: 'William Doherty', 
@@ -616,25 +616,25 @@ export const LandingPage = () => {
                       {member.credentials && (
                         <p className="text-xs text-primary mt-1">{member.credentials}</p>
                       )}
-                    </div>
-                    {member.bio && (
-                      <p className="text-sm text-muted-foreground mt-4 text-left leading-relaxed">
-                        {member.bio}
-                      </p>
-                    )}
-                    <div className="flex justify-center gap-2 mt-4">
-                      <a 
-                        href="#" 
-                        className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        <Linkedin className="h-4 w-4" />
-                      </a>
-                      <a 
-                        href="#" 
-                        className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
-                      >
-                        <Mail className="h-4 w-4" />
-                      </a>
+                      {member.bio && (
+                        <p className="text-sm text-muted-foreground mt-4 text-center leading-relaxed">
+                          {member.bio}
+                        </p>
+                      )}
+                      <div className="flex justify-center gap-2 mt-4">
+                        <a 
+                          href="#" 
+                          className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          <Linkedin className="h-4 w-4" />
+                        </a>
+                        <a 
+                          href="#" 
+                          className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                        >
+                          <Mail className="h-4 w-4" />
+                        </a>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
