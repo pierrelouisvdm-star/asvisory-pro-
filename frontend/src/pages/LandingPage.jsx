@@ -601,11 +601,11 @@ export const LandingPage = () => {
                 { 
                   name: 'William Doherty', 
                   role: 'Chief Operations Officer',
-                  credentials: '',
+                  credentials: 'Financial Advisor & Entrepreneur',
                   initials: 'WD',
                   color: 'bg-amber-500',
                   photo: 'https://customer-assets.emergentagent.com/job_05ab0338-6b86-42c1-b478-12618402212d/artifacts/xbsywy3r_PHOTO-2026-02-17-15-19-30.jpg',
-                  bio: ''
+                  bio: 'William is a Financial Advisor and entrepreneur with a deep-rooted passion for the intersection of finance and technology. His work is driven by the belief that financial solutions should be built for the long term, combining rigorous economic analysis with modern tech to solve real-world problems. He thrives on creating systems that make complex financial landscapes more accessible and efficient for everyone involved.'
                 },
               ].map((member, idx) => (
                 <Card key={idx} className="bg-card border-border hover:border-primary/30 transition-colors">
