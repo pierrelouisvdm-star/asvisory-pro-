@@ -595,7 +595,7 @@ export const LandingPage = () => {
                   credentials: 'Financial Advisor, 11+ Years Experience',
                   initials: 'PV',
                   color: 'bg-emerald-500',
-                  photo: 'https://customer-assets.emergentagent.com/job_05ab0338-6b86-42c1-b478-12618402212d/artifacts/7k1tk2bs_IMG_3131.jpg',
+                  photo: 'https://customer-assets.emergentagent.com/job_05ab0338-6b86-42c1-b478-12618402212d/artifacts/fqtbhhd1_file_0000000060d4722f94b64048ee6cea11.png',
                   bio: 'Pierre is a financial advisor with over 11 years of experience and the founder of Precision Wealth, a modern advisory practice focused on delivering smarter, more cost-effective financial solutions for South Africans. Driven by a strong passion for financial education, Pierre believes that access to clear, practical financial guidance is the foundation of long-term wealth creation. He specialises in retirement planning, tax-efficient investing, and building diversified portfolios using low-cost investment strategies designed to maximise real returns over time.'
                 },
                 { 
