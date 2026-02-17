@@ -260,6 +260,7 @@ export const CarFinanceCalculator = () => {
       ? [
           { label: 'Loan Term', value: `${currentScenario.loanTerm} months` },
           { label: 'Interest Rate', value: `${currentScenario.interestRate}%` },
+          ...(currentScenario.balloonPercent > 0 ? [{ label: 'Balloon Payment', value: `${currentScenario.balloonPercent}%` }] : []),
         ]
       : [
           { label: 'Lease Term', value: `${currentScenario.leaseTerm} months` },
@@ -273,6 +274,8 @@ export const CarFinanceCalculator = () => {
         { label: 'Monthly Payment', value: formatCurrency(results.loanPayment) },
         { label: 'Total of Payments', value: formatCurrency(results.totalLoanPayments) },
         { label: 'Total Interest', value: formatCurrency(results.totalLoanInterest) },
+        ...(results.balloonAmount > 0 ? [{ label: 'Balloon Payment', value: formatCurrency(results.balloonAmount) }] : []),
+        ...(results.totalLumpSumPaid > 0 ? [{ label: 'Lump Sum Payments', value: formatCurrency(results.totalLumpSumPaid) }] : []),
         { label: 'Total Cost', value: formatCurrency(results.totalLoanCost) },
       ]
     : [
