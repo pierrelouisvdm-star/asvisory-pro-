@@ -582,19 +582,19 @@ export const LandingPage = () => {
               {[
                 { 
                   name: 'Denzil Ohlsen', 
-                  role: 'Co-Founder',
+                  role: 'Chief Product & Legal',
                   initials: 'DO',
                   color: 'bg-blue-500'
                 },
                 { 
                   name: 'Pierre Van der Merwe', 
-                  role: 'Co-Founder',
+                  role: 'Founder & CEO',
                   initials: 'PV',
                   color: 'bg-emerald-500'
                 },
                 { 
                   name: 'William Doherty', 
-                  role: 'Co-Founder',
+                  role: 'Chief Operations Officer',
                   initials: 'WD',
                   color: 'bg-amber-500'
                 },
