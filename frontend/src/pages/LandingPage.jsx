@@ -742,28 +742,60 @@ export const LandingPage = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold text-foreground mb-4">Features</h4>
+              <h4 className="font-semibold text-foreground mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>Net Worth Tracker</li>
-                <li>Client Management</li>
-                <li>AI Assistant</li>
-                <li>PDF Reports</li>
+                <li>
+                  <a href="#about" className="hover:text-primary transition-colors">About Us</a>
+                </li>
+                <li>
+                  <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
+                </li>
+                <li>
+                  <Link to="/pricing" className="hover:text-primary transition-colors">Pricing</Link>
+                </li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold text-foreground mb-4">Contact</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>support@advisorypro.co.za</li>
-                <li>bulk@advisorypro.co.za</li>
+                <li>
+                  <a href="mailto:support@advisorypro.co.za" className="hover:text-primary transition-colors">
+                    support@advisorypro.co.za
+                  </a>
+                </li>
+                <li>
+                  <a href="tel:+27123456789" className="hover:text-primary transition-colors">
+                    +27 12 345 6789
+                  </a>
+                </li>
+                <li>Johannesburg, South Africa</li>
               </ul>
             </div>
           </div>
           
-          <div className="pt-8 border-t border-border flex justify-center items-center">
+          <div className="pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
               © 2026 AdvisoryPro. All rights reserved.
             </p>
+            <div className="flex gap-4">
+              <a 
+                href="https://linkedin.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
+              <a 
+                href="https://twitter.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+            </div>
           </div>
         </div>
       </footer>
