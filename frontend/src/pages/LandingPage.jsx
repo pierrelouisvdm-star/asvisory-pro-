@@ -604,7 +604,7 @@ export const LandingPage = () => {
                   credentials: '',
                   initials: 'WD',
                   color: 'bg-amber-500',
-                  photo: '',
+                  photo: 'https://customer-assets.emergentagent.com/job_05ab0338-6b86-42c1-b478-12618402212d/artifacts/xbsywy3r_PHOTO-2026-02-17-15-19-30.jpg',
                   bio: ''
                 },
               ].map((member, idx) => (
