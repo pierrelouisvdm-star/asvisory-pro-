@@ -209,6 +209,36 @@ export const CarFinanceCalculator = () => {
     }
   };
 
+  // Lump sum payment management
+  const addLumpSumPayment = () => {
+    setScenarios(prev => prev.map((s, i) => 
+      i === 0 ? { 
+        ...s, 
+        lumpSumPayments: [...(s.lumpSumPayments || []), { id: generateId(), month: 12, amount: 10000 }] 
+      } : s
+    ));
+  };
+
+  const removeLumpSumPayment = (lumpSumId) => {
+    setScenarios(prev => prev.map((s, i) => 
+      i === 0 ? { 
+        ...s, 
+        lumpSumPayments: (s.lumpSumPayments || []).filter(ls => ls.id !== lumpSumId) 
+      } : s
+    ));
+  };
+
+  const updateLumpSumPayment = (lumpSumId, field, value) => {
+    setScenarios(prev => prev.map((s, i) => 
+      i === 0 ? { 
+        ...s, 
+        lumpSumPayments: (s.lumpSumPayments || []).map(ls => 
+          ls.id === lumpSumId ? { ...ls, [field]: value } : ls
+        ) 
+      } : s
+    ));
+  };
+
   const loanPieData = [
     { name: 'Principal', value: results.netPrice, color: 'hsl(215, 50%, 35%)' },
     { name: 'Interest', value: results.totalLoanInterest, color: 'hsl(43, 74%, 49%)' },
