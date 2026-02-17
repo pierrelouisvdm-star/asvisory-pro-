@@ -524,7 +524,7 @@ export const LandingPage = () => {
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-muted/50 rounded-lg border border-border">
-                  <p className="text-3xl font-bold text-primary">2025</p>
+                  <p className="text-3xl font-bold text-primary">2026</p>
                   <p className="text-sm text-muted-foreground">Founded</p>
                 </div>
                 <div className="p-4 bg-muted/50 rounded-lg border border-border">
