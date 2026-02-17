@@ -581,31 +581,47 @@ export const LandingPage = () => {
             <div className="grid md:grid-cols-3 gap-8">
               {[
                 { 
-                  name: 'Denzil Ohlsen', 
+                  name: 'Denzil Ohlson', 
                   role: 'Chief Product & Legal Officer',
+                  credentials: 'Admitted Advocate, CFP®',
                   initials: 'DO',
-                  color: 'bg-blue-500'
+                  color: 'bg-blue-500',
+                  bio: 'Denzil operates at the intersection of law, regulation, financial planning, and technology-enabled advice. As a Senior Legal Advisor and Business Development Manager, he helps intermediaries and high-net-worth clients implement practical, compliant solutions across estate, retirement, investment, tax, and business assurance planning, with a strong focus on Treating Customers Fairly. A respected technical trainer and presenter, Denzil translates complex legislation into clear, actionable guidance that improves advice quality, reduces risk, and builds lasting client trust.'
                 },
                 { 
                   name: 'Pierre Van der Merwe', 
                   role: 'Founder & CEO',
+                  credentials: '',
                   initials: 'PV',
-                  color: 'bg-emerald-500'
+                  color: 'bg-emerald-500',
+                  bio: ''
                 },
                 { 
                   name: 'William Doherty', 
                   role: 'Chief Operations Officer',
+                  credentials: '',
                   initials: 'WD',
-                  color: 'bg-amber-500'
+                  color: 'bg-amber-500',
+                  bio: ''
                 },
               ].map((member, idx) => (
-                <Card key={idx} className="bg-card border-border text-center hover:border-primary/30 transition-colors">
+                <Card key={idx} className="bg-card border-border hover:border-primary/30 transition-colors">
                   <CardContent className="pt-8 pb-6">
-                    <div className={`w-24 h-24 ${member.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                      <span className="text-white text-2xl font-bold">{member.initials}</span>
+                    <div className="text-center">
+                      <div className={`w-24 h-24 ${member.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                        <span className="text-white text-2xl font-bold">{member.initials}</span>
+                      </div>
+                      <h4 className="font-display text-lg font-semibold text-foreground">{member.name}</h4>
+                      <p className="text-sm text-muted-foreground">{member.role}</p>
+                      {member.credentials && (
+                        <p className="text-xs text-primary mt-1">{member.credentials}</p>
+                      )}
                     </div>
-                    <h4 className="font-display text-lg font-semibold text-foreground">{member.name}</h4>
-                    <p className="text-sm text-muted-foreground">{member.role}</p>
+                    {member.bio && (
+                      <p className="text-sm text-muted-foreground mt-4 text-left leading-relaxed">
+                        {member.bio}
+                      </p>
+                    )}
                     <div className="flex justify-center gap-2 mt-4">
                       <a 
                         href="#" 
