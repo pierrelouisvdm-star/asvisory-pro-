@@ -548,6 +548,80 @@ export const CarFinanceCalculator = () => {
                 )}
               </div>
             </CalculatorCard>
+
+            {/* Lump Sum Payments - Only for Loans */}
+            {calculationType === 'loan' && (
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base font-medium flex items-center gap-2">
+                    <PiggyBank className="h-5 w-5 text-emerald-500" />
+                    Ad-hoc Lump Sum Payments
+                  </CardTitle>
+                  <p className="text-xs text-muted-foreground">
+                    Model extra payments to reduce your loan faster
+                  </p>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {(currentScenario.lumpSumPayments || []).map((lumpSum, idx) => (
+                    <div key={lumpSum.id} className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg">
+                      <div className="flex-1 grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="text-xs text-muted-foreground">Month</label>
+                          <input
+                            type="number"
+                            value={lumpSum.month}
+                            onChange={(e) => updateLumpSumPayment(lumpSum.id, 'month', parseInt(e.target.value) || 1)}
+                            min={1}
+                            max={parseInt(currentScenario.loanTerm)}
+                            className="w-full px-2 py-1 text-sm bg-background border border-border rounded"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-muted-foreground">Amount ({symbol})</label>
+                          <input
+                            type="number"
+                            value={lumpSum.amount}
+                            onChange={(e) => updateLumpSumPayment(lumpSum.id, 'amount', parseFloat(e.target.value) || 0)}
+                            min={0}
+                            step={1000}
+                            className="w-full px-2 py-1 text-sm bg-background border border-border rounded"
+                          />
+                        </div>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeLumpSumPayment(lumpSum.id)}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        ✕
+                      </Button>
+                    </div>
+                  ))}
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={addLumpSumPayment}
+                    className="w-full gap-2"
+                  >
+                    <Banknote className="h-4 w-4" />
+                    Add Lump Sum Payment
+                  </Button>
+
+                  {results.totalLumpSumPaid > 0 && (
+                    <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
+                      <p className="text-sm text-emerald-600">
+                        <strong>Total Extra Payments:</strong> {formatCurrency(results.totalLumpSumPaid)}
+                      </p>
+                      <p className="text-xs text-emerald-600/80 mt-1">
+                        Est. interest saved: ~{formatCurrency(results.interestSavedFromLumpSum)}
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )}
           </div>
 
           {/* Results & Charts */}
