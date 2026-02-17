@@ -727,26 +727,6 @@ export const LandingPage = () => {
 
               <Card className="bg-card border-border">
                 <CardContent className="p-6">
-                  <h3 className="font-display text-lg font-bold text-foreground mb-4">Business Hours</h3>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Monday - Friday</span>
-                      <span className="text-foreground">08:00 - 17:00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Saturday</span>
-                      <span className="text-foreground">09:00 - 13:00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Sunday</span>
-                      <span className="text-foreground">Closed</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card border-border">
-                <CardContent className="p-6">
                   <h3 className="font-display text-lg font-bold text-foreground mb-4">Follow Us</h3>
                   <div className="flex gap-3">
                     <a 
