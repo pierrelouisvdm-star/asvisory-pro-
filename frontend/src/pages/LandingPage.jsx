@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
   PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
   LineChart, Target, Clock, Zap, Award, Globe,
-  ChevronRight, Play, Receipt
+  ChevronRight, Play, Receipt, Mail, Phone, MapPin,
+  Send, Linkedin, Twitter, Building2, Loader2
 } from 'lucide-react';
 
 // Calculator categories with detailed descriptions
