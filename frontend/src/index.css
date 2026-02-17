@@ -17,31 +17,31 @@ code {
 
 @layer base {
     :root {
-        /* AdvisoryPro - Light Theme with Navy Blue Accents */
+        /* AdvisoryPro - Light Theme: White & Navy Blue */
         
         /* Primary - Navy Blue */
         --primary: 220 70% 25%;
         --primary-foreground: 0 0% 100%;
         
-        /* White Background */
-        --background: 210 40% 98%;
-        --foreground: 220 47% 15%;
+        /* Pure White Background */
+        --background: 0 0% 100%;
+        --foreground: 220 50% 15%;
         
-        /* White Cards with subtle shadow */
+        /* White Cards */
         --card: 0 0% 100%;
-        --card-foreground: 220 47% 15%;
+        --card-foreground: 220 50% 15%;
         
         /* Popover */
         --popover: 0 0% 100%;
-        --popover-foreground: 220 47% 15%;
+        --popover-foreground: 220 50% 15%;
         
-        /* Secondary - Light Navy */
+        /* Secondary - Light Blue/Gray */
         --secondary: 220 30% 96%;
-        --secondary-foreground: 220 47% 15%;
+        --secondary-foreground: 220 50% 15%;
         
-        /* Muted */
-        --muted: 220 20% 95%;
-        --muted-foreground: 220 20% 45%;
+        /* Muted - Light Gray */
+        --muted: 220 20% 96%;
+        --muted-foreground: 220 20% 40%;
         
         /* Accent - Navy Blue */
         --accent: 220 70% 25%;
@@ -55,17 +55,17 @@ code {
         --destructive: 0 72% 50%;
         --destructive-foreground: 0 0% 100%;
         
-        /* Border & Input */
-        --border: 220 20% 88%;
-        --input: 220 20% 88%;
+        /* Border & Input - Light Gray */
+        --border: 220 20% 90%;
+        --input: 220 20% 90%;
         --ring: 220 70% 25%;
         
-        /* Chart Colors */
-        --chart-1: 220 70% 35%;
-        --chart-2: 220 50% 55%;
+        /* Chart Colors - Navy Blue Palette */
+        --chart-1: 220 70% 30%;
+        --chart-2: 220 60% 45%;
         --chart-3: 160 70% 40%;
         --chart-4: 43 74% 55%;
-        --chart-5: 220 40% 65%;
+        --chart-5: 220 50% 60%;
         
         /* Custom Tokens */
         --emerald: 160 84% 39%;
@@ -74,15 +74,15 @@ code {
         --navy: 220 70% 25%;
         --navy-light: 220 50% 35%;
         --gold: 43 74% 50%;
-        --slate-dark: 220 47% 15%;
+        --slate-dark: 220 50% 15%;
         --slate-medium: 220 30% 85%;
         
         --radius: 0.75rem;
         
-        /* Shadows */
-        --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.4);
-        --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.5);
-        --shadow-glow: 0 0 30px -5px rgba(52, 211, 153, 0.35);
+        /* Shadows - Lighter for white theme */
+        --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.1);
+        --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.15);
+        --shadow-glow: 0 0 30px -5px rgba(30, 58, 138, 0.2);
         
         /* Transitions */
         --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -90,28 +90,48 @@ code {
     }
     
     .dark {
-        /* Same as root - dark mode is default */
-        --primary: 0 0% 98%;
-        --primary-foreground: 220 47% 10%;
-        --background: 220 47% 6%;
-        --foreground: 210 40% 98%;
-        --card: 220 47% 10%;
-        --card-foreground: 210 40% 98%;
-        --popover: 220 47% 10%;
-        --popover-foreground: 210 40% 98%;
-        --secondary: 220 40% 14%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 220 40% 14%;
-        --muted-foreground: 215 20% 65%;
-        --accent: 160 84% 45%;
-        --accent-foreground: 220 47% 10%;
+        /* Dark Theme - Lighter/Softer Dark */
+        --primary: 220 70% 50%;
+        --primary-foreground: 0 0% 100%;
+        
+        /* Softer Dark Background */
+        --background: 220 25% 14%;
+        --foreground: 220 20% 95%;
+        
+        /* Lighter Dark Cards */
+        --card: 220 25% 18%;
+        --card-foreground: 220 20% 95%;
+        
+        --popover: 220 25% 18%;
+        --popover-foreground: 220 20% 95%;
+        
+        /* Secondary */
+        --secondary: 220 25% 22%;
+        --secondary-foreground: 220 20% 95%;
+        
+        /* Muted */
+        --muted: 220 25% 22%;
+        --muted-foreground: 220 15% 65%;
+        
+        /* Accent - Brighter Blue */
+        --accent: 220 70% 55%;
+        --accent-foreground: 0 0% 100%;
+        
         --success: 160 84% 45%;
-        --success-foreground: 220 47% 10%;
-        --destructive: 0 62% 50%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 220 40% 18%;
-        --input: 220 40% 18%;
-        --ring: 160 84% 45%;
+        --success-foreground: 0 0% 100%;
+        
+        --destructive: 0 62% 55%;
+        --destructive-foreground: 0 0% 100%;
+        
+        /* Border - Softer */
+        --border: 220 20% 25%;
+        --input: 220 20% 25%;
+        --ring: 220 70% 55%;
+        
+        /* Shadows */
+        --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.3);
+        --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.4);
+        --shadow-glow: 0 0 30px -5px rgba(96, 165, 250, 0.25);
     }
 }
 
