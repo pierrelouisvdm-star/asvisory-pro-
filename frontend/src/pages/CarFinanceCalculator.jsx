@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Car, Calculator, GitCompare, BarChart3, Calendar, CreditCard, Wallet } from 'lucide-react';
+import { Car, Calculator, GitCompare, BarChart3, Calendar, CreditCard, Wallet, Banknote, PiggyBank } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 
@@ -38,6 +38,10 @@ const defaultScenario = () => ({
   loanTerm: '60',
   interestRate: 11.5,
   salesTax: 15, // SA VAT rate
+  // Balloon payment
+  balloonPercent: 0,
+  // Lump sum payments
+  lumpSumPayments: [],
   // Lease specific
   residualPercent: 55,
   leaseTerm: '36',
@@ -53,22 +57,81 @@ export const CarFinanceCalculator = () => {
   const calculateCarFinance = useCallback((scenario) => {
     const { 
       vehiclePrice, downPayment, tradeInValue, loanTerm, interestRate, salesTax,
-      residualPercent, leaseTerm, moneyFactor
+      residualPercent, leaseTerm, moneyFactor, balloonPercent, lumpSumPayments
     } = scenario;
     
     // Common calculations
     const taxAmount = vehiclePrice * (salesTax / 100);
     const totalPrice = vehiclePrice + taxAmount;
     const netPrice = totalPrice - downPayment - tradeInValue;
+    
+    // Balloon payment calculation
+    const balloonAmount = vehiclePrice * (balloonPercent / 100);
 
-    // Loan calculations
+    // Loan calculations with balloon payment
     const loanMonths = parseFloat(loanTerm);
     const monthlyRate = (interestRate / 100) / 12;
-    const loanPayment = netPrice * (monthlyRate * Math.pow(1 + monthlyRate, loanMonths)) / 
-                        (Math.pow(1 + monthlyRate, loanMonths) - 1);
-    const totalLoanPayments = loanPayment * loanMonths;
-    const totalLoanInterest = totalLoanPayments - netPrice;
-    const totalLoanCost = downPayment + tradeInValue + totalLoanPayments;
+    
+    // Amount to finance (excluding balloon which is paid at end)
+    const amountToFinance = netPrice - balloonAmount;
+    
+    // Calculate standard loan payment (without lump sums for initial display)
+    const loanPayment = amountToFinance > 0 
+      ? amountToFinance * (monthlyRate * Math.pow(1 + monthlyRate, loanMonths)) / 
+        (Math.pow(1 + monthlyRate, loanMonths) - 1)
+      : 0;
+    
+    // Generate amortization schedule for loan (with lump sum payments)
+    const amortizationData = [];
+    let balance = amountToFinance;
+    let cumulativeInterest = 0;
+    let cumulativePrincipal = 0;
+    let totalLumpSumPaid = 0;
+    
+    // Create a map of lump sum payments by month
+    const lumpSumMap = {};
+    (lumpSumPayments || []).forEach(ls => {
+      if (ls.month && ls.amount > 0) {
+        lumpSumMap[ls.month] = (lumpSumMap[ls.month] || 0) + ls.amount;
+      }
+    });
+
+    for (let month = 1; month <= Math.min(loanMonths, 84); month++) {
+      if (balance <= 0) break;
+      
+      const interestPayment = balance * monthlyRate;
+      let principalPayment = loanPayment - interestPayment;
+      
+      // Apply lump sum payment if exists for this month
+      const lumpSum = lumpSumMap[month] || 0;
+      if (lumpSum > 0) {
+        principalPayment += Math.min(lumpSum, balance - principalPayment);
+        totalLumpSumPaid += lumpSum;
+      }
+      
+      balance = Math.max(0, balance - principalPayment);
+      cumulativeInterest += interestPayment;
+      cumulativePrincipal += principalPayment;
+
+      if (month % 12 === 0 || month === loanMonths || balance <= 0) {
+        amortizationData.push({
+          year: `Year ${Math.ceil(month / 12)}`,
+          principal: cumulativePrincipal,
+          interest: cumulativeInterest,
+          balance: Math.max(0, balance),
+        });
+      }
+    }
+    
+    // Calculate actual totals
+    const totalLoanPayments = (loanPayment * loanMonths) + balloonAmount;
+    const totalLoanInterest = cumulativeInterest;
+    const totalLoanCost = downPayment + tradeInValue + totalLoanPayments - totalLumpSumPaid + totalLumpSumPaid;
+    
+    // Interest saved from lump sum payments (approximate)
+    const interestSavedFromLumpSum = totalLumpSumPaid > 0 
+      ? totalLumpSumPaid * monthlyRate * (loanMonths / 2) 
+      : 0;
 
     // Lease calculations
     const leaseMonths = parseFloat(leaseTerm);
@@ -78,29 +141,6 @@ export const CarFinanceCalculator = () => {
     const leasePayment = depreciation + financeCharge;
     const totalLeasePayments = leasePayment * leaseMonths;
     const totalLeaseCost = downPayment + totalLeasePayments;
-
-    // Generate amortization schedule for loan
-    const amortizationData = [];
-    let balance = netPrice;
-    let cumulativeInterest = 0;
-    let cumulativePrincipal = 0;
-
-    for (let month = 1; month <= Math.min(loanMonths, 84); month++) {
-      const interestPayment = balance * monthlyRate;
-      const principalPayment = loanPayment - interestPayment;
-      balance -= principalPayment;
-      cumulativeInterest += interestPayment;
-      cumulativePrincipal += principalPayment;
-
-      if (month % 12 === 0 || month === loanMonths) {
-        amortizationData.push({
-          year: `Year ${Math.ceil(month / 12)}`,
-          principal: cumulativePrincipal,
-          interest: cumulativeInterest,
-          balance: Math.max(0, balance),
-        });
-      }
-    }
 
     // Comparison data
     const comparisonData = [
@@ -115,6 +155,9 @@ export const CarFinanceCalculator = () => {
       totalLoanPayments,
       totalLoanInterest,
       totalLoanCost,
+      balloonAmount,
+      totalLumpSumPaid,
+      interestSavedFromLumpSum,
       
       // Lease results
       leasePayment,
