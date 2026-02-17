@@ -26,6 +26,7 @@ const educationStages = {
     defaultEndAge: 5,
     costs: {
       government: 15000,
+      semiPrivate: 35000,
       private: 65000,
       premium: 120000,
     },
@@ -40,6 +41,7 @@ const educationStages = {
     defaultEndAge: 12,
     costs: {
       government: 5000,
+      semiPrivate: 35000,
       private: 85000,
       premium: 150000,
     },
@@ -54,6 +56,7 @@ const educationStages = {
     defaultEndAge: 17,
     costs: {
       government: 8000,
+      semiPrivate: 40000,
       private: 110000,
       premium: 200000,
     },
@@ -68,6 +71,7 @@ const educationStages = {
     defaultEndAge: 21,
     costs: {
       government: 65000,
+      semiPrivate: 90000,
       private: 120000,
       premium: 250000,
     },
@@ -86,6 +90,7 @@ const miscCostCategories = [
 
 const schoolTypeOptions = [
   { value: 'government', label: 'Government School' },
+  { value: 'semiPrivate', label: 'Semi-Private School (R20k-R50k/yr)' },
   { value: 'private', label: 'Private School' },
   { value: 'premium', label: 'Premium Private School' },
 ];
