@@ -586,6 +586,7 @@ export const LandingPage = () => {
                   credentials: 'Admitted Advocate, CFP®',
                   initials: 'DO',
                   color: 'bg-blue-500',
+                  photo: 'https://customer-assets.emergentagent.com/job_05ab0338-6b86-42c1-b478-12618402212d/artifacts/qevmztdm_image0.jpeg',
                   bio: 'Denzil operates at the intersection of law, regulation, financial planning, and technology-enabled advice. As a Senior Legal Advisor and Business Development Manager, he helps intermediaries and high-net-worth clients implement practical, compliant solutions across estate, retirement, investment, tax, and business assurance planning, with a strong focus on Treating Customers Fairly. A respected technical trainer and presenter, Denzil translates complex legislation into clear, actionable guidance that improves advice quality, reduces risk, and builds lasting client trust.'
                 },
                 { 
@@ -594,6 +595,7 @@ export const LandingPage = () => {
                   credentials: 'Financial Advisor, 11+ Years Experience',
                   initials: 'PV',
                   color: 'bg-emerald-500',
+                  photo: 'https://customer-assets.emergentagent.com/job_05ab0338-6b86-42c1-b478-12618402212d/artifacts/7k1tk2bs_IMG_3131.jpg',
                   bio: 'Pierre is a financial advisor with over 11 years of experience and the founder of Precision Wealth, a modern advisory practice focused on delivering smarter, more cost-effective financial solutions for South Africans. Driven by a strong passion for financial education, Pierre believes that access to clear, practical financial guidance is the foundation of long-term wealth creation. He specialises in retirement planning, tax-efficient investing, and building diversified portfolios using low-cost investment strategies designed to maximise real returns over time.'
                 },
                 { 
@@ -602,15 +604,24 @@ export const LandingPage = () => {
                   credentials: '',
                   initials: 'WD',
                   color: 'bg-amber-500',
+                  photo: '',
                   bio: ''
                 },
               ].map((member, idx) => (
                 <Card key={idx} className="bg-card border-border hover:border-primary/30 transition-colors">
                   <CardContent className="pt-8 pb-6">
                     <div className="text-center">
-                      <div className={`w-24 h-24 ${member.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                        <span className="text-white text-2xl font-bold">{member.initials}</span>
-                      </div>
+                      {member.photo ? (
+                        <img 
+                          src={member.photo} 
+                          alt={member.name}
+                          className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-border"
+                        />
+                      ) : (
+                        <div className={`w-24 h-24 ${member.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                          <span className="text-white text-2xl font-bold">{member.initials}</span>
+                        </div>
+                      )}
                       <h4 className="font-display text-lg font-semibold text-foreground">{member.name}</h4>
                       <p className="text-sm text-muted-foreground">{member.role}</p>
                       {member.credentials && (
