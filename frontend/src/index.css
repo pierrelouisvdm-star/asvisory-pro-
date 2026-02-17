@@ -223,7 +223,7 @@ code {
     
     /* Calculator Card */
     .calculator-card {
-        @apply relative rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900;
+        @apply relative rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6;
         box-shadow: var(--shadow-soft);
         transition: all var(--transition-smooth);
     }
@@ -234,13 +234,13 @@ code {
     
     /* Results Display */
     .result-highlight {
-        @apply relative px-6 py-4 rounded-xl bg-slate-50 dark:bg-slate-800/50;
+        @apply relative px-6 py-5 rounded-xl bg-slate-50 dark:bg-slate-800/50;
         border: 1px solid hsl(var(--border));
     }
     
     /* Chart Container */
     .chart-container {
-        @apply rounded-xl p-4 bg-slate-50/50 dark:bg-slate-800/30;
+        @apply rounded-xl p-5 bg-slate-50/50 dark:bg-slate-800/30;
     }
     
     /* Navigation Link */
