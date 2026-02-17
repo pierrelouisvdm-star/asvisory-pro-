@@ -108,6 +108,107 @@ const stats = [
   { value: 'PDF', label: 'Instant Reports' },
 ];
 
+// Contact Form Component
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    // Simulate form submission (replace with actual API call if needed)
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      toast.success('Message sent successfully! We\'ll get back to you soon.');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      toast.error('Failed to send message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="contact-name">Name</Label>
+          <Input
+            id="contact-name"
+            placeholder="Your name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required
+            data-testid="contact-name-input"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="contact-email">Email</Label>
+          <Input
+            id="contact-email"
+            type="email"
+            placeholder="your@email.com"
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            required
+            data-testid="contact-email-input"
+          />
+        </div>
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="contact-subject">Subject</Label>
+        <Input
+          id="contact-subject"
+          placeholder="How can we help?"
+          value={formData.subject}
+          onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+          required
+          data-testid="contact-subject-input"
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="contact-message">Message</Label>
+        <Textarea
+          id="contact-message"
+          placeholder="Tell us more about your inquiry..."
+          value={formData.message}
+          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+          rows={5}
+          required
+          data-testid="contact-message-input"
+        />
+      </div>
+      
+      <Button 
+        type="submit" 
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+        disabled={isSubmitting}
+        data-testid="contact-submit-btn"
+      >
+        {isSubmitting ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Sending...
+          </>
+        ) : (
+          <>
+            <Send className="mr-2 h-4 w-4" />
+            Send Message
+          </>
+        )}
+      </Button>
+    </form>
+  );
+};
+
 export const LandingPage = () => {
   return (
     <div className="min-h-screen bg-background">
