@@ -490,6 +490,26 @@ export const CarFinanceCalculator = () => {
                       onChange={(val) => updateScenario(0, 'loanTerm', val)}
                       options={loanTermOptions}
                     />
+
+                    <SliderField
+                      label="Balloon Payment"
+                      id="balloonPercent"
+                      value={currentScenario.balloonPercent}
+                      onChange={(val) => updateScenario(0, 'balloonPercent', val)}
+                      min={0}
+                      max={50}
+                      step={5}
+                      suffix="%"
+                      tooltip="Final lump sum payment due at end of loan term (reduces monthly payments but increases total cost)"
+                    />
+                    
+                    {currentScenario.balloonPercent > 0 && (
+                      <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+                        <p className="text-sm text-amber-600">
+                          <strong>Balloon Payment:</strong> {formatCurrency(results.balloonAmount)} due at end of term
+                        </p>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <>
