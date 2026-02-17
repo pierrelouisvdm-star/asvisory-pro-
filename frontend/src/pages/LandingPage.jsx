@@ -765,11 +765,11 @@ export const LandingPage = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="tel:+27123456789" className="hover:text-primary transition-colors">
-                    +27 12 345 6789
+                  <a href="tel:+27737599863" className="hover:text-primary transition-colors">
+                    073 759 9863
                   </a>
                 </li>
-                <li>Johannesburg, South Africa</li>
+                <li>Cape Town, South Africa</li>
               </ul>
             </div>
           </div>
