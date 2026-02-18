@@ -616,7 +616,7 @@ export const LandingPage = () => {
                         <img 
                           src={member.photo} 
                           alt={member.name}
-                          className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-border"
+                          className={`w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-border ${member.photoPosition || 'object-top'}`}
                         />
                       ) : (
                         <div className={`w-24 h-24 ${member.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
