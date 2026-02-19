@@ -1404,6 +1404,26 @@ const TaxPlanningHub = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Print Report */}
+              <PrintReport
+                title="Provisional Tax Planning"
+                calculatorType="Tax Planning Hub - Provisional"
+                inputs={[
+                  { label: 'Estimated Taxable Income', value: formatCurrency(provisionalData.estimatedTaxableIncome) },
+                  { label: 'Previous Year Tax', value: formatCurrency(provisionalData.previousYearTax) },
+                  { label: '1st Payment Made', value: formatCurrency(provisionalData.firstPayment) },
+                  { label: '2nd Payment Made', value: formatCurrency(provisionalData.secondPayment) },
+                ]}
+                results={[
+                  { label: 'Estimated Annual Tax', value: formatCurrency(provisionalResults.estimatedTax) },
+                  { label: 'Recommended 1st Payment', value: formatCurrency(provisionalResults.recommendedFirst) },
+                  { label: 'Recommended 2nd Payment', value: formatCurrency(provisionalResults.recommendedSecond) },
+                  { label: 'Total Paid to Date', value: formatCurrency(provisionalResults.totalPaid) },
+                  { label: 'Remaining Balance', value: formatCurrency(provisionalResults.remaining) },
+                  { label: 'Estimated Penalty (if underpaid)', value: formatCurrency(provisionalResults.penaltyEstimate) },
+                ]}
+              />
             </div>
           </div>
         </TabsContent>
