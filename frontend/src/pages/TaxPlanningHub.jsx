@@ -1006,6 +1006,27 @@ const TaxPlanningHub = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Print Report */}
+              <PrintReport
+                title="Capital Gains Tax Calculation"
+                calculatorType="Tax Planning Hub - CGT"
+                inputs={[
+                  { label: 'Asset Type', value: cgtData.assetType.charAt(0).toUpperCase() + cgtData.assetType.slice(1) },
+                  { label: 'Purchase Price', value: formatCurrency(cgtData.purchasePrice) },
+                  { label: 'Sale Price', value: formatCurrency(cgtData.salePrice) },
+                  { label: 'Improvements & Costs', value: formatCurrency(cgtData.improvements + cgtData.sellingCosts) },
+                  { label: 'Primary Residence', value: cgtData.isPrimaryResidence ? 'Yes' : 'No' },
+                ]}
+                results={[
+                  { label: 'Base Cost', value: formatCurrency(cgtResults.baseCost) },
+                  { label: 'Gross Gain/Loss', value: formatCurrency(cgtResults.grossGain) },
+                  { label: 'Taxable Capital Gain', value: formatCurrency(cgtResults.taxableGain) },
+                  { label: 'Inclusion Amount (40%)', value: formatCurrency(cgtResults.inclusionAmount) },
+                  { label: 'Estimated CGT Payable', value: formatCurrency(cgtResults.estimatedCGT) },
+                  { label: 'Effective CGT Rate', value: `${cgtResults.effectiveCGTRate.toFixed(2)}%` },
+                ]}
+              />
             </div>
           </div>
         </TabsContent>
