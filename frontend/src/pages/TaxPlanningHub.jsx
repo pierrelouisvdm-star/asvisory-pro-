@@ -1142,6 +1142,25 @@ const TaxPlanningHub = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Print Report */}
+              <PrintReport
+                title="Tax Bracket Analysis"
+                calculatorType="Tax Planning Hub - Brackets"
+                inputs={[
+                  { label: 'Current Taxable Income', value: formatCurrency(bracketData.currentIncome) },
+                  { label: 'Additional Income', value: formatCurrency(bracketData.additionalIncome) },
+                  { label: 'Bonus Amount', value: formatCurrency(bracketData.bonusAmount) },
+                ]}
+                results={[
+                  { label: 'Current Tax Bracket', value: `${bracketResults.currentBracket}%` },
+                  { label: 'New Tax Bracket', value: `${bracketResults.newBracket}%` },
+                  { label: 'Tax on Additional Income', value: formatCurrency(bracketResults.taxOnAdditional) },
+                  { label: 'Effective Rate on Additional', value: `${bracketResults.effectiveRateOnAdditional.toFixed(2)}%` },
+                  { label: 'Room in Current Bracket', value: formatCurrency(bracketResults.roomInCurrentBracket) },
+                  { label: 'Bracket Change', value: bracketResults.bracketChange ? 'Yes' : 'No' },
+                ]}
+              />
             </div>
           </div>
         </TabsContent>
