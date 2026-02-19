@@ -1270,6 +1270,24 @@ const TaxPlanningHub = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Print Report */}
+              <PrintReport
+                title="Medical Tax Credits Calculation"
+                calculatorType="Tax Planning Hub - Medical"
+                inputs={[
+                  { label: 'Medical Aid Members', value: `${incomeData.medicalMembers} member(s)` },
+                  { label: 'Out-of-Pocket Medical', value: formatCurrency(incomeData.outOfPocketMedical) },
+                  { label: 'Disability in Household', value: incomeData.hasDisability ? 'Yes' : 'No' },
+                  { label: 'Age Group', value: incomeData.ageGroup === 'under65' ? 'Under 65' : incomeData.ageGroup === '65to74' ? '65-74' : '75+' },
+                ]}
+                results={[
+                  { label: 'Monthly Medical Credit', value: formatCurrency(incomeTaxResults.annualMedicalCredit / 12) },
+                  { label: 'Annual Medical Scheme Credit', value: formatCurrency(incomeTaxResults.annualMedicalCredit) },
+                  { label: 'Additional Medical Credit', value: formatCurrency(incomeTaxResults.additionalMedicalCredit) },
+                  { label: 'Total Annual Medical Credit', value: formatCurrency(incomeTaxResults.totalMedicalCredits) },
+                ]}
+              />
             </div>
           </div>
         </TabsContent>
