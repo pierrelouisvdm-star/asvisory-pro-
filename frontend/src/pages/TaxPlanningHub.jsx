@@ -1661,6 +1661,23 @@ const TaxPlanningHub = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Print Report */}
+              <PrintReport
+                title="IRP5 Summary Report"
+                calculatorType="Tax Planning Hub - IRP5"
+                inputs={[
+                  { label: 'Tax Year', value: '2025/2026' },
+                  { label: 'Number of IRP5s', value: `${irp5Documents.length} document(s)` },
+                ]}
+                results={[
+                  { label: 'Total Gross Income', value: formatCurrency(irp5Totals.grossIncome) },
+                  { label: 'Total PAYE Paid', value: formatCurrency(irp5Totals.paye) },
+                  { label: 'Total UIF', value: formatCurrency(irp5Totals.uif) },
+                  { label: 'Total Pension Contributions', value: formatCurrency(irp5Totals.pensionContributions) },
+                  { label: 'Total Medical Aid', value: formatCurrency(irp5Totals.medicalAid) },
+                ]}
+              />
             </div>
           </div>
         </TabsContent>
