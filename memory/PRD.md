@@ -1,5 +1,19 @@
 # AdvisoryPro - Product Requirements Document
 
+## Latest Update: February 19, 2026
+
+### Recently Completed
+- ✅ PDF Export added to all Tax Hub calculator tabs (Income Tax, CGT, Brackets, Medical, Provisional, IRP5)
+- ✅ Coupon code ADVPRO-2I68J7YB disabled
+- ✅ 10 new Premium Lifetime coupon codes generated
+
+### Pending Tasks
+- 🔴 **P0:** Deploy application (user requested multiple times)
+- 🟡 **P1:** Verify calculator enhancements (Semi-Private School, balloon payments)
+- 🟢 **P2:** End-to-end test AI Document Reader
+
+---
+
 ## Original Problem Statement
 Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for South African financial advisors. The platform should include:
 - Full-stack application (React + FastAPI + MongoDB)
