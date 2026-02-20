@@ -41,6 +41,7 @@ import FinancialLiteracyQuiz from "@/pages/FinancialLiteracyQuiz";
 import SecurityPage from "@/pages/SecurityPage";
 import TaxPlanningHub from "@/pages/TaxPlanningHub";
 import DocumentReader from "@/pages/DocumentReader";
+import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { Toaster } from "@/components/ui/sonner";
