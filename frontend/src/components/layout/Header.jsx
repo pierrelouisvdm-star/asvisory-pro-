@@ -22,6 +22,7 @@ const allCalculators = [
     items: [
       { path: '/future-value', label: 'Future Value', icon: TrendingUp },
       { path: '/compound-interest', label: 'Compound Interest', icon: Percent },
+      { path: '/fee-comparison', label: 'Fee Comparison (EAC)', icon: Scale },
       { path: '/monte-carlo', label: 'Monte Carlo', icon: BarChart3 },
     ]
   },
