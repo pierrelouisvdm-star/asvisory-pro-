@@ -28,7 +28,8 @@ import {
   Wallet,
   Landmark,
   ClipboardList,
-  Sparkles
+  Sparkles,
+  Scale
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
