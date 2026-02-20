@@ -27,25 +27,25 @@ const FeeComparisonCalculator = () => {
   // Fee structures for comparison (up to 3 options)
   const [options, setOptions] = useState([
     {
-      name: 'Low-Cost Index Fund',
-      ter: 0.5,        // Total Expense Ratio
-      platformFee: 0.2,
+      name: 'Option A',
+      ter: 0,           // Total Expense Ratio
+      platformFee: 0,
       advisorFee: 0,
       performanceFee: 0,
     },
     {
-      name: 'Actively Managed Fund',
-      ter: 1.5,
-      platformFee: 0.3,
-      advisorFee: 0.5,
+      name: 'Option B',
+      ter: 0,
+      platformFee: 0,
+      advisorFee: 0,
       performanceFee: 0,
     },
     {
-      name: 'High-Cost Fund',
-      ter: 2.5,
-      platformFee: 0.5,
-      advisorFee: 1.0,
-      performanceFee: 20, // % of outperformance
+      name: 'Option C',
+      ter: 0,
+      platformFee: 0,
+      advisorFee: 0,
+      performanceFee: 0,
     },
   ]);
 
