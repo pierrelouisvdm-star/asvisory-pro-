@@ -13,7 +13,7 @@ import {
   PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail, Phone, MapPin,
-  Send, Linkedin, Twitter, Building2, Loader2
+  Send, Linkedin, Twitter, Building2, Loader2, Scale
 } from 'lucide-react';
 
 // Calculator categories with detailed descriptions
