@@ -64,14 +64,20 @@ const calculatorCategories = [
 // Key features with detailed benefits
 const keyFeatures = [
   {
+    icon: Scale,
+    title: 'Fee Comparison Tool',
+    description: 'Show clients how fees erode returns over time. Compare up to 3 investment options with different EACs and visualize the long-term impact of TERs, platform fees, and advisor fees.',
+    highlights: ['EAC Analysis', 'Visual Charts', 'PDF Reports'],
+  },
+  {
     icon: Receipt,
     title: 'Tax Planning Hub',
-    description: 'Complete tax planning suite. Income tax, CGT, medical credits, provisional tax, and RA deductibility calculators - all with helpful tooltips explaining SA tax concepts.',
-    highlights: ['Tax Brackets', 'Capital Gains Tax', 'Medical Aid Credits'],
+    description: 'Complete tax planning suite with PDF exports. Income tax, CGT, medical credits, provisional tax, and RA deductibility calculators - all with helpful tooltips explaining SA tax concepts.',
+    highlights: ['6 Tax Calculators', 'PDF Reports', 'Medical Credits'],
   },
   {
     icon: Calculator,
-    title: '17+ Professional Calculators',
+    title: '18+ Professional Calculators',
     description: 'From retirement planning to estate duty, every calculation a financial advisor needs. All localized for South African regulations, tax brackets, and the current Prime Rate.',
     highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
   },
