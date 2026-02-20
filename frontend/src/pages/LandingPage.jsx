@@ -24,6 +24,7 @@ const calculatorCategories = [
     color: 'emerald',
     calculators: [
       { name: 'Future Value Calculator', desc: 'Project investment growth over time' },
+      { name: 'Fee Comparison (EAC)', desc: 'See how fees impact your returns' },
       { name: 'Compound Interest', desc: 'See the power of compounding' },
       { name: 'Monte Carlo Simulator', desc: 'Probability-based projections' },
     ]
@@ -33,7 +34,7 @@ const calculatorCategories = [
     icon: Receipt,
     color: 'blue',
     calculators: [
-      { name: 'Tax Planning Hub', desc: 'Complete 2025/2026 tax suite' },
+      { name: 'Tax Planning Hub', desc: 'Complete 2025/2026 tax suite with PDF reports' },
       { name: 'Income Tax Calculator', desc: 'SARS tax bracket calculations' },
       { name: 'RA Tax Savings', desc: 'Maximize contributions' },
     ]
