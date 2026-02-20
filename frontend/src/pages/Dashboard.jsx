@@ -43,6 +43,14 @@ const investmentCalculators = [
     features: ['Inflation Adjusted', 'Fee Impact', 'Visual Growth'],
   },
   {
+    id: 'fee-comparison',
+    title: 'Fee Comparison (EAC)',
+    description: 'See how fees impact your investment returns',
+    icon: Scale,
+    path: '/fee-comparison',
+    features: ['EAC Analysis', 'Fee Impact', '3-Way Comparison'],
+  },
+  {
     id: 'compound-interest',
     title: 'Compound Interest',
     description: 'Calculate returns with multiple compounding frequencies',
