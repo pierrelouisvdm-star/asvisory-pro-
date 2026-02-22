@@ -48,7 +48,7 @@ const investmentCalculators = [
     description: 'See how fees impact your investment returns',
     icon: Scale,
     path: '/fee-comparison',
-    features: ['EAC Analysis', 'Fee Impact', '3-Way Comparison'],
+    features: ['EAC Analysis', 'Fee Impact', 'Side-by-Side'],
   },
   {
     id: 'compound-interest',
