@@ -360,7 +360,7 @@ const FeeComparisonCalculator = () => {
       </div>
 
       {/* Results Comparison */}
-      <div className="grid lg:grid-cols-3 gap-4">
+      <div className="grid lg:grid-cols-2 gap-4">
         {results.map((result, idx) => (
           <Card 
             key={idx}
