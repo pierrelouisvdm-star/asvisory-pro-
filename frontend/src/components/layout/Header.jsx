@@ -7,7 +7,7 @@ import {
   Umbrella, PiggyBank, Receipt, ScrollText, ShieldAlert, CreditCard, 
   GraduationCap, Wallet, Landmark, Users, LogIn, LogOut, User, 
   BarChart3, GitCompare, ArrowRightLeft, Crown, LineChart, Briefcase, 
-  Target, FileText, Home, Settings, Grid3X3, Scale
+  Target, FileText, Home, Settings, Grid3X3, Scale, ChevronDown, ChevronRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
