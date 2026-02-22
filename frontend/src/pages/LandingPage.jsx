@@ -232,7 +232,7 @@ export const LandingPage = () => {
           <div className="flex flex-col items-center text-center">
             {/* CSS-based Logo - perfectly integrated */}
             <div className="mb-8">
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white italic tracking-tight" style={{ fontFamily: "'Inter', sans-serif", fontStyle: 'italic' }}>
+              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white tracking-tight">
                 Advisory Pro
               </h1>
               <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase">
