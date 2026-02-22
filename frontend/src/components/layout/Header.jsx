@@ -85,6 +85,7 @@ const quickTools = [
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showCalculators, setShowCalculators] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth();
 
@@ -94,6 +95,10 @@ export const Header = () => {
   };
 
   const isActive = (path) => location.pathname === path;
+
+  const toggleCategory = (category) => {
+    setExpandedCategory(expandedCategory === category ? null : category);
+  };
 
   // Simple nav link component
   const NavLink = ({ to, children, icon: Icon, className }) => (
