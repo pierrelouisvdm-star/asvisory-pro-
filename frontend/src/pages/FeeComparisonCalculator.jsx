@@ -152,7 +152,7 @@ const FeeComparisonCalculator = () => {
   const worstOption = sortedByValue[sortedByValue.length - 1];
   const savingsFromBest = worstOption ? bestOption.finalValue - worstOption.finalValue : 0;
 
-  const colors = ['#10b981', '#3b82f6', '#f59e0b'];
+  const colors = ['#10b981', '#3b82f6'];
 
   const InputField = ({ label, value, onChange, prefix, suffix, step = 1, min = 0, max }) => (
     <div className="space-y-2">
