@@ -615,11 +615,10 @@ const FeeComparisonCalculator = () => {
           { label: 'Expected Return (before fees)', value: `${expectedReturn}%` },
         ]}
         results={[
-          { label: `${results[0].name} (EAC: ${results[0].totalAnnualFee.toFixed(2)}%)`, value: formatCurrency(results[0].finalValue) },
-          { label: `${results[1].name} (EAC: ${results[1].totalAnnualFee.toFixed(2)}%)`, value: formatCurrency(results[1].finalValue) },
-          { label: `${results[2].name} (EAC: ${results[2].totalAnnualFee.toFixed(2)}%)`, value: formatCurrency(results[2].finalValue) },
-          { label: 'Potential Savings (Best vs Worst)', value: formatCurrency(savingsFromBest) },
-          { label: 'Best Option', value: bestOption.name },
+          { label: `${results[0]?.name} (EAC: ${results[0]?.totalAnnualFee.toFixed(2)}%)`, value: formatCurrency(results[0]?.finalValue) },
+          { label: `${results[1]?.name} (EAC: ${results[1]?.totalAnnualFee.toFixed(2)}%)`, value: formatCurrency(results[1]?.finalValue) },
+          { label: 'Difference', value: formatCurrency(savingsFromBest) },
+          { label: 'Best Option', value: bestOption?.name },
         ]}
       />
     </div>
