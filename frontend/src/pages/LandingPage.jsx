@@ -351,10 +351,10 @@ export const LandingPage = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-blue-500/10 text-blue-600 border-blue-500/30">
-              <Calculator className="h-3 w-3 mr-2" />
-              17+ Professional Calculators
-            </Badge>
+            <p className="mb-4 text-blue-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
+              <Calculator className="h-4 w-4" />
+              18+ Professional Calculators
+            </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Every Calculation You Need
             </h2>
