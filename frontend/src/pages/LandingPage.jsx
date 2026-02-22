@@ -222,30 +222,35 @@ export const LandingPage = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-background" />
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+        {/* Background with logo-inspired gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a2e] via-[#12124a] to-[#0a0a2e]" />
+        <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-3xl" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="text-center">
-            <Badge className="mb-6 bg-primary/10 text-primary border border-primary/30 px-4 py-1.5 text-sm">
+            {/* Logo Image */}
+            <div className="mb-8 flex justify-center">
+              <img 
+                src={logo} 
+                alt="AdvisoryPro" 
+                className="h-32 sm:h-40 lg:h-48 w-auto object-contain"
+                data-testid="hero-logo"
+              />
+            </div>
+            
+            <Badge className="mb-6 bg-blue-500/20 text-blue-300 border border-blue-400/30 px-4 py-1.5 text-sm">
               <Sparkles className="h-3 w-3 mr-2" />
               Built for Financial Advisors
             </Badge>
             
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-7xl font-extrabold text-foreground mb-4 tracking-tight">
-              Empower Your Practice with{' '}
-              <span className="text-primary">
-                AdvisoryPro
-              </span>
-            </h1>
-            
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-muted-foreground mb-6">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-blue-100/80 mb-6">
               The Complete Toolkit for South African Financial Advisors
             </h2>
             
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-foreground font-medium">17+ professional calculators</span>, 
+            <p className="text-lg sm:text-xl text-blue-100/60 max-w-3xl mx-auto mb-8 leading-relaxed">
+              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">18+ professional calculators</span>, 
               client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
             </p>
 
@@ -253,27 +258,27 @@ export const LandingPage = () => {
             <div className="flex flex-wrap justify-center gap-8 mb-10">
               {stats.map((stat, idx) => (
                 <div key={idx} className="text-center group">
-                  <p className="text-3xl font-bold text-primary group-hover:scale-110 transition-transform">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground">{stat.label}</p>
+                  <p className="text-3xl font-bold text-blue-400 group-hover:scale-110 transition-transform">{stat.value}</p>
+                  <p className="text-sm text-blue-100/60">{stat.label}</p>
                 </div>
               ))}
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 shadow-lg shadow-primary/25 h-14 group">
+                <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg px-8 shadow-lg shadow-blue-500/25 h-14 group">
                   Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/pricing">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-border h-14">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-blue-400/30 text-blue-100 hover:bg-blue-500/10 h-14">
                   View Pricing
                 </Button>
               </Link>
             </div>
             
-            <p className="mt-4 text-sm text-muted-foreground">
+            <p className="mt-4 text-sm text-blue-100/50">
               R299/month • Cancel anytime • Have a coupon? Apply at signup
             </p>
           </div>
