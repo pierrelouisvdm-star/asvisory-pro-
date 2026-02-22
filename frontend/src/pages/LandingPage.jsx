@@ -290,9 +290,9 @@ export const LandingPage = () => {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="mb-4 bg-destructive/10 text-destructive border-destructive/30">
+              <p className="mb-4 text-destructive text-sm font-medium uppercase tracking-wide">
                 The Problem
-              </Badge>
+              </p>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
                 Tired of Outdated Spreadsheets?
               </h2>
