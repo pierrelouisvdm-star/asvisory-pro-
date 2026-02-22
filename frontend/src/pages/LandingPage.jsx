@@ -222,74 +222,64 @@ export const LandingPage = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background matching logo edges exactly */}
-        <div className="absolute inset-0 bg-[#0a0a1e]" />
-        {/* Spotlight effect to match logo center */}
-        <div className="absolute top-[15%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-b from-indigo-500/20 via-purple-500/15 to-transparent rounded-full blur-[100px]" />
+        {/* Background matching new logo */}
+        <div className="absolute inset-0 bg-[#0c0c1a]" />
+        {/* Spotlight effect */}
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gradient-to-b from-indigo-500/15 via-purple-500/10 to-transparent rounded-full blur-[80px]" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-          <div className="flex flex-col items-center">
-            {/* Logo Image - perfectly centered with heavy fade */}
-            <div 
-              className="w-full flex justify-center items-center"
-              style={{
-                maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 60%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 60%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)',
-                maskComposite: 'intersect',
-                WebkitMaskComposite: 'source-in'
-              }}
-            >
+          <div className="flex flex-col items-center text-center">
+            {/* New Logo Image - cleaner */}
+            <div className="w-full max-w-3xl mx-auto mb-6">
               <img 
                 src={logo} 
                 alt="AdvisoryPro" 
-                className="h-64 sm:h-72 lg:h-96 w-auto object-contain mx-auto"
+                className="w-full h-auto object-contain"
                 data-testid="hero-logo"
               />
             </div>
             
-            <div className="text-center -mt-4">
-              <Badge className="mb-6 bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 text-sm">
-                <Sparkles className="h-3 w-3 mr-2" />
-                Built for Financial Advisors
-              </Badge>
-              
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-                The Complete Toolkit for South African Financial Advisors
-              </h2>
-              
-              <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-                Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">18+ professional calculators</span>, 
-                client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
-              </p>
+            <Badge className="mb-6 bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 text-sm">
+              <Sparkles className="h-3 w-3 mr-2" />
+              Built for Financial Advisors
+            </Badge>
+            
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
+              The Complete Toolkit for South African Financial Advisors
+            </h2>
+            
+            <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
+              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">18+ professional calculators</span>, 
+              client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
+            </p>
 
-              {/* Stats Row */}
-              <div className="flex flex-wrap justify-center gap-8 mb-10">
-                {stats.map((stat, idx) => (
-                  <div key={idx} className="text-center group">
-                    <p className="text-3xl font-bold text-indigo-400 group-hover:scale-110 transition-transform">{stat.value}</p>
-                    <p className="text-sm text-slate-400">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/auth">
-                  <Button size="lg" className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-lg px-8 shadow-lg shadow-indigo-500/25 h-14 group">
-                    Get Started Now
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link to="/pricing">
-                  <Button size="lg" variant="outline" className="text-lg px-8 border-indigo-400/30 text-slate-200 hover:bg-indigo-500/10 h-14">
-                    View Pricing
-                  </Button>
-                </Link>
-              </div>
-              
-              <p className="mt-4 text-sm text-slate-500">
-                R299/month • Cancel anytime • Have a coupon? Apply at signup
-              </p>
+            {/* Stats Row */}
+            <div className="flex flex-wrap justify-center gap-8 mb-10">
+              {stats.map((stat, idx) => (
+                <div key={idx} className="text-center group">
+                  <p className="text-3xl font-bold text-indigo-400 group-hover:scale-110 transition-transform">{stat.value}</p>
+                  <p className="text-sm text-slate-400">{stat.label}</p>
+                </div>
+              ))}
             </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/auth">
+                <Button size="lg" className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-lg px-8 shadow-lg shadow-indigo-500/25 h-14 group">
+                  Get Started Now
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/pricing">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-indigo-400/30 text-slate-200 hover:bg-indigo-500/10 h-14">
+                  View Pricing
+                </Button>
+              </Link>
+            </div>
+            
+            <p className="mt-4 text-sm text-slate-500">
+              R299/month • Cancel anytime • Have a coupon? Apply at signup
+            </p>
           </div>
         </div>
       </section>
