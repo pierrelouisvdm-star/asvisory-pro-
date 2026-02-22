@@ -401,10 +401,10 @@ export const LandingPage = () => {
       <section className="relative py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-amber-500/10 text-amber-600 border-amber-500/30">
-              <Zap className="h-3 w-3 mr-2" />
+            <p className="mb-4 text-amber-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
+              <Zap className="h-4 w-4" />
               Powerful Features
-            </Badge>
+            </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Built for How You Actually Work
             </h2>
