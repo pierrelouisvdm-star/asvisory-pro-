@@ -224,9 +224,9 @@ export const LandingPage = () => {
       <section className="relative overflow-hidden min-h-[70vh] flex items-center">
         {/* Background */}
         <div className="absolute inset-0 bg-[#0a0a18]" />
-        {/* Spotlight effect */}
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-b from-purple-500/30 via-indigo-500/20 to-transparent rounded-full blur-[100px]" />
-        <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[300px] h-[200px] bg-gradient-to-b from-pink-400/20 to-transparent rounded-full blur-[60px]" />
+        {/* Spotlight effect - more blue */}
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-b from-blue-500/30 via-blue-600/20 to-transparent rounded-full blur-[100px]" />
+        <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[300px] h-[200px] bg-gradient-to-b from-sky-400/25 to-transparent rounded-full blur-[60px]" />
         
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <div className="flex flex-col items-center text-center">
