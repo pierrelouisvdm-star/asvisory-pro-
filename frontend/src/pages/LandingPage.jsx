@@ -513,10 +513,10 @@ export const LandingPage = () => {
       <section id="about" className="relative py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-emerald-500/10 text-emerald-600 border-emerald-500/30">
-              <Building2 className="h-3 w-3 mr-2" />
+            <p className="mb-4 text-emerald-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
+              <Building2 className="h-4 w-4" />
               About Us
-            </Badge>
+            </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Empowering Financial Advisors Across South Africa
             </h2>
