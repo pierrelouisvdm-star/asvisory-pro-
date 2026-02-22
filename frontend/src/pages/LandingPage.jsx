@@ -15,7 +15,7 @@ import {
   ChevronRight, Play, Receipt, Mail, Phone, MapPin,
   Send, Linkedin, Twitter, Building2, Loader2, Scale
 } from 'lucide-react';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_new.png';
 
 // Calculator categories with detailed descriptions
 const calculatorCategories = [
