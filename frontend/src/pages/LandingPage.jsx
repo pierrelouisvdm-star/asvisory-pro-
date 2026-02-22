@@ -222,26 +222,26 @@ export const LandingPage = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background matching logo exactly - #080810 to #0a0a1a range */}
-        <div className="absolute inset-0 bg-[#080815]" />
+        {/* Background matching logo exactly */}
+        <div className="absolute inset-0 bg-[#070714]" />
         {/* Spotlight effect to match logo */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[900px] h-[700px] bg-gradient-to-b from-indigo-600/25 via-purple-600/15 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[800px] bg-gradient-to-b from-indigo-600/20 via-purple-600/10 to-transparent rounded-full blur-3xl" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           <div className="text-center">
-            {/* Logo Image - with edge fade effect */}
-            <div className="mb-4 flex justify-center">
+            {/* Logo Image - with stronger edge fade */}
+            <div className="mb-2 flex justify-center">
               <div 
                 className="relative"
                 style={{
-                  maskImage: 'radial-gradient(ellipse 80% 70% at center, black 50%, transparent 100%)',
-                  WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at center, black 50%, transparent 100%)'
+                  maskImage: 'radial-gradient(ellipse 70% 60% at center, black 30%, transparent 80%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at center, black 30%, transparent 80%)'
                 }}
               >
                 <img 
                   src={logo} 
                   alt="AdvisoryPro" 
-                  className="h-48 sm:h-56 lg:h-72 w-auto object-contain"
+                  className="h-56 sm:h-64 lg:h-80 w-auto object-contain"
                   data-testid="hero-logo"
                 />
               </div>
