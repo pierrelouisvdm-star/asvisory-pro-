@@ -285,7 +285,7 @@ const FeeComparisonCalculator = () => {
             <CardDescription>Adjust the fee components for each option</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-2 gap-4">
               {options.map((option, idx) => (
                 <div 
                   key={idx} 
