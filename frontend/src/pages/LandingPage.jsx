@@ -316,9 +316,9 @@ export const LandingPage = () => {
               </ul>
             </div>
             <div>
-              <Badge className="mb-4 bg-emerald-500/10 text-emerald-600 border-emerald-500/30">
+              <p className="mb-4 text-emerald-500 text-sm font-medium uppercase tracking-wide">
                 The Solution
-              </Badge>
+              </p>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
                 AdvisoryPro Does It All
               </h2>
