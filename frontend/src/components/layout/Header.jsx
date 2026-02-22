@@ -320,35 +320,61 @@ export const Header = () => {
               </Link>
             </div>
 
-            {/* Calculator Categories */}
-            {allCalculators.map((category) => (
-              <div key={category.category} className="pt-4 border-t border-border">
-                <h3 className={cn(
-                  "px-4 text-xs font-semibold uppercase tracking-wider mb-2",
-                  category.color === 'emerald' && "text-emerald-600",
-                  category.color === 'blue' && "text-blue-600",
-                  category.color === 'amber' && "text-amber-600",
-                  category.color === 'purple' && "text-purple-600",
-                  category.color === 'rose' && "text-rose-600",
-                  category.color === 'cyan' && "text-cyan-600",
-                )}>
-                  {category.category}
-                </h3>
-                <div className="space-y-1">
-                  {category.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center gap-3 px-4 py-2 text-muted-foreground rounded-lg hover:bg-muted hover:text-foreground"
-                    >
-                      <item.icon className="h-4 w-4" />
-                      {item.label}
-                    </Link>
-                  ))}
+            {/* Calculator Categories - Collapsible on Mobile */}
+            <div className="pt-4 border-t border-border">
+              <h3 className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                Calculators
+              </h3>
+              {allCalculators.map((category) => (
+                <div key={category.category} className="mb-1">
+                  <button
+                    onClick={() => toggleCategory(category.category)}
+                    className={cn(
+                      "w-full flex items-center justify-between px-4 py-3 text-foreground rounded-lg hover:bg-muted",
+                      expandedCategory === category.category && "bg-muted"
+                    )}
+                  >
+                    <span className={cn(
+                      "text-sm font-medium",
+                      category.color === 'emerald' && "text-emerald-600",
+                      category.color === 'blue' && "text-blue-600",
+                      category.color === 'amber' && "text-amber-600",
+                      category.color === 'purple' && "text-purple-600",
+                      category.color === 'rose' && "text-rose-600",
+                      category.color === 'cyan' && "text-cyan-600",
+                    )}>
+                      {category.category}
+                    </span>
+                    {expandedCategory === category.category ? (
+                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                  </button>
+                  
+                  {expandedCategory === category.category && (
+                    <div className="ml-4 pl-4 border-l border-border space-y-1 py-2">
+                      {category.items.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          onClick={() => setIsMenuOpen(false)}
+                          className={cn(
+                            "flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors",
+                            isActive(item.path)
+                              ? "bg-primary/10 text-primary"
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          )}
+                        >
+                          <item.icon className="h-4 w-4" />
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
 
             {/* More Tools */}
             <div className="pt-4 border-t border-border">
