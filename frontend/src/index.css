@@ -98,40 +98,40 @@ code {
         --background: 235 70% 8%;
         --foreground: 220 20% 95%;
         
-        /* Lighter Dark Cards */
-        --card: 220 25% 18%;
+        /* Dark Navy Cards matching logo */
+        --card: 235 60% 12%;
         --card-foreground: 220 20% 95%;
         
-        --popover: 220 25% 18%;
+        --popover: 235 60% 12%;
         --popover-foreground: 220 20% 95%;
         
         /* Secondary */
-        --secondary: 220 25% 22%;
+        --secondary: 235 50% 16%;
         --secondary-foreground: 220 20% 95%;
         
         /* Muted */
-        --muted: 220 25% 22%;
+        --muted: 235 50% 16%;
         --muted-foreground: 220 15% 65%;
         
-        /* Accent - Brighter Blue */
-        --accent: 220 70% 55%;
+        /* Accent - Bright Blue from logo spotlight */
+        --accent: 220 90% 60%;
         --accent-foreground: 0 0% 100%;
         
-        --success: 160 84% 45%;
+        --success: 220 90% 60%;
         --success-foreground: 0 0% 100%;
         
         --destructive: 0 62% 55%;
         --destructive-foreground: 0 0% 100%;
         
-        /* Border - Softer */
-        --border: 220 20% 25%;
-        --input: 220 20% 25%;
-        --ring: 220 70% 55%;
+        /* Border - Deep navy */
+        --border: 235 40% 20%;
+        --input: 235 40% 20%;
+        --ring: 220 90% 60%;
         
-        /* Shadows */
+        /* Shadows - Blue glow matching logo */
         --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.3);
         --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.4);
-        --shadow-glow: 0 0 30px -5px rgba(96, 165, 250, 0.25);
+        --shadow-glow: 0 0 30px -5px rgba(96, 130, 250, 0.3);
     }
 }
 
