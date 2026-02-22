@@ -24,7 +24,7 @@ const FeeComparisonCalculator = () => {
   const [investmentYears, setInvestmentYears] = useState(20);
   const [expectedReturn, setExpectedReturn] = useState(10);
   
-  // Fee structures for comparison (up to 3 options)
+  // Fee structures for comparison (2 options)
   const [options, setOptions] = useState([
     {
       name: 'Option A',
@@ -35,13 +35,6 @@ const FeeComparisonCalculator = () => {
     },
     {
       name: 'Option B',
-      ter: 0,
-      platformFee: 0,
-      advisorFee: 0,
-      performanceFee: 0,
-    },
-    {
-      name: 'Option C',
       ter: 0,
       platformFee: 0,
       advisorFee: 0,
