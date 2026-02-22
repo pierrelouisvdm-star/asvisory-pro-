@@ -673,10 +673,10 @@ export const LandingPage = () => {
       <section id="contact" className="relative py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <Badge className="mb-4 bg-blue-500/10 text-blue-600 border-blue-500/30">
-              <Mail className="h-3 w-3 mr-2" />
+            <p className="mb-4 text-blue-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
+              <Mail className="h-4 w-4" />
               Contact Us
-            </Badge>
+            </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Get in Touch
             </h2>
