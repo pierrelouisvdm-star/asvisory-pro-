@@ -17,38 +17,38 @@ code {
 
 @layer base {
     :root {
-        /* AdvisoryPro - Light Theme: White & Navy Blue */
+        /* AdvisoryPro - Light Theme: White & Deep Navy/Purple */
         
-        /* Primary - Navy Blue */
-        --primary: 220 70% 25%;
+        /* Primary - Deep Navy Blue matching logo */
+        --primary: 235 70% 30%;
         --primary-foreground: 0 0% 100%;
         
         /* Pure White Background */
         --background: 0 0% 100%;
-        --foreground: 220 50% 15%;
+        --foreground: 235 50% 15%;
         
         /* White Cards */
         --card: 0 0% 100%;
-        --card-foreground: 220 50% 15%;
+        --card-foreground: 235 50% 15%;
         
         /* Popover */
         --popover: 0 0% 100%;
-        --popover-foreground: 220 50% 15%;
+        --popover-foreground: 235 50% 15%;
         
         /* Secondary - Light Blue/Gray */
-        --secondary: 220 30% 96%;
-        --secondary-foreground: 220 50% 15%;
+        --secondary: 235 30% 96%;
+        --secondary-foreground: 235 50% 15%;
         
         /* Muted - Light Gray */
-        --muted: 220 20% 96%;
-        --muted-foreground: 220 20% 40%;
+        --muted: 235 20% 96%;
+        --muted-foreground: 235 20% 40%;
         
-        /* Accent - Navy Blue */
-        --accent: 220 70% 25%;
+        /* Accent - Deep Navy/Purple matching logo */
+        --accent: 235 70% 30%;
         --accent-foreground: 0 0% 100%;
         
-        /* Success - Emerald */
-        --success: 160 84% 39%;
+        /* Success - Blue accent from logo */
+        --success: 220 90% 56%;
         --success-foreground: 0 0% 100%;
         
         /* Destructive */
@@ -56,33 +56,33 @@ code {
         --destructive-foreground: 0 0% 100%;
         
         /* Border & Input - Light Gray */
-        --border: 220 20% 90%;
-        --input: 220 20% 90%;
-        --ring: 220 70% 25%;
+        --border: 235 20% 90%;
+        --input: 235 20% 90%;
+        --ring: 235 70% 30%;
         
-        /* Chart Colors - Navy Blue Palette */
-        --chart-1: 220 70% 30%;
-        --chart-2: 220 60% 45%;
-        --chart-3: 160 70% 40%;
-        --chart-4: 43 74% 55%;
-        --chart-5: 220 50% 60%;
+        /* Chart Colors - Logo-inspired Palette */
+        --chart-1: 235 70% 35%;
+        --chart-2: 250 60% 50%;
+        --chart-3: 220 90% 56%;
+        --chart-4: 260 70% 60%;
+        --chart-5: 235 50% 60%;
         
-        /* Custom Tokens */
-        --emerald: 160 84% 39%;
-        --emerald-light: 160 84% 50%;
-        --emerald-dark: 161 94% 30%;
-        --navy: 220 70% 25%;
-        --navy-light: 220 50% 35%;
+        /* Custom Tokens - Updated to match logo */
+        --emerald: 220 90% 56%;
+        --emerald-light: 220 90% 65%;
+        --emerald-dark: 220 90% 45%;
+        --navy: 235 70% 12%;
+        --navy-light: 235 50% 35%;
         --gold: 43 74% 50%;
-        --slate-dark: 220 50% 15%;
-        --slate-medium: 220 30% 85%;
+        --slate-dark: 235 50% 15%;
+        --slate-medium: 235 30% 85%;
         
         --radius: 0.75rem;
         
-        /* Shadows - Lighter for white theme */
+        /* Shadows - With blue tint */
         --shadow-soft: 0 2px 10px -3px rgba(0,0,0,0.1);
         --shadow-elevated: 0 10px 40px -15px rgba(0,0,0,0.15);
-        --shadow-glow: 0 0 30px -5px rgba(30, 58, 138, 0.2);
+        --shadow-glow: 0 0 30px -5px rgba(59, 50, 138, 0.2);
         
         /* Transitions */
         --transition-smooth: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -90,12 +90,12 @@ code {
     }
     
     .dark {
-        /* Dark Theme - Lighter/Softer Dark */
-        --primary: 220 70% 50%;
+        /* Dark Theme - Deep Navy matching logo */
+        --primary: 220 90% 60%;
         --primary-foreground: 0 0% 100%;
         
-        /* Softer Dark Background */
-        --background: 220 25% 14%;
+        /* Deep Navy Background matching logo */
+        --background: 235 70% 8%;
         --foreground: 220 20% 95%;
         
         /* Lighter Dark Cards */
