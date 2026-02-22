@@ -542,7 +542,7 @@ const FeeComparisonCalculator = () => {
               <CardDescription>Annual cost breakdown by category</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid md:grid-cols-3 gap-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 {results.map((result, idx) => (
                   <div key={idx} className="space-y-3">
                     <h3 className="font-medium text-white">{result.name}</h3>
