@@ -429,9 +429,9 @@ export const LandingPage = () => {
                   <p className="text-muted-foreground mb-4 leading-relaxed">{feature.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {feature.highlights.map((highlight, idx) => (
-                      <Badge key={idx} variant="outline" className="text-xs border-primary/30 text-primary">
+                      <span key={idx} className="text-xs text-primary border-b border-primary/30 pb-0.5">
                         {highlight}
-                      </Badge>
+                      </span>
                     ))}
                   </div>
                 </div>
