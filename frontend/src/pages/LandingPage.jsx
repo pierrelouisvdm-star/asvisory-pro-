@@ -222,26 +222,29 @@ export const LandingPage = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background matching logo exactly */}
-        <div className="absolute inset-0 bg-[#0a0a1f]" />
+        {/* Background matching logo exactly - #080810 to #0a0a1a range */}
+        <div className="absolute inset-0 bg-[#080815]" />
         {/* Spotlight effect to match logo */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[800px] h-[600px] bg-gradient-to-b from-indigo-600/30 via-purple-600/20 to-transparent rounded-full blur-3xl" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/4 w-[900px] h-[700px] bg-gradient-to-b from-indigo-600/25 via-purple-600/15 to-transparent rounded-full blur-3xl" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
           <div className="text-center">
-            {/* Logo Image - larger and seamless */}
-            <div className="mb-6 flex justify-center">
-              <img 
-                src={logo} 
-                alt="AdvisoryPro" 
-                className="h-40 sm:h-52 lg:h-64 w-auto object-contain drop-shadow-2xl"
-                data-testid="hero-logo"
-                style={{ 
-                  mixBlendMode: 'normal',
-                  filter: 'drop-shadow(0 0 60px rgba(99, 102, 241, 0.3))'
+            {/* Logo Image - with edge fade effect */}
+            <div className="mb-4 flex justify-center">
+              <div 
+                className="relative"
+                style={{
+                  maskImage: 'radial-gradient(ellipse 80% 70% at center, black 50%, transparent 100%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at center, black 50%, transparent 100%)'
                 }}
-              />
+              >
+                <img 
+                  src={logo} 
+                  alt="AdvisoryPro" 
+                  className="h-48 sm:h-56 lg:h-72 w-auto object-contain"
+                  data-testid="hero-logo"
+                />
+              </div>
             </div>
             
             <Badge className="mb-6 bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 text-sm">
