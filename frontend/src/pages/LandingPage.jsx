@@ -221,22 +221,23 @@ export const LandingPage = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        {/* Background matching new logo */}
-        <div className="absolute inset-0 bg-[#0c0c1a]" />
+      <section className="relative overflow-hidden min-h-[70vh] flex items-center">
+        {/* Background */}
+        <div className="absolute inset-0 bg-[#0a0a18]" />
         {/* Spotlight effect */}
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gradient-to-b from-indigo-500/15 via-purple-500/10 to-transparent rounded-full blur-[80px]" />
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-b from-purple-500/30 via-indigo-500/20 to-transparent rounded-full blur-[100px]" />
+        <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[300px] h-[200px] bg-gradient-to-b from-pink-400/20 to-transparent rounded-full blur-[60px]" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <div className="flex flex-col items-center text-center">
-            {/* New Logo Image - cleaner */}
-            <div className="w-full max-w-3xl mx-auto mb-6">
-              <img 
-                src={logo} 
-                alt="AdvisoryPro" 
-                className="w-full h-auto object-contain"
-                data-testid="hero-logo"
-              />
+            {/* CSS-based Logo - perfectly integrated */}
+            <div className="mb-8">
+              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white italic tracking-tight" style={{ fontFamily: "'Inter', sans-serif", fontStyle: 'italic' }}>
+                Advisory Pro
+              </h1>
+              <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase">
+                Empower Your Practice
+              </p>
             </div>
             
             <Badge className="mb-6 bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 text-sm">
