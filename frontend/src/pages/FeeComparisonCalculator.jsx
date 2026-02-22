@@ -219,7 +219,7 @@ const FeeComparisonCalculator = () => {
         </Card>
       )}
 
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-2 gap-6">
         {/* Investment Parameters */}
         <Card className="bg-navy-900/60 border-navy-700">
           <CardHeader>
