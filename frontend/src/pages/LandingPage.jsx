@@ -240,10 +240,10 @@ export const LandingPage = () => {
               </p>
             </div>
             
-            <Badge className="mb-6 bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 text-sm">
-              <Sparkles className="h-3 w-3 mr-2" />
+            <p className="mb-6 text-indigo-300 text-sm flex items-center justify-center gap-2">
+              <Sparkles className="h-3 w-3" />
               Built for Financial Advisors
-            </Badge>
+            </p>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
               The Complete Toolkit for South African Financial Advisors
