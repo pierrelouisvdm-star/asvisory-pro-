@@ -222,34 +222,38 @@ export const LandingPage = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background with logo-inspired gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a2e] via-[#12124a] to-[#0a0a2e]" />
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-3xl" />
+        {/* Background matching logo exactly */}
+        <div className="absolute inset-0 bg-[#0a0a1f]" />
+        {/* Spotlight effect to match logo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/3 w-[800px] h-[600px] bg-gradient-to-b from-indigo-600/30 via-purple-600/20 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/10 rounded-full blur-3xl" />
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="text-center">
-            {/* Logo Image */}
-            <div className="mb-8 flex justify-center">
+            {/* Logo Image - larger and seamless */}
+            <div className="mb-6 flex justify-center">
               <img 
                 src={logo} 
                 alt="AdvisoryPro" 
-                className="h-32 sm:h-40 lg:h-48 w-auto object-contain"
+                className="h-40 sm:h-52 lg:h-64 w-auto object-contain drop-shadow-2xl"
                 data-testid="hero-logo"
+                style={{ 
+                  mixBlendMode: 'normal',
+                  filter: 'drop-shadow(0 0 60px rgba(99, 102, 241, 0.3))'
+                }}
               />
             </div>
             
-            <Badge className="mb-6 bg-blue-500/20 text-blue-300 border border-blue-400/30 px-4 py-1.5 text-sm">
+            <Badge className="mb-6 bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 px-4 py-1.5 text-sm">
               <Sparkles className="h-3 w-3 mr-2" />
               Built for Financial Advisors
             </Badge>
             
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-blue-100/80 mb-6">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
               The Complete Toolkit for South African Financial Advisors
             </h2>
             
-            <p className="text-lg sm:text-xl text-blue-100/60 max-w-3xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
               Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">18+ professional calculators</span>, 
               client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
             </p>
@@ -258,27 +262,27 @@ export const LandingPage = () => {
             <div className="flex flex-wrap justify-center gap-8 mb-10">
               {stats.map((stat, idx) => (
                 <div key={idx} className="text-center group">
-                  <p className="text-3xl font-bold text-blue-400 group-hover:scale-110 transition-transform">{stat.value}</p>
-                  <p className="text-sm text-blue-100/60">{stat.label}</p>
+                  <p className="text-3xl font-bold text-indigo-400 group-hover:scale-110 transition-transform">{stat.value}</p>
+                  <p className="text-sm text-slate-400">{stat.label}</p>
                 </div>
               ))}
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg px-8 shadow-lg shadow-blue-500/25 h-14 group">
+                <Button size="lg" className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-lg px-8 shadow-lg shadow-indigo-500/25 h-14 group">
                   Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link to="/pricing">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-blue-400/30 text-blue-100 hover:bg-blue-500/10 h-14">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-indigo-400/30 text-slate-200 hover:bg-indigo-500/10 h-14">
                   View Pricing
                 </Button>
               </Link>
             </div>
             
-            <p className="mt-4 text-sm text-blue-100/50">
+            <p className="mt-4 text-sm text-slate-500">
               R299/month • Cancel anytime • Have a coupon? Apply at signup
             </p>
           </div>
