@@ -449,9 +449,9 @@ export const LandingPage = () => {
       {/* Pricing Section */}
       <section className="relative py-20 bg-gradient-to-b from-muted/30 to-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Badge className="mb-4 bg-primary/10 text-primary border-primary/30">
+          <p className="mb-4 text-primary text-sm font-medium uppercase tracking-wide">
             Simple Pricing
-          </Badge>
+          </p>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
             One Plan. Everything Included.
           </h2>
