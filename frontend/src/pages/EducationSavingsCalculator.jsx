@@ -100,29 +100,29 @@ export const EducationSavingsCalculator = () => {
   
   // Basic inputs
   const [inputs, setInputs] = useState({
-    childAge: 3,
+    childAge: 0,
     numberOfChildren: 1,
-    currentSavings: 50000,
-    monthlyContribution: 3000,
+    currentSavings: 0,
+    monthlyContribution: 0,
     expectedReturn: 10,
     educationInflation: 8,
   });
 
   // Education stages configuration
   const [stages, setStages] = useState({
-    nursery: { enabled: true, schoolType: 'private', customCost: null },
-    primary: { enabled: true, schoolType: 'private', customCost: null },
-    highSchool: { enabled: true, schoolType: 'private', customCost: null },
-    university: { enabled: true, schoolType: 'government', customCost: null },
+    nursery: { enabled: false, schoolType: 'government', customCost: null },
+    primary: { enabled: false, schoolType: 'government', customCost: null },
+    highSchool: { enabled: false, schoolType: 'government', customCost: null },
+    university: { enabled: false, schoolType: 'government', customCost: null },
   });
 
   // Miscellaneous costs
   const [miscCosts, setMiscCosts] = useState({
-    uniform: { enabled: true, annual: 5000 },
-    transport: { enabled: true, annual: 18000 },
-    meals: { enabled: true, annual: 8000 },
-    technology: { enabled: true, annual: 6000 },
-    extracurricular: { enabled: true, annual: 12000 },
+    uniform: { enabled: false, annual: 0 },
+    transport: { enabled: false, annual: 0 },
+    meals: { enabled: false, annual: 0 },
+    technology: { enabled: false, annual: 0 },
+    extracurricular: { enabled: false, annual: 0 },
   });
 
   const updateInput = (field, value) => {
