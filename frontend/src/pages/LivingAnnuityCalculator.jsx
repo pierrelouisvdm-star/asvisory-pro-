@@ -40,7 +40,7 @@ export const LivingAnnuityCalculator = () => {
   const { symbol, formatCurrency } = useCurrency();
   
   const [inputs, setInputs] = useState({
-    capitalAmount: 2000000,
+    capitalAmount: 0,
     drawdownRate: '5',
     paymentFrequency: '12',
     expectedReturn: 8,
