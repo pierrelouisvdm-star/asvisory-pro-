@@ -17,24 +17,24 @@ export const CashFlowProjector = () => {
   const currencySymbol = currentCurrency.symbol;
 
   const [income, setIncome] = useState({
-    salary: 50000,
-    bonus: 5000,
+    salary: 0,
+    bonus: 0,
     rental: 0,
-    investments: 500,
+    investments: 0,
     other: 0,
   });
 
   const [expenses, setExpenses] = useState({
-    housing: 15000,
-    utilities: 2500,
-    transport: 4000,
-    groceries: 5000,
-    insurance: 2000,
-    healthcare: 1500,
-    entertainment: 3000,
-    debt: 5000,
-    savings: 5000,
-    other: 2000,
+    housing: 0,
+    utilities: 0,
+    transport: 0,
+    groceries: 0,
+    insurance: 0,
+    healthcare: 0,
+    entertainment: 0,
+    debt: 0,
+    savings: 0,
+    other: 0,
   });
 
   const [projectionYears, setProjectionYears] = useState(5);
