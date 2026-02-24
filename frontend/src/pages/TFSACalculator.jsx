@@ -161,7 +161,15 @@ const TFSACalculator = () => {
         <Input
           type="number"
           value={value}
-          onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === '' || val === '-') {
+              onChange(0);
+            } else {
+              const parsed = parseFloat(val);
+              if (!isNaN(parsed)) onChange(parsed);
+            }
+          }}
           className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
           step={step}
           min={min}
