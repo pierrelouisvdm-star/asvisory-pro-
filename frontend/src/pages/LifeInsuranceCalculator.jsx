@@ -33,19 +33,19 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const defaultScenario = () => ({
   id: generateId(),
-  annualIncome: 360000, // R30,000 per month
+  annualIncome: 0,
   coverageMultiplier: '10',
-  customCoverage: 750000,
+  customCoverage: 0,
   age: 35,
   smoker: false,
   healthRating: 'good', // excellent, good, fair
   policyTerm: '20',
-  mortgageBalance: 250000,
-  otherDebts: 25000,
-  childrenEducationFund: 100000,
-  emergencyFund: 50000,
-  existingLifeInsurance: 100000,
-  dependents: 2,
+  mortgageBalance: 0,
+  otherDebts: 0,
+  childrenEducationFund: 0,
+  emergencyFund: 0,
+  existingLifeInsurance: 0,
+  dependents: 0,
   yearsUntilRetirement: 30,
   spouseIncome: 50000,
 });
