@@ -36,16 +36,16 @@ export const LoanComparisonTool = () => {
   const currencySymbol = currentCurrency.symbol;
 
   const [loans, setLoans] = useState([
-    { id: 1, name: 'Bank A', principal: 1000000, rate: 11.5, term: 240, fees: 5000 },
-    { id: 2, name: 'Bank B', principal: 1000000, rate: 12.0, term: 240, fees: 2500 },
+    { id: 1, name: 'Option A', principal: 0, rate: 0, term: 240, fees: 0 },
+    { id: 2, name: 'Option B', principal: 0, rate: 0, term: 240, fees: 0 },
   ]);
 
   const addLoan = () => {
     setLoans([...loans, {
       id: Date.now(),
       name: `Option ${loans.length + 1}`,
-      principal: 1000000,
-      rate: 11,
+      principal: 0,
+      rate: 0,
       term: 240,
       fees: 0,
     }]);
