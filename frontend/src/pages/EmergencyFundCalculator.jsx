@@ -46,16 +46,16 @@ export const EmergencyFundCalculator = () => {
   const { symbol, formatCurrency } = useCurrency();
   
   const [inputs, setInputs] = useState({
-    monthlyIncome: 50000,
-    monthlyExpenses: 35000,
-    currentSavings: 50000,
+    monthlyIncome: 0,
+    monthlyExpenses: 0,
+    currentSavings: 0,
     jobSecurity: 'moderate',
-    dependents: 2,
-    hasSpouseIncome: true,
-    spouseIncome: 30000,
-    hasHealthInsurance: true,
+    dependents: 0,
+    hasSpouseIncome: false,
+    spouseIncome: 0,
+    hasHealthInsurance: false,
     hasDisabilityInsurance: false,
-    monthlySavingsCapacity: 5000,
+    monthlySavingsCapacity: 0,
   });
 
   const updateInput = (field, value) => {

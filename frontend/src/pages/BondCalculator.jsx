@@ -27,8 +27,8 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const defaultScenario = () => ({
   id: generateId(),
-  propertyPrice: 1500000,
-  deposit: 150000,
+  propertyPrice: 0,
+  deposit: 0,
   interestRate: SA_PRIME_RATE, // Prime rate
   loanTerm: '20',
   extraMonthlyPayment: 0,

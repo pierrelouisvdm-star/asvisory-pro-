@@ -32,8 +32,8 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const defaultScenario = () => ({
   id: generateId(),
-  vehiclePrice: 450000,
-  downPayment: 50000,
+  vehiclePrice: 0,
+  downPayment: 0,
   tradeInValue: 0,
   loanTerm: '60',
   interestRate: 11.5,
