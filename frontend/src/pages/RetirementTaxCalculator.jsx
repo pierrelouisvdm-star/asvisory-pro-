@@ -35,11 +35,11 @@ export const RetirementTaxCalculator = () => {
   const { symbol, formatCurrency } = useCurrency();
   
   const [inputs, setInputs] = useState({
-    grossIncome: 600000,
+    grossIncome: 0,
     ageGroup: 'under65',
-    currentRAContribution: 5000, // monthly
+    currentRAContribution: 0, // monthly
     employerPensionContribution: 0, // monthly
-    medicalAidMembers: 2,
+    medicalAidMembers: 0,
     medicalAidDependents: 0,
     otherDeductions: 0,
   });

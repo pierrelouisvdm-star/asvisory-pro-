@@ -47,12 +47,12 @@ export const TaxCalculator = () => {
   const { symbol, formatCurrency } = useCurrency();
   
   const [inputs, setInputs] = useState({
-    grossIncome: 500000,
+    grossIncome: 0,
     ageGroup: 'under65',
-    medicalAidMembers: 2,
-    medicalAidDependents: 2,
-    retirementContributions: 50000,
-    donationsSection18A: 5000,
+    medicalAidMembers: 0,
+    medicalAidDependents: 0,
+    retirementContributions: 0,
+    donationsSection18A: 0,
     travelAllowance: 0,
     otherDeductions: 0,
     capitalGains: 0,
