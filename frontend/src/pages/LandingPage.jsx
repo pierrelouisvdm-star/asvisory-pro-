@@ -77,7 +77,7 @@ const keyFeatures = [
   },
   {
     icon: Calculator,
-    title: '18+ Professional Calculators',
+    title: '19+ Professional Calculators',
     description: 'From retirement planning to estate duty, every calculation a financial advisor needs. All localized for South African regulations, tax brackets, and the current Prime Rate.',
     highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
   },
@@ -109,7 +109,7 @@ const keyFeatures = [
 
 // Stats
 const stats = [
-  { value: '18+', label: 'Financial Calculators' },
+  { value: '19+', label: 'Financial Calculators' },
   { value: 'SA', label: 'Localized for South Africa' },
   { value: '24/7', label: 'Access Anywhere' },
   { value: 'PDF', label: 'Instant Reports' },
@@ -249,7 +249,7 @@ export const LandingPage = () => {
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">18+ professional calculators</span>, 
+              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">19+ professional calculators</span>, 
               client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
             </p>
 
@@ -352,7 +352,7 @@ export const LandingPage = () => {
           <div className="text-center mb-12">
             <p className="mb-4 text-blue-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
               <Calculator className="h-4 w-4" />
-              18+ Professional Calculators
+              19+ Professional Calculators
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Every Calculation You Need
