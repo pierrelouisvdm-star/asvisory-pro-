@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -23,11 +23,20 @@ export const InputField = ({
   className,
   disabled = false,
 }) => {
-  // Handle input change - allow free typing, parse on blur
+  // Use local state to handle typing without immediate parsing
+  const [localValue, setLocalValue] = useState(String(value || ''));
+  
+  // Sync local value when external value changes (e.g., from reset)
+  React.useEffect(() => {
+    setLocalValue(String(value || ''));
+  }, [value]);
+
   const handleChange = (e) => {
     const inputValue = e.target.value;
+    setLocalValue(inputValue);
+    
     if (type === 'number') {
-      // Allow empty string and partial numbers while typing
+      // Only update parent when we have a valid number
       if (inputValue === '' || inputValue === '-') {
         onChange(0);
       } else {
@@ -38,6 +47,19 @@ export const InputField = ({
       }
     } else {
       onChange(inputValue);
+    }
+  };
+
+  const handleBlur = () => {
+    // On blur, ensure the displayed value matches the actual value
+    if (type === 'number') {
+      const parsed = parseFloat(localValue);
+      if (isNaN(parsed) || localValue === '') {
+        setLocalValue('0');
+        onChange(0);
+      } else {
+        setLocalValue(String(parsed));
+      }
     }
   };
 
@@ -69,8 +91,9 @@ export const InputField = ({
         <Input
           id={id}
           type={type}
-          value={value}
+          value={localValue}
           onChange={handleChange}
+          onBlur={handleBlur}
           placeholder={placeholder}
           min={min}
           max={max}
