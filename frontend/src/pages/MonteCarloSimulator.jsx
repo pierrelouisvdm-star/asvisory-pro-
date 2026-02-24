@@ -28,11 +28,11 @@ export const MonteCarloSimulator = () => {
   const [results, setResults] = useState(null);
 
   const [params, setParams] = useState({
-    current_savings: 500000,
-    monthly_contribution: 5000,
+    current_savings: 0,
+    monthly_contribution: 0,
     years_to_retirement: 20,
     retirement_years: 25,
-    monthly_retirement_need: 30000,
+    monthly_retirement_need: 0,
     expected_return: 8,
     volatility: 15,
     inflation: 5,
