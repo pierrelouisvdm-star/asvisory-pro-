@@ -58,6 +58,14 @@ const investmentCalculators = [
     path: '/compound-interest',
     features: ['Monthly/Annual', 'Growth Chart', 'Comparison'],
   },
+  {
+    id: 'tfsa-calculator',
+    title: 'TFSA Calculator',
+    description: 'Maximize your Tax Free Savings Account',
+    icon: Shield,
+    path: '/tfsa-calculator',
+    features: ['Limit Tracker', 'Tax Savings', 'Projections'],
+  },
 ];
 
 const debtCalculators = [
