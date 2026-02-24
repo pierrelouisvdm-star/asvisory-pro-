@@ -154,36 +154,58 @@ const FeeComparisonCalculator = () => {
 
   const colors = ['#10b981', '#3b82f6'];
 
-  const InputField = ({ label, value, onChange, prefix, suffix, step = 1, min = 0, max }) => (
-    <div className="space-y-2">
-      <Label className="text-sm text-slate-300">{label}</Label>
-      <div className="relative">
-        {prefix && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
-        )}
-        <Input
-          type="number"
-          value={value}
-          onChange={(e) => {
-            const val = e.target.value;
-            if (val === '' || val === '-') {
-              onChange(0);
-            } else {
-              const parsed = parseFloat(val);
-              if (!isNaN(parsed)) onChange(parsed);
-            }
-          }}
-          className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
-          step={step}
-          min={min}
-          max={max}
-        />
-        {suffix && (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
-        )}
+  const InputField = ({ label, value, onChange, prefix, suffix, step = 1, min = 0, max }) => {
+    const [localValue, setLocalValue] = React.useState(String(value || ''));
+    
+    React.useEffect(() => {
+      setLocalValue(String(value || ''));
+    }, [value]);
+
+    const handleChange = (e) => {
+      const inputValue = e.target.value;
+      setLocalValue(inputValue);
+      if (inputValue === '' || inputValue === '-') {
+        onChange(0);
+      } else {
+        const parsed = parseFloat(inputValue);
+        if (!isNaN(parsed)) onChange(parsed);
+      }
+    };
+
+    const handleBlur = () => {
+      const parsed = parseFloat(localValue);
+      if (isNaN(parsed) || localValue === '') {
+        setLocalValue('0');
+        onChange(0);
+      } else {
+        setLocalValue(String(parsed));
+      }
+    };
+
+    return (
+      <div className="space-y-2">
+        <Label className="text-sm text-slate-300">{label}</Label>
+        <div className="relative">
+          {prefix && (
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
+          )}
+          <Input
+            type="number"
+            value={localValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
+            step={step}
+            min={min}
+            max={max}
+          />
+          {suffix && (
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="space-y-6" data-testid="fee-comparison-calculator">
