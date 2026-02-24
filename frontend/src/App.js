@@ -162,6 +162,7 @@ function App() {
                   <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
                   <Route path="/document-reader" element={<ProtectedRoute><GatedCalculator path="/document-reader"><DocumentReader /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />
