@@ -1,71 +1,109 @@
 <analysis>**original_problem_statement:**
-The user's requests throughout the session were:
-1.  **Password Reset**: Complete the password reset functionality which was in progress from the previous session.
-2.  **Admin Account**: Create a new admin account with specific credentials and fix login issues related to email case-sensitivity.
-3.  **Coupon Management**: Retrieve a list of available coupon codes and later disable a specific one.
-4.  **Calculator Enhancements**:
-    *   Add a Semi-Private School option to the Education Savings Calculator.
-    *   Add balloon payment and ad-hoc lump-sum payment features to the Car Finance Calculator.
-5.  **Landing Page Creation**: Build a new public landing page with About Us, Contact, and Meet Our Team sections.
-6.  **Content Population**: Update the new landing page with specific company details, team member roles, bios, and photos.
-7.  **UI/Theme Adjustments**:
-    *   Make the application's text less condensed by improving global spacing.
-    *   Adjust the color scheme: make the light theme white and navy blue, and make the dark theme's background lighter.
-    *   Fix team member photo positioning and cropping.
-8.  **Deployment**: The user requested to deploy the application multiple times.
+The user's initial high-level goal was to continue development from a previous session, focusing on deploying the application. Throughout this session, the user added several new feature requests, UI improvements, and bug investigations.
+
+**Initial Problem Statement & Carry-over tasks from previous fork:**
+1.  **Deploy the Application**: The user repeatedly requested to deploy the application.
+2.  **Password Reset**: Complete and verify the password reset functionality. (Completed in previous session).
+3.  **Calculator Enhancements**: Add new features to Education and Car Finance calculators. (Coded in previous session, pending verification).
+4.  **Landing Page**: Build and populate a public landing page. (Completed in previous session).
+5.  **UI/Theme Adjustments**: Improve spacing and adjust color themes. (Completed in previous session).
+6.  **Refactoring**: Address incorrectly scoped components in  for performance. (Pending).
+7.  **AI Document Reader Test**: Perform an end-to-end test. (Pending).
+
+**New requests in this session:**
+1.  **Bug Investigation**: A test user () reported their clients were not appearing.
+2.  **Coupon Management**: Generate 10 new coupon codes.
+3.  **Feature Addition (Tax Hub)**: Add a PDF export option to every calculator within the Tax Planning Hub.
+4.  **New Project Scoping**: Discuss and plan for separate US/Canadian and B2C (AdvisoryPro Personal) versions of the app.
+5.  **New Feature (Calculator)**: Create a new EAC/Fee Comparison tool.
+6.  **Feature Refinement**: Modify the EAC tool to have only two comparison options instead of three.
+7.  **Bug Fix (Mobile UI)**: The calculator dropdown menu was not working correctly on mobile devices.
+8.  **UI/Branding Rework**:
+    *   Integrate a new logo provided by the user.
+    *   Update the entire app's color scheme to match the new logo's navy blue and accent colors.
+    *   Iteratively refine the logo's implementation on the landing page to ensure it blends seamlessly with the background, eventually replacing the image with a CSS-based solution.
+    *   Remove the badge or pill style from informational text on the landing page.
+9.  **New Feature (Calculator)**: Add a Tax-Free Savings Account (TFSA) calculator.
+10. **Verification**: Ensure the existing Retirement Calculator is working accurately.
 
 **PRODUCT REQUIREMENTS:**
--   A fully functional password reset flow must be available for users.
--   Admin login must be case-insensitive regarding the email address.
--   The Education and Car Finance calculators must include the new user-requested options.
--   A public-facing landing page must exist with details about the company, team, and a contact form.
--   The application's theme should be adjustable, with a white/navy blue light mode and a softer dark mode.
+-   The application must be deployable to a production environment.
+-   All calculators in the Tax Hub must provide a Download as PDF option.
+-   A new EAC/Fee Comparison calculator must be available, allowing a two-way comparison.
+-   A new Tax-Free Savings Account calculator must be available.
+-   The mobile navigation menu must be functional and user-friendly, with collapsible sections for calculator categories.
+-   The application's branding (logo and color scheme) must be updated to reflect the user's latest design choices, with a seamless, professional look on the landing page.
+-   The Retirement Calculator's calculations must be accurate.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The project is a comprehensive financial advisory platform with a React frontend and a FastAPI backend. Key features include user authentication (with a working password reset), a dashboard with over 17 financial calculators, client management, an AI Document Reader, and a new public-facing landing page. The application supports both a light (white/navy) and a lighter-dark theme, switchable via a toggle in the header.
+The project is a comprehensive financial advisory platform with a React frontend and FastAPI backend. It features user authentication, a dashboard, and now has approximately 19 financial calculators, including the newly added Fee Comparison and Tax-Free Savings calculators. All calculators within the Tax Hub now support PDF report generation. The application's UI has been significantly updated with a new CSS-based logo on the landing page and a new color scheme (deep navy blue with blue accents) applied globally. The mobile navigation has been fixed and now uses collapsible categories.
 
 **Last working item**:
--   **Last item agent was working:** The agent disabled a specific coupon code () as requested by the user. The agent located the code in the database and set its  status to .
--   **Status:** NONE
--   **Agent Testing Done:** Y
--   **Which testing method agent to use?** NA
+-   **Last item agent was working:** Verifying the calculation accuracy of the Retirement Annuity Calculator. The user explicitly requested to check if the calculator was working correctly.
+-   **Status:** IN PROGRESS
+-   **Agent Testing Done:** N
+-   **Which testing method agent to use?** Frontend testing agent. The agent should be instructed to create a test case for , providing specific inputs and verifying that the calculated Retirement Shortfall/Surplus matches an expected, pre-calculated value. This will ensure long-term accuracy.
 -   **User Testing Done:** N
 
 **All Pending/In progress Issue list**:
-There are no pending bugs or issues.
+-   **Issue 1 (P0):** Verify the Retirement Calculator's accuracy.
+-   **Issue 2 (P2):** Refactor  to move any incorrectly scoped inner components to the top level to prevent performance issues and unnecessary re-renders.
+-   **Issue 3 (P2):** Inconsistent Light Theme. Although the dark theme was updated, a full audit is needed to ensure all components use theme variables correctly and respect the light theme settings.
+
+**Issues Detail:**
+-   **Issue 1: Verify Retirement Calculator Accuracy**
+    -   **Attempted fixes:** The agent viewed the code in , reviewed the formulas for , , and the final , and determined the logic looks correct. However, no quantitative test was completed to confirm this.
+    -   **Next debug checklist:**
+        1.  Use the frontend testing agent to write a test for .
+        2.  Define a set of inputs (e.g., Current Age: 30, Retirement Age: 65, Monthly Contribution: 5000, etc.).
+        3.  Manually calculate the expected outcome.
+        4.  Assert that the component's output () matches the expected value.
+    -   **Why fix this issue and what will be achieved with the fix?** To ensure one of the core financial planning tools provides accurate and reliable results to end-users, which is critical for a financial advisory application.
+    -   **Status:** IN PROGRESS
+    -   **Is recurring issue?** N
+    -   **Should Test frontend/backend/both after fix?** Frontend
+    -   **Blocked on other issue:** None
+
+-   **Issue 2 & 3:** See Earlier issues found/mentioned but not fixed and Areas that need refactoring for details.
 
 **In progress Task List**:
-There are no tasks currently in progress.
+There are no other multi-step tasks in progress.
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   **Deploy the Application (P0):** The user has repeatedly requested to deploy the application. The deployment agent should be called next.
-    -   **Verify Calculator Enhancements (P1):** The agent implemented updates to the Education Savings and Car Finance calculators but faced session issues when trying to test the UI. A thorough user verification or an end-to-end test by the testing agent is required to confirm full functionality.
-    -   **End-to-end Test of AI Document Reader (P2):** This was carried over from the last handoff. A formal test should be run to confirm the client dropdown and save functionality works seamlessly after an analysis is completed.
+    -   **Deploy the Application (P0):** The user has requested this multiple times and it remains the highest priority action item after the current task is resolved.
+    -   **Verify New/Updated Calculators (P1):** The user should be prompted to verify the functionality of the newly added **EAC Fee Comparison** and **TFSA** calculators, as well as the previously modified **Car Finance** and **Education Savings** calculators.
+    -   **End-to-end Test of AI Document Reader (P2):** This task has been carried over and requires a formal test to confirm the client dropdown and save functionality works seamlessly after a document analysis.
 
 -   **Future Tasks:**
-    -   There are no other pending future tasks requested by the user.
+    -   **Create a Portal Landing Page:** The user opted to create a separate, lightweight landing page later to act as a portal, directing users to the  (South Africa) and  (United States) subdomains. This will be a new project.
+    -   **Build US/Canadian App:** The user decided this will be a completely new project.
+    -   **Build AdvisoryPro Personal Consumer App:** The user decided this will also be a new project. A spec document has been created at .
 
 **Completed work in this session**
-- **Password Reset Flow:** Completed the implementation by adding frontend routes, a Forgot Password? link, fixing a backend datetime bug (), and running successful end-to-end tests via the testing agent.
-- **Admin Account Management:** Created a new admin account with user-provided credentials and fixed a login bug by making the email check case-insensitive in .
-- **Landing Page Creation:** Built a multi-section landing page () with About Us, Team, and Contact sections.
-- **Team Section Content:** Populated the team section with photos, roles, and bios for all three co-founders, and fixed photo positioning issues.
-- **Calculator Enhancements:**
-    -   Added a Semi-Private School option to .
-    -   Added Balloon Payment and Lump Sum Payments features to .
-- **UI & Theme Updates:**
-    -   Improved global text spacing for better readability by updating .
-    -   Updated the color themes in  to a white/navy blue light mode and a softer dark mode.
-- **Coupon Management:** Retrieved a list of available coupon codes and later disabled a specific code as requested.
-- **Content Updates:** Updated contact info (phone, location) and removed the Business Hours section from the landing page.
+-   **Feature - PDF Export for Tax Hub:** Added a  component to all 6 tabs in , enabling PDF downloads for each calculator.
+-   **Feature - Fee Comparison Calculator:** Created a new calculator at , added routes, and linked it in the dashboard and header. It was later refined to offer a 2-way comparison instead of 3-way.
+-   **Feature - TFSA Calculator:** Created a new  and integrated it into the application's routing, dashboard, and header.
+-   **UI - Mobile Menu Fix:** Refactored the mobile menu in  to use collapsible categories, fixing the usability issue of a long, non-interactive list.
+-   **UI - Branding Overhaul:**
+    -   Replaced the landing page hero image with a custom, CSS-based logo that blends seamlessly into the background ().
+    -   Updated the application's color palette in  to a deep navy blue with blue/sky-blue accents, matching the new logo.
+    -   Removed the badge styling for section headers on the landing page, replacing them with simpler text elements.
+-   **Content Updates:** Updated the calculator count on the landing and auth pages to 19.
+-   **Bug Investigation:** Investigated a user's missing client data, correctly identifying it as a database isolation issue between different deployment environments.
+-   **Coupon Management:** Generated 10 new Premium Lifetime coupon codes and stored them in the database.
+-   **Documentation:** Created handoff/spec documents for potential future projects:  and .
 
 **Earlier issues found/mentioned but not fixed**
--   **Issue 1:** The refactoring of  to check for incorrectly scoped components (like the  example) was mentioned in a previous handoff but has not been addressed.
-    -   **Debug checklist:** Review complex component files like  for components defined inside other components, which can cause performance issues.
-    -   **Why to solve this issue and what will be achieved with this?** To improve application performance and prevent unnecessary re-renders.
+-   **Issue 1: Component Scoping in **
+    -   A previous handoff noted that components were being defined inside other components (e.g.,  inside ), which hurts performance. This refactoring task was carried over but not addressed in this session.
+    -   **Debug checklist:**
+        1.  Review  and other complex component files.
+        2.  Identify any component functions defined within the  scope of another component.
+        3.  Move these inner components outside the parent component's definition to prevent them from being re-created on every render.
+    -   **Why to solve this issue and what will be achieved with this?** To improve React performance by preventing unnecessary re-renders and ensuring stable component identity.
     -   **Should Test frontend/backend/both after fix:** Frontend
     -   **Is recurring issue?** N
 
@@ -78,11 +116,13 @@ There are no tasks currently in progress.
 **Key Technical Concepts**
 -   **Frontend:** React, Tailwind CSS, Vite
 -   **Backend:** FastAPI (Python)
--   **Database:** SQLite
--   **AI Integration:** Emergent-managed OpenAI GPT-4o for document analysis.
--   **State Management:** React Context API (for theme).
+-   **Database:** SQLite (in preview), Emergent-managed MongoDB (in production)
+-   **State Management:** React Context API ()
+-   **PDF Generation:**  library for client-side PDF creation from components.
+-   **UI/Branding:** The hero logo on the landing page is a CSS implementation (using radial gradients) rather than a static image file to achieve a seamless blend with the background.
 
 **key DB schema**
+-   No changes were made to the database schema in this session.
 -   **users:** uid=0(root) gid=0(root) groups=0(root), , , , , , , 
 -   **coupons:** uid=0(root) gid=0(root) groups=0(root), , , , , 
 
@@ -90,60 +130,58 @@ There are no tasks currently in progress.
 -   None.
 
 **All files of reference**
--   : Modified to fix a password reset datetime bug and to implement case-insensitive email login.
--   : Updated with routes for password reset pages and the new landing page.
--   : Modified to add a Forgot Password? link.
--   : (New) Created to serve as the public-facing homepage with About, Team, and Contact sections.
--   : Modified to add a new school type.
--   : Modified to add balloon payment and lump-sum features.
--   : Modified to update the light and dark theme color palettes.
--   : Modified to add global spacing and typography improvements.
--   : Added team member photos (, , ).
+-   : (New) The EAC/Fee comparison tool.
+-   : (New) The TFSA calculator.
+-   : (Modified)  component was added to all 6 calculator tabs.
+-   : (Modified) The mobile menu was fixed with collapsible categories, and links to new calculators were added.
+-   : (Modified) Hero section was completely reworked with a CSS logo, new color scheme was applied, and badge styles were removed.
+-   : (Modified) The color variables for dark and light themes were updated to match the new logo.
+-   : (Modified) Links to the two new calculators were added.
+-   : (Modified) Routes for the new calculators were added.
+-   : (Viewed) Inspected for the accuracy verification task.
+-   : (New) Spec document for the consumer-facing app.
+-   : (New) Handoff document for the US/Canada version.
 
 **Areas that need refactoring**:
--   **Inconsistent Light Theme:** Although the default theme is dark, some components may still have hardcoded dark-mode colors. A full audit of all components is needed to ensure they all use theme variables correctly.
--   **Component Scoping:** A previous note mentioned the  component inside  was moved out to prevent re-renders. A review of other complex pages should be done to ensure this anti-pattern is not repeated.
+-   **Component Scoping:** The  file needs to be reviewed for components defined inside other components, an anti-pattern that hurts performance.
+-   **Inconsistent Light Theme:** The new color scheme was primarily tested on the dark theme. A full pass is needed to ensure all components render correctly in the light theme without hardcoded colors.
 
 **key api endpoints**
--   : (POST) User login. (Verified case-insensitive)
--   : (POST) User registration, updated to create admin users.
--   : (POST) Generates a password reset token. (Verified working)
--   : (POST) Resets the user's password with a valid code. (Verified working)
--   : (GET) Retrieves coupon codes.
--   : (POST) Disables a coupon code.
+-   No new API endpoints were created. The agent worked on the frontend or interacted with the database via scripts.
 
 **Critical Info for New Agent**
--   The user's highest priority is to **deploy the application**. You should initiate deployment next.
--   The password reset email flow is mocked. The reset code is returned directly in the API response for testing. The user opted out of a real email integration for now.
--   The latest admin credentials are provided below.
--   Calculator enhancements have been coded but require user verification or a full end-to-end test.
+-   The user's highest priority is to **deploy the application**. This should be the next major action after verifying the retirement calculator.
+-   The user has firmly decided that the **North American and consumer versions will be separate projects**. Do not attempt to build them in this workspace. Reference the spec docs in .
+-   The logo on the landing page is **not an image file**. It is implemented with CSS in . Modifications should be made there.
+-   When testing, be aware that this preview environment has an isolated database. Production data or data from other forks will not be present.
 
 **documents and test reports created in this job**
--   : Updated to reflect completed tasks.
--   : Test report from the successful password reset flow test.
+-   
+-   
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-10.  - **Completed.** User provided a screenshot of a coupon to be disabled.
-9.   - **Completed.** User approved the fix for Pierre's photo cropping.
-8.   - **Completed.** User clarified the issue with the team member's photo.
-7.   - **Completed.** User requested a positioning fix for a team photo.
-6.   - **Completed.** User requested theme color updates.
-5.   - **Completed.** User asked to remove a section from the contact page.
-4.   - **Pending.** User requested deployment.
-3.   - **Pending.** User requested deployment.
-2.   - **Completed.** User provided the final team member bio.
-1.   - **Completed.** User provided an updated photo for a team member.
+10.  - **In Progress.** Agent was investigating this when the session ended.
+9.   - **Completed.** The calculator was created and integrated.
+8.   (Start building consumer app now) - **Acknowledged.** Agent explained this must be a new project and created a spec document.
+7.   - **Completed.** Agent researched and recommended APIs for the new consumer app.
+6.   - **Completed.** Agent provided a detailed breakdown of potential features and monetization.
+5.   - **Completed.** Agent adjusted the CSS logo's gradient colors.
+4.   - **Completed.** Agent removed the italic style from the CSS logo text.
+3.   - **Completed.** This led the agent to abandon the image file and create a seamless CSS-based logo.
+2.   - **Completed.** Agent updated the theme context and landing page.
+1.   - **Completed.** User provided a logo image which kicked off the branding overhaul.
 
 **Project Health Check:**
 -   **Broken:** None
--   **Mocked:** The email-sending part of the password reset flow is mocked. The reset code is returned in the API response instead of being sent via email.
+-   **Mocked:** The email-sending part of the password reset flow is still mocked (the reset token is returned in the API response).
 
 **3rd Party Integrations**
 -   **OpenAI GPT-4o:** Used for the AI Document Reader feature. Uses Emergent LLM Key.
 -   **PayFast:** Used for processing payments. Requires User API Key.
 
 **Testing status**
--   **Testing agent used after significant changes:** YES (for the password reset flow)
+-   **Testing agent used after significant changes:** NO
 -   **Troubleshoot agent used after agent stuck in loop:** NO
 -   **Test files created:** None
 -   **Known regressions:** None
@@ -153,4 +191,4 @@ There are no tasks currently in progress.
 -   **Admin Password:** 
 
 **What agent forgot to execute**
--   The agent did not address the refactoring task for  which was noted in the initial handoff summary from the previous fork.</analysis>
+-   The agent did not address the refactoring task for  (improving component scoping), which was carried over from a previous handoff and is important for application performance.</analysis>

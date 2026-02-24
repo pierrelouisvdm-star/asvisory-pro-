@@ -472,7 +472,7 @@ GET  /api/payments/portal   // Customer billing portal
 
 ### Frontend (.env)
 ```
-REACT_APP_BACKEND_URL=https://your-app.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://advisor-beta.preview.emergentagent.com
 ```
 
 ### Backend (.env)
