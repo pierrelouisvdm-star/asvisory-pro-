@@ -23,6 +23,24 @@ export const InputField = ({
   className,
   disabled = false,
 }) => {
+  // Handle input change - allow free typing, parse on blur
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    if (type === 'number') {
+      // Allow empty string and partial numbers while typing
+      if (inputValue === '' || inputValue === '-') {
+        onChange(0);
+      } else {
+        const parsed = parseFloat(inputValue);
+        if (!isNaN(parsed)) {
+          onChange(parsed);
+        }
+      }
+    } else {
+      onChange(inputValue);
+    }
+  };
+
   return (
     <div className={cn("space-y-2", className)}>
       <div className="flex items-center gap-2">
@@ -52,7 +70,7 @@ export const InputField = ({
           id={id}
           type={type}
           value={value}
-          onChange={(e) => onChange(type === 'number' ? parseFloat(e.target.value) || 0 : e.target.value)}
+          onChange={handleChange}
           placeholder={placeholder}
           min={min}
           max={max}
