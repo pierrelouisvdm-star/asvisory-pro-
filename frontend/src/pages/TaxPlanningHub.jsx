@@ -23,38 +23,63 @@ import { InfoTooltip, SectionInfo } from '../components/ui/info-tooltip';
 import { toast } from 'sonner';
 
 // Standalone InputField component to prevent re-rendering issues
-const TaxInputField = ({ label, id, value, onChange, prefix, suffix, min = 0, step = 1, tooltip }) => (
-  <div className="space-y-2">
-    <div className="flex items-center gap-2">
-      <Label htmlFor={id} className="text-sm text-slate-300">{label}</Label>
-      {tooltip && (
-        <InfoTooltip content={tooltip} size="xs" iconClassName="text-slate-500 hover:text-slate-300" />
-      )}
+const TaxInputField = ({ label, id, value, onChange, prefix, suffix, min = 0, step = 1, tooltip }) => {
+  const [localValue, setLocalValue] = React.useState(String(value || ''));
+  
+  React.useEffect(() => {
+    setLocalValue(String(value || ''));
+  }, [value]);
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    setLocalValue(inputValue);
+    if (inputValue === '' || inputValue === '-') {
+      onChange(0);
+    } else {
+      const parsed = parseFloat(inputValue);
+      if (!isNaN(parsed)) onChange(parsed);
+    }
+  };
+
+  const handleBlur = () => {
+    const parsed = parseFloat(localValue);
+    if (isNaN(parsed) || localValue === '') {
+      setLocalValue('0');
+      onChange(0);
+    } else {
+      setLocalValue(String(parsed));
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center gap-2">
+        <Label htmlFor={id} className="text-sm text-slate-300">{label}</Label>
+        {tooltip && (
+          <InfoTooltip content={tooltip} size="xs" iconClassName="text-slate-500 hover:text-slate-300" />
+        )}
+      </div>
+      <div className="relative">
+        {prefix && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
+        )}
+        <Input
+          id={id}
+          type="number"
+          value={localValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
+          min={min}
+          step={step}
+        />
+        {suffix && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
+        )}
+      </div>
     </div>
-    <div className="relative">
-      {prefix && (
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
-      )}
-      <Input
-        id={id}
-        type="number"
-        value={value || ''}
-        onChange={(e) => {
-          const val = e.target.value;
-          if (val === '' || val === '-') {
-            onChange(0);
-          } else {
-            const parsed = parseFloat(val);
-            if (!isNaN(parsed)) onChange(parsed);
-          }
-        }}
-        className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
-        min={min}
-        step={step}
-      />
-      {suffix && (
-        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
-      )}
+  );
+};
     </div>
   </div>
 );
