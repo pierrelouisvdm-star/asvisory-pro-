@@ -22,20 +22,20 @@ export const EstatePlanningCalculator = () => {
   
   const [inputs, setInputs] = useState({
     // Assets
-    primaryResidence: 3500000,
-    otherProperties: 1000000,
-    investments: 2000000,
-    retirement: 1500000,
-    businessInterests: 500000,
-    vehicles: 300000,
-    personalEffects: 200000,
-    cashAndBanking: 500000,
-    lifeInsurance: 2000000,
+    primaryResidence: 0,
+    otherProperties: 0,
+    investments: 0,
+    retirement: 0,
+    businessInterests: 0,
+    vehicles: 0,
+    personalEffects: 0,
+    cashAndBanking: 0,
+    lifeInsurance: 0,
     otherAssets: 0,
     
     // Liabilities
-    homeLoan: 1500000,
-    otherLoans: 200000,
+    homeLoan: 0,
+    otherLoans: 0,
     
     // Beneficiaries
     spouseInheritance: 50,
@@ -43,10 +43,10 @@ export const EstatePlanningCalculator = () => {
     charityInheritance: 10,
     
     // Planning
-    hasWill: true,
+    hasWill: false,
     hasLivingWill: false,
     hasTrust: false,
-    spouseRollover: true,
+    spouseRollover: false,
   });
 
   const updateInput = (field, value) => {
