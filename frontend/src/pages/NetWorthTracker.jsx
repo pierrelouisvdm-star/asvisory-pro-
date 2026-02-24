@@ -67,15 +67,7 @@ export const NetWorthTracker = () => {
   
   // Core state
   const [assets, setAssets] = useState([
-    { id: generateId(), name: 'Primary Residence', value: 2500000, category: 'property' },
-    { id: generateId(), name: 'Investment Property', value: 1500000, category: 'property' },
-    { id: generateId(), name: 'Retirement Annuity', value: 800000, category: 'retirement' },
-    { id: generateId(), name: 'Pension Fund', value: 600000, category: 'retirement' },
-    { id: generateId(), name: 'Stock Portfolio', value: 500000, category: 'investments' },
-    { id: generateId(), name: 'Unit Trusts', value: 300000, category: 'investments' },
-    { id: generateId(), name: 'Emergency Fund', value: 150000, category: 'cash' },
-    { id: generateId(), name: 'Savings Account', value: 100000, category: 'cash' },
-    { id: generateId(), name: 'Vehicle', value: 350000, category: 'vehicles' },
+    { id: generateId(), name: 'Asset 1', value: 0, category: 'property' },
   ]);
 
   const [liabilities, setLiabilities] = useState([
