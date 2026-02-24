@@ -13,6 +13,25 @@
   - No hardcoded secrets or URLs
   - CORS correctly configured
   - MongoDB connections using environment variables
+- ✅ **All Calculators Reset to 0 Defaults** - Updated 15+ calculators to have 0 as default values for all monetary inputs
+  - Fee Comparison Calculator
+  - TFSA Calculator
+  - Debt Payoff Calculator
+  - Net Worth Tracker
+  - Budget Planner
+  - Cash Flow Projector
+  - Bond Calculator
+  - Car Finance Calculator
+  - Life Insurance Calculator
+  - Income Disability Calculator
+  - Emergency Fund Calculator
+  - Living Annuity Calculator
+  - Monte Carlo Simulator
+  - Loan Comparison Tool
+  - Tax Calculator
+  - Retirement Tax Calculator
+  - Estate Planning Calculator
+  - Education Savings Calculator
 
 ### Previous Session: February 19, 2026
 - ✅ PDF Export added to all Tax Hub calculator tabs
