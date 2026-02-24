@@ -16,10 +16,10 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 
 const defaultDebt = () => ({
   id: generateId(),
-  name: 'Credit Card',
-  balance: 25000,
-  interestRate: 21,
-  minimumPayment: 750,
+  name: 'New Debt',
+  balance: 0,
+  interestRate: 0,
+  minimumPayment: 0,
 });
 
 export const DebtPayoffCalculator = () => {
