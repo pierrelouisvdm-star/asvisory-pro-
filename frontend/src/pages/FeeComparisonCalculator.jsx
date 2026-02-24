@@ -316,7 +316,11 @@ const FeeComparisonCalculator = () => {
                       <Input
                         type="number"
                         value={option.ter}
-                        onChange={(e) => updateOption(idx, 'ter', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const parsed = val === '' ? 0 : parseFloat(val);
+                          if (!isNaN(parsed)) updateOption(idx, 'ter', parsed);
+                        }}
                         className="bg-navy-800 border-navy-600 text-white mt-1"
                         step={0.1}
                         min={0}
@@ -328,7 +332,11 @@ const FeeComparisonCalculator = () => {
                       <Input
                         type="number"
                         value={option.platformFee}
-                        onChange={(e) => updateOption(idx, 'platformFee', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const parsed = val === '' ? 0 : parseFloat(val);
+                          if (!isNaN(parsed)) updateOption(idx, 'platformFee', parsed);
+                        }}
                         className="bg-navy-800 border-navy-600 text-white mt-1"
                         step={0.1}
                         min={0}
@@ -340,7 +348,11 @@ const FeeComparisonCalculator = () => {
                       <Input
                         type="number"
                         value={option.advisorFee}
-                        onChange={(e) => updateOption(idx, 'advisorFee', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const parsed = val === '' ? 0 : parseFloat(val);
+                          if (!isNaN(parsed)) updateOption(idx, 'advisorFee', parsed);
+                        }}
                         className="bg-navy-800 border-navy-600 text-white mt-1"
                         step={0.1}
                         min={0}
