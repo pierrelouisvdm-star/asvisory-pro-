@@ -14,7 +14,7 @@ import {
 import { toast } from 'sonner';
 
 const PREMIUM_FEATURES = [
-  { icon: Calculator, label: 'All 18 Financial Calculators' },
+  { icon: Calculator, label: 'All 19 Financial Calculators' },
   { icon: Users, label: 'Unlimited Client Management' },
   { icon: FileText, label: 'PDF Report Generation' },
   { icon: BarChart3, label: 'Advanced Analysis Tools' },

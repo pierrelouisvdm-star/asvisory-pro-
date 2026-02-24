@@ -22,7 +22,7 @@ const tiers = [
     period: '/month',
     description: 'Full professional suite',
     features: [
-      'All 18 Financial Calculators',
+      'All 19 Financial Calculators',
       'Unlimited Clients',
       'PDF Reports',
       'Live Market Tracker',
@@ -452,7 +452,7 @@ export const AuthPage = () => {
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div className="flex items-center gap-2 text-foreground">
                     <Calculator className="h-3.5 w-3.5 text-primary" />
-                    18 Calculators
+                    19 Calculators
                   </div>
                   <div className="flex items-center gap-2 text-foreground">
                     <Users className="h-3.5 w-3.5 text-primary" />
