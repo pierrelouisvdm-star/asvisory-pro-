@@ -23,10 +23,10 @@ const TFSACalculator = () => {
   const { formatCurrency, symbol } = useCurrency();
   
   // Contribution inputs
-  const [currentBalance, setCurrentBalance] = useState(50000);
-  const [lifetimeContributions, setLifetimeContributions] = useState(72000); // 2 years worth
-  const [monthlyContribution, setMonthlyContribution] = useState(3000);
-  const [yearToDateContribution, setYearToDateContribution] = useState(15000);
+  const [currentBalance, setCurrentBalance] = useState(0);
+  const [lifetimeContributions, setLifetimeContributions] = useState(0);
+  const [monthlyContribution, setMonthlyContribution] = useState(0);
+  const [yearToDateContribution, setYearToDateContribution] = useState(0);
   
   // Growth assumptions
   const [expectedReturn, setExpectedReturn] = useState(10);

@@ -26,12 +26,10 @@ export const DebtPayoffCalculator = () => {
   const { symbol, formatCurrency } = useCurrency();
   
   const [debts, setDebts] = useState([
-    { id: generateId(), name: 'Credit Card 1', balance: 25000, interestRate: 21, minimumPayment: 750 },
-    { id: generateId(), name: 'Personal Loan', balance: 50000, interestRate: 15, minimumPayment: 1500 },
-    { id: generateId(), name: 'Car Loan', balance: 150000, interestRate: 11, minimumPayment: 3500 },
+    { id: generateId(), name: 'Debt 1', balance: 0, interestRate: 0, minimumPayment: 0 },
   ]);
   
-  const [extraPayment, setExtraPayment] = useState(2000);
+  const [extraPayment, setExtraPayment] = useState(0);
   const [strategy, setStrategy] = useState('avalanche'); // 'avalanche' or 'snowball'
 
   const addDebt = () => {
