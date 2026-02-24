@@ -24,26 +24,26 @@ export const BudgetPlanner = () => {
   const { symbol, formatCurrency } = useCurrency();
   
   const [income, setIncome] = useState({
-    salary: 50000,
-    bonus: 5000,
-    investment: 2000,
+    salary: 0,
+    bonus: 0,
+    investment: 0,
     rental: 0,
     other: 0,
   });
 
   const [expenses, setExpenses] = useState({
-    housing: 15000,
-    utilities: 2500,
-    transport: 5000,
-    food: 6000,
-    healthcare: 2000,
-    insurance: 3000,
-    debt: 5000,
-    entertainment: 3000,
-    clothing: 1500,
-    education: 2000,
-    savings: 5000,
-    other: 2000,
+    housing: 0,
+    utilities: 0,
+    transport: 0,
+    food: 0,
+    healthcare: 0,
+    insurance: 0,
+    debt: 0,
+    entertainment: 0,
+    clothing: 0,
+    education: 0,
+    savings: 0,
+    other: 0,
   });
 
   const [savingsGoal, setSavingsGoal] = useState(20);
