@@ -80,9 +80,6 @@ const TaxInputField = ({ label, id, value, onChange, prefix, suffix, min = 0, st
     </div>
   );
 };
-    </div>
-  </div>
-);
 
 // 2025/2026 South African Tax Tables
 const TAX_BRACKETS_2025 = [
