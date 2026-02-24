@@ -71,10 +71,7 @@ export const NetWorthTracker = () => {
   ]);
 
   const [liabilities, setLiabilities] = useState([
-    { id: generateId(), name: 'Home Loan', value: 1800000, category: 'mortgage', interestRate: 11.5 },
-    { id: generateId(), name: 'Car Finance', value: 200000, category: 'vehicle', interestRate: 13 },
-    { id: generateId(), name: 'Credit Card', value: 50000, category: 'credit', interestRate: 21 },
-    { id: generateId(), name: 'Personal Loan', value: 100000, category: 'personal', interestRate: 18 },
+    { id: generateId(), name: 'Liability 1', value: 0, category: 'mortgage', interestRate: 0 },
   ]);
 
   // Enhanced state
@@ -87,13 +84,13 @@ export const NetWorthTracker = () => {
   const [isSaving, setIsSaving] = useState(false);
   
   // Goal form state
-  const [newGoalAmount, setNewGoalAmount] = useState(5000000);
+  const [newGoalAmount, setNewGoalAmount] = useState(0);
   const [newGoalDate, setNewGoalDate] = useState('2030-12-31');
-  const [newGoalName, setNewGoalName] = useState('Financial Freedom');
+  const [newGoalName, setNewGoalName] = useState('');
 
   // What-if scenario state
   const [scenario, setScenario] = useState({
-    additionalMonthlySavings: 5000,
+    additionalMonthlySavings: 0,
     debtToPayOff: '',
     years: 5,
     expectedReturn: 8,
