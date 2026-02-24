@@ -23,6 +23,7 @@ const allCalculators = [
       { path: '/future-value', label: 'Future Value', icon: TrendingUp },
       { path: '/compound-interest', label: 'Compound Interest', icon: Percent },
       { path: '/fee-comparison', label: 'Fee Comparison (EAC)', icon: Scale },
+      { path: '/tfsa-calculator', label: 'TFSA Calculator', icon: PiggyBank },
       { path: '/monte-carlo', label: 'Monte Carlo', icon: BarChart3 },
     ]
   },
