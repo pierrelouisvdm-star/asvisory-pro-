@@ -82,6 +82,9 @@ const FeeComparisonCalculator = () => {
           totalContributions += currentMonthlyContribution;
         }
         
+        // Increase contribution for next year
+        currentMonthlyContribution = currentMonthlyContribution * (1 + annualContributionIncrease / 100);
+        
         totalFeesLost = currentValueGross - currentValueNet;
         
         yearlyData.push({
