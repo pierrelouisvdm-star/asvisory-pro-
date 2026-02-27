@@ -21,6 +21,7 @@ const FeeComparisonCalculator = () => {
   // Investment inputs
   const [initialInvestment, setInitialInvestment] = useState(0);
   const [monthlyContribution, setMonthlyContribution] = useState(0);
+  const [annualContributionIncrease, setAnnualContributionIncrease] = useState(0);
   const [investmentYears, setInvestmentYears] = useState(20);
   const [expectedReturn, setExpectedReturn] = useState(10);
   
