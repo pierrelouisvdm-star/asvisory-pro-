@@ -556,7 +556,7 @@ const TaxDirectiveSimulator = () => {
               {/* Tax Tables Reference */}
               <Card className="bg-navy-900/60 border-navy-700">
                 <CardHeader>
-                  <CardTitle className="text-lg text-white">SARS Tax Tables 2024/25</CardTitle>
+                  <CardTitle className="text-lg text-white">SARS Tax Tables 2026/27</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <Tabs defaultValue="retirement-table">
