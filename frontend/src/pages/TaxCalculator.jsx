@@ -67,8 +67,8 @@ export const TaxCalculator = () => {
             retirementContributions, donationsSection18A, travelAllowance, 
             otherDeductions, capitalGains } = inputs;
 
-    // Calculate retirement deduction (max 27.5% of income, capped at R350,000)
-    const maxRetirementDeduction = Math.min(grossIncome * 0.275, 350000);
+    // Calculate retirement deduction (max 27.5% of income, capped at R430,000)
+    const maxRetirementDeduction = Math.min(grossIncome * 0.275, 430000);
     const retirementDeduction = Math.min(retirementContributions, maxRetirementDeduction);
 
     // Donations deduction (max 10% of taxable income)
