@@ -425,7 +425,6 @@ const FeeComparisonCalculator = () => {
                       max={2}
                       step={0.1}
                     />
-                    </div>
                     
                     <div className="pt-2 border-t border-navy-700">
                       <div className="flex justify-between items-center">
