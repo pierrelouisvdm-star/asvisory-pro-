@@ -279,6 +279,18 @@ const FeeComparisonCalculator = () => {
               step={500}
             />
             <div className="space-y-2">
+              <Label className="text-sm text-slate-300">Annual Contribution Increase: {annualContributionIncrease}%</Label>
+              <Slider
+                value={[annualContributionIncrease]}
+                onValueChange={([val]) => setAnnualContributionIncrease(val)}
+                min={0}
+                max={15}
+                step={0.5}
+                className="mt-2"
+              />
+              <p className="text-xs text-slate-500">Increase your monthly contribution each year to keep pace with inflation</p>
+            </div>
+            <div className="space-y-2">
               <Label className="text-sm text-slate-300">Investment Period: {investmentYears} years</Label>
               <Slider
                 value={[investmentYears]}
