@@ -334,14 +334,14 @@ const FeeComparisonCalculator = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <InputField
+            <EACInputField
               label="Initial Investment"
               value={initialInvestment}
               onChange={setInitialInvestment}
               prefix={symbol}
               step={10000}
             />
-            <InputField
+            <EACInputField
               label="Monthly Contribution"
               value={monthlyContribution}
               onChange={setMonthlyContribution}
