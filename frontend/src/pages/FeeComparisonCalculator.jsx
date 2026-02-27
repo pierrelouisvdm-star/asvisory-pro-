@@ -15,6 +15,129 @@ import { PrintReport } from '../components/calculators/PrintReport';
 import { Disclaimer } from '../components/calculators/Disclaimer';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area, AreaChart, BarChart, Bar } from 'recharts';
 
+// InputField component OUTSIDE the main component to prevent re-creation on render
+const EACInputField = ({ label, value, onChange, prefix, suffix, step = 1, min = 0, max }) => {
+  const [localValue, setLocalValue] = useState(String(value || ''));
+  const [isFocused, setIsFocused] = useState(false);
+  
+  // Only sync from parent when not focused (to prevent overwriting while typing)
+  React.useEffect(() => {
+    if (!isFocused) {
+      setLocalValue(String(value || ''));
+    }
+  }, [value, isFocused]);
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    setLocalValue(inputValue);
+    
+    // Update parent immediately for calculations, but don't let parent override our local state
+    if (inputValue === '' || inputValue === '-') {
+      onChange(0);
+    } else {
+      const parsed = parseFloat(inputValue);
+      if (!isNaN(parsed)) onChange(parsed);
+    }
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    const parsed = parseFloat(localValue);
+    if (isNaN(parsed) || localValue === '') {
+      setLocalValue('0');
+      onChange(0);
+    } else {
+      setLocalValue(String(parsed));
+      onChange(parsed);
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label className="text-sm text-slate-300">{label}</Label>
+      <div className="relative">
+        {prefix && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
+        )}
+        <Input
+          type="number"
+          value={localValue}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
+          step={step}
+          min={min}
+          max={max}
+        />
+        {suffix && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Fee input component OUTSIDE the main component
+const EACFeeInput = ({ label, value, onChange, min = 0, max, step = 0.1 }) => {
+  const [localValue, setLocalValue] = useState(String(value || ''));
+  const [isFocused, setIsFocused] = useState(false);
+  
+  React.useEffect(() => {
+    if (!isFocused) {
+      setLocalValue(String(value || ''));
+    }
+  }, [value, isFocused]);
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    setLocalValue(inputValue);
+    if (inputValue === '' || inputValue === '-') {
+      onChange(0);
+    } else {
+      const parsed = parseFloat(inputValue);
+      if (!isNaN(parsed)) onChange(parsed);
+    }
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    const parsed = parseFloat(localValue);
+    if (isNaN(parsed) || localValue === '') {
+      setLocalValue('0');
+      onChange(0);
+    } else {
+      setLocalValue(String(parsed));
+      onChange(parsed);
+    }
+  };
+
+  return (
+    <div>
+      <Label className="text-xs text-slate-400">{label}</Label>
+      <Input
+        type="number"
+        value={localValue}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        className="bg-navy-800 border-navy-600 text-white mt-1"
+        step={step}
+        min={min}
+        max={max}
+      />
+    </div>
+  );
+};
+
 const FeeComparisonCalculator = () => {
   const { formatCurrency, symbol } = useCurrency();
   
