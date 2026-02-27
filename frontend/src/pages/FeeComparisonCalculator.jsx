@@ -118,7 +118,7 @@ const FeeComparisonCalculator = () => {
         growthWithoutFees: finalValueNoFees - totalContributions,
       };
     });
-  }, [options, initialInvestment, monthlyContribution, investmentYears, expectedReturn]);
+  }, [options, initialInvestment, monthlyContribution, annualContributionIncrease, investmentYears, expectedReturn]);
 
   // Combined chart data
   const chartData = useMemo(() => {
