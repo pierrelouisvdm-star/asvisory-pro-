@@ -189,7 +189,7 @@ const TaxPlanningHub = () => {
   // IRP5 Storage State
   const [irp5Documents, setIrp5Documents] = useState([]);
   const [newIrp5, setNewIrp5] = useState({
-    taxYear: '2025/2026',
+    taxYear: '2026/2027',
     employer: '',
     grossIncome: 0,
     paye: 0,
@@ -214,7 +214,7 @@ const TaxPlanningHub = () => {
     
     setIrp5Documents([...irp5Documents, irp5Entry]);
     setNewIrp5({
-      taxYear: '2025/2026',
+      taxYear: '2026/2027',
       employer: '',
       grossIncome: 0,
       paye: 0,
@@ -514,11 +514,11 @@ const TaxPlanningHub = () => {
             Tax Planning Hub
           </h1>
           <p className="text-slate-400 mt-1">
-            2025/2026 Tax Year • Comprehensive tax planning and simulation
+            2026/2027 Tax Year • Comprehensive tax planning and simulation
           </p>
         </div>
         <Badge variant="outline" className="border-emerald-500/50 text-emerald-400">
-          2025/2026 Tax Tables
+          2026/2027 Tax Tables
         </Badge>
       </div>
 
@@ -747,7 +747,7 @@ const TaxPlanningHub = () => {
               {/* Tax Summary */}
               <Card className="bg-gradient-to-br from-emerald-500/10 to-navy-900 border-emerald-500/30">
                 <CardHeader>
-                  <CardTitle className="text-lg text-white">Tax Summary 2025/2026</CardTitle>
+                  <CardTitle className="text-lg text-white">Tax Summary 2026/2027</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-2 gap-4">
@@ -834,7 +834,7 @@ const TaxPlanningHub = () => {
                 title="Income Tax Calculation"
                 calculatorType="Tax Planning Hub"
                 inputs={[
-                  { label: 'Tax Year', value: '2025/2026' },
+                  { label: 'Tax Year', value: '2026/2027' },
                   { label: 'Gross Income', value: formatCurrency(incomeData.grossIncome) },
                   { label: 'Retirement Contributions', value: formatCurrency(incomeData.retirementContributions + incomeData.raContributions) },
                   { label: 'Age Group', value: incomeData.ageGroup === 'under65' ? 'Under 65' : incomeData.ageGroup === '65to74' ? '65-74' : '75+' },
@@ -1150,7 +1150,7 @@ const TaxPlanningHub = () => {
               {/* Tax Brackets Reference */}
               <Card className="bg-navy-900/60 border-navy-700">
                 <CardHeader>
-                  <CardTitle className="text-lg text-white">2025/2026 Tax Brackets</CardTitle>
+                  <CardTitle className="text-lg text-white">2026/2027 Tax Brackets</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-sm">
@@ -1281,7 +1281,7 @@ const TaxPlanningHub = () => {
 
               <Card className="bg-navy-900/60 border-navy-700">
                 <CardHeader>
-                  <CardTitle className="text-lg text-white">2025/2026 Credit Rates</CardTitle>
+                  <CardTitle className="text-lg text-white">2026/2027 Credit Rates</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3 text-sm">
@@ -1482,7 +1482,7 @@ const TaxPlanningHub = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="2025/2026">2025/2026</SelectItem>
+                        <SelectItem value="2026/2027">2026/2027</SelectItem>
                         <SelectItem value="2024/2025">2024/2025</SelectItem>
                         <SelectItem value="2023/2024">2023/2024</SelectItem>
                       </SelectContent>
@@ -1697,7 +1697,7 @@ const TaxPlanningHub = () => {
                 title="IRP5 Summary Report"
                 calculatorType="Tax Planning Hub - IRP5"
                 inputs={[
-                  { label: 'Tax Year', value: '2025/2026' },
+                  { label: 'Tax Year', value: '2026/2027' },
                   { label: 'Number of IRP5s', value: `${irp5Documents.length} document(s)` },
                 ]}
                 results={[
