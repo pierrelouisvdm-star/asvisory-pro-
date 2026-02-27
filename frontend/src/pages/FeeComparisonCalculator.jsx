@@ -212,6 +212,52 @@ const FeeComparisonCalculator = () => {
     );
   };
 
+  // Fee input component with local state for smooth typing
+  const FeeInput = ({ label, value, onChange, min = 0, max, step = 0.1 }) => {
+    const [localValue, setLocalValue] = React.useState(String(value || ''));
+    
+    React.useEffect(() => {
+      setLocalValue(String(value || ''));
+    }, [value]);
+
+    const handleChange = (e) => {
+      const inputValue = e.target.value;
+      setLocalValue(inputValue);
+      if (inputValue === '' || inputValue === '-') {
+        onChange(0);
+      } else {
+        const parsed = parseFloat(inputValue);
+        if (!isNaN(parsed)) onChange(parsed);
+      }
+    };
+
+    const handleBlur = () => {
+      const parsed = parseFloat(localValue);
+      if (isNaN(parsed) || localValue === '') {
+        setLocalValue('0');
+        onChange(0);
+      } else {
+        setLocalValue(String(parsed));
+      }
+    };
+
+    return (
+      <div>
+        <Label className="text-xs text-slate-400">{label}</Label>
+        <Input
+          type="number"
+          value={localValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className="bg-navy-800 border-navy-600 text-white mt-1"
+          step={step}
+          min={min}
+          max={max}
+        />
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6" data-testid="fee-comparison-calculator">
       <Disclaimer />
