@@ -62,23 +62,24 @@ const FeeComparisonCalculator = () => {
       
       const months = investmentYears * 12;
       
-      // Calculate year-by-year growth
+      // Calculate year-by-year growth with escalating contributions
       const yearlyData = [];
       let currentValueNet = initialInvestment;
       let currentValueGross = initialInvestment;
       let totalContributions = initialInvestment;
       let totalFeesLost = 0;
+      let currentMonthlyContribution = monthlyContribution;
       
       for (let year = 1; year <= investmentYears; year++) {
         // Calculate for 12 months
         for (let month = 1; month <= 12; month++) {
           // Gross growth (no fees)
-          currentValueGross = currentValueGross * (1 + monthlyGrossReturn) + monthlyContribution;
+          currentValueGross = currentValueGross * (1 + monthlyGrossReturn) + currentMonthlyContribution;
           
           // Net growth (after fees)
-          currentValueNet = currentValueNet * (1 + monthlyReturn) + monthlyContribution;
+          currentValueNet = currentValueNet * (1 + monthlyReturn) + currentMonthlyContribution;
           
-          totalContributions += monthlyContribution;
+          totalContributions += currentMonthlyContribution;
         }
         
         totalFeesLost = currentValueGross - currentValueNet;
