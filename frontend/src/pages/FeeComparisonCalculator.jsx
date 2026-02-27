@@ -425,7 +425,7 @@ const FeeComparisonCalculator = () => {
                   />
                   
                   <div className="space-y-3">
-                    <FeeInput
+                    <EACFeeInput
                       label="TER / Management Fee (%)"
                       value={option.ter}
                       onChange={(val) => updateOption(idx, 'ter', val)}
@@ -433,7 +433,7 @@ const FeeComparisonCalculator = () => {
                       max={5}
                       step={0.1}
                     />
-                    <FeeInput
+                    <EACFeeInput
                       label="Platform Fee (%)"
                       value={option.platformFee}
                       onChange={(val) => updateOption(idx, 'platformFee', val)}
@@ -441,7 +441,7 @@ const FeeComparisonCalculator = () => {
                       max={2}
                       step={0.1}
                     />
-                    <FeeInput
+                    <EACFeeInput
                       label="Advisor Fee (%)"
                       value={option.advisorFee}
                       onChange={(val) => updateOption(idx, 'advisorFee', val)}
