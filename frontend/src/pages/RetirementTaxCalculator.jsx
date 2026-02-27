@@ -139,14 +139,14 @@ export const RetirementTaxCalculator = () => {
     const effectiveTaxRateWithRA = (Math.max(0, taxWithRA) / grossIncome) * 100;
     const effectiveTaxRateMaxRA = (Math.max(0, taxWithMaxRA) / grossIncome) * 100;
     
-    // Marginal tax rate (for information)
+    // Marginal tax rate (for information) - 2026/27 brackets
     let marginalRate = 18;
-    if (taxableIncomeWithRA > 1817000) marginalRate = 45;
-    else if (taxableIncomeWithRA > 857900) marginalRate = 41;
-    else if (taxableIncomeWithRA > 673000) marginalRate = 39;
-    else if (taxableIncomeWithRA > 512800) marginalRate = 36;
-    else if (taxableIncomeWithRA > 370500) marginalRate = 31;
-    else if (taxableIncomeWithRA > 237100) marginalRate = 26;
+    if (taxableIncomeWithRA > 1878600) marginalRate = 45;
+    else if (taxableIncomeWithRA > 887000) marginalRate = 41;
+    else if (taxableIncomeWithRA > 695800) marginalRate = 39;
+    else if (taxableIncomeWithRA > 530200) marginalRate = 36;
+    else if (taxableIncomeWithRA > 383100) marginalRate = 31;
+    else if (taxableIncomeWithRA > 245100) marginalRate = 26;
     
     // Net cost of RA contribution (contribution minus tax saving)
     const netCostOfContribution = annualRAContribution - currentTaxSaving;
