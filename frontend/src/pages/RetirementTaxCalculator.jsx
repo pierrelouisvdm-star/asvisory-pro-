@@ -52,21 +52,21 @@ export const RetirementTaxCalculator = () => {
   const calculateTax = (taxableIncome, ageGroup) => {
     let tax = 0;
     
-    // 2024/25 Tax Brackets
-    if (taxableIncome <= 237100) {
+    // 2026/27 Tax Brackets (Effective 1 March 2026)
+    if (taxableIncome <= 245100) {
       tax = taxableIncome * 0.18;
-    } else if (taxableIncome <= 370500) {
-      tax = 42678 + (taxableIncome - 237100) * 0.26;
-    } else if (taxableIncome <= 512800) {
-      tax = 77362 + (taxableIncome - 370500) * 0.31;
-    } else if (taxableIncome <= 673000) {
-      tax = 121475 + (taxableIncome - 512800) * 0.36;
-    } else if (taxableIncome <= 857900) {
-      tax = 179147 + (taxableIncome - 673000) * 0.39;
-    } else if (taxableIncome <= 1817000) {
-      tax = 251258 + (taxableIncome - 857900) * 0.41;
+    } else if (taxableIncome <= 383100) {
+      tax = 44118 + (taxableIncome - 245100) * 0.26;
+    } else if (taxableIncome <= 530200) {
+      tax = 79998 + (taxableIncome - 383100) * 0.31;
+    } else if (taxableIncome <= 695800) {
+      tax = 125599 + (taxableIncome - 530200) * 0.36;
+    } else if (taxableIncome <= 887000) {
+      tax = 185215 + (taxableIncome - 695800) * 0.39;
+    } else if (taxableIncome <= 1878600) {
+      tax = 259783 + (taxableIncome - 887000) * 0.41;
     } else {
-      tax = 644489 + (taxableIncome - 1817000) * 0.45;
+      tax = 666339 + (taxableIncome - 1878600) * 0.45;
     }
     
     // Apply rebates
