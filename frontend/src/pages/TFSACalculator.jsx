@@ -45,8 +45,8 @@ const TFSACalculator = () => {
     const lifetimeRemaining = Math.max(0, TFSA_LIFETIME_LIMIT - lifetimeContributions);
     const effectiveAnnualLimit = Math.min(annualRemaining, lifetimeRemaining);
     
-    // Monthly contribution capped
-    const monthsRemaining = 12 - Math.ceil(yearToDateContribution / 3000);
+    // Monthly contribution capped (R46,000 / 12 months = ~R3,833/month)
+    const monthsRemaining = 12 - Math.ceil(yearToDateContribution / 3833);
     const maxMonthlyToLimit = monthsRemaining > 0 ? effectiveAnnualLimit / monthsRemaining : 0;
     const effectiveMonthly = Math.min(monthlyContribution, maxMonthlyToLimit);
     
