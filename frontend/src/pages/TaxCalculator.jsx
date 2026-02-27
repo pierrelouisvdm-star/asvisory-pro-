@@ -12,29 +12,29 @@ import { Receipt, Calculator, Info, TrendingDown } from 'lucide-react';
 import { useCurrency } from '@/context/CurrencyContext';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 
-// South African Tax Brackets 2024/2025
+// South African Tax Brackets 2026/2027 (Effective 1 March 2026)
 const SA_TAX_BRACKETS = [
-  { min: 0, max: 237100, rate: 18, base: 0 },
-  { min: 237101, max: 370500, rate: 26, base: 42678 },
-  { min: 370501, max: 512800, rate: 31, base: 77362 },
-  { min: 512801, max: 673000, rate: 36, base: 121475 },
-  { min: 673001, max: 857900, rate: 39, base: 179147 },
-  { min: 857901, max: 1817000, rate: 41, base: 251258 },
-  { min: 1817001, max: Infinity, rate: 45, base: 644489 },
+  { min: 0, max: 245100, rate: 18, base: 0 },
+  { min: 245101, max: 383100, rate: 26, base: 44118 },
+  { min: 383101, max: 530200, rate: 31, base: 79998 },
+  { min: 530201, max: 695800, rate: 36, base: 125599 },
+  { min: 695801, max: 887000, rate: 39, base: 185215 },
+  { min: 887001, max: 1878600, rate: 41, base: 259783 },
+  { min: 1878601, max: Infinity, rate: 45, base: 666339 },
 ];
 
-// Tax Rebates
+// Tax Rebates 2026/2027
 const TAX_REBATES = {
-  primary: 17235,      // All taxpayers
-  secondary: 9444,     // 65 and older
-  tertiary: 3145,      // 75 and older
+  primary: 17820,      // All taxpayers
+  secondary: 9765,     // 65 and older
+  tertiary: 3249,      // 75 and older
 };
 
-// Medical Aid Credits
+// Medical Aid Credits 2026/2027
 const MEDICAL_CREDITS = {
-  main: 364,           // Main member per month
-  firstDependent: 364, // First dependent per month
-  additional: 246,     // Additional dependents per month
+  main: 376,           // Main member per month
+  firstDependent: 376, // First dependent per month
+  additional: 254,     // Additional dependents per month
 };
 
 const ageGroupOptions = [
