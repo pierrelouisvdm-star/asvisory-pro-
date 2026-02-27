@@ -118,8 +118,8 @@ export const LivingAnnuityCalculator = () => {
     const shortfallYears = Math.max(0, yearsInRetirement - yearsLasting);
     
     // Tax calculation (simplified - living annuity income is taxable)
-    // Using SA tax brackets for 65+ (2024/25)
-    const taxFreeThreshold = 165600; // R165,600 for 65+
+    // Using SA tax brackets for 65+ (2026/27)
+    const taxFreeThreshold = 171300; // R171,300 for 75+ (R153,250 for 65-74)
     const taxableIncome = Math.max(0, annualIncome - taxFreeThreshold);
     const estimatedTax = calculateSATax(annualIncome, currentAge);
     const afterTaxAnnualIncome = annualIncome - estimatedTax;
