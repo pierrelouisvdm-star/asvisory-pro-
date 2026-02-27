@@ -316,8 +316,13 @@ const FeeComparisonCalculator = () => {
             <div className="p-3 bg-navy-800 rounded-lg">
               <p className="text-xs text-slate-400">Total Contributions</p>
               <p className="text-lg font-bold text-white">
-                {formatCurrency(initialInvestment + (monthlyContribution * investmentYears * 12))}
+                {formatCurrency(results[0]?.totalContributions || 0)}
               </p>
+              {annualContributionIncrease > 0 && (
+                <p className="text-xs text-slate-500 mt-1">
+                  Including {annualContributionIncrease}% annual increase
+                </p>
+              )}
             </div>
           </CardContent>
         </Card>
