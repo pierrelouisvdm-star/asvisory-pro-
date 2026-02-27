@@ -1,37 +1,27 @@
 # AdvisoryPro - Product Requirements Document
 
-## Latest Update: February 24, 2026
+## Latest Update: February 27, 2026
 
-### Session: February 24, 2026
-- ✅ **Retirement Calculator Verified** - All calculations mathematically accurate
-  - Projected Nest Egg calculation verified
-  - Funding Ratio calculation verified  
-  - Shortfall/Surplus calculation verified
-  - Additional monthly savings recommendation verified
-- ✅ **Deployment Check Passed** - Application ready for production
-  - All environment variables properly configured
-  - No hardcoded secrets or URLs
-  - CORS correctly configured
-  - MongoDB connections using environment variables
-- ✅ **All Calculators Reset to 0 Defaults** - Updated 15+ calculators to have 0 as default values for all monetary inputs
-  - Fee Comparison Calculator
-  - TFSA Calculator
-  - Debt Payoff Calculator
-  - Net Worth Tracker
-  - Budget Planner
-  - Cash Flow Projector
-  - Bond Calculator
-  - Car Finance Calculator
-  - Life Insurance Calculator
-  - Income Disability Calculator
-  - Emergency Fund Calculator
-  - Living Annuity Calculator
-  - Monte Carlo Simulator
-  - Loan Comparison Tool
-  - Tax Calculator
-  - Retirement Tax Calculator
-  - Estate Planning Calculator
-  - Education Savings Calculator
+### Session: February 27, 2026
+- ✅ **2026/2027 Tax Year Updates** - All tax figures updated per SA Budget Speech:
+  - **Tax Brackets** - Updated all 7 brackets (e.g., 18% up to R245,100, etc.)
+  - **Tax Rebates** - Primary: R17,820 | Secondary (65+): R9,765 | Tertiary (75+): R3,249
+  - **Medical Credits** - Main: R376/month | Additional Dependent: R254/month
+  - **TFSA Annual Limit** - Increased from R36,000 to **R46,000**
+  - **RA Deduction Cap** - Increased from R350,000 to **R430,000**
+  - **Tax Thresholds** - Under 65: R99,000 | 65-74: R153,250 | 75+: R171,300
+  
+- ✅ **Files Updated:**
+  - TaxPlanningHub.jsx - All tax constants, brackets, rebates, credits
+  - TaxCalculator.jsx - Tax brackets and medical credits
+  - TFSACalculator.jsx - Annual limit (R46,000), rules text
+  - RetirementTaxCalculator.jsx - RA cap (R430,000), rebates, brackets
+  - LivingAnnuityCalculator.jsx - Tax calculation for seniors
+  - TaxDirectiveSimulator.jsx - Year references (withdrawal tables unchanged)
+
+- ✅ **EAC Tool Fixed** - Input fields now allow multi-digit number entry
+- ✅ **Annual Contribution Increase** added to EAC Tool
+- ✅ **10 Premium Lifetime Coupon Codes** generated
 
 ### Previous Session: February 19, 2026
 - ✅ PDF Export added to all Tax Hub calculator tabs
