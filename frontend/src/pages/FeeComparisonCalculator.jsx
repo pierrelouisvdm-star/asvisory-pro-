@@ -401,53 +401,30 @@ const FeeComparisonCalculator = () => {
                   />
                   
                   <div className="space-y-3">
-                    <div>
-                      <Label className="text-xs text-slate-400">TER / Management Fee (%)</Label>
-                      <Input
-                        type="number"
-                        value={option.ter}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const parsed = val === '' ? 0 : parseFloat(val);
-                          if (!isNaN(parsed)) updateOption(idx, 'ter', parsed);
-                        }}
-                        className="bg-navy-800 border-navy-600 text-white mt-1"
-                        step={0.1}
-                        min={0}
-                        max={5}
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-xs text-slate-400">Platform Fee (%)</Label>
-                      <Input
-                        type="number"
-                        value={option.platformFee}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const parsed = val === '' ? 0 : parseFloat(val);
-                          if (!isNaN(parsed)) updateOption(idx, 'platformFee', parsed);
-                        }}
-                        className="bg-navy-800 border-navy-600 text-white mt-1"
-                        step={0.1}
-                        min={0}
-                        max={2}
-                      />
-                    </div>
-                    <div>
-                      <Label className="text-xs text-slate-400">Advisor Fee (%)</Label>
-                      <Input
-                        type="number"
-                        value={option.advisorFee}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const parsed = val === '' ? 0 : parseFloat(val);
-                          if (!isNaN(parsed)) updateOption(idx, 'advisorFee', parsed);
-                        }}
-                        className="bg-navy-800 border-navy-600 text-white mt-1"
-                        step={0.1}
-                        min={0}
-                        max={2}
-                      />
+                    <FeeInput
+                      label="TER / Management Fee (%)"
+                      value={option.ter}
+                      onChange={(val) => updateOption(idx, 'ter', val)}
+                      min={0}
+                      max={5}
+                      step={0.1}
+                    />
+                    <FeeInput
+                      label="Platform Fee (%)"
+                      value={option.platformFee}
+                      onChange={(val) => updateOption(idx, 'platformFee', val)}
+                      min={0}
+                      max={2}
+                      step={0.1}
+                    />
+                    <FeeInput
+                      label="Advisor Fee (%)"
+                      value={option.advisorFee}
+                      onChange={(val) => updateOption(idx, 'advisorFee', val)}
+                      min={0}
+                      max={2}
+                      step={0.1}
+                    />
                     </div>
                     
                     <div className="pt-2 border-t border-navy-700">
