@@ -15,7 +15,7 @@ import { useCurrency } from '../context/CurrencyContext';
 import { PrintReport } from '../components/calculators/PrintReport';
 import { Disclaimer } from '../components/calculators/Disclaimer';
 
-// SARS Tax Tables 2024/25
+// SARS Tax Tables 2026/27 (Retirement Fund Lump Sum Benefits)
 const RETIREMENT_TAX_TABLE = [
   { min: 0, max: 550000, rate: 0, base: 0 },
   { min: 550001, max: 770000, rate: 0.18, base: 0 },
