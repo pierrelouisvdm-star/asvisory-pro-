@@ -14,16 +14,16 @@ import {
 import { useCurrency } from '@/context/CurrencyContext';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 
-// SA Tax Year 2024/25 Constants
-const TAX_YEAR = '2024/25';
+// SA Tax Year 2026/27 Constants (Effective 1 March 2026)
+const TAX_YEAR = '2026/27';
 const RA_CONTRIBUTION_LIMIT_PERCENTAGE = 27.5;
-const RA_CONTRIBUTION_LIMIT_MAX = 350000;
-const PRIMARY_REBATE = 17235;
-const SECONDARY_REBATE = 9444; // 65+
-const TERTIARY_REBATE = 3145; // 75+
-const MEDICAL_TAX_CREDIT_MAIN = 364; // per month
-const MEDICAL_TAX_CREDIT_FIRST_DEP = 364;
-const MEDICAL_TAX_CREDIT_ADDITIONAL_DEP = 246;
+const RA_CONTRIBUTION_LIMIT_MAX = 430000; // Increased from R350,000
+const PRIMARY_REBATE = 17820;
+const SECONDARY_REBATE = 9765; // 65+
+const TERTIARY_REBATE = 3249; // 75+
+const MEDICAL_TAX_CREDIT_MAIN = 376; // per month
+const MEDICAL_TAX_CREDIT_FIRST_DEP = 376;
+const MEDICAL_TAX_CREDIT_ADDITIONAL_DEP = 254;
 
 const ageGroupOptions = [
   { value: 'under65', label: 'Under 65' },
