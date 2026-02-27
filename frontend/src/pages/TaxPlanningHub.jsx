@@ -81,39 +81,39 @@ const TaxInputField = ({ label, id, value, onChange, prefix, suffix, min = 0, st
   );
 };
 
-// 2025/2026 South African Tax Tables
-const TAX_BRACKETS_2025 = [
-  { min: 0, max: 237100, rate: 0.18, base: 0 },
-  { min: 237101, max: 370500, rate: 0.26, base: 42678 },
-  { min: 370501, max: 512800, rate: 0.31, base: 77362 },
-  { min: 512801, max: 673000, rate: 0.36, base: 121475 },
-  { min: 673001, max: 857900, rate: 0.39, base: 179147 },
-  { min: 857901, max: 1817000, rate: 0.41, base: 251258 },
-  { min: 1817001, max: Infinity, rate: 0.45, base: 644489 },
+// 2026/2027 South African Tax Tables (Effective 1 March 2026)
+const TAX_BRACKETS_2026 = [
+  { min: 0, max: 245100, rate: 0.18, base: 0 },
+  { min: 245101, max: 383100, rate: 0.26, base: 44118 },
+  { min: 383101, max: 530200, rate: 0.31, base: 79998 },
+  { min: 530201, max: 695800, rate: 0.36, base: 125599 },
+  { min: 695801, max: 887000, rate: 0.39, base: 185215 },
+  { min: 887001, max: 1878600, rate: 0.41, base: 259783 },
+  { min: 1878601, max: Infinity, rate: 0.45, base: 666339 },
 ];
 
-// Tax Rebates 2025/2026
+// Tax Rebates 2026/2027
 const TAX_REBATES = {
-  primary: 17235,      // All taxpayers
-  secondary: 9444,     // 65 and older
-  tertiary: 3145,      // 75 and older
+  primary: 17820,      // All taxpayers
+  secondary: 9765,     // 65 and older
+  tertiary: 3249,      // 75 and older
 };
 
-// Tax Thresholds 2025/2026
+// Tax Thresholds 2026/2027
 const TAX_THRESHOLDS = {
-  under65: 95750,
-  age65to74: 148217,
-  age75plus: 165689,
+  under65: 99000,
+  age65to74: 153250,
+  age75plus: 171300,
 };
 
-// Medical Tax Credits 2025/2026
+// Medical Tax Credits 2026/2027
 const MEDICAL_CREDITS = {
-  mainMember: 364,      // Per month
-  firstDependent: 364,  // Per month  
-  additionalDependent: 246, // Per month
+  mainMember: 376,      // Per month
+  firstDependent: 376,  // Per month  
+  additionalDependent: 254, // Per month
 };
 
-// CGT Constants
+// CGT Constants (unchanged)
 const CGT = {
   inclusionRate: 0.40,        // 40% for individuals
   annualExclusion: 40000,     // R40,000 annual exclusion
@@ -121,16 +121,16 @@ const CGT = {
   primaryResidence: 2000000,  // R2m primary residence exclusion
 };
 
-// TFSA Limits
+// TFSA Limits 2026/2027 (Updated)
 const TFSA = {
-  annualLimit: 36000,
-  lifetimeLimit: 500000,
+  annualLimit: 46000,         // Increased from R36,000 to R46,000
+  lifetimeLimit: 500000,      // Unchanged
 };
 
-// Retirement Contribution Limits
+// Retirement Contribution Limits 2026/2027 (Updated)
 const RETIREMENT = {
-  maxDeductionPercent: 0.275, // 27.5% of taxable income
-  maxDeductionAmount: 350000, // R350,000 cap
+  maxDeductionPercent: 0.275, // 27.5% of taxable income (unchanged)
+  maxDeductionAmount: 430000, // Increased from R350,000 to R430,000
 };
 
 const TaxPlanningHub = () => {
