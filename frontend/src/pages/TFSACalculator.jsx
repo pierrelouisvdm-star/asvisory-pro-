@@ -565,11 +565,11 @@ const TFSACalculator = () => {
           <div className="flex items-start gap-3">
             <Info className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
             <div>
-              <h4 className="font-medium text-blue-400 mb-2">TFSA Rules (South Africa)</h4>
+              <h4 className="font-medium text-blue-400 mb-2">TFSA Rules (South Africa) - 2026/2027</h4>
               <ul className="text-sm text-slate-300 space-y-1 grid sm:grid-cols-2 gap-x-8">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                  Annual contribution limit: <strong>R36,000</strong>
+                  Annual contribution limit: <strong>R46,000</strong> (from 1 March 2026)
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="h-3 w-3 text-emerald-400" />
