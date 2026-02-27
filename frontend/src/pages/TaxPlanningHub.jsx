@@ -277,7 +277,7 @@ const TaxPlanningHub = () => {
 
     // Calculate gross tax
     let grossTax = 0;
-    for (const bracket of TAX_BRACKETS_2025) {
+    for (const bracket of TAX_BRACKETS_2026) {
       if (taxableIncome >= bracket.min) {
         if (taxableIncome <= bracket.max) {
           grossTax = bracket.base + (taxableIncome - bracket.min + 1) * bracket.rate;
@@ -326,7 +326,7 @@ const TaxPlanningHub = () => {
 
     // Find marginal rate
     let marginalRate = 18;
-    for (const bracket of TAX_BRACKETS_2025) {
+    for (const bracket of TAX_BRACKETS_2026) {
       if (taxableIncome >= bracket.min && taxableIncome <= bracket.max) {
         marginalRate = bracket.rate * 100;
         break;
@@ -419,12 +419,12 @@ const TaxPlanningHub = () => {
 
     // Find current and new brackets
     const findBracket = (income) => {
-      for (let i = TAX_BRACKETS_2025.length - 1; i >= 0; i--) {
-        if (income >= TAX_BRACKETS_2025[i].min) {
-          return { ...TAX_BRACKETS_2025[i], index: i };
+      for (let i = TAX_BRACKETS_2026.length - 1; i >= 0; i--) {
+        if (income >= TAX_BRACKETS_2026[i].min) {
+          return { ...TAX_BRACKETS_2026[i], index: i };
         }
       }
-      return { ...TAX_BRACKETS_2025[0], index: 0 };
+      return { ...TAX_BRACKETS_2026[0], index: 0 };
     };
 
     const currentBracket = findBracket(currentIncome);
@@ -457,7 +457,7 @@ const TaxPlanningHub = () => {
     
     // Calculate estimated tax for the year
     let estimatedTax = 0;
-    for (const bracket of TAX_BRACKETS_2025) {
+    for (const bracket of TAX_BRACKETS_2026) {
       if (estimatedTaxableIncome >= bracket.min) {
         if (estimatedTaxableIncome <= bracket.max) {
           estimatedTax = bracket.base + (estimatedTaxableIncome - bracket.min + 1) * bracket.rate;
@@ -1154,7 +1154,7 @@ const TaxPlanningHub = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-sm">
-                    {TAX_BRACKETS_2025.map((bracket, index) => (
+                    {TAX_BRACKETS_2026.map((bracket, index) => (
                       <div 
                         key={index} 
                         className={`flex justify-between p-2 rounded ${
