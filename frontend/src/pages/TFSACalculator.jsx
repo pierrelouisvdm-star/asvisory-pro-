@@ -15,9 +15,9 @@ import { PrintReport } from '../components/calculators/PrintReport';
 import { Disclaimer } from '../components/calculators/Disclaimer';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area, BarChart, Bar } from 'recharts';
 
-// TFSA Limits for South Africa
-const TFSA_ANNUAL_LIMIT = 36000;
-const TFSA_LIFETIME_LIMIT = 500000;
+// TFSA Limits for South Africa 2026/2027 (Effective 1 March 2026)
+const TFSA_ANNUAL_LIMIT = 46000;    // Increased from R36,000 to R46,000
+const TFSA_LIFETIME_LIMIT = 500000; // Unchanged
 
 const TFSACalculator = () => {
   const { formatCurrency, symbol } = useCurrency();
