@@ -160,30 +160,30 @@ export const LivingAnnuityCalculator = () => {
     };
   }, [inputs]);
 
-  // SA Tax calculation for seniors (simplified 2024/25 rates)
+  // SA Tax calculation for seniors (2026/27 rates - Effective 1 March 2026)
   function calculateSATax(income, age) {
     // Tax rebates for 65+
-    const primaryRebate = 17235;
-    const secondaryRebate = age >= 65 ? 9444 : 0;
-    const tertiaryRebate = age >= 75 ? 3145 : 0;
+    const primaryRebate = 17820;
+    const secondaryRebate = age >= 65 ? 9765 : 0;
+    const tertiaryRebate = age >= 75 ? 3249 : 0;
     const totalRebate = primaryRebate + secondaryRebate + tertiaryRebate;
     
-    // Tax brackets (2024/25)
+    // Tax brackets (2026/27)
     let tax = 0;
-    if (income <= 237100) {
+    if (income <= 245100) {
       tax = income * 0.18;
-    } else if (income <= 370500) {
-      tax = 42678 + (income - 237100) * 0.26;
-    } else if (income <= 512800) {
-      tax = 77362 + (income - 370500) * 0.31;
-    } else if (income <= 673000) {
-      tax = 121475 + (income - 512800) * 0.36;
-    } else if (income <= 857900) {
-      tax = 179147 + (income - 673000) * 0.39;
-    } else if (income <= 1817000) {
-      tax = 251258 + (income - 857900) * 0.41;
+    } else if (income <= 383100) {
+      tax = 44118 + (income - 245100) * 0.26;
+    } else if (income <= 530200) {
+      tax = 79998 + (income - 383100) * 0.31;
+    } else if (income <= 695800) {
+      tax = 125599 + (income - 530200) * 0.36;
+    } else if (income <= 887000) {
+      tax = 185215 + (income - 695800) * 0.39;
+    } else if (income <= 1878600) {
+      tax = 259783 + (income - 887000) * 0.41;
     } else {
-      tax = 644489 + (income - 1817000) * 0.45;
+      tax = 666339 + (income - 1878600) * 0.45;
     }
     
     return Math.max(0, tax - totalRebate);
