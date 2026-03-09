@@ -25,11 +25,14 @@ export const InputField = ({
 }) => {
   // Use local state to handle typing without immediate parsing
   const [localValue, setLocalValue] = useState(String(value || ''));
+  const [isFocused, setIsFocused] = useState(false);
   
-  // Sync local value when external value changes (e.g., from reset)
+  // Only sync from parent when not focused (to prevent overwriting while typing)
   React.useEffect(() => {
-    setLocalValue(String(value || ''));
-  }, [value]);
+    if (!isFocused) {
+      setLocalValue(String(value || ''));
+    }
+  }, [value, isFocused]);
 
   const handleChange = (e) => {
     const inputValue = e.target.value;
@@ -50,7 +53,12 @@ export const InputField = ({
     }
   };
 
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
   const handleBlur = () => {
+    setIsFocused(false);
     // On blur, ensure the displayed value matches the actual value
     if (type === 'number') {
       const parsed = parseFloat(localValue);
@@ -59,6 +67,7 @@ export const InputField = ({
         onChange(0);
       } else {
         setLocalValue(String(parsed));
+        onChange(parsed);
       }
     }
   };
@@ -93,6 +102,7 @@ export const InputField = ({
           type={type}
           value={localValue}
           onChange={handleChange}
+          onFocus={handleFocus}
           onBlur={handleBlur}
           placeholder={placeholder}
           min={min}
