@@ -256,7 +256,7 @@ export const LandingPage = () => {
             </p>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-              The Complete Financial Toolkit for South Africans
+              The Complete Financial Planning Toolkit for South Africans
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
