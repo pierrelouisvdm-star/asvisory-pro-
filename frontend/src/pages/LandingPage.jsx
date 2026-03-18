@@ -290,7 +290,7 @@ export const LandingPage = () => {
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R249/month • Cancel anytime • Have a coupon? Apply at signup
+              R249/month or R1,499/year (Save R1,489!) • Have a coupon? Apply at signup
             </p>
           </div>
         </div>
@@ -818,7 +818,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            R249/month • Cancel anytime
+            R249/month or R1,499/year • Cancel anytime
           </p>
         </div>
       </section>

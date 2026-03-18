@@ -32,12 +32,17 @@ const PAYFAST_CONFIG = {
   sandboxMode: true, // Set to false in production
 };
 
-const PREMIUM_PRICE = 249; // R249 per month
+const PREMIUM_PRICE = 249;
+const ANNUAL_PRICE = 1499;
+const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1499 vs R2988 = R1489 savings // R249 per month
 
 export const PricingPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
   const { refreshSubscription } = useSubscription();
+  
+  // Billing period toggle
+  const [billingPeriod, setBillingPeriod] = useState('annual'); // 'monthly' or 'annual'
   
   // Coupon state
   const [couponCode, setCouponCode] = useState('');
@@ -78,6 +83,9 @@ export const PricingPage = () => {
     }
 
     setPaymentLoading(true);
+    
+    const isAnnual = billingPeriod === 'annual';
+    const paymentAmount = isAnnual ? ANNUAL_PRICE : PREMIUM_PRICE;
 
     // Build PayFast payment form
     const paymentData = {
@@ -88,15 +96,16 @@ export const PricingPage = () => {
       notify_url: `${process.env.REACT_APP_BACKEND_URL}/api/payments/payfast-notify`,
       email_address: user?.email || '',
       m_payment_id: `AP-${Date.now()}`,
-      amount: PREMIUM_PRICE.toFixed(2),
-      item_name: 'Financial Advisory Pro Premium Monthly',
-      item_description: 'Monthly premium subscription',
+      amount: paymentAmount.toFixed(2),
+      item_name: isAnnual ? 'Financial Advisory Pro Premium Annual' : 'Financial Advisory Pro Premium Monthly',
+      item_description: isAnnual ? 'Annual premium subscription' : 'Monthly premium subscription',
       subscription_type: '1', // 1 = subscription
       billing_date: new Date().getDate().toString(),
-      recurring_amount: PREMIUM_PRICE.toFixed(2),
-      frequency: '3', // 3 = Monthly
+      recurring_amount: paymentAmount.toFixed(2),
+      frequency: isAnnual ? '6' : '3', // 6 = Yearly, 3 = Monthly
       cycles: '0', // 0 = indefinite
       custom_str1: user?.id || '',
+      custom_str2: billingPeriod,
     };
 
     // Create and submit form
@@ -135,6 +144,33 @@ export const PricingPage = () => {
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
             Start free with essential calculators, or unlock everything with Premium.
           </p>
+        </div>
+
+        {/* Billing Toggle */}
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <button
+            onClick={() => setBillingPeriod('monthly')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              billingPeriod === 'monthly' 
+                ? 'bg-emerald-600 text-white' 
+                : 'bg-slate-800 text-slate-400 hover:text-white'
+            }`}
+          >
+            Monthly
+          </button>
+          <button
+            onClick={() => setBillingPeriod('annual')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors relative ${
+              billingPeriod === 'annual' 
+                ? 'bg-emerald-600 text-white' 
+                : 'bg-slate-800 text-slate-400 hover:text-white'
+            }`}
+          >
+            Annual
+            <span className="absolute -top-2 -right-2 bg-amber-500 text-xs text-black px-1.5 py-0.5 rounded-full font-bold">
+              Save R{ANNUAL_SAVINGS}
+            </span>
+          </button>
         </div>
 
         {/* Pricing Cards */}
@@ -196,10 +232,22 @@ export const PricingPage = () => {
               </div>
               <CardTitle className="text-2xl text-white">Premium Plan</CardTitle>
               <div className="mt-4">
-                <span className="text-5xl font-bold text-white">R{PREMIUM_PRICE}</span>
-                <span className="text-slate-400 ml-2">/month</span>
+                {billingPeriod === 'annual' ? (
+                  <>
+                    <span className="text-5xl font-bold text-white">R{ANNUAL_PRICE}</span>
+                    <span className="text-slate-400 ml-2">/year</span>
+                    <p className="text-emerald-400 text-sm mt-2">
+                      Only R{Math.round(ANNUAL_PRICE / 12)}/month • Save R{ANNUAL_SAVINGS}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-5xl font-bold text-white">R{PREMIUM_PRICE}</span>
+                    <span className="text-slate-400 ml-2">/month</span>
+                    <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
+                  </>
+                )}
               </div>
-              <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
             </CardHeader>
 
             <CardContent className="pb-8">

@@ -32,7 +32,10 @@ const tiers = [
   {
     name: 'Premium',
     price: 'R249',
+    annualPrice: 'R1,499',
     period: '/month',
+    annualPeriod: '/year',
+    annualSavings: 'Save R1,489',
     description: 'Full professional suite',
     features: [
       'All 20 Financial Calculators',
@@ -417,7 +420,9 @@ export const AuthPage = () => {
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
-              <p className="text-muted-foreground text-sm">R249/month • Cancel anytime</p>
+              <p className="text-muted-foreground text-sm">
+                R249/month or <span className="text-emerald-500 font-medium">R1,499/year</span> (Save R1,489!)
+              </p>
             </div>
 
             {tiers.map((tier) => (
