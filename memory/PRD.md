@@ -3,6 +3,20 @@
 ## Latest Update: March 18, 2026
 
 ### Session: March 18, 2026
+- ✅ **Complete Client Management Feature Removal** - All client-related features removed to align with new focus on individual investors:
+  - Removed "Clients" navigation link from desktop and mobile Header
+  - Removed "Unlimited Client Management" and "Up to 3 Clients" from PricingPage
+  - Removed client routes from App.js (/clients, /clients/:clientId, etc.)
+  - Updated Dashboard CTA from "client presentations" to "take control of your finances"
+  - Changed Features section title from "Built for Advisors" to "Professional Tools"
+  - Removed canAddMoreClients and getClientLimit from SubscriptionContext
+  - Updated QuickActionsWidget to remove client stats
+  - Updated LandingPage terminology (11+ instances updated)
+  - Updated FinancialLiteracyQuiz terminology
+  - Updated AuthPage premium features list
+  - Updated FeatureGate premium features description
+
+### Previous Session: March 18, 2026
 - ✅ **Complete 2026/2027 CGT Updates** - All Capital Gains Tax exclusions updated:
   - **CGT Annual Exclusion** - R40,000 → **R50,000**
   - **CGT Primary Residence Exclusion** - R2,000,000 → **R3,000,000**
@@ -26,46 +40,26 @@
   - **TFSA Annual Limit** - Increased from R36,000 to **R46,000**
   - **RA Deduction Cap** - Increased from R350,000 to **R430,000**
   - **Tax Thresholds** - Under 65: R99,000 | 65-74: R153,250 | 75+: R171,300
-  
-- ✅ **Files Updated:**
-  - TaxPlanningHub.jsx - All tax constants, brackets, rebates, credits
-  - TaxCalculator.jsx - Tax brackets and medical credits
-  - TFSACalculator.jsx - Annual limit (R46,000), rules text
-  - RetirementTaxCalculator.jsx - RA cap (R430,000), rebates, brackets
-  - LivingAnnuityCalculator.jsx - Tax calculation for seniors
-  - TaxDirectiveSimulator.jsx - Year references (withdrawal tables unchanged)
-
-- ✅ **EAC Tool Fixed** - Input fields now allow multi-digit number entry
-- ✅ **Annual Contribution Increase** added to EAC Tool
-
-### Previous Session: February 19, 2026
-- ✅ PDF Export added to all Tax Hub calculator tabs
-- ✅ Fee Comparison Calculator created (2-way comparison)
-- ✅ TFSA Calculator created and integrated
-- ✅ Mobile menu fixed with collapsible categories
-- ✅ Complete branding overhaul (CSS logo, navy blue theme)
-- ✅ 10 new Premium Lifetime coupon codes generated
 
 ---
 
 ## Original Problem Statement
-Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for South African financial advisors. The platform should include:
+Build a comprehensive financial SaaS platform called "AdvisoryPro" for South African investors and financial professionals. The platform should include:
 - Full-stack application (React + FastAPI + MongoDB)
 - Suite of financial calculators localized for South Africa (ZAR, local tax laws)
 - User authentication with admin features
-- Premium subscription model via PayFast or coupon codes
+- Free/Premium subscription model (R249/month for Premium)
 - High security standards (POPIA compliance, audit trails)
 
 ## User Personas
-1. **Financial Advisors** - Primary users who need calculators and client management
-2. **Admin Users** - Manage coupons, view analytics, access all features
-3. **Clients** - End beneficiaries of the calculations (not direct users)
+1. **Individual Investors** - Primary users who need calculators and planning tools
+2. **Financial Professionals** - Secondary users who can use tools for personal planning
+3. **Admin Users** - Manage coupons, view analytics, access all features
 
 ## Core Requirements
 - Modern, clean, professional UI with **dark theme** (default) and optional light mode
 - ZAR currency with South African tax calculations
 - PDF report generation for all calculators
-- Client management system
 - Live market data tracker
 
 ---
@@ -73,28 +67,28 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ## What's Been Implemented
 
 ### Financial Calculators (19 total)
-1. Future Value Calculator
-2. Compound Interest Calculator
-3. Monte Carlo Simulator
-4. Bond/Mortgage Calculator
-5. Vehicle Finance Calculator
-6. Debt Payoff Calculator
-7. Loan Comparison Tool
-8. Life Insurance Calculator
-9. Income Protection Calculator
-10. Emergency Fund Calculator
-11. Retirement Planner ✅ (Verified Feb 24, 2026)
-12. Living Annuity Calculator
-13. RA Tax Savings Calculator
-14. Tax Directive Simulator (Withdrawal Tax)
-15. Income Tax Calculator
-16. Budget Planner
-17. Cash Flow Projector
-18. Fee Comparison Calculator (NEW - Feb 2026)
-19. TFSA Calculator (NEW - Feb 2026)
+1. Future Value Calculator (FREE)
+2. Compound Interest Calculator (FREE)
+3. Bond/Mortgage Calculator (FREE)
+4. TFSA Calculator (FREE)
+5. Monte Carlo Simulator
+6. Vehicle Finance Calculator
+7. Debt Payoff Calculator
+8. Loan Comparison Tool
+9. Life Insurance Calculator
+10. Income Protection Calculator
+11. Emergency Fund Calculator
+12. Retirement Planner ✅ (Verified Feb 24, 2026)
+13. Living Annuity Calculator
+14. RA Tax Savings Calculator
+15. Tax Directive Simulator (Withdrawal Tax)
+16. Income Tax Calculator
+17. Budget Planner
+18. Cash Flow Projector
+19. Fee Comparison Calculator (EAC)
 
 ### Tax Planning Hub
-- Income Tax Calculator (2025/2026 brackets)
+- Income Tax Calculator (2026/2027 brackets)
 - Capital Gains Tax Calculator
 - Tax Bracket Simulator
 - Medical Aid Credits Estimator
@@ -104,7 +98,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 
 ### Security & Compliance
 - API-level data isolation per user
-- Audit logging for all client data access
+- Audit logging for all data access
 - POPIA compliance documentation
 - Security & Privacy Hub page
 
@@ -117,12 +111,15 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ### Payment Integration
 - PayFast frontend integration
 - PayFast backend ITN webhook
-- Stripe integration (legacy)
+
+### Subscription Model
+- **Free Tier:** TFSA, Bond, Future Value, Compound Interest calculators
+- **Premium Tier:** All 19 calculators, PDF reports, AI features (R249/month)
 
 ### UI/UX
-- CSS-based logo on landing page (seamless dark theme integration)
+- CSS-based logo on landing page
 - Navy blue color scheme
-- Mobile-responsive with collapsible calculator menu
+- Mobile-responsive design
 - Dark/Light theme toggle
 
 ---
@@ -130,8 +127,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ## Pending Tasks
 
 ### P0 - Critical
-- [x] **Verify Retirement Calculator** - Completed Feb 24, 2026 ✅
-- [ ] **Deploy to Production** - Ready for deployment, awaiting user action
+- [ ] **Deploy to Production** - Ready for deployment
 
 ### P1 - High Priority
 - [ ] **IRP5 File Storage Backend** - UI exists, needs file upload implementation
@@ -146,8 +142,8 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ## Future/Backlog
 
 ### Planned New Projects (Separate Codebases)
-- **AdvisoryPro US/Canada** - North American localized version (see ADVISORYPRO_US_CANADA_HANDOFF.md)
-- **AdvisoryPro Personal** - Consumer B2C version (see ADVISORYPRO_PERSONAL_SPEC.md)
+- **AdvisoryPro US/Canada** - North American localized version
+- **AdvisoryPro Personal** - Consumer B2C version
 - **Portal Landing Page** - Domain router for regional subdomains
 
 ### Features
@@ -168,7 +164,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 - **Backend**: FastAPI, Motor (async MongoDB driver)
 - **Database**: MongoDB
 - **Auth**: JWT with bcrypt password hashing
-- **Payments**: PayFast (primary), Stripe (legacy)
+- **Payments**: PayFast (primary)
 - **AI**: OpenAI GPT-4o via Emergent LLM Key
 
 ## Key Environment Variables
@@ -187,7 +183,7 @@ Build a comprehensive financial advisor SaaS platform called "AdvisoryPro" for S
 ## Deployment Status
 **Status:** ✅ READY FOR PRODUCTION
 
-Checked on Feb 24, 2026:
+Checked on March 18, 2026:
 - Environment variables properly configured
 - No hardcoded secrets
 - CORS allows all origins
@@ -196,4 +192,4 @@ Checked on Feb 24, 2026:
 
 ---
 
-*Last Updated: February 24, 2026*
+*Last Updated: March 18, 2026*
