@@ -235,7 +235,7 @@ export const LandingPage = () => {
                 Advisory Pro
               </h1>
               <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase">
-                Empower Your Practice
+                Empower Your Financial Future
               </p>
             </div>
             
