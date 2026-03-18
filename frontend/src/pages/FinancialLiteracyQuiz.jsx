@@ -164,29 +164,29 @@ const getLiteracyLevel = (score) => {
     return {
       level: 'High',
       color: 'emerald',
-      description: 'Strong understanding of financial concepts. Client can engage with more complex financial products and strategies.',
-      recommendation: 'Client demonstrates good financial literacy. Suitable for comprehensive financial planning discussions including complex investment strategies.'
+      description: 'Strong understanding of financial concepts. You can engage with more complex financial products and strategies.',
+      recommendation: 'You demonstrate good financial literacy. You are ready for comprehensive financial planning including complex investment strategies.'
     };
   } else if (percentage >= 60) {
     return {
       level: 'Moderate',
       color: 'amber',
-      description: 'Adequate understanding of basic concepts. Some areas may need additional explanation.',
-      recommendation: 'Client has foundational knowledge. Recommend additional education on weaker areas before implementing complex strategies.'
+      description: 'Adequate understanding of basic concepts. Some areas may need additional review.',
+      recommendation: 'You have foundational knowledge. Consider learning more about weaker areas before implementing complex strategies.'
     };
   } else if (percentage >= 40) {
     return {
       level: 'Basic',
       color: 'orange',
-      description: 'Limited understanding of financial concepts. Requires additional education.',
-      recommendation: 'Client needs financial education support. Focus on basic concepts before recommending complex products. Consider simpler solutions initially.'
+      description: 'Limited understanding of financial concepts. Additional education recommended.',
+      recommendation: 'Consider focusing on basic financial concepts before exploring complex products. Simpler solutions may be more suitable initially.'
     };
   } else {
     return {
       level: 'Low',
       color: 'red',
       description: 'Significant gaps in financial understanding. Comprehensive education recommended.',
-      recommendation: 'Client requires substantial financial education. Start with fundamentals. Ensure thorough explanation of any recommended products. Consider referring to financial literacy resources.'
+      recommendation: 'Start with the fundamentals of personal finance. Take time to understand any financial products thoroughly before committing. Consider using financial literacy resources.'
     };
   }
 };
@@ -277,7 +277,7 @@ const FinancialLiteracyQuiz = () => {
               <GraduationCap className="h-7 w-7 text-emerald-400" />
               Financial Literacy Assessment Results
             </h1>
-            <p className="text-slate-400 mt-1">COFI-compliant client assessment</p>
+            <p className="text-slate-400 mt-1">COFI-compliant assessment</p>
           </div>
           <div className="flex gap-2">
             <PrintReport
@@ -428,8 +428,8 @@ const FinancialLiteracyQuiz = () => {
                 <h4 className="text-sm font-medium text-blue-400 mb-1">COFI Compliance Note</h4>
                 <p className="text-sm text-slate-300">
                   This assessment helps fulfill the Conduct of Financial Institutions (COFI) requirement 
-                  to understand your client's financial literacy level. Results should be documented 
-                  in the client's record of advice and considered when making product recommendations.
+                  to understand financial literacy levels. Results can be documented 
+                  and considered when making financial planning decisions.
                 </p>
               </div>
             </div>
@@ -452,7 +452,7 @@ const FinancialLiteracyQuiz = () => {
             <GraduationCap className="h-7 w-7 text-emerald-400" />
             Financial Literacy Assessment
           </h1>
-          <p className="text-slate-400 mt-1">COFI-compliant client questionnaire</p>
+          <p className="text-slate-400 mt-1">COFI-compliant questionnaire</p>
         </div>
         <Badge variant="outline" className="border-emerald-500/50 text-emerald-400">
           {currentQuestion + 1} of {questions.length}

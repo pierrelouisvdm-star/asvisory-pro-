@@ -66,7 +66,7 @@ const keyFeatures = [
   {
     icon: Scale,
     title: 'Fee Comparison Tool',
-    description: 'Show clients how fees erode returns over time. Compare up to 3 investment options with different EACs and visualize the long-term impact of TERs, platform fees, and advisor fees.',
+    description: 'See how fees erode your returns over time. Compare up to 3 investment options with different EACs and visualize the long-term impact of TERs, platform fees, and advisor fees.',
     highlights: ['EAC Analysis', 'Visual Charts', 'PDF Reports'],
   },
   {
@@ -84,26 +84,26 @@ const keyFeatures = [
   {
     icon: GraduationCap,
     title: 'Financial Literacy Assessment',
-    description: 'COFI-compliant quiz to assess client financial knowledge. 10 carefully crafted questions with scoring, explanations, and professional PDF reports.',
+    description: 'COFI-compliant quiz to assess your financial knowledge. 10 carefully crafted questions with scoring, explanations, and professional PDF reports.',
     highlights: ['COFI Compliant', 'Instant Scoring', 'PDF Reports'],
   },
   {
     icon: LineChart,
     title: 'Net Worth Tracker',
-    description: 'Help clients visualize their financial journey. Track assets, liabilities, set goals, and celebrate milestones. Generate beautiful progress reports.',
+    description: 'Visualize your financial journey. Track assets, liabilities, set goals, and celebrate milestones. Generate beautiful progress reports.',
     highlights: ['Historical Snapshots', 'Goal Tracking', 'Smart Insights'],
   },
   {
     icon: Shield,
     title: 'Enterprise Security',
-    description: 'Bank-level security with POPIA compliance, audit trails for all data access, and complete data isolation. Your client data is always protected.',
+    description: 'Bank-level security with POPIA compliance, audit trails for all data access, and complete data isolation. Your financial data is always protected.',
     highlights: ['POPIA Compliant', 'Audit Trails', 'Data Isolation'],
   },
   {
     icon: Bot,
     title: 'AI Financial Assistant',
-    description: 'Get intelligent insights powered by advanced AI. Answer complex financial questions, generate explanations, and provide guidance to your clients.',
-    highlights: ['GPT-Powered', 'SA Context Aware', 'Client-Ready Explanations'],
+    description: 'Get intelligent insights powered by advanced AI. Answer complex financial questions, generate explanations, and get guidance on your financial decisions.',
+    highlights: ['GPT-Powered', 'SA Context Aware', 'Clear Explanations'],
   },
 ];
 
@@ -306,11 +306,11 @@ export const LandingPage = () => {
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-destructive mt-1">✗</span>
-                  Hours spent creating client reports
+                  Hours spent creating financial reports
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-destructive mt-1">✗</span>
-                  No way to track client progress over time
+                  No way to track your financial progress over time
                 </li>
               </ul>
             </div>
@@ -408,7 +408,7 @@ export const LandingPage = () => {
               Built for How You Actually Work
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Every feature designed to save you time and impress your clients
+              Every feature designed to save you time and help you make smarter financial decisions
             </p>
           </div>
 
@@ -556,7 +556,7 @@ export const LandingPage = () => {
                 { 
                   icon: Shield, 
                   title: 'Security & Privacy', 
-                  desc: 'POPIA compliant with bank-level security for all client data.' 
+                  desc: 'POPIA compliant with bank-level security for all your data.' 
                 },
                 { 
                   icon: Zap, 
@@ -775,7 +775,7 @@ export const LandingPage = () => {
             Ready to Elevate Your Practice?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Start delivering exceptional service to your clients with AdvisoryPro's professional financial tools.
+            Start making smarter financial decisions today with AdvisoryPro's professional tools.
           </p>
           <Link to="/auth">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xl px-12 h-16 shadow-lg shadow-primary/25">

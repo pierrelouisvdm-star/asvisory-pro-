@@ -246,4 +246,118 @@ test.describe('Client Management Removal Verification', () => {
       expect(pageContent?.toLowerCase()).not.toContain('client list');
     });
   });
+
+  test.describe('LandingPage - Updated Terminology', () => {
+    
+    test('landing page solution section should say "Track your net worth" not "Track client net worth"', async ({ page }) => {
+      await page.goto('/');
+      await waitForAppReady(page);
+      
+      const pageContent = await page.locator('body').textContent();
+      
+      // Should have updated terminology
+      expect(pageContent).toContain('Track your net worth with visual milestones');
+      
+      // Should NOT have old client-focused text
+      expect(pageContent?.toLowerCase()).not.toContain('track client net worth');
+    });
+
+    test('landing page pricing section should show "All 19+ Financial Calculators" not "Unlimited Client Profiles"', async ({ page }) => {
+      await page.goto('/');
+      await waitForAppReady(page);
+      
+      // Scroll to pricing section
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.6));
+      await page.waitForTimeout(300);
+      
+      const pageContent = await page.locator('body').textContent();
+      
+      // Should have correct feature list
+      expect(pageContent).toContain('All 19+ Financial Calculators');
+      
+      // Should NOT have old client-related features
+      expect(pageContent?.toLowerCase()).not.toContain('unlimited client profiles');
+      expect(pageContent?.toLowerCase()).not.toContain('unlimited client');
+    });
+
+    test('landing page about section should say "User-Focused" not "Advisor-Centric"', async ({ page }) => {
+      await page.goto('/');
+      await waitForAppReady(page);
+      
+      // Scroll to about section
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.8));
+      await page.waitForTimeout(300);
+      
+      const pageContent = await page.locator('body').textContent();
+      
+      // Should have updated terminology
+      expect(pageContent).toContain('User-Focused');
+      
+      // Should NOT have old advisor-centric text
+      expect(pageContent?.toLowerCase()).not.toContain('advisor-centric');
+    });
+
+    test('landing page team bios may contain "clients" in biographical context', async ({ page }) => {
+      // Note: Team member bios intentionally still contain 'clients' as it describes their professional work
+      await page.goto('/');
+      await waitForAppReady(page);
+      
+      // Scroll to team section
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.9));
+      await page.waitForTimeout(300);
+      
+      // Verify team section exists with members
+      const pageContent = await page.locator('body').textContent();
+      expect(pageContent).toContain('Meet Our Team');
+      expect(pageContent).toContain('Denzil Ohlson');
+      expect(pageContent).toContain('Pierre Van der Merwe');
+      expect(pageContent).toContain('William Doherty');
+    });
+  });
+
+  test.describe('FinancialLiteracyQuiz - No Client References', () => {
+    
+    test('financial literacy quiz should NOT contain client-related terminology', async ({ page }) => {
+      // Navigate to auth page first
+      await page.goto('/auth');
+      await page.waitForLoadState('domcontentloaded');
+      
+      // Click the Sign In tab
+      await page.getByTestId('login-tab').click();
+      await page.waitForTimeout(500);
+      
+      // Fill in credentials
+      await page.getByTestId('login-email-input').fill('Pierrelouisvdm@gmail.com');
+      await page.getByTestId('login-password-input').fill('Scorpio@57!!');
+      
+      // Click sign in
+      await page.getByTestId('login-submit-btn').click();
+      
+      // Wait for successful login
+      await page.waitForURL('/');
+      await page.waitForLoadState('domcontentloaded');
+      
+      // Navigate to literacy quiz
+      await page.goto('/financial-literacy');
+      await waitForAppReady(page);
+      
+      // Wait for the quiz content to load
+      await page.waitForSelector('[data-testid="literacy-quiz"]');
+      
+      // Check quiz page content
+      const pageContent = await page.locator('body').textContent();
+      
+      // Should contain quiz elements
+      expect(pageContent).toContain('Financial Literacy Assessment');
+      expect(pageContent).toContain('COFI-compliant');
+      
+      // Should NOT contain client-related assessment language
+      // (e.g., "Client demonstrates good financial literacy", "understand your client's financial literacy level")
+      expect(pageContent?.toLowerCase()).not.toContain('client demonstrates');
+      expect(pageContent?.toLowerCase()).not.toContain("your client's");
+      expect(pageContent?.toLowerCase()).not.toContain('client assessment');
+      
+      await page.screenshot({ path: 'literacy-quiz-no-clients.jpeg', quality: 20 });
+    });
+  });
 });
