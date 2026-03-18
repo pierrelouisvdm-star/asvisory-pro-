@@ -170,6 +170,27 @@ const retirementCalculators = [
 
 const personalFinanceTools = [
   {
+    id: 'tax-planning',
+    title: 'Tax Planning Hub',
+    description: 'Complete tax suite: Income tax, CGT, medical credits & more',
+    icon: Receipt,
+    path: '/tax-planning',
+    features: ['2026/27 Tax Year', '6 Tax Tools', 'PDF Reports'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
+  {
+    id: 'income-expense-tracker',
+    title: 'Income & Expense Tracker',
+    description: 'Track finances, set budgets, identify tax-deductible expenses',
+    icon: Wallet,
+    path: '/income-expense-tracker',
+    features: ['Budget vs Actual', 'Tax Deductions', 'Monthly Reports'],
+    isFree: false,
+    isNew: true,
+  },
+  {
     id: 'tax-calculator',
     title: 'Tax Calculator',
     description: 'Calculate income tax with deductions & credits',
@@ -265,15 +286,32 @@ const CalculatorCard = ({ calc, index }) => {
     >
       <div className={cn(
         "h-full rounded-xl border bg-card p-5 transition-all duration-300 animate-fade-in",
-        hasAccess 
-          ? "border-border hover:border-primary/50 hover:shadow-lg" 
-          : "border-border/50 opacity-80 hover:opacity-100"
+        calc.isFeatured 
+          ? "border-emerald-500/50 bg-gradient-to-br from-emerald-950/20 to-card hover:border-emerald-500 hover:shadow-lg hover:shadow-emerald-500/10" 
+          : hasAccess 
+            ? "border-border hover:border-primary/50 hover:shadow-lg" 
+            : "border-border/50 opacity-80 hover:opacity-100"
       )}>
         <div className="flex items-start justify-between mb-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20">
-            <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+          <div className={cn(
+            "flex h-11 w-11 items-center justify-center rounded-lg transition-colors",
+            calc.isFeatured 
+              ? "bg-emerald-500/20 group-hover:bg-emerald-500/30"
+              : "bg-primary/10 group-hover:bg-primary/20"
+          )}>
+            <Icon className={cn(
+              "h-5 w-5 transition-colors",
+              calc.isFeatured 
+                ? "text-emerald-400 group-hover:text-emerald-300"
+                : "text-muted-foreground group-hover:text-primary"
+            )} />
           </div>
           <div className="flex items-center gap-2">
+            {calc.isNew && (
+              <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs">
+                NEW
+              </Badge>
+            )}
             {calc.isFree ? (
               <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 text-xs">
                 Free
@@ -287,7 +325,12 @@ const CalculatorCard = ({ calc, index }) => {
             <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
           </div>
         </div>
-        <h3 className="font-display text-base font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors">
+        <h3 className={cn(
+          "font-display text-base font-semibold mb-1.5 transition-colors",
+          calc.isFeatured 
+            ? "text-emerald-400 group-hover:text-emerald-300"
+            : "text-foreground group-hover:text-primary"
+        )}>
           {calc.title}
         </h3>
         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">

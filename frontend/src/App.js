@@ -37,6 +37,7 @@ import TaxPlanningHub from "@/pages/TaxPlanningHub";
 import DocumentReader from "@/pages/DocumentReader";
 import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
 import TFSACalculator from "@/pages/TFSACalculator";
+import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { Toaster } from "@/components/ui/sonner";
@@ -149,6 +150,7 @@ function App() {
                   <Route path="/document-reader" element={<ProtectedRoute><GatedCalculator path="/document-reader"><DocumentReader /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />

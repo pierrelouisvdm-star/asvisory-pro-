@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
@@ -110,7 +111,7 @@ const keyFeatures = [
 // Stats
 const stats = [
   { value: '19+', label: 'Financial Calculators' },
-  { value: 'SA', label: 'Localized for South Africa' },
+  { value: 'Tax Hub', label: 'Complete Tax Suite' },
   { value: '24/7', label: 'Access Anywhere' },
   { value: 'PDF', label: 'Instant Reports' },
 ];
@@ -270,9 +271,10 @@ export const LandingPage = () => {
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link to="/pricing">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-indigo-400/30 text-slate-200 hover:bg-indigo-500/10 h-14">
-                  View Pricing
+              <Link to="/tax-planning">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-emerald-400/50 text-emerald-300 hover:bg-emerald-500/10 h-14 group">
+                  <Receipt className="mr-2 h-5 w-5" />
+                  Explore Tax Hub
                 </Button>
               </Link>
             </div>
@@ -339,6 +341,110 @@ export const LandingPage = () => {
                   AI assistant for complex financial questions
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Tax Hub Feature Highlight */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/50 via-background to-background" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+                <Receipt className="h-3 w-3 mr-1" />
+                Featured: Tax Planning Hub
+              </Badge>
+              <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
+                The Most Complete <span className="text-emerald-400">Tax Planning Suite</span> for South Africans
+              </h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                Everything you need to understand, plan, and optimize your taxes - updated for the 2026/2027 tax year with the latest SARS brackets, rebates, and thresholds.
+              </p>
+              
+              <div className="grid sm:grid-cols-2 gap-4 mb-8">
+                {[
+                  { title: 'Income Tax Calculator', desc: 'All 7 tax brackets with rebates' },
+                  { title: 'Capital Gains Tax', desc: 'CGT with R50,000 annual exclusion' },
+                  { title: 'Medical Aid Credits', desc: 'Calculate your tax credits' },
+                  { title: 'RA Tax Savings', desc: 'Maximize your 27.5% deduction' },
+                  { title: 'Provisional Tax', desc: 'Estimate your payments' },
+                  { title: 'Income & Expense Tracker', desc: 'NEW: Track your finances' },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="font-medium text-foreground text-sm">{item.title}</p>
+                      <p className="text-xs text-muted-foreground">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex flex-wrap gap-4">
+                <Link to="/tax-planning">
+                  <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                    <Receipt className="mr-2 h-5 w-5" />
+                    Open Tax Hub
+                  </Button>
+                </Link>
+                <Link to="/pricing">
+                  <Button size="lg" variant="outline" className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
+                    View Pricing
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            
+            <div className="relative">
+              <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-emerald-500/20 p-6 shadow-2xl">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <span className="ml-2 text-xs text-slate-500">Tax Planning Hub</span>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                    <p className="text-xs text-emerald-400 mb-1">2026/2027 Tax Year</p>
+                    <p className="text-2xl font-bold text-white">Income Tax Calculator</p>
+                    <div className="mt-3 grid grid-cols-2 gap-3">
+                      <div className="bg-slate-700/50 rounded p-2">
+                        <p className="text-xs text-slate-400">Taxable Income</p>
+                        <p className="text-lg font-semibold text-white">R 650,000</p>
+                      </div>
+                      <div className="bg-slate-700/50 rounded p-2">
+                        <p className="text-xs text-slate-400">Tax Payable</p>
+                        <p className="text-lg font-semibold text-emerald-400">R 142,531</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20 text-center">
+                      <p className="text-xs text-blue-400">CGT</p>
+                      <p className="text-sm font-bold text-white">18%</p>
+                    </div>
+                    <div className="bg-purple-500/10 rounded-lg p-3 border border-purple-500/20 text-center">
+                      <p className="text-xs text-purple-400">RA Cap</p>
+                      <p className="text-sm font-bold text-white">R430k</p>
+                    </div>
+                    <div className="bg-amber-500/10 rounded-lg p-3 border border-amber-500/20 text-center">
+                      <p className="text-xs text-amber-400">TFSA</p>
+                      <p className="text-sm font-bold text-white">R46k</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-700">
+                    <span>6 Tax Tools • PDF Export • 2026/27 Updated</span>
+                    <Badge className="bg-emerald-500/20 text-emerald-400 text-xs">Premium</Badge>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

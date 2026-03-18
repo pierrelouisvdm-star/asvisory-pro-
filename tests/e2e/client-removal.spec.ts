@@ -297,21 +297,22 @@ test.describe('Client Management Removal Verification', () => {
       expect(pageContent?.toLowerCase()).not.toContain('advisor-centric');
     });
 
-    test('landing page team bios may contain "clients" in biographical context', async ({ page }) => {
-      // Note: Team member bios intentionally still contain 'clients' as it describes their professional work
+    test('landing page About Us section should use individual investor messaging', async ({ page }) => {
+      // Note: Team section with bios has been removed - now using general About Us section
       await page.goto('/');
       await waitForAppReady(page);
       
-      // Scroll to team section
-      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.9));
+      // Scroll to About Us section
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.7));
       await page.waitForTimeout(300);
       
-      // Verify team section exists with members
+      // Verify About Us section exists with appropriate messaging
       const pageContent = await page.locator('body').textContent();
-      expect(pageContent).toContain('Meet Our Team');
-      expect(pageContent).toContain('Denzil Ohlson');
-      expect(pageContent).toContain('Pierre Van der Merwe');
-      expect(pageContent).toContain('William Doherty');
+      expect(pageContent).toContain('About Us');
+      expect(pageContent).toContain('Our Mission');
+      expect(pageContent).toContain('Our Values');
+      // Verify user-focused language
+      expect(pageContent).toContain('User-Focused');
     });
   });
 
