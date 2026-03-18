@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
+import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { useAuth } from '@/context/AuthContext';
 import { ThemeToggle } from '@/components/ThemeToggle';
 
@@ -158,6 +159,7 @@ export const Header = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
+            <JurisdictionSelector />
             <ThemeToggle />
             <CurrencySelector />
             
