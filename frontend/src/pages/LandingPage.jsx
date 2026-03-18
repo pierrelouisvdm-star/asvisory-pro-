@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
@@ -230,6 +231,15 @@ export const LandingPage = () => {
         
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <div className="flex flex-col items-center text-center">
+            {/* Region Selector - for future jurisdictions */}
+            <div className="mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50">
+                <Globe className="h-4 w-4 text-slate-400" />
+                <span className="text-sm text-slate-400">Select your region:</span>
+                <JurisdictionSelector />
+              </div>
+            </div>
+            
             {/* CSS-based Logo - perfectly integrated */}
             <div className="mb-8">
               <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white tracking-tight">
@@ -641,12 +651,12 @@ export const LandingPage = () => {
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-muted/50 rounded-lg border border-border">
-                  <p className="text-3xl font-bold text-primary">2026</p>
+                  <p className="text-3xl font-bold text-primary">2025</p>
                   <p className="text-sm text-muted-foreground">Founded</p>
                 </div>
                 <div className="p-4 bg-muted/50 rounded-lg border border-border">
-                  <p className="text-3xl font-bold text-primary">SA</p>
-                  <p className="text-sm text-muted-foreground">Proudly South African</p>
+                  <p className="text-3xl font-bold text-primary">20+</p>
+                  <p className="text-sm text-muted-foreground">Financial Calculators</p>
                 </div>
               </div>
             </div>
