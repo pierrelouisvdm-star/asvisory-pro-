@@ -4,27 +4,17 @@ import { subscriptionApi, couponApi } from '@/services/api';
 
 const SubscriptionContext = createContext(null);
 
-// All users have full premium access - no tiers
+// Free tier has limited calculators
 const TIER_FEATURES = {
   free: {
-    calculators: 'all',
-    maxClients: -1,
-    pdfReports: true,
-    advancedTools: true,
-    marketTracker: true,
-    goalPlanner: true,
-    meetingScheduler: true,
-    portfolioTracker: true,
-  },
-  standard: {
-    calculators: 'all',
-    maxClients: -1,
-    pdfReports: true,
-    advancedTools: true,
-    marketTracker: true,
-    goalPlanner: true,
-    meetingScheduler: true,
-    portfolioTracker: true,
+    calculators: ['tfsa-calculator', 'bond', 'future-value', 'compound-interest'],
+    maxClients: 3,
+    pdfReports: false,
+    advancedTools: false,
+    marketTracker: false,
+    goalPlanner: false,
+    meetingScheduler: false,
+    portfolioTracker: false,
   },
   premium: {
     calculators: 'all',
@@ -38,8 +28,8 @@ const TIER_FEATURES = {
   },
 };
 
-// All calculators are free
-const FREE_CALCULATORS = 'all';
+// Free calculators available without subscription
+const FREE_CALCULATORS = ['tfsa-calculator', 'bond', 'future-value', 'compound-interest'];
 
 export const SubscriptionProvider = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
@@ -52,7 +42,6 @@ export const SubscriptionProvider = ({ children }) => {
 
   const fetchSubscription = useCallback(async (forceRefresh = false) => {
     // Check token directly from localStorage for explicit refreshes
-    // This handles the case where React state hasn't updated yet after registration
     const hasToken = forceRefresh 
       ? !!localStorage.getItem('advisorypro_token')
       : isAuthenticated;
@@ -95,38 +84,50 @@ export const SubscriptionProvider = ({ children }) => {
     fetchSubscription();
   }, [fetchSubscription]);
 
-  // Check if user has access to a specific feature - ALL features enabled
+  // Check if user has access to a specific feature
   const hasFeature = (featureName) => {
-    return true; // All features available to everyone
+    if (subscription.tier === 'premium') return true;
+    return subscription.features[featureName] || false;
   };
 
-  // Check if user can access a specific calculator - ALL users can access ALL calculators
+  // Check if user can access a specific calculator
   const canAccessCalculator = (path) => {
-    return true; // All calculators available to everyone
+    // Clean the path
+    const cleanPath = path.replace(/^\//, '');
+    
+    // Premium users have access to all
+    if (subscription.tier === 'premium') return true;
+    
+    // Admin users have access to all
+    if (user?.is_admin) return true;
+    
+    // Check if calculator is in free tier
+    return FREE_CALCULATORS.includes(cleanPath);
   };
 
-  // Check if user can add more clients - unlimited for all
+  // Check if user can add more clients
   const canAddMoreClients = (currentClientCount = 0) => {
-    return true; // Unlimited clients for everyone
+    if (subscription.tier === 'premium') return true;
+    const limit = subscription.features.maxClients;
+    return limit === -1 || currentClientCount < limit;
   };
 
-  // Get client limit - unlimited
+  // Get client limit
   const getClientLimit = () => {
-    return -1; // Unlimited
+    return subscription.features.maxClients;
   };
 
-  // Check subscription tier - everyone is premium
-  const isPremium = () => true;
-  const isStandard = () => false;
-  const isFree = () => false;
-  const isTrialing = () => false;
+  // Check subscription tier
+  const isPremium = () => subscription.tier === 'premium';
+  const isFree = () => subscription.tier === 'free';
+  const isTrialing = () => subscription.status === 'trialing';
 
   // Redeem coupon code
   const redeemCoupon = async (code) => {
     try {
       const result = await couponApi.redeem(code);
       if (result.success) {
-        await fetchSubscription(true); // Refresh subscription with forceRefresh
+        await fetchSubscription(true);
       }
       return result;
     } catch (error) {
@@ -144,7 +145,6 @@ export const SubscriptionProvider = ({ children }) => {
       canAddMoreClients,
       getClientLimit,
       isPremium,
-      isStandard,
       isFree,
       isTrialing,
       refreshSubscription: () => fetchSubscription(true),

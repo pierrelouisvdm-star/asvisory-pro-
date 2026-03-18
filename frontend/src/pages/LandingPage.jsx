@@ -78,7 +78,7 @@ const keyFeatures = [
   {
     icon: Calculator,
     title: '19+ Professional Calculators',
-    description: 'From retirement planning to estate duty, every calculation a financial advisor needs. All localized for South African regulations, tax brackets, and the current Prime Rate.',
+    description: 'From retirement planning to estate duty, every calculation you need. All localized for South African regulations, tax brackets, and the current Prime Rate.',
     highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
   },
   {
@@ -241,16 +241,16 @@ export const LandingPage = () => {
             
             <p className="mb-6 text-indigo-300 text-sm flex items-center justify-center gap-2">
               <Sparkles className="h-3 w-3" />
-              Built for Financial Advisors
+              Smart Financial Planning Tools
             </p>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-              The Complete Toolkit for South African Financial Advisors
+              The Complete Financial Toolkit for South Africans
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Stop juggling spreadsheets and outdated tools. AdvisoryPro gives you <span className="text-white font-medium">19+ professional calculators</span>, 
-              client management, AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
+              Whether you're a financial advisor or managing your own investments, AdvisoryPro gives you <span className="text-white font-medium">19+ professional calculators</span>, 
+              AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
             </p>
 
             {/* Stats Row */}
@@ -278,7 +278,7 @@ export const LandingPage = () => {
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R299/month • Cancel anytime • Have a coupon? Apply at signup
+              R249/month • Cancel anytime • Have a coupon? Apply at signup
             </p>
           </div>
         </div>
@@ -461,7 +461,7 @@ export const LandingPage = () => {
           <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
             <CardContent className="p-8">
               <div className="mb-6">
-                <span className="text-5xl font-bold text-foreground">R299</span>
+                <span className="text-5xl font-bold text-foreground">R249</span>
                 <span className="text-muted-foreground ml-2">/month</span>
               </div>
               
@@ -517,10 +517,10 @@ export const LandingPage = () => {
               About Us
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
-              Empowering Financial Advisors Across South Africa
+              Empowering South Africans to Plan Smarter
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
-              We understand the unique challenges faced by South African financial advisors. That's why we built AdvisoryPro - a comprehensive platform designed specifically for the local market.
+              Whether you're a professional advisor or managing your own finances, AdvisoryPro provides the tools you need - designed specifically for the South African market.
             </p>
           </div>
 
@@ -528,10 +528,10 @@ export const LandingPage = () => {
             <div>
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Mission</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                To provide South African financial advisors with world-class tools that save time, reduce errors, and help deliver exceptional service to their clients. We believe that by empowering advisors with better technology, we can help more South Africans achieve financial security.
+                To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth. We believe everyone deserves access to professional-grade financial calculators.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Every feature in AdvisoryPro is built with the South African regulatory environment in mind - from SARS tax brackets to FSCA compliance requirements. We're not just another generic financial calculator - we're your partner in building a successful practice.
+                Every feature in AdvisoryPro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We're not just another generic financial calculator - we're your partner in achieving financial freedom.
               </p>
               
               <div className="grid grid-cols-2 gap-4">
@@ -567,7 +567,7 @@ export const LandingPage = () => {
                 { 
                   icon: Users, 
                   title: 'Advisor-Centric', 
-                  desc: 'Built by advisors, for advisors. We listen to your feedback.' 
+                  desc: 'Built by users, for users. We listen to your feedback.' 
                 },
               ].map((value, idx) => (
                 <div key={idx} className="flex items-start gap-4 p-4 bg-card rounded-lg border border-border hover:border-primary/30 transition-colors">
@@ -785,7 +785,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            R299/month • Cancel anytime
+            R249/month • Cancel anytime
           </p>
         </div>
       </section>
@@ -802,7 +802,7 @@ export const LandingPage = () => {
                 <span className="text-foreground font-bold text-xl">AdvisoryPro</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Professional financial advisor tools built for South African regulations.
+                Professional financial planning tools built for South African regulations.
               </p>
             </div>
             

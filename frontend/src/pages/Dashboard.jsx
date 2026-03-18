@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { MarketTracker } from '@/components/MarketTracker';
 import { QuickActionsWidget } from '@/components/QuickActionsWidget';
 import { useAuth } from '@/context/AuthContext';
+import { useSubscription } from '@/context/SubscriptionContext';
 import { 
   Calculator, 
   TrendingUp, 
@@ -29,9 +30,14 @@ import {
   Landmark,
   ClipboardList,
   Sparkles,
-  Scale
+  Scale,
+  Crown,
+  Lock
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+// Free calculators available without subscription
+const FREE_CALCULATOR_IDS = ['tfsa-calculator', 'bond', 'future-value', 'compound-interest'];
 
 const investmentCalculators = [
   {
@@ -41,6 +47,7 @@ const investmentCalculators = [
     icon: TrendingUp,
     path: '/future-value',
     features: ['Inflation Adjusted', 'Fee Impact', 'Visual Growth'],
+    isFree: true,
   },
   {
     id: 'fee-comparison',
@@ -49,6 +56,7 @@ const investmentCalculators = [
     icon: Scale,
     path: '/fee-comparison',
     features: ['EAC Analysis', 'Fee Impact', 'Side-by-Side'],
+    isFree: false,
   },
   {
     id: 'compound-interest',
@@ -57,6 +65,7 @@ const investmentCalculators = [
     icon: Percent,
     path: '/compound-interest',
     features: ['Monthly/Annual', 'Growth Chart', 'Comparison'],
+    isFree: true,
   },
   {
     id: 'tfsa-calculator',
@@ -65,6 +74,7 @@ const investmentCalculators = [
     icon: Shield,
     path: '/tfsa-calculator',
     features: ['Limit Tracker', 'Tax Savings', 'Projections'],
+    isFree: true,
   },
 ];
 
@@ -76,6 +86,7 @@ const debtCalculators = [
     icon: Building2,
     path: '/bond',
     features: ['Amortization', 'Extra Payments', 'Interest Savings'],
+    isFree: true,
   },
   {
     id: 'car-finance',
@@ -84,6 +95,7 @@ const debtCalculators = [
     icon: Car,
     path: '/car-finance',
     features: ['Loan vs Lease', 'Total Cost', 'Payment Schedule'],
+    isFree: false,
   },
   {
     id: 'debt-payoff',
@@ -92,6 +104,7 @@ const debtCalculators = [
     icon: CreditCard,
     path: '/debt-payoff',
     features: ['Avalanche', 'Snowball', 'Interest Savings'],
+    isFree: false,
   },
   {
     id: 'loan-comparison',
@@ -100,6 +113,7 @@ const debtCalculators = [
     icon: GitCompare,
     path: '/loan-comparison',
     features: ['Side-by-Side', 'Total Cost', 'Best Option'],
+    isFree: false,
   },
 ];
 
@@ -111,6 +125,7 @@ const insuranceCalculators = [
     icon: Shield,
     path: '/life-insurance',
     features: ['DIME Method', 'Gap Analysis', 'Premium Est.'],
+    isFree: false,
   },
   {
     id: 'income-disability',
@@ -119,6 +134,7 @@ const insuranceCalculators = [
     icon: Umbrella,
     path: '/income-disability',
     features: ['Waiting Period', 'Benefit Analysis', 'Premiums'],
+    isFree: false,
   },
 ];
 
@@ -130,6 +146,7 @@ const retirementCalculators = [
     icon: PiggyBank,
     path: '/retirement',
     features: ['Funding Ratio', 'Income Sources', 'Inflation'],
+    isFree: false,
   },
   {
     id: 'living-annuity',
@@ -138,6 +155,7 @@ const retirementCalculators = [
     icon: Wallet,
     path: '/living-annuity',
     features: ['SA Regulations', 'Sustainability', 'Tax Impact'],
+    isFree: false,
   },
   {
     id: 'retirement-tax',
@@ -146,6 +164,7 @@ const retirementCalculators = [
     icon: Receipt,
     path: '/retirement-tax',
     features: ['27.5% Limit', 'Tax Savings', 'Net Cost'],
+    isFree: false,
   },
 ];
 
@@ -157,6 +176,7 @@ const personalFinanceTools = [
     icon: Receipt,
     path: '/tax-calculator',
     features: ['SA Tax Brackets', 'Medical Credits', 'Retirement'],
+    isFree: false,
   },
   {
     id: 'budget-planner',
@@ -165,6 +185,7 @@ const personalFinanceTools = [
     icon: Wallet,
     path: '/budget-planner',
     features: ['50/30/20 Rule', 'Tracking', 'Savings Goals'],
+    isFree: false,
   },
   {
     id: 'net-worth',
@@ -173,6 +194,7 @@ const personalFinanceTools = [
     icon: Landmark,
     path: '/net-worth',
     features: ['Asset Tracking', 'Debt Analysis', 'Health Score'],
+    isFree: false,
   },
   {
     id: 'emergency-fund',
@@ -180,6 +202,7 @@ const personalFinanceTools = [
     description: 'Calculate your financial security needs',
     icon: ShieldAlert,
     path: '/emergency-fund',
+    isFree: false,
     features: ['Risk Analysis', 'Funding Progress', 'Timeline'],
   },
 ];
@@ -192,6 +215,7 @@ const planningTools = [
     icon: ScrollText,
     path: '/estate-planning',
     features: ['Estate Duty', 'Executor Fees', 'Liquidity'],
+    isFree: false,
   },
   {
     id: 'education-savings',
@@ -200,6 +224,7 @@ const planningTools = [
     icon: GraduationCap,
     path: '/education-savings',
     features: ['Cost Projection', 'Inflation', 'Funding Gap'],
+    isFree: false,
   },
 ];
 
@@ -228,6 +253,9 @@ const features = [
 
 const CalculatorCard = ({ calc, index }) => {
   const Icon = calc.icon;
+  const { canAccessCalculator, isPremium } = useSubscription();
+  const hasAccess = isPremium() || calc.isFree;
+  
   return (
     <Link 
       to={calc.path}
@@ -235,12 +263,29 @@ const CalculatorCard = ({ calc, index }) => {
       data-testid={`calculator-card-${calc.id}`}
       style={{ animationDelay: `${index * 50}ms` }}
     >
-      <div className="h-full rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:border-primary/50 hover:shadow-lg animate-fade-in">
+      <div className={cn(
+        "h-full rounded-xl border bg-card p-5 transition-all duration-300 animate-fade-in",
+        hasAccess 
+          ? "border-border hover:border-primary/50 hover:shadow-lg" 
+          : "border-border/50 opacity-80 hover:opacity-100"
+      )}>
         <div className="flex items-start justify-between mb-4">
           <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20">
             <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </div>
-          <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+          <div className="flex items-center gap-2">
+            {calc.isFree ? (
+              <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 text-xs">
+                Free
+              </Badge>
+            ) : !isPremium() ? (
+              <Badge className="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 text-xs">
+                <Crown className="h-3 w-3 mr-1" />
+                Premium
+              </Badge>
+            ) : null}
+            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" />
+          </div>
         </div>
         <h3 className="font-display text-base font-semibold text-foreground mb-1.5 group-hover:text-primary transition-colors">
           {calc.title}
@@ -249,7 +294,7 @@ const CalculatorCard = ({ calc, index }) => {
           {calc.description}
         </p>
         <div className="flex flex-wrap gap-1.5">
-          {calc.features.map((feature) => (
+          {calc.features?.map((feature) => (
             <span 
               key={feature} 
               className="inline-flex text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground"
@@ -298,8 +343,8 @@ export const Dashboard = () => {
             </h1>
             
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
-              A comprehensive suite of 15 professional calculators for financial advisors. 
-              Help your clients make informed decisions with precision tools.
+              A comprehensive suite of 19+ professional calculators for South Africans. 
+              Make informed financial decisions with precision tools.
             </p>
             
             <div className="flex flex-wrap justify-center gap-3 animate-fade-in" style={{ animationDelay: '300ms' }}>
