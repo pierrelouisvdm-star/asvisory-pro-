@@ -79,7 +79,7 @@ const keyFeatures = [
   },
   {
     icon: Calculator,
-    title: '19+ Professional Calculators',
+    title: '20+ Professional Calculators',
     description: 'From retirement planning to estate duty, every calculation you need. All localized for South African regulations, tax brackets, and the current Prime Rate.',
     highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
   },
@@ -111,7 +111,7 @@ const keyFeatures = [
 
 // Stats
 const stats = [
-  { value: '19+', label: 'Financial Calculators' },
+  { value: '20+', label: 'Financial Calculators' },
   { value: 'Tax Hub', label: 'Complete Tax Suite' },
   { value: '24/7', label: 'Access Anywhere' },
   { value: 'PDF', label: 'Instant Reports' },
@@ -468,7 +468,7 @@ export const LandingPage = () => {
           <div className="text-center mb-12">
             <p className="mb-4 text-blue-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
               <Calculator className="h-4 w-4" />
-              19+ Professional Calculators
+              20+ Professional Calculators
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Every Calculation You Need

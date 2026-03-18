@@ -47,7 +47,7 @@ export const CalculatorGate = ({ path, children }) => {
           </div>
           <h2 className="text-2xl font-bold text-white mb-3">Premium Feature</h2>
           <p className="text-slate-400 mb-6">
-            This calculator is available with a Premium subscription. Upgrade to unlock all 19+ financial calculators and tools.
+            This calculator is available with a Premium subscription. Upgrade to unlock all 20+ financial calculators and tools.
           </p>
           
           <div className="bg-slate-800/50 rounded-lg p-4 mb-6 text-left">
@@ -55,7 +55,7 @@ export const CalculatorGate = ({ path, children }) => {
             <ul className="space-y-2 text-sm text-slate-300">
               <li className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-emerald-400" />
-                All 19+ financial calculators
+                All 20+ financial calculators
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-emerald-400" />

@@ -470,7 +470,7 @@ export const AuthPage = () => {
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   <div className="flex items-center gap-2 text-foreground">
                     <Calculator className="h-3.5 w-3.5 text-primary" />
-                    19 Calculators
+                    20 Calculators
                   </div>
                   <div className="flex items-center gap-2 text-foreground">
                     <FileText className="h-3.5 w-3.5 text-primary" />

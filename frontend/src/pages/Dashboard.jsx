@@ -399,7 +399,7 @@ export const Dashboard = () => {
             </h1>
             
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
-              A comprehensive suite of 19+ professional calculators for South Africans. 
+              A comprehensive suite of 20+ professional calculators for South Africans. 
               Make informed financial decisions with precision tools.
             </p>
             
