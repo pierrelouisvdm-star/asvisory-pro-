@@ -17,8 +17,21 @@ import { couponApi } from '@/services/api';
 
 const tiers = [
   {
+    name: 'Free',
+    price: 'R0',
+    period: '/forever',
+    description: 'Get started today',
+    features: [
+      'TFSA Calculator',
+      'Bond/Mortgage Calculator',
+      'Future Value Calculator',
+      'Compound Interest Calculator',
+    ],
+    highlight: false,
+  },
+  {
     name: 'Premium',
-    price: 'R299',
+    price: 'R249',
     period: '/month',
     description: 'Full professional suite',
     features: [
@@ -403,7 +416,7 @@ export const AuthPage = () => {
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
-              <p className="text-muted-foreground text-sm">R299/month • Cancel anytime</p>
+              <p className="text-muted-foreground text-sm">R249/month • Cancel anytime</p>
             </div>
 
             {tiers.map((tier) => (
