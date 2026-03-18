@@ -173,7 +173,7 @@ export const PrintReport = ({
             Client Report Preview
           </DialogTitle>
           <DialogDescription>
-            Review the report before printing or sharing with your client
+            Review the report before printing or saving
           </DialogDescription>
         </DialogHeader>
         

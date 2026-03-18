@@ -484,10 +484,10 @@ export const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-3 tracking-tight">
-              Built for Advisors
+              Professional Tools
             </h2>
             <p className="text-muted-foreground">
-              Every feature designed to enhance your client presentations
+              Every feature designed to help you make better financial decisions
             </p>
           </div>
 
@@ -520,10 +520,10 @@ export const Dashboard = () => {
       <section className="bg-muted/50 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4 tracking-tight">
-            Ready to elevate your client presentations?
+            Ready to take control of your finances?
           </h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Start using our professional calculators today and help your clients make better financial decisions.
+            Start using our professional calculators today and make smarter financial decisions.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link to="/future-value">

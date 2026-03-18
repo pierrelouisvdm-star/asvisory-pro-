@@ -8,22 +8,18 @@ const SubscriptionContext = createContext(null);
 const TIER_FEATURES = {
   free: {
     calculators: ['tfsa-calculator', 'bond', 'future-value', 'compound-interest'],
-    maxClients: 3,
     pdfReports: false,
     advancedTools: false,
     marketTracker: false,
     goalPlanner: false,
-    meetingScheduler: false,
     portfolioTracker: false,
   },
   premium: {
     calculators: 'all',
-    maxClients: -1, // unlimited
     pdfReports: true,
     advancedTools: true,
     marketTracker: true,
     goalPlanner: true,
-    meetingScheduler: true,
     portfolioTracker: true,
   },
 };
@@ -105,18 +101,6 @@ export const SubscriptionProvider = ({ children }) => {
     return FREE_CALCULATORS.includes(cleanPath);
   };
 
-  // Check if user can add more clients
-  const canAddMoreClients = (currentClientCount = 0) => {
-    if (subscription.tier === 'premium') return true;
-    const limit = subscription.features.maxClients;
-    return limit === -1 || currentClientCount < limit;
-  };
-
-  // Get client limit
-  const getClientLimit = () => {
-    return subscription.features.maxClients;
-  };
-
   // Check subscription tier
   const isPremium = () => subscription.tier === 'premium';
   const isFree = () => subscription.tier === 'free';
@@ -140,10 +124,7 @@ export const SubscriptionProvider = ({ children }) => {
       subscription,
       hasFeature,
       canAccessCalculator,
-      canAddClient: canAddMoreClients,
       canAccessFeature: hasFeature,
-      canAddMoreClients,
-      getClientLimit,
       isPremium,
       isFree,
       isTrialing,

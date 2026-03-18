@@ -21,12 +21,6 @@ import { BudgetPlanner } from "@/pages/BudgetPlanner";
 import { NetWorthTracker } from "@/pages/NetWorthTracker";
 import { RiskProfileQuiz } from "@/pages/RiskProfileQuiz";
 import { AuthPage } from "@/pages/AuthPage";
-import { ClientsPage } from "@/pages/ClientsPage";
-import { ClientProfilePage } from "@/pages/ClientProfilePage";
-import { GoalPlannerPage } from "@/pages/GoalPlannerPage";
-import { MeetingSchedulerPage } from "@/pages/MeetingSchedulerPage";
-import { ReviewTrackerPage } from "@/pages/ReviewTrackerPage";
-import { PortfolioTrackerPage } from "@/pages/PortfolioTrackerPage";
 import { CashFlowProjector } from "@/pages/CashFlowProjector";
 import { MonteCarloSimulator } from "@/pages/MonteCarloSimulator";
 import { LoanComparisonTool } from "@/pages/LoanComparisonTool";
@@ -121,14 +115,6 @@ function App() {
                   <Route path="/subscription/success" element={<SubscriptionSuccessPage />} />
                   
                   {/* Protected Routes - require authentication */}
-                  {/* Client Management */}
-                  <Route path="/clients" element={<ProtectedRoute><ClientsPage /></ProtectedRoute>} />
-                  <Route path="/clients/:clientId" element={<ProtectedRoute><ClientProfilePage /></ProtectedRoute>} />
-                  <Route path="/clients/:clientId/analysis" element={<ProtectedRoute><ClientProfilePage /></ProtectedRoute>} />
-                  <Route path="/clients/:clientId/goals" element={<ProtectedRoute><GoalPlannerPage /></ProtectedRoute>} />
-                  <Route path="/clients/:clientId/meetings" element={<ProtectedRoute><MeetingSchedulerPage /></ProtectedRoute>} />
-                  <Route path="/clients/:clientId/reviews" element={<ProtectedRoute><ReviewTrackerPage /></ProtectedRoute>} />
-                  <Route path="/clients/:clientId/portfolio" element={<ProtectedRoute><PortfolioTrackerPage /></ProtectedRoute>} />
                   
                   {/* Advanced Tools - require auth */}
                   <Route path="/cash-flow" element={<ProtectedRoute><CashFlowProjector /></ProtectedRoute>} />

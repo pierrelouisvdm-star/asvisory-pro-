@@ -59,7 +59,7 @@ export const CalculatorGate = ({ path, children }) => {
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-emerald-400" />
-                Unlimited client management
+                Advanced analysis tools
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 text-emerald-400" />

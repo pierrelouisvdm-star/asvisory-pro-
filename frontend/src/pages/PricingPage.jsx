@@ -15,7 +15,6 @@ import { toast } from 'sonner';
 
 const PREMIUM_FEATURES = [
   { icon: Calculator, label: 'All 19 Financial Calculators' },
-  { icon: Users, label: 'Unlimited Client Management' },
   { icon: FileText, label: 'PDF Report Generation' },
   { icon: BarChart3, label: 'Advanced Analysis Tools' },
   { icon: TrendingUp, label: 'Live Market Tracker' },
@@ -161,7 +160,6 @@ export const PricingPage = () => {
                   { label: 'Bond/Mortgage Calculator', included: true },
                   { label: 'Future Value Calculator', included: true },
                   { label: 'Compound Interest Calculator', included: true },
-                  { label: 'Up to 3 Clients', included: true },
                   { label: '15+ Premium Calculators', included: false },
                   { label: 'PDF Reports', included: false },
                   { label: 'AI Document Analysis', included: false },

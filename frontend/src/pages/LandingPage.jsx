@@ -332,7 +332,7 @@ export const LandingPage = () => {
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Track client net worth with visual milestones
+                  Track your net worth with visual milestones
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
@@ -467,8 +467,7 @@ export const LandingPage = () => {
               
               <ul className="space-y-3 text-left mb-8">
                 {[
-                  'All 15+ Financial Calculators',
-                  'Unlimited Client Profiles',
+                  'All 19+ Financial Calculators',
                   'Net Worth Tracker with Goals',
                   'AI Financial Assistant',
                   'Live Market Data',
@@ -566,7 +565,7 @@ export const LandingPage = () => {
                 },
                 { 
                   icon: Users, 
-                  title: 'Advisor-Centric', 
+                  title: 'User-Focused', 
                   desc: 'Built by users, for users. We listen to your feedback.' 
                 },
               ].map((value, idx) => (

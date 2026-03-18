@@ -1,111 +1,366 @@
 <analysis>**original_problem_statement:**
-The user's initial high-level goal was to continue development from a previous session, focusing on deploying the application. Throughout this session, the user added several new feature requests, UI improvements, and bug investigations.
-
-**Initial Problem Statement & Carry-over tasks from previous fork:**
-1.  **Deploy the Application**: The user repeatedly requested to deploy the application.
-2.  **Password Reset**: Complete and verify the password reset functionality. (Completed in previous session).
-3.  **Calculator Enhancements**: Add new features to Education and Car Finance calculators. (Coded in previous session, pending verification).
-4.  **Landing Page**: Build and populate a public landing page. (Completed in previous session).
-5.  **UI/Theme Adjustments**: Improve spacing and adjust color themes. (Completed in previous session).
-6.  **Refactoring**: Address incorrectly scoped components in  for performance. (Pending).
-7.  **AI Document Reader Test**: Perform an end-to-end test. (Pending).
-
-**New requests in this session:**
-1.  **Bug Investigation**: A test user () reported their clients were not appearing.
-2.  **Coupon Management**: Generate 10 new coupon codes.
-3.  **Feature Addition (Tax Hub)**: Add a PDF export option to every calculator within the Tax Planning Hub.
-4.  **New Project Scoping**: Discuss and plan for separate US/Canadian and B2C (AdvisoryPro Personal) versions of the app.
-5.  **New Feature (Calculator)**: Create a new EAC/Fee Comparison tool.
-6.  **Feature Refinement**: Modify the EAC tool to have only two comparison options instead of three.
-7.  **Bug Fix (Mobile UI)**: The calculator dropdown menu was not working correctly on mobile devices.
-8.  **UI/Branding Rework**:
-    *   Integrate a new logo provided by the user.
-    *   Update the entire app's color scheme to match the new logo's navy blue and accent colors.
-    *   Iteratively refine the logo's implementation on the landing page to ensure it blends seamlessly with the background, eventually replacing the image with a CSS-based solution.
-    *   Remove the badge or pill style from informational text on the landing page.
-9.  **New Feature (Calculator)**: Add a Tax-Free Savings Account (TFSA) calculator.
-10. **Verification**: Ensure the existing Retirement Calculator is working accurately.
+The user's initial goal was to continue development, focusing on deploying the application. Over the session, this expanded to include:
+-   Verifying and fixing calculator accuracy and usability (Retirement, Compound Interest, EAC).
+-   Updating all calculators to default to .
+-   Generating coupon codes and fixing a critical bug preventing their redemption.
+-   Adding admin endpoints for user management.
+-   Updating the entire application with the 2026/2027 South African tax year rules, including income tax, TFSA, and CGT.
+-   Restructuring the application's business model to a Free/Premium tier system (R249/month for premium).
+-   Removing messaging specific to financial advisors to target a broader audience.
+-   The latest request is to completely remove the add client feature from the application.
 
 **PRODUCT REQUIREMENTS:**
--   The application must be deployable to a production environment.
--   All calculators in the Tax Hub must provide a Download as PDF option.
--   A new EAC/Fee Comparison calculator must be available, allowing a two-way comparison.
--   A new Tax-Free Savings Account calculator must be available.
--   The mobile navigation menu must be functional and user-friendly, with collapsible sections for calculator categories.
--   The application's branding (logo and color scheme) must be updated to reflect the user's latest design choices, with a seamless, professional look on the landing page.
--   The Retirement Calculator's calculations must be accurate.
+-   The application must be deployable.
+-   Calculators must be accurate and user-friendly (no input typing bugs).
+-   All tax-related calculations must use the 2026/2027 tax year figures.
+-   The app must have a Free tier (TFSA, Bond, Future Value calculators) and a Premium tier (all other calculators) priced at R249/month.
+-   The application should not contain features or text related to managing clients.
+-   Admin users must have an API to manage application users (list, delete).
 
 **User's preferred language**: English
 
 **what currently exists?**
-The project is a comprehensive financial advisory platform with a React frontend and FastAPI backend. It features user authentication, a dashboard, and now has approximately 19 financial calculators, including the newly added Fee Comparison and Tax-Free Savings calculators. All calculators within the Tax Hub now support PDF report generation. The application's UI has been significantly updated with a new CSS-based logo on the landing page and a new color scheme (deep navy blue with blue accents) applied globally. The mobile navigation has been fixed and now uses collapsible categories.
+The project is a financial advisory platform with a React frontend and FastAPI backend. It features user authentication, a dashboard, and approximately 19 financial calculators. The application's tax logic has been updated to the 2026/2027 tax year. A new Free/Premium subscription model has been implemented, gating access to most calculators. Critical bugs related to calculator inputs and coupon redemption have been fixed. Admin-only API endpoints for user management have been added. The agent was just beginning to remove all client management functionality.
 
 **Last working item**:
--   **Last item agent was working:** Verifying the calculation accuracy of the Retirement Annuity Calculator. The user explicitly requested to check if the calculator was working correctly.
+-   **Last item agent was working:** Removing the client management features from the application to align with the new focus on individual investors. The agent had just begun by identifying files that reference client.
 -   **Status:** IN PROGRESS
 -   **Agent Testing Done:** N
--   **Which testing method agent to use?** Frontend testing agent. The agent should be instructed to create a test case for , providing specific inputs and verifying that the calculated Retirement Shortfall/Surplus matches an expected, pre-calculated value. This will ensure long-term accuracy.
+-   **Which testing method agent to use?** Frontend testing agent. Instruct the agent to test the signup, login, pricing, and dashboard pages to ensure no broken UI elements or text referencing clients remain.
 -   **User Testing Done:** N
 
 **All Pending/In progress Issue list**:
--   **Issue 1 (P0):** Verify the Retirement Calculator's accuracy.
--   **Issue 2 (P2):** Refactor  to move any incorrectly scoped inner components to the top level to prevent performance issues and unnecessary re-renders.
--   **Issue 3 (P2):** Inconsistent Light Theme. Although the dark theme was updated, a full audit is needed to ensure all components use theme variables correctly and respect the light theme settings.
+-   **Issue 1 (P0):** Complete the removal of the client management feature.
+-   **Issue 2 (P1):** Refactor  to improve performance.
+-   **Issue 3 (P2):** Audit and fix the application's light theme for color consistency.
 
 **Issues Detail:**
--   **Issue 1: Verify Retirement Calculator Accuracy**
-    -   **Attempted fixes:** The agent viewed the code in , reviewed the formulas for , , and the final , and determined the logic looks correct. However, no quantitative test was completed to confirm this.
+-   **Issue 1: Remove Client Management Feature**
+    -   **Attempted fixes:** The agent has listed files containing the word client to scope the work. No code has been modified yet.
     -   **Next debug checklist:**
-        1.  Use the frontend testing agent to write a test for .
-        2.  Define a set of inputs (e.g., Current Age: 30, Retirement Age: 65, Monthly Contribution: 5000, etc.).
-        3.  Manually calculate the expected outcome.
-        4.  Assert that the component's output () matches the expected value.
-    -   **Why fix this issue and what will be achieved with the fix?** To ensure one of the core financial planning tools provides accurate and reliable results to end-users, which is critical for a financial advisory application.
+        1.  Edit  to remove text about client limits (e.g., up to 3 clients).
+        2.  Edit  to remove any logic related to client counts.
+        3.  Review and edit  and any other components to remove UI elements or text referencing clients.
+        4.  Verify the changes on the pricing and dashboard pages after logging in as a free and premium user.
+    -   **Why fix this issue and what will be achieved with the fix?** To align the app with the user's new product strategy targeting individual investors instead of advisors managing clients.
     -   **Status:** IN PROGRESS
     -   **Is recurring issue?** N
     -   **Should Test frontend/backend/both after fix?** Frontend
     -   **Blocked on other issue:** None
 
--   **Issue 2 & 3:** See Earlier issues found/mentioned but not fixed and Areas that need refactoring for details.
+-   **Issue 2: Refactor  for performance**
+    -   **Attempted fixes:** None on this specific file, but the agent successfully fixed an identical issue in  by moving stateful sub-components (, ) outside the main component definition.
+    -   **Next debug checklist:**
+        1.  Review .
+        2.  Identify any components defined inside the  functional component's scope (e.g., ).
+        3.  Move these component definitions outside the  component to prevent them from being re-created on every render.
+    -   **Why fix this issue and what will be achieved with the fix?** To improve React performance and prevent unnecessary re-renders, ensuring a smoother user experience.
+    -   **Status:** NOT STARTED
+    -   **Is recurring issue?** Y (The pattern of defining components inside other components was found and fixed elsewhere).
+    -   **Should Test frontend/backend/both after fix?** Frontend
+    -   **Blocked on other issue:** None
+
+-   **Issue 3: Inconsistent Light Theme**
+    -   **Attempted fixes:** None.
+    -   **Next debug checklist:**
+        1.  Switch the application to the light theme via the UI.
+        2.  Systematically navigate through every page (Landing, Auth, Dashboard, all calculators).
+        3.  Identify any UI elements with hardcoded colors or styling that looks incorrect in light mode.
+        4.  Correct the styles to use the theme variables defined in .
+    -   **Why fix this issue and what will be achieved with the fix?** Ensures a consistent, professional brand experience for users who prefer a light theme.
+    -   **Status:** NOT STARTED
+    -   **Is recurring issue?** N
+    -   **Should Test frontend/backend/both after fix?** Frontend
+    -   **Blocked on other issue:** None
 
 **In progress Task List**:
-There are no other multi-step tasks in progress.
+-   **Task 1: Remove Client Management Feature**
+    -   **Where to resume:** The agent has a list of files (frontend/src/index.js:import ReactDOM from "react-dom/client";
+frontend/src/hooks/use-toast.js:"use client";
+frontend/src/components/AIAdvisorChat.jsx:  clientContext = null,
+frontend/src/components/AIAdvisorChat.jsx:          client_context: clientContext,
+frontend/src/components/layout/Header.jsx:            <NavLink to="/clients" icon={Users}>Clients</NavLink>
+frontend/src/components/layout/Header.jsx:                to="/clients"
+frontend/src/components/ui/toggle.jsx:"use client"
+frontend/src/components/calculators/PrintReport.jsx:            Review the report before printing or sharing with your client
+frontend/src/components/QuickActionsWidget.jsx:          <Link to="/clients">
+frontend/src/components/QuickActionsWidget.jsx:            <p className="text-2xl font-bold text-foreground">{data.total_clients || 0}</p>
+frontend/src/components/QuickActionsWidget.jsx:            <Link to="/clients">
+frontend/src/components/QuickActionsWidget.jsx:                      to={`/clients/${calc.client_id}`}
+frontend/src/components/QuickActionsWidget.jsx:                              {calc.client_name}
+frontend/src/components/QuickActionsWidget.jsx:                      key={review.client_id} 
+frontend/src/components/QuickActionsWidget.jsx:                      to={`/clients/${review.client_id}`}
+frontend/src/components/QuickActionsWidget.jsx:                              {review.client_name}
+frontend/src/components/FeatureGate.jsx:                Unlimited client management
+frontend/src/App.js:                  <Route path="/clients" element={<ProtectedRoute><ClientsPage /></ProtectedRoute>} />
+frontend/src/App.js:                  <Route path="/clients/:clientId" element={<ProtectedRoute><ClientProfilePage /></ProtectedRoute>} />
+frontend/src/App.js:                  <Route path="/clients/:clientId/analysis" element={<ProtectedRoute><ClientProfilePage /></ProtectedRoute>} />
+frontend/src/App.js:                  <Route path="/clients/:clientId/goals" element={<ProtectedRoute><GoalPlannerPage /></ProtectedRoute>} />
+frontend/src/App.js:                  <Route path="/clients/:clientId/meetings" element={<ProtectedRoute><MeetingSchedulerPage /></ProtectedRoute>} />
+frontend/src/App.js:                  <Route path="/clients/:clientId/reviews" element={<ProtectedRoute><ReviewTrackerPage /></ProtectedRoute>} />
+frontend/src/App.js:                  <Route path="/clients/:clientId/portfolio" element={<ProtectedRoute><PortfolioTrackerPage /></ProtectedRoute>} />
+frontend/src/services/api.js:export const clientsApi = {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients`, {
+frontend/src/services/api.js:  getById: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients/${clientId}`, {
+frontend/src/services/api.js:  create: async (clientData) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients`, {
+frontend/src/services/api.js:      body: JSON.stringify(clientData),
+frontend/src/services/api.js:  update: async (clientId, updateData) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients/${clientId}`, {
+frontend/src/services/api.js:  delete: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients/${clientId}`, {
+frontend/src/services/api.js:  updateFinancialData: async (clientId, financialData) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients/${clientId}/financial-data`, {
+frontend/src/services/api.js:  getAnalysis: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients/${clientId}/analysis`, {
+frontend/src/services/api.js:  refreshAnalysis: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/clients/${clientId}/analysis/refresh`, {
+frontend/src/services/api.js:  getByClient: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/calculations/client/${clientId}`, {
+frontend/src/services/api.js:  getByType: async (clientId, calcType) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/calculations/client/${clientId}/type/${calcType}`, {
+frontend/src/services/api.js:  getByClient: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/tools/goals/client/${clientId}`, {
+frontend/src/services/api.js:  getByClient: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/tools/meetings/client/${clientId}`, {
+frontend/src/services/api.js:  getByClient: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/tools/reviews/client/${clientId}`, {
+frontend/src/services/api.js:  downloadAnalysis: (clientId, currency = 'ZAR') => {
+frontend/src/services/api.js:    return `${API_URL}/api/tools/reports/client/${clientId}/analysis?currency=${currency}&token=${token}`;
+frontend/src/services/api.js:  downloadGoals: (clientId, currency = 'ZAR') => {
+frontend/src/services/api.js:    return `${API_URL}/api/tools/reports/client/${clientId}/goals?currency=${currency}&token=${token}`;
+frontend/src/services/api.js:  get: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/portfolio/client/${clientId}`, {
+frontend/src/services/api.js:  createOrUpdate: async (clientId, portfolioData) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/portfolio/client/${clientId}`, {
+frontend/src/services/api.js:  getRebalancingSuggestions: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/portfolio/client/${clientId}/rebalance`, {
+frontend/src/services/api.js:  compare: async (clientId, purpose, options) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/portfolio/loans/compare?client_id=${clientId}&purpose=${purpose}`, {
+frontend/src/services/api.js:  getByClient: async (clientId) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/portfolio/loans/client/${clientId}`, {
+frontend/src/services/api.js:  calculate: async (clientId, feeData) => {
+frontend/src/services/api.js:    const response = await fetch(`${API_URL}/api/portfolio/fees/calculate?client_id=${clientId}`, {
+frontend/src/context/SubscriptionContext.jsx:  // Check if user can add more clients
+frontend/src/context/SubscriptionContext.jsx:  // Get client limit
+frontend/src/pages/FinancialLiteracyQuiz.jsx:            <p className="text-slate-400 mt-1">COFI-compliant client assessment</p>
+frontend/src/pages/FinancialLiteracyQuiz.jsx:                  to understand your client's financial literacy level. Results should be documented 
+frontend/src/pages/FinancialLiteracyQuiz.jsx:                  in the client's record of advice and considered when making product recommendations.
+frontend/src/pages/FinancialLiteracyQuiz.jsx:          <p className="text-slate-400 mt-1">COFI-compliant client questionnaire</p>
+frontend/src/pages/LandingPage.jsx:    description: 'Show clients how fees erode returns over time. Compare up to 3 investment options with different EACs and visualize the long-term impact of TERs, platform fees, and advisor fees.',
+frontend/src/pages/LandingPage.jsx:    description: 'COFI-compliant quiz to assess client financial knowledge. 10 carefully crafted questions with scoring, explanations, and professional PDF reports.',
+frontend/src/pages/LandingPage.jsx:    description: 'Help clients visualize their financial journey. Track assets, liabilities, set goals, and celebrate milestones. Generate beautiful progress reports.',
+frontend/src/pages/LandingPage.jsx:    description: 'Bank-level security with POPIA compliance, audit trails for all data access, and complete data isolation. Your client data is always protected.',
+frontend/src/pages/LandingPage.jsx:    description: 'Get intelligent insights powered by advanced AI. Answer complex financial questions, generate explanations, and provide guidance to your clients.',
+frontend/src/pages/LandingPage.jsx:                  Hours spent creating client reports
+frontend/src/pages/LandingPage.jsx:                  No way to track client progress over time
+frontend/src/pages/LandingPage.jsx:                  Track client net worth with visual milestones
+frontend/src/pages/LandingPage.jsx:              Every feature designed to save you time and impress your clients
+frontend/src/pages/LandingPage.jsx:                  desc: 'POPIA compliant with bank-level security for all client data.' 
+frontend/src/pages/LandingPage.jsx:                  bio: 'Denzil operates at the intersection of law, regulation, financial planning, and technology-enabled advice. As a Senior Legal Advisor and Business Development Manager, he helps intermediaries and high-net-worth clients implement practical, compliant solutions across estate, retirement, investment, tax, and business assurance planning, with a strong focus on Treating Customers Fairly. A respected technical trainer and presenter, Denzil translates complex legislation into clear, actionable guidance that improves advice quality, reduces risk, and builds lasting client trust.'
+frontend/src/pages/LandingPage.jsx:            Start delivering exceptional service to your clients with AdvisoryPro's professional financial tools.
+frontend/src/pages/GoalPlannerPage.jsx:import { goalsApi, clientsApi } from '@/services/api';
+frontend/src/pages/GoalPlannerPage.jsx:  const { clientId } = useParams();
+frontend/src/pages/GoalPlannerPage.jsx:  const [client, setClient] = useState(null);
+frontend/src/pages/GoalPlannerPage.jsx:    if (isAuthenticated && clientId) {
+frontend/src/pages/GoalPlannerPage.jsx:  }, [isAuthenticated, clientId]);
+frontend/src/pages/GoalPlannerPage.jsx:      const [clientData, goalsData] = await Promise.all([
+frontend/src/pages/GoalPlannerPage.jsx:        clientsApi.getById(clientId),
+frontend/src/pages/GoalPlannerPage.jsx:        goalsApi.getByClient(clientId),
+frontend/src/pages/GoalPlannerPage.jsx:      setClient(clientData);
+frontend/src/pages/GoalPlannerPage.jsx:        client_id: clientId,
+frontend/src/pages/GoalPlannerPage.jsx:          <Link to={`/clients/${clientId}`} className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-4">
+frontend/src/pages/GoalPlannerPage.jsx:            Back to {client?.first_name}'s Profile
+frontend/src/pages/GoalPlannerPage.jsx:                Track and manage {client?.first_name}'s financial goals
+frontend/src/pages/Dashboard.jsx:              Every feature designed to enhance your client presentations
+frontend/src/pages/Dashboard.jsx:            Ready to elevate your client presentations?
+frontend/src/pages/Dashboard.jsx:            Start using our professional calculators today and help your clients make better financial decisions.
+frontend/src/pages/SubscriptionSuccessPage.jsx:                  onClick={() => navigate('/clients')}
+frontend/src/pages/MeetingSchedulerPage.jsx:import { meetingsApi, clientsApi } from '@/services/api';
+frontend/src/pages/MeetingSchedulerPage.jsx:  const { clientId } = useParams();
+frontend/src/pages/MeetingSchedulerPage.jsx:  const [client, setClient] = useState(null);
+frontend/src/pages/MeetingSchedulerPage.jsx:    if (isAuthenticated && clientId) {
+frontend/src/pages/MeetingSchedulerPage.jsx:  }, [isAuthenticated, clientId]);
+frontend/src/pages/MeetingSchedulerPage.jsx:      const [clientData, meetingsData] = await Promise.all([
+frontend/src/pages/MeetingSchedulerPage.jsx:        clientsApi.getById(clientId),
+frontend/src/pages/MeetingSchedulerPage.jsx:        meetingsApi.getByClient(clientId),
+frontend/src/pages/MeetingSchedulerPage.jsx:      setClient(clientData);
+frontend/src/pages/MeetingSchedulerPage.jsx:        client_id: clientId,
+frontend/src/pages/MeetingSchedulerPage.jsx:          <Link to={`/clients/${clientId}`} className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-4">
+frontend/src/pages/MeetingSchedulerPage.jsx:            Back to {client?.first_name}&apos;s Profile
+frontend/src/pages/MeetingSchedulerPage.jsx:                Track meetings and action items for {client?.first_name}
+frontend/src/pages/MeetingSchedulerPage.jsx:                              <SelectItem value="client">Client</SelectItem>
+frontend/src/pages/ClientProfilePage.jsx:import { clientsApi } from '@/services/api';
+frontend/src/pages/ClientProfilePage.jsx:  const { clientId } = useParams();
+frontend/src/pages/ClientProfilePage.jsx:  const [client, setClient] = useState(null);
+frontend/src/pages/ClientProfilePage.jsx:  }, [isAuthenticated, clientId, navigate]);
+frontend/src/pages/ClientProfilePage.jsx:      const data = await clientsApi.getById(clientId);
+frontend/src/pages/ClientProfilePage.jsx:      // Auto-fetch analysis if client has financial data
+frontend/src/pages/ClientProfilePage.jsx:      toast.error('Failed to load client');
+frontend/src/pages/ClientProfilePage.jsx:      navigate('/clients');
+frontend/src/pages/ClientProfilePage.jsx:      const data = await clientsApi.getAnalysis(clientId);
+frontend/src/pages/ClientProfilePage.jsx:      const updated = await clientsApi.updateFinancialData(clientId, financialData);
+frontend/src/pages/ClientProfilePage.jsx:      const data = await clientsApi.refreshAnalysis(clientId);
+frontend/src/pages/ClientProfilePage.jsx:        <div className="animate-pulse text-slate-500">Loading client...</div>
+frontend/src/pages/ClientProfilePage.jsx:  if (!client) return null;
+frontend/src/pages/ClientProfilePage.jsx:    <div className="min-h-screen bg-navy-950" data-testid="client-profile-page">
+frontend/src/pages/ClientProfilePage.jsx:          <Link to="/clients" className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white mb-4">
+frontend/src/pages/ClientProfilePage.jsx:              {client.first_name[0]}{client.last_name[0]}
+frontend/src/pages/ClientProfilePage.jsx:                {client.first_name} {client.last_name}
+frontend/src/pages/ClientProfilePage.jsx:                {client.email && (
+frontend/src/pages/ClientProfilePage.jsx:                    {client.email}
+frontend/src/pages/ClientProfilePage.jsx:                {client.phone && (
+frontend/src/pages/ClientProfilePage.jsx:                    {client.phone}
+frontend/src/pages/ClientProfilePage.jsx:          <Link to={`/clients/${clientId}/goals`}>
+frontend/src/pages/ClientProfilePage.jsx:          <Link to={`/clients/${clientId}/meetings`}>
+frontend/src/pages/ClientProfilePage.jsx:          <Link to={`/clients/${clientId}/reviews`}>
+frontend/src/pages/ClientProfilePage.jsx:          <Link to={`/clients/${clientId}/portfolio`}>
+frontend/src/pages/ClientProfilePage.jsx:            href={reportsApi.downloadAnalysis(clientId, currentCurrency.code)} 
+frontend/src/pages/ClientProfilePage.jsx:                        This client&apos;s financial plan appears to be well-structured.
+frontend/src/pages/ClientProfilePage.jsx:                        <p className="font-medium">{client.first_name} {client.last_name}</p>
+frontend/src/pages/ClientProfilePage.jsx:                    {client.email && (
+frontend/src/pages/ClientProfilePage.jsx:                          <p className="font-medium">{client.email}</p>
+frontend/src/pages/ClientProfilePage.jsx:                    {client.phone && (
+frontend/src/pages/ClientProfilePage.jsx:                          <p className="font-medium">{client.phone}</p>
+frontend/src/pages/ClientProfilePage.jsx:                    {client.occupation && (
+frontend/src/pages/ClientProfilePage.jsx:                          <p className="font-medium">{client.occupation}</p>
+frontend/src/pages/ClientProfilePage.jsx:                    {client.date_of_birth && (
+frontend/src/pages/ClientProfilePage.jsx:                          <p className="font-medium">{client.date_of_birth}</p>
+frontend/src/pages/ClientProfilePage.jsx:                {client.notes && (
+frontend/src/pages/ClientProfilePage.jsx:                    <p className="text-slate-700 dark:text-slate-300">{client.notes}</p>
+frontend/src/pages/ClientsPage.jsx:import { clientsApi } from '@/services/api';
+frontend/src/pages/ClientsPage.jsx:  const [clients, setClients] = useState([]);
+frontend/src/pages/ClientsPage.jsx:  // New client form
+frontend/src/pages/ClientsPage.jsx:      const data = await clientsApi.getAll();
+frontend/src/pages/ClientsPage.jsx:      toast.error('Failed to load clients');
+frontend/src/pages/ClientsPage.jsx:      const created = await clientsApi.create(newClient);
+frontend/src/pages/ClientsPage.jsx:      setClients([created, ...clients]);
+frontend/src/pages/ClientsPage.jsx:  const handleDeleteClient = async (clientId) => {
+frontend/src/pages/ClientsPage.jsx:    if (!confirm('Are you sure you want to delete this client? This action cannot be undone.')) {
+frontend/src/pages/ClientsPage.jsx:      await clientsApi.delete(clientId);
+frontend/src/pages/ClientsPage.jsx:      setClients(clients.filter(c => c.id !== clientId));
+frontend/src/pages/ClientsPage.jsx:  const filteredClients = clients.filter(client => {
+frontend/src/pages/ClientsPage.jsx:    const fullName = `${client.first_name} ${client.last_name}`.toLowerCase();
+frontend/src/pages/ClientsPage.jsx:           (client.email && client.email.toLowerCase().includes(query)) ||
+frontend/src/pages/ClientsPage.jsx:           (client.occupation && client.occupation.toLowerCase().includes(query));
+frontend/src/pages/ClientsPage.jsx:        <div className="animate-pulse text-slate-500">Loading clients...</div>
+frontend/src/pages/ClientsPage.jsx:    <div className="min-h-screen bg-navy-950" data-testid="clients-page">
+frontend/src/pages/ClientsPage.jsx:              Manage your client profiles and financial plans
+frontend/src/pages/ClientsPage.jsx:              <Button className="btn-premium" data-testid="add-client-btn">
+frontend/src/pages/ClientsPage.jsx:                  Enter the client's basic information to create their profile.
+frontend/src/pages/ClientsPage.jsx:                        data-testid="client-first-name-input"
+frontend/src/pages/ClientsPage.jsx:                        data-testid="client-last-name-input"
+frontend/src/pages/ClientsPage.jsx:                      data-testid="client-email-input"
+frontend/src/pages/ClientsPage.jsx:                      data-testid="client-phone-input"
+frontend/src/pages/ClientsPage.jsx:                      data-testid="client-occupation-input"
+frontend/src/pages/ClientsPage.jsx:                  <Button type="submit" disabled={isSubmitting} data-testid="save-client-btn">
+frontend/src/pages/ClientsPage.jsx:            placeholder="Search clients by name, email, or occupation..."
+frontend/src/pages/ClientsPage.jsx:            data-testid="client-search-input"
+frontend/src/pages/ClientsPage.jsx:                  <p className="text-2xl font-bold text-white">{clients.length}</p>
+frontend/src/pages/ClientsPage.jsx:                    {clients.filter(c => !c.financial_data?.life_insurance_coverage).length}
+frontend/src/pages/ClientsPage.jsx:                    {clients.filter(c => c.financial_data?.life_insurance_coverage > 0).length}
+frontend/src/pages/ClientsPage.jsx:                {searchQuery ? 'No clients found' : 'No clients yet'}
+frontend/src/pages/ClientsPage.jsx:                  : 'Add your first client to get started'}
+frontend/src/pages/ClientsPage.jsx:            {filteredClients.map((client) => (
+frontend/src/pages/ClientsPage.jsx:                key={client.id} 
+frontend/src/pages/ClientsPage.jsx:                data-testid={`client-card-${client.id}`}
+frontend/src/pages/ClientsPage.jsx:                        {client.first_name[0]}{client.last_name[0]}
+frontend/src/pages/ClientsPage.jsx:                          {client.first_name} {client.last_name}
+frontend/src/pages/ClientsPage.jsx:                          {client.email && (
+frontend/src/pages/ClientsPage.jsx:                              {client.email}
+frontend/src/pages/ClientsPage.jsx:                          {client.phone && (
+frontend/src/pages/ClientsPage.jsx:                              {client.phone}
+frontend/src/pages/ClientsPage.jsx:                          {client.occupation && (
+frontend/src/pages/ClientsPage.jsx:                              {client.occupation}
+frontend/src/pages/ClientsPage.jsx:                      <Link to={`/clients/${client.id}`}>
+frontend/src/pages/ClientsPage.jsx:                        <Button variant="outline" size="sm" data-testid={`view-client-${client.id}`}>
+frontend/src/pages/ClientsPage.jsx:                            <Link to={`/clients/${client.id}/analysis`} className="flex items-center gap-2">
+frontend/src/pages/ClientsPage.jsx:                            onClick={() => handleDeleteClient(client.id)}
+frontend/src/pages/PortfolioTrackerPage.jsx:import { portfolioApi, clientsApi } from '@/services/api';
+frontend/src/pages/PortfolioTrackerPage.jsx:  const { clientId } = useParams();
+frontend/src/pages/PortfolioTrackerPage.jsx:  const [client, setClient] = useState(null);
+frontend/src/pages/PortfolioTrackerPage.jsx:    if (isAuthenticated && clientId) {
+frontend/src/pages/PortfolioTrackerPage.jsx:  }, [isAuthenticated, clientId]);
+frontend/src/pages/PortfolioTrackerPage.jsx:      const clientData = await clientsApi.getById(clientId);
+frontend/src/pages/PortfolioTrackerPage.jsx:      setClient(clientData);
+frontend/src/pages/PortfolioTrackerPage.jsx:        const portfolioData = await portfolioApi.get(clientId);
+frontend/src/pages/PortfolioTrackerPage.jsx:        const suggestions = await portfolioApi.getRebalancingSuggestions(clientId);
+frontend/src/pages/PortfolioTrackerPage.jsx:      const saved = await portfolioApi.createOrUpdate(clientId, portfolioData);
+frontend/src/pages/PortfolioTrackerPage.jsx:          <Link to={`/clients/${clientId}`} className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-4">
+frontend/src/pages/PortfolioTrackerPage.jsx:            Back to {client?.first_name}&apos;s Profile
+frontend/src/pages/PortfolioTrackerPage.jsx:                Manage {client?.first_name}&apos;s investment portfolio
+frontend/src/pages/SecurityPage.jsx:    if (action?.includes('client')) return <Users className="h-4 w-4" />;
+frontend/src/pages/SecurityPage.jsx:                  {securitySummary?.total_clients || 0}
+frontend/src/pages/SecurityPage.jsx:                  {securitySummary?.client_access_count || 0}
+frontend/src/pages/SecurityPage.jsx:                How we protect your clients' data
+frontend/src/pages/SecurityPage.jsx:                    description: 'Each advisor can only access their own clients - strict separation enforced',
+frontend/src/pages/SecurityPage.jsx:                    Your client data is completely isolated from other advisors. Every database query 
+frontend/src/pages/SecurityPage.jsx:                    clients' information. This is enforced at the API level, not just the UI.
+frontend/src/pages/SecurityPage.jsx:                Rights that your clients have regarding their personal information
+frontend/src/pages/SecurityPage.jsx:                {privacyReport?.client_rights?.map((right, index) => (
+frontend/src/pages/SecurityPage.jsx:                    {privacyReport?.consent_text || 'Ensure you obtain proper consent from clients before collecting their personal information.'}
+frontend/src/pages/ReviewTrackerPage.jsx:import { reviewsApi, clientsApi } from '@/services/api';
+frontend/src/pages/ReviewTrackerPage.jsx:  const { clientId } = useParams();
+frontend/src/pages/ReviewTrackerPage.jsx:  const [client, setClient] = useState(null);
+frontend/src/pages/ReviewTrackerPage.jsx:    if (isAuthenticated && clientId) {
+frontend/src/pages/ReviewTrackerPage.jsx:  }, [isAuthenticated, clientId]);
+frontend/src/pages/ReviewTrackerPage.jsx:      const clientData = await clientsApi.getById(clientId);
+frontend/src/pages/ReviewTrackerPage.jsx:      setClient(clientData);
+frontend/src/pages/ReviewTrackerPage.jsx:        const reviewData = await reviewsApi.getByClient(clientId);
+frontend/src/pages/ReviewTrackerPage.jsx:        client_id: clientId,
+frontend/src/pages/ReviewTrackerPage.jsx:          <Link to={`/clients/${clientId}`} className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-4">
+frontend/src/pages/ReviewTrackerPage.jsx:            Back to {client?.first_name}&apos;s Profile
+frontend/src/pages/ReviewTrackerPage.jsx:                Manage periodic reviews for {client?.first_name}
+frontend/src/pages/ReviewTrackerPage.jsx:              <p className="text-slate-500 mb-4">Set up a periodic review schedule to stay on top of client reviews</p>
+frontend/src/pages/ReviewTrackerPage.jsx:                        The scheduled review for {client?.first_name} is coming up in {daysUntil} days. 
+frontend/src/pages/DocumentReader.jsx:const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
+frontend/src/pages/DocumentReader.jsx:      toast.error('Please select a client');
+frontend/src/pages/DocumentReader.jsx:      toast.success('Saved to client profile');
+frontend/src/pages/DocumentReader.jsx:                <SelectValue placeholder="Select client..." />
+frontend/src/pages/DocumentReader.jsx:                {clients.map(client => (
+frontend/src/pages/DocumentReader.jsx:                  <SelectItem key={client.id} value={client.id}>
+frontend/src/pages/DocumentReader.jsx:                    {client.first_name} {client.last_name}
+frontend/src/pages/DocumentReader.jsx:  const [clients, setClients] = useState([]);
+frontend/src/pages/DocumentReader.jsx:  // Fetch existing analyses and clients
+frontend/src/pages/DocumentReader.jsx:        const [analysesRes, clientsRes] = await Promise.all([
+frontend/src/pages/DocumentReader.jsx:          axios.get(`${API_URL}/api/clients`, {
+frontend/src/pages/DocumentReader.jsx:        setClients(clientsRes.data || []);
+frontend/src/pages/DocumentReader.jsx:  // Save to client
+frontend/src/pages/DocumentReader.jsx:  const handleSaveToClient = async (analysisId, clientId) => {
+frontend/src/pages/DocumentReader.jsx:      `${API_URL}/api/documents/save-to-client`,
+frontend/src/pages/DocumentReader.jsx:      { analysis_id: analysisId, client_id: clientId },
+frontend/src/pages/DocumentReader.jsx:              clients={clients}). The next step is to edit these files, starting with  and .
+    -   **What will be achieved with this?** The app will no longer have any user-facing features related to managing a list of clients.
+    -   **Status:** IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?** Frontend
+    -   **Blocked on something:** None
 
 **Upcoming and Future Tasks**
 -   **Upcoming Tasks:**
-    -   **Deploy the Application (P0):** The user has requested this multiple times and it remains the highest priority action item after the current task is resolved.
-    -   **Verify New/Updated Calculators (P1):** The user should be prompted to verify the functionality of the newly added **EAC Fee Comparison** and **TFSA** calculators, as well as the previously modified **Car Finance** and **Education Savings** calculators.
-    -   **End-to-end Test of AI Document Reader (P2):** This task has been carried over and requires a formal test to confirm the client dropdown and save functionality works seamlessly after a document analysis.
+    -   **(P0) Deploy the Application:** This has been a recurring high-priority request. Once the client feature removal is complete, this should be the next action.
+    -   **(P1) Verify New/Updated Calculators:** Prompt the user to test the EAC Fee Comparison, TFSA, and Compound Interest calculators to confirm all recent fixes and additions meet their expectations.
+    -   **(P2) End-to-end Test of AI Document Reader:** A carried-over task to test the full document analysis workflow.
 
 -   **Future Tasks:**
-    -   **Create a Portal Landing Page:** The user opted to create a separate, lightweight landing page later to act as a portal, directing users to the  (South Africa) and  (United States) subdomains. This will be a new project.
-    -   **Build US/Canadian App:** The user decided this will be a completely new project.
-    -   **Build AdvisoryPro Personal Consumer App:** The user decided this will also be a new project. A spec document has been created at .
+    -   **White-Labeling:** Implement a multi-tenant architecture to allow other financial firms to use AdvisoryPro under their own brand.
+    -   **Create a Portal Landing Page:** A new page to direct users to different regional versions of the app (e.g., ZA, US).
+    -   **Build US/Canadian App:** New, separate project.
+    -   **Build AdvisoryPro Personal Consumer App:** New, separate project. A spec doc exists at .
 
 **Completed work in this session**
--   **Feature - PDF Export for Tax Hub:** Added a  component to all 6 tabs in , enabling PDF downloads for each calculator.
--   **Feature - Fee Comparison Calculator:** Created a new calculator at , added routes, and linked it in the dashboard and header. It was later refined to offer a 2-way comparison instead of 3-way.
--   **Feature - TFSA Calculator:** Created a new  and integrated it into the application's routing, dashboard, and header.
--   **UI - Mobile Menu Fix:** Refactored the mobile menu in  to use collapsible categories, fixing the usability issue of a long, non-interactive list.
--   **UI - Branding Overhaul:**
-    -   Replaced the landing page hero image with a custom, CSS-based logo that blends seamlessly into the background ().
-    -   Updated the application's color palette in  to a deep navy blue with blue/sky-blue accents, matching the new logo.
-    -   Removed the badge styling for section headers on the landing page, replacing them with simpler text elements.
--   **Content Updates:** Updated the calculator count on the landing and auth pages to 19.
--   **Bug Investigation:** Investigated a user's missing client data, correctly identifying it as a database isolation issue between different deployment environments.
--   **Coupon Management:** Generated 10 new Premium Lifetime coupon codes and stored them in the database.
--   **Documentation:** Created handoff/spec documents for potential future projects:  and .
+-   **Feature - Admin User Management:** Added secure admin API endpoints () to list, get, and delete users.
+-   **Feature - Implemented Free/Premium Tiers:** Reworked the application to have a Free tier with 3 calculators and a Premium tier (R249/month) for all features. Updated UI with Free/Premium badges.
+-   **Feature - Updated All Tax Rules to 2026/2027:** Updated income tax brackets, RA limits, TFSA limits, and all CGT exclusions across all relevant calculators.
+-   **Bug Fix - Critical Coupon Redemption Failure:** Diagnosed and fixed a bug where coupons were being created in the wrong database, making them invalid.
+-   **Bug Fix - Frustrating Calculator Input Issue:** Fixed a major UX bug across multiple calculators where users could only type one digit at a time. The fix involved creating stateful input components defined outside the parent component.
+-   **Verification - Retirement Calculator Accuracy:** Confirmed the calculator's formulas and output are 100% accurate.
+-   **UI/UX - Set All Calculator Defaults to 0:** Removed pre-filled values from all calculators for a cleaner user experience.
+-   **Content - Removed For Financial Advisors Messaging:** Updated the landing page and dashboard to be more inclusive for individual investors.
 
 **Earlier issues found/mentioned but not fixed**
--   **Issue 1: Component Scoping in **
-    -   A previous handoff noted that components were being defined inside other components (e.g.,  inside ), which hurts performance. This refactoring task was carried over but not addressed in this session.
-    -   **Debug checklist:**
-        1.  Review  and other complex component files.
-        2.  Identify any component functions defined within the  scope of another component.
-        3.  Move these inner components outside the parent component's definition to prevent them from being re-created on every render.
-    -   **Why to solve this issue and what will be achieved with this?** To improve React performance by preventing unnecessary re-renders and ensuring stable component identity.
-    -   **Should Test frontend/backend/both after fix:** Frontend
-    -   **Is recurring issue?** N
+-   **Issue 1: Component Scoping in :** Detailed under All Pending/In progress Issue list. This is a performance-related refactoring task that was carried over from a previous session.
+-   **Issue 2: Inconsistent Light Theme:** Detailed under All Pending/In progress Issue list.
 
 **Known issue recurrence from previous fork**
 -   None.
@@ -116,65 +371,65 @@ There are no other multi-step tasks in progress.
 **Key Technical Concepts**
 -   **Frontend:** React, Tailwind CSS, Vite
 -   **Backend:** FastAPI (Python)
--   **Database:** SQLite (in preview), Emergent-managed MongoDB (in production)
--   **State Management:** React Context API ()
--   **PDF Generation:**  library for client-side PDF creation from components.
--   **UI/Branding:** The hero logo on the landing page is a CSS implementation (using radial gradients) rather than a static image file to achieve a seamless blend with the background.
+-   **Database:** SQLite (preview), MongoDB (production)
+-   **State Management:**
+    -   React Context API (, ) for global state.
+    -   **Controlled Components with Local State:** A key pattern was established for input fields to solve a typing bug. The input component maintains its own string-based  state while typing and only calls the parent's  handler on blur or when valid. This component must be defined *outside* the parent component.
+-   **API Design:** A new  () was created in FastAPI to modularize admin-specific endpoints and secure them.
+-   **Feature Gating:** Using  and a  component to conditionally render UI or block access to pages/features based on the user's subscription status.
 
 **key DB schema**
--   No changes were made to the database schema in this session.
--   **users:** uid=0(root) gid=0(root) groups=0(root), , , , , , , 
+-   Schema unchanged.
+-   **users:** uid=0(root) gid=0(root) groups=0(root), , , , , , ...
 -   **coupons:** uid=0(root) gid=0(root) groups=0(root), , , , , 
 
 **changes in tech stack**
 -   None.
 
 **All files of reference**
--   : (New) The EAC/Fee comparison tool.
--   : (New) The TFSA calculator.
--   : (Modified)  component was added to all 6 calculator tabs.
--   : (Modified) The mobile menu was fixed with collapsible categories, and links to new calculators were added.
--   : (Modified) Hero section was completely reworked with a CSS logo, new color scheme was applied, and badge styles were removed.
--   : (Modified) The color variables for dark and light themes were updated to match the new logo.
--   : (Modified) Links to the two new calculators were added.
--   : (Modified) Routes for the new calculators were added.
--   : (Viewed) Inspected for the accuracy verification task.
--   : (New) Spec document for the consumer-facing app.
--   : (New) Handoff document for the US/Canada version.
+-   : (Modified) Added annual contribution increase and fixed the critical input typing bug by moving sub-components outside the main component.
+-   : (Modified) The shared input component was updated with better state handling to fix the typing bug.
+-   : (Modified) Updated to show the new Free/Premium tiers and R249/month price.
+-   : (Modified) Logic updated to define free vs. paid features.
+-   : (Modified) Updated to display Free and Premium badges on calculator cards.
+-   : (New) Contains endpoints for admin user management.
+-   : (Modified) Updated to register the new admin router.
+-   **Multiple Calculator Files:** Nearly all files in  and  were modified to update tax rules for 2026/2027 and/or set default values to 0.
 
 **Areas that need refactoring**:
--   **Component Scoping:** The  file needs to be reviewed for components defined inside other components, an anti-pattern that hurts performance.
--   **Inconsistent Light Theme:** The new color scheme was primarily tested on the dark theme. A full pass is needed to ensure all components render correctly in the light theme without hardcoded colors.
+-   ** Component Scoping:** Still needs to be refactored to move inner components to the top level for performance, following the pattern used to fix .
+-   **Light Theme Consistency:** The app's light theme needs a full review to ensure all components use the correct theme variables and display properly.
 
 **key api endpoints**
--   No new API endpoints were created. The agent worked on the frontend or interacted with the database via scripts.
+-   : User login.
+-   : Validates a coupon code.
+-   : (New, Admin Only) Lists all users.
+-   : (New, Admin Only) Deletes a user.
 
 **Critical Info for New Agent**
--   The user's highest priority is to **deploy the application**. This should be the next major action after verifying the retirement calculator.
--   The user has firmly decided that the **North American and consumer versions will be separate projects**. Do not attempt to build them in this workspace. Reference the spec docs in .
--   The logo on the landing page is **not an image file**. It is implemented with CSS in . Modifications should be made there.
--   When testing, be aware that this preview environment has an isolated database. Production data or data from other forks will not be present.
+-   The user's highest priority after the current task is to **deploy the application**.
+-   The input field typing bug was complex. The required fix is to ensure stateful input components are defined **outside** the parent component that uses them. Replicating this pattern is crucial if the bug reappears.
+-   When creating database records (like coupons), **always read configuration** (like the database name) from the  file. A critical bug was caused by a hardcoded database name in a script.
+-   The new business model is **Free vs. Premium Tiers**. Do not re-introduce logic related to client management.
 
 **documents and test reports created in this job**
--   
--   
--   
+-    (updated multiple times)
 
 **Last 10 User Messages and any pending HUMAN messages**
-10.  - **In Progress.** Agent was investigating this when the session ended.
-9.   - **Completed.** The calculator was created and integrated.
-8.   (Start building consumer app now) - **Acknowledged.** Agent explained this must be a new project and created a spec document.
-7.   - **Completed.** Agent researched and recommended APIs for the new consumer app.
-6.   - **Completed.** Agent provided a detailed breakdown of potential features and monetization.
-5.   - **Completed.** Agent adjusted the CSS logo's gradient colors.
-4.   - **Completed.** Agent removed the italic style from the CSS logo text.
-3.   - **Completed.** This led the agent to abandon the image file and create a seamless CSS-based logo.
-2.   - **Completed.** Agent updated the theme context and landing page.
-1.   - **Completed.** User provided a logo image which kicked off the branding overhaul.
+10.  - **Completed.**
+9.   - **Completed.**
+8.   (to creating an admin endpoint for user deletion) - **Completed.**
+7.   - **Completed.** Agent confirmed the user is not in the preview DB and created an admin endpoint for post-deployment deletion.
+6.   - **Completed.** Agent investigated and explained the user is in the production DB, not preview.
+5.   - **Completed.** A critical bug was found and fixed where coupons were being written to the wrong database.
+4.   - **Completed.**
+3.   - **Completed.** Agent verified accuracy and fixed a related input-typing bug.
+2.   - **Completed.** Agent fixed this recurring input bug by refactoring the component structure.
+1.   - **IN PROGRESS.** This is the current task.
 
 **Project Health Check:**
--   **Broken:** None
--   **Mocked:** The email-sending part of the password reset flow is still mocked (the reset token is returned in the API response).
+-   **Broken:** None.
+-   **Mocked:** The email-sending portion of the password reset flow is still mocked (the reset token is returned in the API response instead of being emailed).
 
 **3rd Party Integrations**
 -   **OpenAI GPT-4o:** Used for the AI Document Reader feature. Uses Emergent LLM Key.
@@ -191,4 +446,4 @@ There are no other multi-step tasks in progress.
 -   **Admin Password:** 
 
 **What agent forgot to execute**
--   The agent did not address the refactoring task for  (improving component scoping), which was carried over from a previous handoff and is important for application performance.</analysis>
+-   The agent did not address the refactoring task for  (improving component scoping), which was a known performance issue carried over from a previous handoff.</analysis>
