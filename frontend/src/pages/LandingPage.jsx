@@ -14,7 +14,7 @@ import {
   PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail, Phone, MapPin,
-  Send, Linkedin, Twitter, Building2, Loader2, Scale
+  Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 
@@ -882,7 +882,28 @@ export const LandingPage = () => {
             </div>
           </div>
           
-          <div className="pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
+          {/* Important Disclaimer */}
+          <div className="mt-8 pt-8 border-t border-border">
+            <div className="bg-slate-900/50 border border-amber-500/20 rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+                <div className="text-xs text-slate-400 leading-relaxed">
+                  <p className="font-medium text-slate-300 mb-2">Important Disclaimer</p>
+                  <p className="mb-2">
+                    Financial Advisory Pro is <strong className="text-slate-300">financial software</strong> designed for informational and educational purposes only. 
+                    The calculators, tools, and content provided do not constitute financial, investment, tax, or legal advice.
+                  </p>
+                  <p>
+                    We strongly recommend that you consult with a <strong className="text-slate-300">qualified professional financial advisor</strong>, 
+                    tax consultant, or other appropriate professional before making any financial decisions based on 
+                    information obtained from this software.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 mt-8">
             <p className="text-sm text-muted-foreground">
               © 2026 Financial Advisory Pro. All rights reserved.
             </p>

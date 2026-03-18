@@ -1,5 +1,6 @@
 import React from 'react';
-import { Calculator, Shield, Award, Clock } from 'lucide-react';
+import { Calculator, Shield, Award, Clock, AlertTriangle } from 'lucide-react';
+import { FullDisclaimer } from '@/components/calculators/Disclaimer';
 
 export const Footer = () => {
   return (
@@ -43,6 +44,11 @@ export const Footer = () => {
               <p className="text-xs text-slate-400">Instant results</p>
             </div>
           </div>
+        </div>
+
+        {/* Disclaimer Section */}
+        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4 mb-8">
+          <FullDisclaimer />
         </div>
 
         {/* Bottom Bar */}
