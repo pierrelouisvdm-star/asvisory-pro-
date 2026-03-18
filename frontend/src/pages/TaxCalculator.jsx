@@ -79,8 +79,8 @@ export const TaxCalculator = () => {
     const totalDeductions = retirementDeduction + donationsDeduction + travelAllowance + otherDeductions;
     const taxableIncome = Math.max(0, grossIncome - totalDeductions);
 
-    // Calculate capital gains tax (40% inclusion rate, first R40,000 exempt)
-    const taxableCapitalGains = Math.max(0, (capitalGains - 40000) * 0.4);
+    // Calculate capital gains tax (40% inclusion rate, first R50,000 exempt - 2026/27)
+    const taxableCapitalGains = Math.max(0, (capitalGains - 50000) * 0.4);
     const totalTaxableIncome = taxableIncome + taxableCapitalGains;
 
     // Calculate tax using brackets
@@ -223,7 +223,7 @@ export const TaxCalculator = () => {
                 prefix={symbol}
                 min={0}
                 step={10000}
-                tooltip="First R40,000 is exempt, 40% inclusion rate"
+                tooltip="First R50,000 is exempt (2026/27), 40% inclusion rate"
               />
             </div>
           </CalculatorCard>

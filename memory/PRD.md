@@ -1,6 +1,22 @@
 # AdvisoryPro - Product Requirements Document
 
-## Latest Update: February 27, 2026
+## Latest Update: March 18, 2026
+
+### Session: March 18, 2026
+- ✅ **Complete 2026/2027 CGT Updates** - All Capital Gains Tax exclusions updated:
+  - **CGT Annual Exclusion** - R40,000 → **R50,000**
+  - **CGT Primary Residence Exclusion** - R2,000,000 → **R3,000,000**
+  - **CGT Death Exclusion** - R300,000 → **R440,000**
+  - **Small Business Disposal (55+)** - R1,800,000 → **R2,700,000**
+  
+- ✅ **Admin User Management Endpoints** added:
+  - DELETE /api/admin/users/{email} - Delete user and all their data
+  - GET /api/admin/users - List all users
+  - POST /api/admin/users/{email}/reset-subscription - Reset subscription
+
+- ✅ **Coupon Code Issue Fixed** - Now creates in correct database
+- ✅ **Compound Interest Calculator Verified** - Working correctly
+- ✅ **Input Field Fix** - Added isFocused state to prevent typing issues
 
 ### Session: February 27, 2026
 - ✅ **2026/2027 Tax Year Updates** - All tax figures updated per SA Budget Speech:
@@ -21,7 +37,6 @@
 
 - ✅ **EAC Tool Fixed** - Input fields now allow multi-digit number entry
 - ✅ **Annual Contribution Increase** added to EAC Tool
-- ✅ **10 Premium Lifetime Coupon Codes** generated
 
 ### Previous Session: February 19, 2026
 - ✅ PDF Export added to all Tax Hub calculator tabs

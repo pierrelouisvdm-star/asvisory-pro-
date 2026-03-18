@@ -12,10 +12,15 @@ import { ScrollText, Users, Building, AlertTriangle, CheckCircle } from 'lucide-
 import { useCurrency } from '@/context/CurrencyContext';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 
-// SA Estate Duty rates
+// SA Estate Duty rates (unchanged for 2026/27)
 const ESTATE_DUTY_THRESHOLD = 3500000; // First R3.5M exempt
 const ESTATE_DUTY_RATE_1 = 0.20; // 20% on first R30M above threshold
 const ESTATE_DUTY_RATE_2 = 0.25; // 25% on amounts above R30M
+
+// CGT on death exclusions (2026/27)
+const CGT_DEATH_EXCLUSION = 440000; // R440,000 exclusion on death (was R300,000)
+const CGT_PRIMARY_RESIDENCE_EXCLUSION = 3000000; // R3m (was R2m)
+const CGT_INCLUSION_RATE = 0.40; // 40% for individuals
 
 export const EstatePlanningCalculator = () => {
   const { symbol, formatCurrency } = useCurrency();

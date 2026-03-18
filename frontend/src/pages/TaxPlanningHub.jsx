@@ -113,12 +113,14 @@ const MEDICAL_CREDITS = {
   additionalDependent: 254, // Per month
 };
 
-// CGT Constants (unchanged)
+// CGT Constants 2026/2027 (Updated per Budget Speech)
 const CGT = {
-  inclusionRate: 0.40,        // 40% for individuals
-  annualExclusion: 40000,     // R40,000 annual exclusion
-  deathExclusion: 300000,     // R300,000 on death
-  primaryResidence: 2000000,  // R2m primary residence exclusion
+  inclusionRate: 0.40,        // 40% for individuals (unchanged)
+  annualExclusion: 50000,     // R50,000 annual exclusion (was R40,000)
+  deathExclusion: 440000,     // R440,000 on death (was R300,000)
+  primaryResidence: 3000000,  // R3m primary residence exclusion (was R2m)
+  smallBusinessExclusion: 2700000, // R2.7m for 55+ (was R1.8m)
+  smallBusinessMaxValue: 15000000, // Business max value R15m (was R10m)
 };
 
 // TFSA Limits 2026/2027 (Updated)
@@ -861,11 +863,11 @@ const TaxPlanningHub = () => {
                     <TrendingUp className="h-5 w-5 text-emerald-400" />
                     Asset Details
                     <SectionInfo
-                      title="Capital Gains Tax (CGT)"
+                      title="Capital Gains Tax (CGT) - 2026/27"
                       description="CGT is payable when you sell an asset for more than you paid. Only 40% of the gain is included in your taxable income."
                       tips={[
-                        "R40,000 annual exclusion applies to your total gains",
-                        "Primary residence up to R2m profit is exempt",
+                        "R50,000 annual exclusion applies to your total gains (increased from R40,000)",
+                        "Primary residence up to R3m profit is exempt (increased from R2m)",
                         "Keep proof of purchase price and improvement costs"
                       ]}
                     />
@@ -988,7 +990,7 @@ const TaxPlanningHub = () => {
                   <div className="space-y-3">
                     {cgtResults.primaryResidenceExclusion > 0 && (
                       <div className="flex justify-between text-sm">
-                        <span className="text-slate-400">Less: Primary Residence Exclusion</span>
+                        <span className="text-slate-400">Less: Primary Residence Exclusion (2026/27: up to R3m)</span>
                         <span className="text-emerald-400">-{formatCurrency(cgtResults.primaryResidenceExclusion)}</span>
                       </div>
                     )}
@@ -997,7 +999,7 @@ const TaxPlanningHub = () => {
                       <span className="text-white">{formatCurrency(cgtResults.totalGains)}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-slate-400">Less: Annual Exclusion</span>
+                      <span className="text-slate-400">Less: Annual Exclusion (2026/27: R50,000)</span>
                       <span className="text-emerald-400">-{formatCurrency(cgtResults.annualExclusion)}</span>
                     </div>
                     <div className="flex justify-between text-sm pt-2 border-t border-navy-700">

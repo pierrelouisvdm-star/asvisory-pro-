@@ -93,8 +93,9 @@ const TFSACalculator = () => {
       });
       
       // Apply CGT on taxable account (simplified - annual rebalancing assumption)
+      // 2026/27: R50,000 annual exclusion (was R40,000)
       const taxableGrowth = taxableBalance - totalTaxableContributions;
-      const annualCGT = taxableGrowth > 40000 ? (taxableGrowth - 40000) * (cgtInclusionRate / 100) * (marginalTaxRate / 100) * 0.1 : 0;
+      const annualCGT = taxableGrowth > 50000 ? (taxableGrowth - 50000) * (cgtInclusionRate / 100) * (marginalTaxRate / 100) * 0.1 : 0;
       taxableBalance -= annualCGT;
       
       taxableProjection.push({
