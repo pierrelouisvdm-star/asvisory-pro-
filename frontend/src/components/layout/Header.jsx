@@ -129,7 +129,7 @@ export const Header = () => {
               A
             </div>
             <span className="font-display text-xl font-bold text-foreground hidden sm:block">
-              AdvisoryPro
+              Financial Advisory Pro
             </span>
           </Link>
 

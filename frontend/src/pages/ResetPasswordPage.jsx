@@ -75,7 +75,7 @@ export const ResetPasswordPage = () => {
               <span className="text-primary-foreground font-bold text-xl">A</span>
             </div>
             <span className="font-display text-2xl font-bold tracking-tight text-foreground">
-              AdvisoryPro
+              Financial Advisory Pro
             </span>
           </div>
         </div>

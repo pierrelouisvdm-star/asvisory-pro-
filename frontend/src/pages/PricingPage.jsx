@@ -89,7 +89,7 @@ export const PricingPage = () => {
       email_address: user?.email || '',
       m_payment_id: `AP-${Date.now()}`,
       amount: PREMIUM_PRICE.toFixed(2),
-      item_name: 'AdvisoryPro Premium Monthly',
+      item_name: 'Financial Advisory Pro Premium Monthly',
       item_description: 'Monthly premium subscription',
       subscription_type: '1', // 1 = subscription
       billing_date: new Date().getDate().toString(),

@@ -92,7 +92,7 @@ export const AuthPage = () => {
 
     try {
       const registerData = await register(registerEmail, registerPassword, registerName, registerCompany);
-      toast.success('Account created! Welcome to AdvisoryPro.');
+      toast.success('Account created! Welcome to Financial Advisory Pro.');
       
       // If coupon was validated, try to redeem it after registration
       if (couponResult?.valid && couponCode) {
@@ -164,7 +164,7 @@ export const AuthPage = () => {
               <span className="text-primary-foreground font-bold text-xl">A</span>
             </div>
             <span className="font-display text-2xl font-bold tracking-tight text-foreground">
-              AdvisoryPro
+              Financial Advisory Pro
             </span>
           </div>
           <p className="text-muted-foreground">

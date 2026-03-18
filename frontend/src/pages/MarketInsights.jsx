@@ -14,7 +14,7 @@ const MarketInsightsContent = () => {
   const latestUpdate = {
     date: 'March 18, 2026',
     title: 'SA Markets Weekly Wrap: JSE All Share hits new high',
-    author: 'AdvisoryPro Research Team',
+    author: 'Financial Advisory Pro Research Team',
     summary: 'The JSE All Share Index gained 2.3% this week, driven by strong performance in the resources sector. Gold stocks led the charge as the precious metal price surged above $2,100/oz.',
   };
 

@@ -243,7 +243,7 @@ export const LandingPage = () => {
             {/* CSS-based Logo - perfectly integrated */}
             <div className="mb-8">
               <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white tracking-tight">
-                Advisory Pro
+                Financial Advisory Pro
               </h1>
               <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase">
                 Empower Your Financial Future
@@ -260,7 +260,7 @@ export const LandingPage = () => {
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Whether you're a financial advisor or managing your own investments, AdvisoryPro gives you <span className="text-white font-medium">20 professional calculators</span>, 
+              Whether you're a financial advisor or managing your own investments, Financial Advisory Pro gives you <span className="text-white font-medium">20 professional calculators</span>, 
               Tax Planning Hub, Income Tracker, and instant PDF reports - all localized for SA regulations and the 2026/2027 tax brackets.
             </p>
 
@@ -331,7 +331,7 @@ export const LandingPage = () => {
                 The Solution
               </p>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
-                AdvisoryPro Does It All
+                Financial Advisory Pro Does It All
               </h2>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-3">
@@ -635,7 +635,7 @@ export const LandingPage = () => {
               Empowering South Africans to Plan Smarter
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
-              Whether you're a professional advisor or managing your own finances, AdvisoryPro provides the tools you need - designed specifically for the South African market.
+              Whether you're a professional advisor or managing your own finances, Financial Advisory Pro provides the tools you need - designed specifically for the South African market.
             </p>
           </div>
 
@@ -646,7 +646,7 @@ export const LandingPage = () => {
                 To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth. We believe everyone deserves access to professional-grade financial calculators.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Every feature in AdvisoryPro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We're not just another generic financial calculator - we're your partner in achieving financial freedom.
+                Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We're not just another generic financial calculator - we're your partner in achieving financial freedom.
               </p>
               
               <div className="grid grid-cols-2 gap-4">
@@ -713,7 +713,7 @@ export const LandingPage = () => {
               Get in Touch
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Have questions about AdvisoryPro? Want to discuss bulk licensing for your team? We'd love to hear from you.
+              Have questions about Financial Advisory Pro? Want to discuss bulk licensing for your team? We'd love to hear from you.
             </p>
           </div>
 
@@ -809,7 +809,7 @@ export const LandingPage = () => {
             Ready to Elevate Your Practice?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Start making smarter financial decisions today with AdvisoryPro's professional tools.
+            Start making smarter financial decisions today with Financial Advisory Pro's professional tools.
           </p>
           <Link to="/auth">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xl px-12 h-16 shadow-lg shadow-primary/25">
@@ -832,7 +832,7 @@ export const LandingPage = () => {
                 <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
                   <span className="text-primary-foreground font-bold text-lg">A</span>
                 </div>
-                <span className="text-foreground font-bold text-xl">AdvisoryPro</span>
+                <span className="text-foreground font-bold text-xl">Financial Advisory Pro</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Professional financial planning tools built for South African regulations.
@@ -884,7 +884,7 @@ export const LandingPage = () => {
           
           <div className="pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © 2026 AdvisoryPro. All rights reserved.
+              © 2026 Financial Advisory Pro. All rights reserved.
             </p>
             <div className="flex gap-4">
               <a 

@@ -52,11 +52,11 @@ export const Footer = () => {
               <span className="text-navy-950 font-bold text-sm">A</span>
             </div>
             <span className="font-display text-lg font-bold tracking-tight text-white">
-              AdvisoryPro
+              Financial Advisory Pro
             </span>
           </div>
           <p className="text-sm text-slate-400 text-center">
-            © {new Date().getFullYear()} AdvisoryPro. Professional Financial Calculator Suite.
+            © {new Date().getFullYear()} Financial Advisory Pro. Professional Financial Calculator Suite.
           </p>
           <div className="flex items-center gap-4 text-sm text-slate-400">
             <span className="hover:text-emerald-400 cursor-pointer transition-colors">Privacy</span>
