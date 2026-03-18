@@ -32,7 +32,9 @@ import {
   Sparkles,
   Scale,
   Crown,
-  Lock
+  Lock,
+  Award,
+  Newspaper
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -176,6 +178,17 @@ const personalFinanceTools = [
     icon: Receipt,
     path: '/tax-planning',
     features: ['2026/27 Tax Year', '6 Tax Tools', 'PDF Reports'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
+  {
+    id: 'market-insights',
+    title: 'Weekly Market Insights',
+    description: 'Expert analysis & tips from certified financial planners',
+    icon: Newspaper,
+    path: '/market-insights',
+    features: ['Analyst Updates', 'CFP® Tips', 'Weekly Reports'],
     isFree: false,
     isNew: true,
     isFeatured: true,

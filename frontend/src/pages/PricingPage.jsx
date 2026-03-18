@@ -10,17 +10,17 @@ import { Input } from '@/components/ui/input';
 import { 
   Check, Crown, Gift, Loader2, CreditCard, Mail, Phone,
   Calculator, Users, FileText, BarChart3, TrendingUp, Target, Calendar, PieChart,
-  Receipt, Wallet, Bot
+  Receipt, Wallet, Bot, Award
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const PREMIUM_FEATURES = [
   { icon: Calculator, label: 'All 20 Financial Calculators' },
   { icon: Receipt, label: 'Tax Planning Hub (2026/27)' },
+  { icon: TrendingUp, label: 'Weekly Market Updates by Analysts' },
+  { icon: Award, label: 'Tips from Certified Financial Planners' },
   { icon: Wallet, label: 'Income & Expense Tracker' },
   { icon: FileText, label: 'PDF Report Generation' },
-  { icon: BarChart3, label: 'Advanced Analysis Tools' },
-  { icon: TrendingUp, label: 'Live Market Tracker' },
   { icon: Bot, label: 'AI Financial Assistant' },
 ];
 

@@ -585,11 +585,11 @@ export const LandingPage = () => {
                 {[
                   'All 20 Financial Calculators',
                   'Tax Planning Hub (2026/27)',
+                  'Weekly Market Updates by Analysts',
+                  'Tips from Certified Financial Planners',
                   'Income & Expense Tracker',
-                  'AI Financial Assistant',
                   'Professional PDF Reports',
-                  'Live Market Data',
-                  'ZAR & USD Currency Support',
+                  'AI Financial Assistant',
                 ].map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground">
                     <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />

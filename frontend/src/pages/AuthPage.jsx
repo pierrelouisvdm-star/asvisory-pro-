@@ -37,9 +37,10 @@ const tiers = [
     features: [
       'All 20 Financial Calculators',
       'Tax Planning Hub (2026/27)',
+      'Weekly Market Updates by Analysts',
+      'Tips from Certified Financial Planners',
       'Income & Expense Tracker',
       'PDF Reports & AI Assistant',
-      'Live Market Tracker',
     ],
     highlight: true,
   },
