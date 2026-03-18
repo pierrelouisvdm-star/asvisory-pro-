@@ -174,7 +174,7 @@ export const TaxCalculator = () => {
             Tax Calculator
           </h1>
           <p className="text-muted-foreground">
-            South African income tax calculation (2024/2025 tax year)
+            South African income tax calculation (2026/2027 tax year)
           </p>
         </div>
         <PrintReport
@@ -447,7 +447,7 @@ export const TaxCalculator = () => {
             <TabsContent value="brackets" className="mt-4">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base font-medium">SA Tax Brackets 2024/2025</CardTitle>
+                  <CardTitle className="text-base font-medium">SA Tax Brackets 2026/2027</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">

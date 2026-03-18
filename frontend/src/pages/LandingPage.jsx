@@ -35,7 +35,7 @@ const calculatorCategories = [
     icon: Receipt,
     color: 'blue',
     calculators: [
-      { name: 'Tax Planning Hub', desc: 'Complete 2025/2026 tax suite with PDF reports' },
+      { name: 'Tax Planning Hub', desc: 'Complete 2026/2027 tax suite with PDF reports' },
       { name: 'Income Tax Calculator', desc: 'SARS tax bracket calculations' },
       { name: 'RA Tax Savings', desc: 'Maximize contributions' },
     ]
@@ -242,7 +242,7 @@ export const LandingPage = () => {
             
             <p className="mb-6 text-indigo-300 text-sm flex items-center justify-center gap-2">
               <Sparkles className="h-3 w-3" />
-              Smart Financial Planning Tools
+              2026/2027 Tax Year Ready
             </p>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
@@ -250,8 +250,8 @@ export const LandingPage = () => {
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Whether you're a financial advisor or managing your own investments, AdvisoryPro gives you <span className="text-white font-medium">19+ professional calculators</span>, 
-              AI insights, and instant PDF reports - all localized for SA regulations and the latest tax brackets.
+              Whether you're a financial advisor or managing your own investments, AdvisoryPro gives you <span className="text-white font-medium">20 professional calculators</span>, 
+              Tax Planning Hub, Income Tracker, and instant PDF reports - all localized for SA regulations and the 2026/2027 tax brackets.
             </p>
 
             {/* Stats Row */}
@@ -573,13 +573,13 @@ export const LandingPage = () => {
               
               <ul className="space-y-3 text-left mb-8">
                 {[
-                  'All 19+ Financial Calculators',
-                  'Net Worth Tracker with Goals',
+                  'All 20 Financial Calculators',
+                  'Tax Planning Hub (2026/27)',
+                  'Income & Expense Tracker',
                   'AI Financial Assistant',
-                  'Live Market Data',
                   'Professional PDF Reports',
+                  'Live Market Data',
                   'ZAR & USD Currency Support',
-                  'SA Tax Brackets & Regulations',
                 ].map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground">
                     <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />

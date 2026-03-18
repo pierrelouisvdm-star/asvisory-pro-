@@ -9,18 +9,19 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { 
   Check, Crown, Gift, Loader2, CreditCard, Mail, Phone,
-  Calculator, Users, FileText, BarChart3, TrendingUp, Target, Calendar, PieChart
+  Calculator, Users, FileText, BarChart3, TrendingUp, Target, Calendar, PieChart,
+  Receipt, Wallet, Bot
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 const PREMIUM_FEATURES = [
-  { icon: Calculator, label: 'All 19 Financial Calculators' },
+  { icon: Calculator, label: 'All 20 Financial Calculators' },
+  { icon: Receipt, label: 'Tax Planning Hub (2026/27)' },
+  { icon: Wallet, label: 'Income & Expense Tracker' },
   { icon: FileText, label: 'PDF Report Generation' },
   { icon: BarChart3, label: 'Advanced Analysis Tools' },
   { icon: TrendingUp, label: 'Live Market Tracker' },
-  { icon: Target, label: 'Goal Planner' },
-  { icon: Calendar, label: 'Meeting Scheduler' },
-  { icon: PieChart, label: 'Portfolio Tracker' },
+  { icon: Bot, label: 'AI Financial Assistant' },
 ];
 
 // PayFast configuration
