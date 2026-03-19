@@ -13,7 +13,7 @@ import {
   PiggyBank, Car, Home, ShoppingCart, Utensils, Zap, Phone,
   GraduationCap, Heart, Plane, Gift, BarChart3, Calendar,
   Download, Filter, ArrowUpRight, ArrowDownRight, CheckCircle2,
-  AlertCircle, Tag, RefreshCw, FileText
+  AlertCircle, Tag, RefreshCw, FileText, Upload, Image, Eye, X, Paperclip
 } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
 import { PrintReport } from '../components/calculators/PrintReport';
@@ -132,7 +132,11 @@ const IncomeExpenseTrackerContent = () => {
     date: new Date().toISOString().slice(0, 10),
     isRecurring: false,
     taxDeductible: false,
+    receipt: null, // { name, type, data (base64) }
   });
+
+  // Receipt preview modal
+  const [viewingReceipt, setViewingReceipt] = useState(null);
 
   // Save to localStorage
   useEffect(() => {
@@ -187,10 +191,57 @@ const IncomeExpenseTrackerContent = () => {
       date: new Date().toISOString().slice(0, 10),
       isRecurring: false,
       taxDeductible: false,
+      receipt: null,
     });
     
-    toast.success(`${newTransaction.type === 'income' ? 'Income' : 'Expense'} added successfully`);
+    toast.success(`${newTransaction.type === 'income' ? 'Income' : 'Expense'} added successfully${newTransaction.receipt ? ' with receipt' : ''}`);
   };
+
+  // Handle receipt upload
+  const handleReceiptUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Please upload an image (JPG, PNG, WebP) or PDF file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('File size must be less than 5MB');
+      return;
+    }
+
+    // Convert to base64
+    const reader = new FileReader();
+    reader.onload = () => {
+      setNewTransaction({
+        ...newTransaction,
+        receipt: {
+          name: file.name,
+          type: file.type,
+          data: reader.result,
+          size: file.size,
+        }
+      });
+      toast.success('Receipt attached');
+    };
+    reader.onerror = () => {
+      toast.error('Failed to read file');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // Remove receipt from new transaction
+  const removeReceipt = () => {
+    setNewTransaction({ ...newTransaction, receipt: null });
+  };
+
+  // Get transactions with receipts
+  const transactionsWithReceipts = transactions.filter(t => t.receipt);
 
   // Delete transaction
   const deleteTransaction = (id) => {
@@ -338,6 +389,13 @@ const IncomeExpenseTrackerContent = () => {
           <TabsTrigger value="transactions" className="data-[state=active]:bg-emerald-500/20">
             <FileText className="h-4 w-4 mr-2" />
             Transactions
+          </TabsTrigger>
+          <TabsTrigger value="receipts" className="data-[state=active]:bg-emerald-500/20">
+            <Paperclip className="h-4 w-4 mr-2" />
+            Receipts
+            {transactionsWithReceipts.length > 0 && (
+              <Badge className="ml-2 bg-emerald-500/20 text-emerald-400 text-xs">{transactionsWithReceipts.length}</Badge>
+            )}
           </TabsTrigger>
           <TabsTrigger value="budget" className="data-[state=active]:bg-emerald-500/20">
             <PiggyBank className="h-4 w-4 mr-2" />
@@ -580,6 +638,64 @@ const IncomeExpenseTrackerContent = () => {
                 )}
               </div>
 
+              {/* Receipt Upload */}
+              <div className="border border-dashed border-navy-600 rounded-lg p-4 bg-navy-800/30">
+                <Label className="text-sm text-slate-300 mb-3 block">
+                  <Paperclip className="h-4 w-4 inline mr-1" />
+                  Attach Receipt/Invoice (optional)
+                </Label>
+                
+                {newTransaction.receipt ? (
+                  <div className="flex items-center justify-between p-3 bg-navy-800 rounded-lg border border-navy-600">
+                    <div className="flex items-center gap-3">
+                      {newTransaction.receipt.type.startsWith('image/') ? (
+                        <Image className="h-8 w-8 text-blue-400" />
+                      ) : (
+                        <FileText className="h-8 w-8 text-red-400" />
+                      )}
+                      <div>
+                        <p className="text-sm font-medium text-white truncate max-w-[200px]">
+                          {newTransaction.receipt.name}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {(newTransaction.receipt.size / 1024).toFixed(1)} KB
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setViewingReceipt(newTransaction.receipt)}
+                        className="text-blue-400 hover:text-blue-300"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={removeReceipt}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className="flex flex-col items-center justify-center p-6 cursor-pointer hover:bg-navy-800/50 rounded-lg transition-colors">
+                    <Upload className="h-8 w-8 text-slate-500 mb-2" />
+                    <span className="text-sm text-slate-400">Click to upload receipt or invoice</span>
+                    <span className="text-xs text-slate-600 mt-1">JPG, PNG, WebP or PDF (max 5MB)</span>
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/png,image/webp,application/pdf"
+                      onChange={handleReceiptUpload}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+              </div>
+
               <Button onClick={addTransaction} className="w-full bg-emerald-600 hover:bg-emerald-700">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Transaction
@@ -631,6 +747,16 @@ const IncomeExpenseTrackerContent = () => {
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
+                          {transaction.receipt && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => setViewingReceipt(transaction.receipt)}
+                              className="text-blue-400 hover:text-blue-300"
+                            >
+                              <Paperclip className="h-4 w-4" />
+                            </Button>
+                          )}
                           <p className={`font-semibold ${transaction.type === 'income' ? 'text-emerald-400' : 'text-red-400'}`}>
                             {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
                           </p>
@@ -642,6 +768,79 @@ const IncomeExpenseTrackerContent = () => {
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Receipts Tab */}
+        <TabsContent value="receipts" className="space-y-6">
+          <Card className="bg-navy-900/50 border-navy-700">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-2">
+                <Paperclip className="h-5 w-5 text-emerald-400" />
+                Uploaded Receipts & Invoices
+              </CardTitle>
+              <CardDescription>All your uploaded documents in one place</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {transactionsWithReceipts.length === 0 ? (
+                <div className="text-center py-12">
+                  <Upload className="h-12 w-12 text-slate-600 mx-auto mb-4" />
+                  <p className="text-slate-500 mb-2">No receipts uploaded yet</p>
+                  <p className="text-xs text-slate-600">Add a transaction and attach a receipt to see it here</p>
+                </div>
+              ) : (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {transactionsWithReceipts.map(transaction => {
+                    const category = getCategoryInfo(transaction.category, transaction.type);
+                    const Icon = category.icon;
+                    const isImage = transaction.receipt.type.startsWith('image/');
+                    
+                    return (
+                      <div
+                        key={transaction.id}
+                        className="border border-navy-700 rounded-lg overflow-hidden hover:border-emerald-500/50 transition-colors"
+                      >
+                        {/* Preview */}
+                        <div 
+                          className="h-32 bg-navy-800 flex items-center justify-center cursor-pointer"
+                          onClick={() => setViewingReceipt(transaction.receipt)}
+                        >
+                          {isImage ? (
+                            <img 
+                              src={transaction.receipt.data} 
+                              alt="Receipt" 
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <div className="text-center">
+                              <FileText className="h-12 w-12 text-red-400 mx-auto mb-2" />
+                              <span className="text-xs text-slate-500">PDF Document</span>
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* Info */}
+                        <div className="p-3 bg-navy-900/50">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Icon className={`h-4 w-4 text-${category.color}-400`} />
+                            <span className="text-sm font-medium text-white truncate">{category.name}</span>
+                          </div>
+                          <p className={`text-sm font-bold ${transaction.type === 'income' ? 'text-emerald-400' : 'text-red-400'}`}>
+                            {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
+                          </p>
+                          <p className="text-xs text-slate-500 mt-1">
+                            {new Date(transaction.date).toLocaleDateString('en-ZA')}
+                          </p>
+                          {transaction.taxDeductible && (
+                            <Badge className="mt-2 text-xs bg-purple-500/20 text-purple-300">Tax Deductible</Badge>
+                          )}
                         </div>
                       </div>
                     );
@@ -701,6 +900,7 @@ const IncomeExpenseTrackerContent = () => {
         inputs={[
           { label: 'Period', value: new Date(selectedMonth + '-01').toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' }) },
           { label: 'Total Transactions', value: filteredTransactions.length.toString() },
+          { label: 'Receipts Attached', value: transactionsWithReceipts.length.toString() },
         ]}
         results={[
           { label: 'Total Income', value: formatCurrency(totals.income) },
@@ -710,6 +910,53 @@ const IncomeExpenseTrackerContent = () => {
           { label: 'Tax Deductible Expenses', value: formatCurrency(totals.taxDeductible) },
         ]}
       />
+
+      {/* Receipt Viewing Modal */}
+      {viewingReceipt && (
+        <div 
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          onClick={() => setViewingReceipt(null)}
+        >
+          <div 
+            className="relative max-w-4xl max-h-[90vh] bg-navy-900 rounded-lg overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between p-4 border-b border-navy-700">
+              <div className="flex items-center gap-3">
+                {viewingReceipt.type.startsWith('image/') ? (
+                  <Image className="h-5 w-5 text-blue-400" />
+                ) : (
+                  <FileText className="h-5 w-5 text-red-400" />
+                )}
+                <span className="text-white font-medium">{viewingReceipt.name}</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setViewingReceipt(null)}
+                className="text-slate-400 hover:text-white"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="p-4 overflow-auto max-h-[calc(90vh-80px)]">
+              {viewingReceipt.type.startsWith('image/') ? (
+                <img 
+                  src={viewingReceipt.data} 
+                  alt="Receipt" 
+                  className="max-w-full h-auto mx-auto"
+                />
+              ) : (
+                <iframe
+                  src={viewingReceipt.data}
+                  title="PDF Receipt"
+                  className="w-full h-[70vh] bg-white"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
