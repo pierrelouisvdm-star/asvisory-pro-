@@ -19,6 +19,70 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const TFSA_ANNUAL_LIMIT = 46000;    // Increased from R36,000 to R46,000
 const TFSA_LIFETIME_LIMIT = 500000; // Unchanged
 
+// Input component defined OUTSIDE the main component to prevent re-creation on every render
+const TFSAInputField = ({ label, value, onChange, prefix, suffix, step = 1, min = 0, max, tooltip }) => {
+  const [localValue, setLocalValue] = React.useState(String(value || ''));
+  
+  React.useEffect(() => {
+    setLocalValue(String(value || ''));
+  }, [value]);
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    setLocalValue(inputValue);
+    if (inputValue === '' || inputValue === '-') {
+      onChange(0);
+    } else {
+      const parsed = parseFloat(inputValue);
+      if (!isNaN(parsed)) onChange(parsed);
+    }
+  };
+
+  const handleBlur = () => {
+    const parsed = parseFloat(localValue);
+    if (isNaN(parsed) || localValue === '') {
+      setLocalValue('0');
+      onChange(0);
+    } else {
+      setLocalValue(String(parsed));
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center gap-2">
+        <Label className="text-sm text-slate-300">{label}</Label>
+        {tooltip && (
+          <div className="group relative">
+            <Info className="h-3.5 w-3.5 text-slate-500 cursor-help" />
+            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-800 text-xs text-slate-300 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              {tooltip}
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="relative">
+        {prefix && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
+        )}
+        <Input
+          type="number"
+          value={localValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
+          step={step}
+          min={min}
+          max={max}
+        />
+        {suffix && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const TFSACalculator = () => {
   const { formatCurrency, symbol } = useCurrency();
   
@@ -142,69 +206,6 @@ const TFSACalculator = () => {
     contributions: tfsa.contributions,
   }));
 
-  const InputField = ({ label, value, onChange, prefix, suffix, step = 1, min = 0, max, tooltip }) => {
-    const [localValue, setLocalValue] = React.useState(String(value || ''));
-    
-    React.useEffect(() => {
-      setLocalValue(String(value || ''));
-    }, [value]);
-
-    const handleChange = (e) => {
-      const inputValue = e.target.value;
-      setLocalValue(inputValue);
-      if (inputValue === '' || inputValue === '-') {
-        onChange(0);
-      } else {
-        const parsed = parseFloat(inputValue);
-        if (!isNaN(parsed)) onChange(parsed);
-      }
-    };
-
-    const handleBlur = () => {
-      const parsed = parseFloat(localValue);
-      if (isNaN(parsed) || localValue === '') {
-        setLocalValue('0');
-        onChange(0);
-      } else {
-        setLocalValue(String(parsed));
-      }
-    };
-
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <Label className="text-sm text-slate-300">{label}</Label>
-          {tooltip && (
-            <div className="group relative">
-              <Info className="h-3.5 w-3.5 text-slate-500 cursor-help" />
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-800 text-xs text-slate-300 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                {tooltip}
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="relative">
-          {prefix && (
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{prefix}</span>
-          )}
-          <Input
-            type="number"
-            value={localValue}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className={`bg-navy-800 border-navy-600 text-white ${prefix ? 'pl-8' : ''} ${suffix ? 'pr-12' : ''}`}
-            step={step}
-            min={min}
-            max={max}
-          />
-          {suffix && (
-            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{suffix}</span>
-          )}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="space-y-6" data-testid="tfsa-calculator">
       <Disclaimer />
@@ -303,7 +304,7 @@ const TFSACalculator = () => {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <InputField
+            <TFSAInputField
               label="Current TFSA Balance"
               value={currentBalance}
               onChange={setCurrentBalance}
@@ -311,7 +312,7 @@ const TFSACalculator = () => {
               step={1000}
               tooltip="Total value of your TFSA today"
             />
-            <InputField
+            <TFSAInputField
               label="Lifetime Contributions Made"
               value={lifetimeContributions}
               onChange={setLifetimeContributions}
@@ -320,7 +321,7 @@ const TFSACalculator = () => {
               max={TFSA_LIFETIME_LIMIT}
               tooltip="Total you've contributed since opening (max R500k)"
             />
-            <InputField
+            <TFSAInputField
               label="This Year's Contributions"
               value={yearToDateContribution}
               onChange={setYearToDateContribution}
@@ -329,7 +330,7 @@ const TFSACalculator = () => {
               max={TFSA_ANNUAL_LIMIT}
               tooltip="Amount contributed in current tax year"
             />
-            <InputField
+            <TFSAInputField
               label="Monthly Contribution"
               value={monthlyContribution}
               onChange={setMonthlyContribution}
