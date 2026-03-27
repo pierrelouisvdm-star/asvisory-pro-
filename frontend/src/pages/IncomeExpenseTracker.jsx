@@ -142,6 +142,10 @@ const IncomeExpenseTrackerContent = () => {
   // Receipt preview modal
   const [viewingReceipt, setViewingReceipt] = useState(null);
   const [receiptBlobUrls, setReceiptBlobUrls] = useState({});
+  
+  // OCR state
+  const [ocrData, setOcrData] = useState(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   // Load transactions from backend
   const loadTransactions = useCallback(async () => {
@@ -273,10 +277,18 @@ const IncomeExpenseTrackerContent = () => {
           const receiptData = await receiptResponse.json();
           createdTransaction.receipt_id = receiptData.receipt_id;
           createdTransaction.receipt_filename = receiptData.filename;
+          
+          // Show OCR data if available (for future reference - already applied above)
+          if (receiptData.ocr_data) {
+            toast.success('Receipt analyzed! Data extracted automatically.');
+          }
         } else {
           toast.error('Transaction saved but receipt upload failed');
         }
       }
+      
+      // Clear OCR data
+      setOcrData(null);
       
       // Transform and add to state
       const transformed = {
@@ -420,6 +432,53 @@ const IncomeExpenseTrackerContent = () => {
       console.error('Error loading receipt:', error);
       toast.error('Failed to load receipt');
     }
+  };
+
+  // Analyze receipt for a transaction
+  const analyzeReceipt = async (transactionId) => {
+    if (!token) return;
+    
+    setIsAnalyzing(true);
+    try {
+      const response = await fetch(`${API_URL}/api/transactions/${transactionId}/receipt/analyze`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!response.ok) throw new Error('Failed to analyze receipt');
+      
+      const data = await response.json();
+      if (data.ocr_data) {
+        toast.success('Receipt analyzed! Review the extracted data.');
+        return data.ocr_data;
+      } else {
+        toast.info('Could not extract data from this receipt');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error analyzing receipt:', error);
+      toast.error('Failed to analyze receipt');
+      return null;
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  // Apply OCR data to form
+  const applyOcrData = (data) => {
+    if (!data) return;
+    
+    setNewTransaction(prev => ({
+      ...prev,
+      amount: data.amount || prev.amount,
+      category: data.category || prev.category,
+      description: data.description || data.merchant || prev.description,
+      date: data.date || prev.date
+    }));
+    setOcrData(null);
+    toast.success('OCR data applied to form');
   };
 
   // Get category info
@@ -859,6 +918,7 @@ const IncomeExpenseTrackerContent = () => {
                     <Upload className="h-8 w-8 text-slate-500 mb-2" />
                     <span className="text-sm text-slate-400">Click to upload receipt or invoice</span>
                     <span className="text-xs text-slate-600 mt-1">JPG, PNG, WebP or PDF (max 5MB)</span>
+                    <span className="text-xs text-emerald-500 mt-1">AI will auto-extract amount, date & merchant</span>
                     <input
                       type="file"
                       accept="image/jpeg,image/png,image/webp,application/pdf"
@@ -868,6 +928,59 @@ const IncomeExpenseTrackerContent = () => {
                   </label>
                 )}
               </div>
+
+              {/* OCR Data Preview */}
+              {ocrData && (
+                <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                      <span className="text-sm font-medium text-emerald-400">Receipt Analyzed</span>
+                    </div>
+                    <Button
+                      size="sm"
+                      onClick={() => applyOcrData(ocrData)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-xs"
+                    >
+                      Apply Data
+                    </Button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    {ocrData.amount && (
+                      <div>
+                        <span className="text-slate-500">Amount:</span>
+                        <span className="text-white ml-2">R{ocrData.amount.toFixed(2)}</span>
+                      </div>
+                    )}
+                    {ocrData.date && (
+                      <div>
+                        <span className="text-slate-500">Date:</span>
+                        <span className="text-white ml-2">{ocrData.date}</span>
+                      </div>
+                    )}
+                    {ocrData.merchant && (
+                      <div className="col-span-2">
+                        <span className="text-slate-500">Merchant:</span>
+                        <span className="text-white ml-2">{ocrData.merchant}</span>
+                      </div>
+                    )}
+                    {ocrData.category && (
+                      <div>
+                        <span className="text-slate-500">Category:</span>
+                        <span className="text-white ml-2 capitalize">{ocrData.category}</span>
+                      </div>
+                    )}
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setOcrData(null)}
+                    className="text-slate-500 hover:text-slate-300 mt-2 text-xs"
+                  >
+                    Dismiss
+                  </Button>
+                </div>
+              )}
 
               <Button 
                 onClick={addTransaction} 
@@ -1038,6 +1151,31 @@ const IncomeExpenseTrackerContent = () => {
                           </p>
                           {transaction.taxDeductible && (
                             <Badge className="mt-2 text-xs bg-purple-500/20 text-purple-300">Tax Deductible</Badge>
+                          )}
+                          {/* Analyze button for images */}
+                          {isImage && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={async (e) => {
+                                e.stopPropagation();
+                                const data = await analyzeReceipt(transaction.id);
+                                if (data) {
+                                  setOcrData(data);
+                                  setActiveTab('add');
+                                  toast.info('Go to Add tab to review extracted data');
+                                }
+                              }}
+                              disabled={isAnalyzing}
+                              className="mt-2 w-full text-xs border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10"
+                            >
+                              {isAnalyzing ? (
+                                <Loader2 className="h-3 w-3 mr-1 animate-spin" />
+                              ) : (
+                                <Eye className="h-3 w-3 mr-1" />
+                              )}
+                              Re-analyze
+                            </Button>
                           )}
                         </div>
                       </div>

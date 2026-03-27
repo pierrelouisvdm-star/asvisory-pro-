@@ -5,10 +5,14 @@ from utils.auth import get_current_user
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime, timezone
+from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
 import os
 import uuid
 import logging
 import requests
+import base64
+import json
+import re
 
 router = APIRouter(prefix="/transactions", tags=["Transactions"])
 
@@ -85,6 +89,68 @@ def get_object(path: str) -> tuple:
     )
     resp.raise_for_status()
     return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+
+
+async def analyze_receipt_with_ocr(image_content: bytes, content_type: str) -> dict:
+    """
+    Use AI vision to extract data from receipt image.
+    Returns dict with: amount, date, merchant, category, description
+    """
+    # Only analyze images, not PDFs
+    if not content_type.startswith("image/"):
+        return None
+    
+    try:
+        # Convert to base64
+        image_base64 = base64.b64encode(image_content).decode('utf-8')
+        
+        # Initialize chat with vision model
+        chat = LlmChat(
+            api_key=EMERGENT_KEY,
+            session_id=f"ocr-{uuid.uuid4()}",
+            system_message="""You are a receipt/invoice OCR assistant. Analyze the receipt image and extract:
+1. Total amount (the final amount paid, in ZAR)
+2. Date (in YYYY-MM-DD format)
+3. Merchant/Store name
+4. Suggested category (one of: housing, transport, food, utilities, communication, education, healthcare, entertainment, travel, shopping, business, other)
+5. Brief description
+
+Respond ONLY with valid JSON in this exact format:
+{
+  "amount": 123.45,
+  "date": "2026-03-27",
+  "merchant": "Store Name",
+  "category": "food",
+  "description": "Brief description of purchase"
+}
+
+If you cannot determine a value, use null. Always try to extract the total/final amount, not subtotals."""
+        ).with_model("openai", "gpt-4o")
+        
+        # Create message with image
+        image = ImageContent(image_base64=image_base64)
+        user_message = UserMessage(
+            text="Please analyze this receipt/invoice and extract the relevant information.",
+            file_contents=[image]
+        )
+        
+        # Get response
+        response = await chat.send_message(user_message)
+        logger.info(f"OCR response: {response}")
+        
+        # Parse JSON from response
+        # Try to extract JSON from the response
+        json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
+        if json_match:
+            extracted_data = json.loads(json_match.group())
+            logger.info(f"Extracted receipt data: {extracted_data}")
+            return extracted_data
+        
+        return None
+        
+    except Exception as e:
+        logger.error(f"OCR analysis failed: {e}")
+        return None
 
 
 # Pydantic models
@@ -274,6 +340,11 @@ async def upload_receipt(
         result = put_object(storage_path, content, content_type)
         logger.info(f"Receipt uploaded: {result['path']}")
         
+        # Run OCR analysis on images
+        ocr_data = None
+        if content_type.startswith("image/"):
+            ocr_data = await analyze_receipt_with_ocr(content, content_type)
+        
         # Store receipt reference in database
         now = datetime.now(timezone.utc).isoformat()
         receipt_doc = {
@@ -284,6 +355,7 @@ async def upload_receipt(
             "original_filename": file.filename,
             "content_type": content_type,
             "size": result.get("size", len(content)),
+            "ocr_data": ocr_data,
             "is_deleted": False,
             "created_at": now
         }
@@ -300,11 +372,18 @@ async def upload_receipt(
             }}
         )
         
-        return {
+        response_data = {
             "message": "Receipt uploaded successfully",
             "receipt_id": receipt_id,
             "filename": file.filename
         }
+        
+        # Include OCR data if available
+        if ocr_data:
+            response_data["ocr_data"] = ocr_data
+            response_data["message"] = "Receipt uploaded and analyzed successfully"
+        
+        return response_data
         
     except Exception as e:
         logger.error(f"Failed to upload receipt: {e}")
@@ -388,3 +467,76 @@ async def get_all_receipts(
     ).sort("created_at", -1).to_list(1000)
     
     return {"receipts": receipts}
+
+
+@router.post("/{transaction_id}/receipt/analyze")
+async def analyze_receipt(
+    transaction_id: str,
+    current_user: dict = Depends(get_current_user)
+):
+    """Re-analyze an existing receipt with OCR."""
+    # Find the receipt
+    receipt = await db.receipts.find_one({
+        "transaction_id": transaction_id,
+        "user_id": current_user["id"],
+        "is_deleted": {"$ne": True}
+    })
+    
+    if not receipt:
+        raise HTTPException(status_code=404, detail="Receipt not found")
+    
+    # Only analyze images
+    if not receipt.get("content_type", "").startswith("image/"):
+        raise HTTPException(status_code=400, detail="OCR only available for image files")
+    
+    try:
+        # Get the image from storage
+        content, content_type = get_object(receipt["storage_path"])
+        
+        # Run OCR analysis
+        ocr_data = await analyze_receipt_with_ocr(content, content_type)
+        
+        if ocr_data:
+            # Update receipt with OCR data
+            await db.receipts.update_one(
+                {"id": receipt["id"]},
+                {"$set": {"ocr_data": ocr_data, "updated_at": datetime.now(timezone.utc).isoformat()}}
+            )
+            
+            return {
+                "message": "Receipt analyzed successfully",
+                "ocr_data": ocr_data
+            }
+        else:
+            return {
+                "message": "Could not extract data from receipt",
+                "ocr_data": None
+            }
+            
+    except Exception as e:
+        logger.error(f"Failed to analyze receipt: {e}")
+        raise HTTPException(status_code=500, detail="Failed to analyze receipt")
+
+
+@router.get("/{transaction_id}/receipt/ocr")
+async def get_receipt_ocr_data(
+    transaction_id: str,
+    current_user: dict = Depends(get_current_user)
+):
+    """Get OCR data for a receipt."""
+    receipt = await db.receipts.find_one({
+        "transaction_id": transaction_id,
+        "user_id": current_user["id"],
+        "is_deleted": {"$ne": True}
+    }, {"_id": 0})
+    
+    if not receipt:
+        raise HTTPException(status_code=404, detail="Receipt not found")
+    
+    return {
+        "transaction_id": transaction_id,
+        "receipt_id": receipt.get("id"),
+        "ocr_data": receipt.get("ocr_data"),
+        "has_ocr": receipt.get("ocr_data") is not None
+    }
+
