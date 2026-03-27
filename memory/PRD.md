@@ -1,6 +1,6 @@
 # Financial Advisory Pro - Product Requirements Document
 
-## Latest Update: March 18, 2026
+## Latest Update: March 27, 2026
 
 ---
 
@@ -11,9 +11,23 @@
 
 ---
 
-## Recent Session Updates (March 18, 2026)
+## Recent Session Updates (March 27, 2026)
 
 ### Features Implemented
+1. ✅ **Tax Hub 2026/2027 Complete Update** - All tax values verified and updated
+   - CGT annual exclusion: R50,000 (was R40,000)
+   - CGT primary residence exclusion: R3m (was R2m)
+   - Medical credits: R376/month main member (was R364)
+   - Retirement deduction cap: R430,000 (was R350,000)
+2. ✅ **Backend Receipt Storage** - Receipts now persist to Emergent Object Storage
+   - New API: POST /api/transactions - Create transaction
+   - New API: GET /api/transactions - List user transactions
+   - New API: DELETE /api/transactions/{id} - Soft delete
+   - New API: POST /api/transactions/{id}/receipt - Upload receipt
+   - New API: GET /api/transactions/{id}/receipt - Download receipt
+3. ✅ **Income & Expense Tracker Backend Integration** - Frontend now uses backend API
+
+### Previous Session (March 18, 2026)
 1. ✅ **Client Management Feature Removed** - App now targets individual investors
 2. ✅ **Tax Hub Highlighted** - Featured section on landing page with visual mockup
 3. ✅ **Income & Expense Tracker** (Premium) - With receipt/invoice upload capability
@@ -25,13 +39,16 @@
 9. ✅ **Tagline Updated** - "The Complete Financial Planning Toolkit for South Africans"
 10. ✅ **Calculator Count Fixed** - Consistently shows 20+ calculators
 
-### Tax Updates (2026/2027)
+### Tax Updates (2026/2027) ✅ VERIFIED
 - Income tax brackets updated
 - Tax rebates: Primary R17,820 | Secondary R9,765 | Tertiary R3,249
-- TFSA annual limit: R46,000
-- RA deduction cap: R430,000
-- CGT annual exclusion: R50,000
-- CGT primary residence: R3,000,000
+- Tax thresholds: Under 65 R99,000 | 65-74 R153,250 | 75+ R171,300
+- TFSA annual limit: R46,000 (was R36,000)
+- RA deduction cap: R430,000 (was R350,000)
+- CGT annual exclusion: R50,000 (was R40,000)
+- CGT primary residence: R3,000,000 (was R2,000,000)
+- CGT death exclusion: R440,000 (was R300,000)
+- Medical credits: R376/month main & first dependent, R254/month additional
 
 ---
 
@@ -108,22 +125,22 @@
 ## Future Roadmap
 
 ### P1 - High Priority
-- [ ] Backend storage for receipts (currently localStorage)
 - [ ] IRP5 File Storage implementation
 - [ ] Portfolio Builder & Xray Tool
 - [ ] Connect Market Insights to real data API
+- [ ] Password reset email integration
 
 ### P2 - Medium Priority
-- [ ] Refactor TaxPlanningHub.jsx (performance)
-- [ ] Light theme audit
+- [ ] Refactor TaxPlanningHub.jsx (1700+ lines - performance debt)
+- [ ] Light theme audit and consistency
 - [ ] OCR for receipt auto-reading
 - [ ] Email notifications for weekly updates
 
 ### Future Projects
-- US/Canada/UK/Australia localized versions
+- US/Canada/UK/Australia localized versions (spec at /app/memory/US_VERSION_SPEC.md)
 - White-labeling for financial firms
 - Mobile app (React Native)
 
 ---
 
-*Last Updated: March 18, 2026*
+*Last Updated: March 27, 2026*
