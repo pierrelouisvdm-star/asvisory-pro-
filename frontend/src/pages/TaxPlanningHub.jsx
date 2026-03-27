@@ -261,7 +261,7 @@ const TaxPlanningHub = () => {
     // Assuming SA dividends for simplicity
     const taxableDividends = 0;
 
-    // Retirement deduction (27.5% of taxable income, max R350,000)
+    // Retirement deduction (27.5% of taxable income, max R430,000 for 2026/27)
     const totalRetirement = retirementContributions + raContributions;
     const maxRetirementDeduction = Math.min(
       totalIncome * RETIREMENT.maxDeductionPercent,
@@ -632,7 +632,7 @@ const TaxPlanningHub = () => {
                     Deductions & Contributions
                     <SectionInfo
                       title="Tax Deductions"
-                      description="These contributions reduce your taxable income, lowering your tax bill. Retirement contributions are limited to 27.5% of taxable income or R350,000."
+                      description="These contributions reduce your taxable income, lowering your tax bill. Retirement contributions are limited to 27.5% of taxable income or R430,000 (2026/27)."
                       tips={[
                         "Pension + RA contributions combined are capped at 27.5%",
                         "Home office must be regularly and exclusively used for work",
@@ -697,8 +697,8 @@ const TaxPlanningHub = () => {
                       title="Medical Tax Credits"
                       description="Medical tax credits directly reduce your tax payable. You get a fixed monthly credit per member, plus additional credits for out-of-pocket medical expenses."
                       tips={[
-                        "R364/month for main member and first dependent",
-                        "R246/month for additional dependents",
+                        "R376/month for main member and first dependent (2026/27)",
+                        "R254/month for additional dependents (2026/27)",
                         "Keep medical receipts for additional credits"
                       ]}
                     />
@@ -1030,8 +1030,8 @@ const TaxPlanningHub = () => {
                       <h4 className="font-medium text-blue-400 mb-1">CGT Key Points</h4>
                       <ul className="text-sm text-slate-300 space-y-1">
                         <li>• 40% inclusion rate for individuals</li>
-                        <li>• R40,000 annual exclusion</li>
-                        <li>• R2m primary residence exclusion</li>
+                        <li>• R50,000 annual exclusion (2026/27)</li>
+                        <li>• R3m primary residence exclusion (2026/27)</li>
                         <li>• CGT is added to taxable income</li>
                       </ul>
                     </div>
@@ -1684,7 +1684,7 @@ const TaxPlanningHub = () => {
                       </p>
                       <ul className="text-sm text-slate-300 space-y-1">
                         <li>• <strong>27.5%</strong> of your taxable income, OR</li>
-                        <li>• <strong>R350,000</strong> per year (whichever is lower)</li>
+                        <li>• <strong>R430,000</strong> per year (whichever is lower) (2026/27)</li>
                       </ul>
                       <p className="text-xs text-slate-400 mt-2">
                         At a 36% marginal rate, a R100,000 RA contribution saves R36,000 in tax!

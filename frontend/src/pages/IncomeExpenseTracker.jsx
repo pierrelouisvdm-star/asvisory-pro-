@@ -13,13 +13,16 @@ import {
   PiggyBank, Car, Home, ShoppingCart, Utensils, Zap, Phone,
   GraduationCap, Heart, Plane, Gift, BarChart3, Calendar,
   Download, Filter, ArrowUpRight, ArrowDownRight, CheckCircle2,
-  AlertCircle, Tag, RefreshCw, FileText, Upload, Image, Eye, X, Paperclip
+  AlertCircle, Tag, RefreshCw, FileText, Upload, Image, Eye, X, Paperclip, Loader2
 } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
 import { PrintReport } from '../components/calculators/PrintReport';
 import { Disclaimer } from '../components/calculators/Disclaimer';
 import { CalculatorGate } from '../components/FeatureGate';
+import { useAuth } from '../context/AuthContext';
 import { toast } from 'sonner';
+
+const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 // Expense categories with icons and colors
 const EXPENSE_CATEGORIES = [
@@ -105,16 +108,17 @@ const TrackerInput = ({ label, id, value, onChange, prefix, type = 'number', pla
 
 const IncomeExpenseTrackerContent = () => {
   const { formatCurrency, currencySymbol } = useCurrency();
+  const { token } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [pendingReceipt, setPendingReceipt] = useState(null); // File to upload after transaction creation
   
   // Transactions state
-  const [transactions, setTransactions] = useState(() => {
-    const saved = localStorage.getItem('incomeExpenseTransactions');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [transactions, setTransactions] = useState([]);
   
-  // Budget state
+  // Budget state (still using localStorage as budgets are user preferences)
   const [budgets, setBudgets] = useState(() => {
     const saved = localStorage.getItem('incomeExpenseBudgets');
     return saved ? JSON.parse(saved) : EXPENSE_CATEGORIES.reduce((acc, cat) => {
@@ -132,20 +136,66 @@ const IncomeExpenseTrackerContent = () => {
     date: new Date().toISOString().slice(0, 10),
     isRecurring: false,
     taxDeductible: false,
-    receipt: null, // { name, type, data (base64) }
+    receipt: null, // { name, type, file (File object) }
   });
 
   // Receipt preview modal
   const [viewingReceipt, setViewingReceipt] = useState(null);
+  const [receiptBlobUrls, setReceiptBlobUrls] = useState({});
 
-  // Save to localStorage
+  // Load transactions from backend
+  const loadTransactions = useCallback(async () => {
+    if (!token) return;
+    
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}/api/transactions?month=${selectedMonth}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (!response.ok) throw new Error('Failed to load transactions');
+      
+      const data = await response.json();
+      // Transform backend format to frontend format
+      const transformed = data.transactions.map(t => ({
+        ...t,
+        taxDeductible: t.tax_deductible,
+        isRecurring: t.is_recurring,
+        createdAt: t.created_at,
+        receipt: t.receipt_id ? { id: t.receipt_id, name: t.receipt_filename } : null
+      }));
+      setTransactions(transformed);
+    } catch (error) {
+      console.error('Error loading transactions:', error);
+      // Fallback to localStorage for offline support
+      const saved = localStorage.getItem('incomeExpenseTransactions');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setTransactions(parsed.filter(t => t.date.startsWith(selectedMonth)));
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }, [token, selectedMonth]);
+
+  // Load transactions when month changes or on mount
   useEffect(() => {
-    localStorage.setItem('incomeExpenseTransactions', JSON.stringify(transactions));
-  }, [transactions]);
+    loadTransactions();
+  }, [loadTransactions]);
 
+  // Save budgets to localStorage
   useEffect(() => {
     localStorage.setItem('incomeExpenseBudgets', JSON.stringify(budgets));
   }, [budgets]);
+
+  // Cleanup blob URLs on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(receiptBlobUrls).forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [receiptBlobUrls]);
 
   // Filter transactions by month
   const filteredTransactions = transactions.filter(t => 
@@ -169,35 +219,100 @@ const IncomeExpenseTrackerContent = () => {
   const netIncome = totals.income - totals.expenses;
   const savingsRate = totals.income > 0 ? ((totals.income - totals.expenses) / totals.income) * 100 : 0;
 
-  // Add transaction
-  const addTransaction = () => {
+  // Add transaction (with backend API)
+  const addTransaction = async () => {
     if (newTransaction.amount <= 0) {
       toast.error('Please enter a valid amount');
       return;
     }
     
-    const transaction = {
-      ...newTransaction,
-      id: Date.now(),
-      createdAt: new Date().toISOString(),
-    };
+    if (!token) {
+      toast.error('Please log in to add transactions');
+      return;
+    }
+
+    setIsSaving(true);
     
-    setTransactions([transaction, ...transactions]);
-    setNewTransaction({
-      type: 'expense',
-      amount: 0,
-      category: 'other',
-      description: '',
-      date: new Date().toISOString().slice(0, 10),
-      isRecurring: false,
-      taxDeductible: false,
-      receipt: null,
-    });
-    
-    toast.success(`${newTransaction.type === 'income' ? 'Income' : 'Expense'} added successfully${newTransaction.receipt ? ' with receipt' : ''}`);
+    try {
+      // Create transaction via API
+      const response = await fetch(`${API_URL}/api/transactions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          type: newTransaction.type,
+          amount: newTransaction.amount,
+          category: newTransaction.category,
+          description: newTransaction.description,
+          date: newTransaction.date,
+          is_recurring: newTransaction.isRecurring,
+          tax_deductible: newTransaction.taxDeductible
+        })
+      });
+
+      if (!response.ok) throw new Error('Failed to create transaction');
+      
+      const createdTransaction = await response.json();
+      
+      // If there's a receipt to upload, upload it now
+      if (newTransaction.receipt?.file) {
+        const formData = new FormData();
+        formData.append('file', newTransaction.receipt.file);
+        
+        const receiptResponse = await fetch(`${API_URL}/api/transactions/${createdTransaction.id}/receipt`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+        
+        if (receiptResponse.ok) {
+          const receiptData = await receiptResponse.json();
+          createdTransaction.receipt_id = receiptData.receipt_id;
+          createdTransaction.receipt_filename = receiptData.filename;
+        } else {
+          toast.error('Transaction saved but receipt upload failed');
+        }
+      }
+      
+      // Transform and add to state
+      const transformed = {
+        ...createdTransaction,
+        taxDeductible: createdTransaction.tax_deductible,
+        isRecurring: createdTransaction.is_recurring,
+        createdAt: createdTransaction.created_at,
+        receipt: createdTransaction.receipt_id ? { 
+          id: createdTransaction.receipt_id, 
+          name: createdTransaction.receipt_filename 
+        } : null
+      };
+      
+      setTransactions([transformed, ...transactions]);
+      setNewTransaction({
+        type: 'expense',
+        amount: 0,
+        category: 'other',
+        description: '',
+        date: new Date().toISOString().slice(0, 10),
+        isRecurring: false,
+        taxDeductible: false,
+        receipt: null,
+      });
+      
+      toast.success(`${newTransaction.type === 'income' ? 'Income' : 'Expense'} added successfully${newTransaction.receipt ? ' with receipt' : ''}`);
+      
+    } catch (error) {
+      console.error('Error adding transaction:', error);
+      toast.error('Failed to add transaction. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  // Handle receipt upload
+  // Handle receipt upload - store file object for later upload
   const handleReceiptUpload = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -215,38 +330,96 @@ const IncomeExpenseTrackerContent = () => {
       return;
     }
 
-    // Convert to base64
-    const reader = new FileReader();
-    reader.onload = () => {
-      setNewTransaction({
-        ...newTransaction,
-        receipt: {
-          name: file.name,
-          type: file.type,
-          data: reader.result,
-          size: file.size,
-        }
-      });
-      toast.success('Receipt attached');
-    };
-    reader.onerror = () => {
-      toast.error('Failed to read file');
-    };
-    reader.readAsDataURL(file);
+    // Store file object and create preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setNewTransaction({
+      ...newTransaction,
+      receipt: {
+        name: file.name,
+        type: file.type,
+        file: file,
+        size: file.size,
+        previewUrl: previewUrl
+      }
+    });
+    toast.success('Receipt attached');
   };
 
   // Remove receipt from new transaction
   const removeReceipt = () => {
+    if (newTransaction.receipt?.previewUrl) {
+      URL.revokeObjectURL(newTransaction.receipt.previewUrl);
+    }
     setNewTransaction({ ...newTransaction, receipt: null });
   };
 
   // Get transactions with receipts
   const transactionsWithReceipts = transactions.filter(t => t.receipt);
 
-  // Delete transaction
-  const deleteTransaction = (id) => {
-    setTransactions(transactions.filter(t => t.id !== id));
-    toast.success('Transaction deleted');
+  // Delete transaction (with backend API)
+  const deleteTransaction = async (id) => {
+    if (!token) {
+      toast.error('Please log in to delete transactions');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/transactions/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) throw new Error('Failed to delete transaction');
+      
+      setTransactions(transactions.filter(t => t.id !== id));
+      toast.success('Transaction deleted');
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+      toast.error('Failed to delete transaction');
+    }
+  };
+
+  // View receipt from backend
+  const viewReceipt = async (transaction) => {
+    if (!transaction.receipt?.id || !token) return;
+    
+    // Check if we already have the blob URL cached
+    if (receiptBlobUrls[transaction.id]) {
+      setViewingReceipt({
+        ...transaction.receipt,
+        url: receiptBlobUrls[transaction.id],
+        transactionId: transaction.id
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/transactions/${transaction.id}/receipt`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) throw new Error('Failed to load receipt');
+      
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      
+      // Cache the blob URL
+      setReceiptBlobUrls(prev => ({ ...prev, [transaction.id]: blobUrl }));
+      
+      setViewingReceipt({
+        ...transaction.receipt,
+        url: blobUrl,
+        type: blob.type,
+        transactionId: transaction.id
+      });
+    } catch (error) {
+      console.error('Error loading receipt:', error);
+      toast.error('Failed to load receipt');
+    }
   };
 
   // Get category info
@@ -696,9 +869,22 @@ const IncomeExpenseTrackerContent = () => {
                 )}
               </div>
 
-              <Button onClick={addTransaction} className="w-full bg-emerald-600 hover:bg-emerald-700">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Transaction
+              <Button 
+                onClick={addTransaction} 
+                className="w-full bg-emerald-600 hover:bg-emerald-700"
+                disabled={isSaving}
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Transaction
+                  </>
+                )}
               </Button>
             </CardContent>
           </Card>
@@ -714,7 +900,12 @@ const IncomeExpenseTrackerContent = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {filteredTransactions.length === 0 ? (
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 text-emerald-400 animate-spin" />
+                  <span className="ml-3 text-slate-400">Loading transactions...</span>
+                </div>
+              ) : filteredTransactions.length === 0 ? (
                 <p className="text-slate-500 text-center py-8">No transactions recorded for this month</p>
               ) : (
                 <div className="space-y-2 max-h-[500px] overflow-y-auto">
@@ -751,7 +942,7 @@ const IncomeExpenseTrackerContent = () => {
                             <Button
                               variant="ghost"
                               size="sm"
-                              onClick={() => setViewingReceipt(transaction.receipt)}
+                              onClick={() => viewReceipt(transaction)}
                               className="text-blue-400 hover:text-blue-300"
                             >
                               <Paperclip className="h-4 w-4" />
@@ -800,7 +991,7 @@ const IncomeExpenseTrackerContent = () => {
                   {transactionsWithReceipts.map(transaction => {
                     const category = getCategoryInfo(transaction.category, transaction.type);
                     const Icon = category.icon;
-                    const isImage = transaction.receipt.type.startsWith('image/');
+                    const isImage = transaction.receipt.name?.match(/\.(jpg|jpeg|png|webp)$/i);
                     
                     return (
                       <div
@@ -810,14 +1001,21 @@ const IncomeExpenseTrackerContent = () => {
                         {/* Preview */}
                         <div 
                           className="h-32 bg-navy-800 flex items-center justify-center cursor-pointer"
-                          onClick={() => setViewingReceipt(transaction.receipt)}
+                          onClick={() => viewReceipt(transaction)}
                         >
                           {isImage ? (
-                            <img 
-                              src={transaction.receipt.data} 
-                              alt="Receipt" 
-                              className="h-full w-full object-cover"
-                            />
+                            receiptBlobUrls[transaction.id] ? (
+                              <img 
+                                src={receiptBlobUrls[transaction.id]} 
+                                alt="Receipt" 
+                                className="h-full w-full object-cover"
+                              />
+                            ) : (
+                              <div className="text-center">
+                                <Image className="h-12 w-12 text-blue-400 mx-auto mb-2" />
+                                <span className="text-xs text-slate-500">Click to view</span>
+                              </div>
+                            )
                           ) : (
                             <div className="text-center">
                               <FileText className="h-12 w-12 text-red-400 mx-auto mb-2" />
@@ -923,7 +1121,7 @@ const IncomeExpenseTrackerContent = () => {
           >
             <div className="flex items-center justify-between p-4 border-b border-navy-700">
               <div className="flex items-center gap-3">
-                {viewingReceipt.type.startsWith('image/') ? (
+                {(viewingReceipt.type?.startsWith('image/') || viewingReceipt.name?.match(/\.(jpg|jpeg|png|webp)$/i)) ? (
                   <Image className="h-5 w-5 text-blue-400" />
                 ) : (
                   <FileText className="h-5 w-5 text-red-400" />
@@ -940,15 +1138,15 @@ const IncomeExpenseTrackerContent = () => {
               </Button>
             </div>
             <div className="p-4 overflow-auto max-h-[calc(90vh-80px)]">
-              {viewingReceipt.type.startsWith('image/') ? (
+              {(viewingReceipt.type?.startsWith('image/') || viewingReceipt.name?.match(/\.(jpg|jpeg|png|webp)$/i)) ? (
                 <img 
-                  src={viewingReceipt.data} 
+                  src={viewingReceipt.url || viewingReceipt.previewUrl || viewingReceipt.data} 
                   alt="Receipt" 
                   className="max-w-full h-auto mx-auto"
                 />
               ) : (
                 <iframe
-                  src={viewingReceipt.data}
+                  src={viewingReceipt.url || viewingReceipt.previewUrl || viewingReceipt.data}
                   title="PDF Receipt"
                   className="w-full h-[70vh] bg-white"
                 />

@@ -472,7 +472,7 @@ GET  /api/payments/portal   // Customer billing portal
 
 ### Frontend (.env)
 ```
-REACT_APP_BACKEND_URL=https://sa-financial-tools.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://fintech-za-test.preview.emergentagent.com
 ```
 
 ### Backend (.env)

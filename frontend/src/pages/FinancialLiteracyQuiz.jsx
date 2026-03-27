@@ -110,7 +110,7 @@ const questions = [
       { value: 'c', label: 'RAs have no investment growth', correct: false },
       { value: 'd', label: 'RAs are only for employees', correct: false },
     ],
-    explanation: 'RA contributions are tax-deductible up to 27.5% of taxable income (max R350,000 per year). However, funds are generally only accessible at retirement (age 55+).',
+    explanation: 'RA contributions are tax-deductible up to 27.5% of taxable income (max R430,000 per year for 2026/27). However, funds are generally only accessible at retirement (age 55+).',
     cofiReference: 'Understanding of retirement products and tax benefits'
   },
   {
