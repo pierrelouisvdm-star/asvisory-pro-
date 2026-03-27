@@ -26,6 +26,12 @@
    - New API: POST /api/transactions/{id}/receipt - Upload receipt
    - New API: GET /api/transactions/{id}/receipt - Download receipt
 3. ✅ **Income & Expense Tracker Backend Integration** - Frontend now uses backend API
+4. ✅ **AI-Powered Receipt OCR** - Auto-extracts data from receipt images using GPT-4o Vision
+   - Extracts: amount, date, merchant name, category, description
+   - New API: POST /api/transactions/{id}/receipt/analyze - Re-analyze existing receipt
+   - New API: GET /api/transactions/{id}/receipt/ocr - Get stored OCR data
+   - Frontend: "Apply Data" button to auto-fill form fields from OCR results
+   - Frontend: "Re-analyze" button on receipts tab
 
 ### Previous Session (March 18, 2026)
 1. ✅ **Client Management Feature Removed** - App now targets individual investors
@@ -133,7 +139,7 @@
 ### P2 - Medium Priority
 - [ ] Refactor TaxPlanningHub.jsx (1700+ lines - performance debt)
 - [ ] Light theme audit and consistency
-- [ ] OCR for receipt auto-reading
+- [x] OCR for receipt auto-reading ✅ COMPLETED - Uses GPT-4o Vision
 - [ ] Email notifications for weekly updates
 
 ### Future Projects
