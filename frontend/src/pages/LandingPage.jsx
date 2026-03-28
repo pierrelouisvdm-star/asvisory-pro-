@@ -703,7 +703,7 @@ export const LandingPage = () => {
             <div>
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Mission</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth. We believe everyone deserves access to professional-grade financial calculators.
+                To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We're not just another generic financial calculator - we're your partner in achieving financial freedom.
