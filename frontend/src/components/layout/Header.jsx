@@ -14,6 +14,7 @@ import { CurrencySelector } from '@/components/CurrencySelector';
 import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { useAuth } from '@/context/AuthContext';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { AdvisoryProLogoCompact } from '@/components/AdvisoryProLogo';
 
 // All calculators organized by category for the mega menu
 const allCalculators = [
@@ -124,13 +125,8 @@ export const Header = () => {
       <div className="max-w-full mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground font-bold text-lg group-hover:scale-105 transition-transform">
-              A
-            </div>
-            <span className="font-display text-xl font-bold text-foreground hidden sm:block">
-              Financial Advisory Pro
-            </span>
+          <Link to="/" className="flex items-center gap-2 group hover:opacity-90 transition-opacity">
+            <AdvisoryProLogoCompact />
           </Link>
 
           {/* Desktop Navigation */}

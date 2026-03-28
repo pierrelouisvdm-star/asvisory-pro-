@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { couponApi } from '@/services/api';
+import { AdvisoryProLogo } from '@/components/AdvisoryProLogo';
 
 const tiers = [
   {
@@ -162,13 +163,8 @@ export const AuthPage = () => {
       <div className="max-w-6xl mx-auto">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
-              <span className="text-primary-foreground font-bold text-xl">A</span>
-            </div>
-            <span className="font-display text-2xl font-bold tracking-tight text-foreground">
-              Financial Advisory Pro
-            </span>
+          <div className="flex justify-center mb-4">
+            <AdvisoryProLogo size="large" className="text-white" />
           </div>
           <p className="text-muted-foreground">
             Professional Financial Advisor Suite

@@ -17,6 +17,7 @@ import {
   Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
+import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 
 // Calculator categories with detailed descriptions
 const calculatorCategories = [
@@ -240,15 +241,14 @@ export const LandingPage = () => {
               </div>
             </div>
             
-            {/* CSS-based Logo - perfectly integrated */}
-            <div className="mb-8">
-              <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white tracking-tight">
-                Financial Advisory Pro
-              </h1>
-              <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase">
-                Plan Better. Track Smarter. Grow Faster.
-              </p>
+            {/* Logo */}
+            <div className="mb-8 flex justify-center">
+              <AdvisoryProLogo size="hero" className="text-white" />
             </div>
+            
+            <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase mb-6">
+              Plan Better. Track Smarter. Grow Faster.
+            </p>
             
             <p className="mb-6 text-indigo-300 text-sm flex items-center justify-center gap-2">
               <Sparkles className="h-3 w-3" />
