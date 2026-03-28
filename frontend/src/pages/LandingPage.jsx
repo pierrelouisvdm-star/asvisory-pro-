@@ -706,7 +706,7 @@ export const LandingPage = () => {
                 To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth.
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We're not just another generic financial calculator - we're your partner in achieving financial freedom.
+                Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules.
               </p>
               
               <div className="grid grid-cols-2 gap-4">
