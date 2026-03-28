@@ -246,7 +246,7 @@ export const LandingPage = () => {
                 Financial Advisory Pro
               </h1>
               <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase">
-                Empower Your Financial Future
+                Plan Better. Track Smarter. Grow Faster.
               </p>
             </div>
             
@@ -256,12 +256,13 @@ export const LandingPage = () => {
             </p>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-              The Complete Financial Planning Toolkit for South Africans
+              The Complete Financial Planning Platform for South Africans
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Whether you're a financial advisor or managing your own investments, Financial Advisory Pro gives you <span className="text-white font-medium">20 professional calculators</span>, 
-              Tax Planning Hub, Income Tracker, and instant PDF reports - all localized for SA regulations and the 2026/2027 tax brackets.
+              Plan, track and optimise your finances with powerful tools built for real-world decisions. 
+              <span className="text-white font-medium"> 20+ professional calculators</span>, 
+              Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.
             </p>
 
             {/* Stats Row */}
@@ -277,14 +278,14 @@ export const LandingPage = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
                 <Button size="lg" className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-lg px-8 shadow-lg shadow-indigo-500/25 h-14 group">
-                  Get Started Now
+                  Get Started
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link to="/tax-planning">
+              <Link to="/dashboard">
                 <Button size="lg" variant="outline" className="text-lg px-8 border-emerald-400/50 text-emerald-300 hover:bg-emerald-500/10 h-14 group">
-                  <Receipt className="mr-2 h-5 w-5" />
-                  Explore Tax Hub
+                  <Play className="mr-2 h-5 w-5" />
+                  Explore the Platform
                 </Button>
               </Link>
             </div>
@@ -296,59 +297,118 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Problem/Solution Section */}
+      {/* Value Proposition Section */}
       <section className="relative bg-muted/50 border-y border-border py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <p className="mb-4 text-destructive text-sm font-medium uppercase tracking-wide">
-                The Problem
+          <div className="text-center mb-12">
+            <p className="text-indigo-400 text-sm font-medium uppercase tracking-wide mb-3">
+              Why Choose Us
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+              Not just a calculator. A structured way to take control of your finances.
+            </h2>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Plan with Confidence */}
+            <div className="bg-background/50 border border-border rounded-xl p-6 hover:border-indigo-500/50 transition-colors">
+              <div className="w-12 h-12 bg-indigo-500/10 rounded-lg flex items-center justify-center mb-4">
+                <Target className="h-6 w-6 text-indigo-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Plan with Confidence</h3>
+              <p className="text-muted-foreground">
+                Make informed decisions using over 20 financial calculators designed for real-life scenarios.
               </p>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
-                Tired of Outdated Spreadsheets?
-              </h2>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-start gap-3">
-                  <span className="text-destructive mt-1">✗</span>
-                  Manual calculations prone to errors
+            </div>
+            
+            {/* Optimise Your Tax */}
+            <div className="bg-background/50 border border-border rounded-xl p-6 hover:border-emerald-500/50 transition-colors">
+              <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-4">
+                <Receipt className="h-6 w-6 text-emerald-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Optimise Your Tax</h3>
+              <p className="text-muted-foreground">
+                Stay ahead with a fully integrated Tax Planning Hub built around South African tax rules.
+              </p>
+            </div>
+            
+            {/* Track Your Progress */}
+            <div className="bg-background/50 border border-border rounded-xl p-6 hover:border-amber-500/50 transition-colors">
+              <div className="w-12 h-12 bg-amber-500/10 rounded-lg flex items-center justify-center mb-4">
+                <LineChart className="h-6 w-6 text-amber-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-foreground mb-3">Track Your Progress</h3>
+              <p className="text-muted-foreground">
+                Monitor your net worth, income, and expenses in one clear, structured view.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who It's For Section */}
+      <section className="py-16 bg-background">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-emerald-400 text-sm font-medium uppercase tracking-wide mb-3">
+              Built For You
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground">
+              Who It's For
+            </h2>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* For Financial Advisors */}
+            <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border border-indigo-500/20 rounded-2xl p-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center">
+                  <Briefcase className="h-7 w-7 text-indigo-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground">For Financial Advisors</h3>
+              </div>
+              <p className="text-lg text-muted-foreground mb-6">
+                Save time on calculations and planning. Deliver clearer outputs. Focus on clients, not admin.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3 text-muted-foreground">
+                  <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
+                  Professional PDF reports for clients
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-destructive mt-1">✗</span>
-                  Generic tools not built for SA regulations
+                <li className="flex items-center gap-3 text-muted-foreground">
+                  <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
+                  SARS-compliant tax calculations
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-destructive mt-1">✗</span>
-                  Hours spent creating financial reports
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-destructive mt-1">✗</span>
-                  No way to track your financial progress over time
+                <li className="flex items-center gap-3 text-muted-foreground">
+                  <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
+                  Fee comparison & scenario modeling
                 </li>
               </ul>
             </div>
-            <div>
-              <p className="mb-4 text-emerald-500 text-sm font-medium uppercase tracking-wide">
-                The Solution
+            
+            {/* For Individuals */}
+            <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-2xl p-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                  <Users className="h-7 w-7 text-emerald-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground">For Individuals</h3>
+              </div>
+              <p className="text-lg text-muted-foreground mb-6">
+                Understand your financial position. Make better decisions. Build long-term wealth with structure.
               </p>
-              <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground mb-4">
-                Financial Advisory Pro Does It All
-              </h2>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Accurate calculations with SA tax brackets & rates
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3 text-muted-foreground">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                  Track net worth over time
                 </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Professional PDF reports in one click
+                <li className="flex items-center gap-3 text-muted-foreground">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                  Retirement & investment planning
                 </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  Track your net worth with visual milestones
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                  AI assistant for complex financial questions
+                <li className="flex items-center gap-3 text-muted-foreground">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                  AI-powered receipt scanning
                 </li>
               </ul>
             </div>
@@ -805,15 +865,18 @@ export const LandingPage = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-emerald-400 text-sm font-medium uppercase tracking-wide mb-4">
+            Start Today
+          </p>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground mb-6">
-            Ready to Elevate Your Practice?
+            Start planning smarter today.
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Start making smarter financial decisions today with Financial Advisory Pro's professional tools.
+            Take control of your finances with tools designed for real-world decisions.
           </p>
           <Link to="/auth">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xl px-12 h-16 shadow-lg shadow-primary/25">
-              Get Started Now
+              Get Started
               <ArrowRight className="ml-2 h-6 w-6" />
             </Button>
           </Link>
