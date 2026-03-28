@@ -6,12 +6,12 @@ export const AdvisoryProLogo = ({
   showText = true,
   iconOnly = false 
 }) => {
-  // Size configurations
+  // Size configurations - reduced for better fit
   const sizes = {
-    small: { icon: 32, text: 'text-lg' },
-    default: { icon: 40, text: 'text-2xl' },
-    large: { icon: 56, text: 'text-4xl' },
-    hero: { icon: 72, text: 'text-5xl sm:text-6xl' }
+    small: { icon: 24, text: 'text-base' },
+    default: { icon: 32, text: 'text-xl' },
+    large: { icon: 40, text: 'text-2xl' },
+    hero: { icon: 48, text: 'text-3xl sm:text-4xl' }
   };
   
   const { icon: iconSize, text: textSize } = sizes[size] || sizes.default;
@@ -109,8 +109,8 @@ export const AdvisoryProLogoCompact = ({ className = '' }) => {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <svg 
-        width={32} 
-        height={32} 
+        width={24} 
+        height={24} 
         viewBox="0 0 48 48" 
         fill="none" 
         xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ export const AdvisoryProLogoCompact = ({ className = '' }) => {
         />
       </svg>
       
-      <div className="font-bold tracking-tight text-xl">
+      <div className="font-bold tracking-tight text-base">
         <span className="text-slate-300">ADVISORY</span>
         <span className="text-white">PRO</span>
       </div>
