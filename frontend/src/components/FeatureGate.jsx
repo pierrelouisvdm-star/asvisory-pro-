@@ -80,7 +80,7 @@ export const CalculatorGate = ({ path, children }) => {
             <Link to="/pricing" className="block">
               <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white">
                 <Crown className="h-4 w-4 mr-2" />
-                Upgrade to Premium - R249/month
+                Upgrade to Premium - R299/month
               </Button>
             </Link>
             <Link to="/dashboard" className="block">

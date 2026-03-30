@@ -32,8 +32,8 @@ const tiers = [
   },
   {
     name: 'Premium',
-    price: 'R249',
-    annualPrice: 'R1,499',
+    price: 'R299',
+    annualPrice: 'R1,999',
     period: '/month',
     annualPeriod: '/year',
     annualSavings: 'Save R1,489',
@@ -417,7 +417,7 @@ export const AuthPage = () => {
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
               <p className="text-muted-foreground text-sm">
-                R249/month or <span className="text-emerald-500 font-medium">R1,499/year</span> (Save R1,489!)
+                R299/month or <span className="text-emerald-500 font-medium">R1,999/year</span> (Save R1,589!)
               </p>
             </div>
 

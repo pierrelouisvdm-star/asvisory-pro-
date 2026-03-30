@@ -32,9 +32,9 @@ const PAYFAST_CONFIG = {
   sandboxMode: true, // Set to false in production
 };
 
-const PREMIUM_PRICE = 249;
-const ANNUAL_PRICE = 1499;
-const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1499 vs R2988 = R1489 savings // R249 per month
+const PREMIUM_PRICE = 299;
+const ANNUAL_PRICE = 1999;
+const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1999 vs R3588 = R1589 savings
 
 export const PricingPage = () => {
   const navigate = useNavigate();

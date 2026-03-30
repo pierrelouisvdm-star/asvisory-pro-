@@ -291,7 +291,7 @@ export const LandingPage = () => {
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R249/month or R1,499/year (Save R1,489!) • Have a coupon? Apply at signup
+              R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup
             </p>
           </div>
         </div>
@@ -637,7 +637,7 @@ export const LandingPage = () => {
           <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
             <CardContent className="p-8">
               <div className="mb-6">
-                <span className="text-5xl font-bold text-foreground">R249</span>
+                <span className="text-5xl font-bold text-foreground">R299</span>
                 <span className="text-muted-foreground ml-2">/month</span>
               </div>
               
@@ -881,7 +881,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            R249/month or R1,499/year • Cancel anytime
+            R299/month or R1,999/year • Cancel anytime
           </p>
         </div>
       </section>
