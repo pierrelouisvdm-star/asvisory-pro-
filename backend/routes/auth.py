@@ -7,14 +7,76 @@ from pydantic import BaseModel, EmailStr
 import os
 import secrets
 import uuid
+import asyncio
+import resend
+import logging
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
+logger = logging.getLogger(__name__)
 
 # Get database connection
 mongo_url = os.environ['MONGO_URL']
 db_name = os.environ['DB_NAME']
 client = AsyncIOMotorClient(mongo_url)
 db = client[db_name]
+
+# Resend configuration
+resend.api_key = os.environ.get('RESEND_API_KEY')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'support@advisorypro.co.za')
+
+
+async def send_password_reset_email(to_email: str, reset_code: str, user_name: str = None):
+    """Send password reset email via Resend"""
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">AdvisoryPro</h1>
+            <p style="color: #94a3b8; margin: 10px 0 0 0;">Password Reset Request</p>
+        </div>
+        
+        <p style="font-size: 16px;">Hi{' ' + user_name if user_name else ''},</p>
+        
+        <p style="font-size: 16px;">We received a request to reset your password. Use the code below to complete the process:</p>
+        
+        <div style="background: #f1f5f9; border-radius: 10px; padding: 25px; text-align: center; margin: 25px 0;">
+            <p style="font-size: 14px; color: #64748b; margin: 0 0 10px 0;">Your reset code:</p>
+            <h2 style="font-size: 36px; letter-spacing: 8px; color: #1e293b; margin: 0; font-family: monospace;">{reset_code}</h2>
+        </div>
+        
+        <p style="font-size: 14px; color: #64748b;">This code will expire in <strong>15 minutes</strong>.</p>
+        
+        <p style="font-size: 14px; color: #64748b;">If you didn't request this password reset, please ignore this email or contact support if you have concerns.</p>
+        
+        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+        
+        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+            © 2026 AdvisoryPro. All rights reserved.<br>
+            This is an automated message, please do not reply.
+        </p>
+    </body>
+    </html>
+    """
+    
+    params = {
+        "from": f"AdvisoryPro <{SENDER_EMAIL}>",
+        "to": [to_email],
+        "subject": "Reset Your AdvisoryPro Password",
+        "html": html_content
+    }
+    
+    try:
+        email = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Password reset email sent to {to_email}, email_id: {email.get('id')}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to send password reset email to {to_email}: {str(e)}")
+        return False
 
 
 @router.post("/register", response_model=Token)
@@ -137,7 +199,7 @@ async def forgot_password(request: PasswordResetRequest):
     
     # Always return success to prevent email enumeration
     if not user:
-        return {"success": True, "message": "If an account exists with this email, a reset code has been generated."}
+        return {"success": True, "message": "If an account exists with this email, a reset link has been sent."}
     
     # Generate a 6-digit reset code (easier for users to type)
     reset_code = ''.join([str(secrets.randbelow(10)) for _ in range(6)])
@@ -158,12 +220,16 @@ async def forgot_password(request: PasswordResetRequest):
     # Save new reset token
     await db.password_resets.insert_one(reset_data)
     
-    # In production, you would send an email here
-    # For now, we'll return the code (REMOVE IN PRODUCTION)
+    # Send password reset email
+    user_name = user.get("full_name", "").split()[0] if user.get("full_name") else None
+    email_sent = await send_password_reset_email(request.email.lower(), reset_code, user_name)
+    
+    if not email_sent:
+        logger.warning(f"Failed to send password reset email to {request.email}")
+    
     return {
         "success": True, 
-        "message": "If an account exists with this email, a reset code has been generated.",
-        "reset_code": reset_code,  # REMOVE THIS IN PRODUCTION - only for testing
+        "message": "If an account exists with this email, a reset code has been sent.",
         "expires_in_minutes": 15
     }
 
