@@ -4,13 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from 'sonner';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine, ResponsiveContainer, AreaChart, Area
 } from 'recharts';
-import { Flame, Target, TrendingUp, PiggyBank, Zap, DollarSign, Clock, CheckCircle2, Info } from 'lucide-react';
+import { Flame, Target, TrendingUp, PiggyBank, Zap, DollarSign, Clock, CheckCircle2, Info, Share2, Twitter, Copy, X } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const formatCurrency = (amount) => new Intl.NumberFormat('en-US', {
@@ -66,6 +65,7 @@ export default function FIRECalculator() {
   const [inflationRate, setInflationRate] = useState(3);
   const [retirementAge, setRetirementAge] = useState(65);
   const [activeVariant, setActiveVariant] = useState('regular');
+  const [showShare, setShowShare] = useState(false);
 
   const annualSavings = annualIncome - annualExpenses;
   const savingsRate = annualIncome > 0 ? (annualSavings / annualIncome) * 100 : 0;
