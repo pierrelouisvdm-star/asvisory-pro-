@@ -41,6 +41,10 @@ import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
 import MarketInsights from "@/pages/MarketInsights";
 import TaxCalculatorUS from "@/pages/calculators/TaxCalculatorUS";
 import Calculator401k from "@/pages/calculators/Calculator401k";
+import RothIRACalculator from "@/pages/calculators/RothIRACalculator";
+import SocialSecurityCalculator from "@/pages/calculators/SocialSecurityCalculator";
+import HSACalculator from "@/pages/calculators/HSACalculator";
+import Calculator529 from "@/pages/calculators/Calculator529";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { Toaster } from "@/components/ui/sonner";
@@ -161,6 +165,10 @@ function App() {
                   {/* US Calculators */}
                   <Route path="/us/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/us/tax-calculator"><TaxCalculatorUS /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/401k-calculator" element={<ProtectedRoute><GatedCalculator path="/us/401k-calculator"><Calculator401k /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/roth-ira" element={<ProtectedRoute><GatedCalculator path="/us/roth-ira"><RothIRACalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/social-security" element={<ProtectedRoute><GatedCalculator path="/us/social-security"><SocialSecurityCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/hsa" element={<ProtectedRoute><GatedCalculator path="/us/hsa"><HSACalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/529" element={<ProtectedRoute><GatedCalculator path="/us/529"><Calculator529 /></GatedCalculator></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />

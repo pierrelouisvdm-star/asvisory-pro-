@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { marketApi } from '@/services/api';
+import { useJurisdiction } from '@/context/JurisdictionContext';
 
 const CurrencyContext = createContext();
 
@@ -19,8 +20,14 @@ export const currencies = {
 };
 
 export const CurrencyProvider = ({ children }) => {
-  const [currency, setCurrency] = useState('ZAR');
-  const [exchangeRate, setExchangeRate] = useState(18.5); // Default USD/ZAR rate
+  const { isUS } = useJurisdiction();
+  const [currency, setCurrency] = useState(() => isUS ? 'USD' : 'ZAR');
+  const [exchangeRate, setExchangeRate] = useState(18.5);
+
+  // Auto-sync currency with jurisdiction
+  useEffect(() => {
+    setCurrency(isUS ? 'USD' : 'ZAR');
+  }, [isUS]);
 
   // Fetch current exchange rate
   useEffect(() => {
@@ -40,27 +47,10 @@ export const CurrencyProvider = ({ children }) => {
 
   const currentCurrency = currencies[currency];
 
-  // Convert value from ZAR to selected currency
-  const convertFromZAR = (zarValue) => {
-    if (typeof zarValue !== 'number' || isNaN(zarValue)) return 0;
-    if (currency === 'ZAR') return zarValue;
-    // Convert ZAR to USD
-    return zarValue / exchangeRate;
-  };
-
-  // Convert value from USD to selected currency
-  const convertFromUSD = (usdValue) => {
-    if (typeof usdValue !== 'number' || isNaN(usdValue)) return 0;
-    if (currency === 'USD') return usdValue;
-    // Convert USD to ZAR
-    return usdValue * exchangeRate;
-  };
-
-  // Convert any value to display currency (assumes input is in ZAR)
-  const convert = (value, fromCurrency = 'ZAR') => {
+  const convert = (value, fromCurrency = currency) => {
     if (typeof value !== 'number' || isNaN(value)) return 0;
     if (fromCurrency === currency) return value;
-    
+
     if (fromCurrency === 'ZAR' && currency === 'USD') {
       return value / exchangeRate;
     }
@@ -70,11 +60,26 @@ export const CurrencyProvider = ({ children }) => {
     return value;
   };
 
+  // Convert value from ZAR to selected currency
+  const convertFromZAR = (zarValue) => {
+    if (typeof zarValue !== 'number' || isNaN(zarValue)) return 0;
+    if (currency === 'ZAR') return zarValue;
+    return zarValue / exchangeRate;
+  };
+
+  // Convert value from USD to selected currency
+  const convertFromUSD = (usdValue) => {
+    if (typeof usdValue !== 'number' || isNaN(usdValue)) return 0;
+    if (currency === 'USD') return usdValue;
+    return usdValue * exchangeRate;
+  };
+
+  // fromCurrency defaults to current currency so no unwanted conversion
   const formatCurrency = (value, options = {}) => {
-    const { minimumFractionDigits = 2, maximumFractionDigits = 2, fromCurrency = 'ZAR' } = options;
-    
+    const { minimumFractionDigits = 2, maximumFractionDigits = 2, fromCurrency = currency } = options;
+
     const convertedValue = convert(value, fromCurrency);
-    
+
     if (typeof convertedValue !== 'number' || isNaN(convertedValue)) {
       return `${currentCurrency.symbol}0.00`;
     }
@@ -89,7 +94,7 @@ export const CurrencyProvider = ({ children }) => {
 
   const formatNumber = (value, options = {}) => {
     const { minimumFractionDigits = 0, maximumFractionDigits = 2 } = options;
-    
+
     if (typeof value !== 'number' || isNaN(value)) {
       return '0';
     }
@@ -112,6 +117,8 @@ export const CurrencyProvider = ({ children }) => {
       convertFromUSD,
       exchangeRate,
       symbol: currentCurrency.symbol,
+      currencySymbol: currentCurrency.symbol,
+      locale: currentCurrency.locale,
     }}>
       {children}
     </CurrencyContext.Provider>

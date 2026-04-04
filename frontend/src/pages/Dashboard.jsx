@@ -80,14 +80,17 @@ const investmentCalculators = [
     path: '/tfsa-calculator',
     features: ['Limit Tracker', 'Tax Savings', 'Projections'],
     isFree: true,
+    isSAOnly: true,
   },
 ];
 
 const debtCalculators = [
   {
     id: 'bond',
-    title: 'Bond Calculator',
+    title: 'Bond / Mortgage Calculator',
+    titleUS: 'Mortgage Calculator',
     description: 'Analyze home loan payments and amortization',
+    descriptionUS: 'Analyze mortgage payments, amortization, and interest savings',
     icon: Building2,
     path: '/bond',
     features: ['Amortization', 'Extra Payments', 'Interest Savings'],
@@ -96,6 +99,7 @@ const debtCalculators = [
   {
     id: 'car-finance',
     title: 'Vehicle Finance',
+    titleUS: 'Auto Loan Calculator',
     description: 'Compare loan options and calculate payments',
     icon: Car,
     path: '/car-finance',
@@ -161,22 +165,24 @@ const retirementCalculators = [
     path: '/living-annuity',
     features: ['SA Regulations', 'Sustainability', 'Tax Impact'],
     isFree: false,
+    isSAOnly: true,
   },
   {
     id: 'retirement-tax',
-    title: 'Tax Savings Calculator',
+    title: 'RA Tax Savings Calculator',
     description: 'Maximize RA contribution tax benefits',
     icon: Receipt,
     path: '/retirement-tax',
     features: ['27.5% Limit', 'Tax Savings', 'Net Cost'],
     isFree: false,
+    isSAOnly: true,
   },
 ];
 
 const personalFinanceTools = [
   {
     id: 'tax-planning',
-    title: 'Tax Planning Hub',
+    title: 'SA Tax Planning Hub',
     description: 'Complete tax suite: Income tax, CGT, medical credits & more',
     icon: Receipt,
     path: '/tax-planning',
@@ -184,6 +190,7 @@ const personalFinanceTools = [
     isFree: false,
     isNew: true,
     isFeatured: true,
+    isSAOnly: true,
   },
   {
     id: 'market-insights',
@@ -208,12 +215,13 @@ const personalFinanceTools = [
   },
   {
     id: 'tax-calculator',
-    title: 'Tax Calculator',
+    title: 'SA Tax Calculator',
     description: 'Calculate income tax with deductions & credits',
     icon: Receipt,
     path: '/tax-calculator',
     features: ['SA Tax Brackets', 'Medical Credits', 'Retirement'],
     isFree: false,
+    isSAOnly: true,
   },
   {
     id: 'budget-planner',
@@ -355,7 +363,11 @@ const features = [
 const CalculatorCard = ({ calc, index }) => {
   const Icon = calc.icon;
   const { canAccessCalculator, isPremium } = useSubscription();
+  const { isUS } = useJurisdiction();
   const hasAccess = isPremium() || calc.isFree;
+  
+  const displayTitle = isUS && calc.titleUS ? calc.titleUS : calc.title;
+  const displayDescription = isUS && calc.descriptionUS ? calc.descriptionUS : calc.description;
   
   return (
     <Link 
@@ -411,10 +423,10 @@ const CalculatorCard = ({ calc, index }) => {
             ? "text-emerald-400 group-hover:text-emerald-300"
             : "text-foreground group-hover:text-primary"
         )}>
-          {calc.title}
+          {displayTitle}
         </h3>
         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-          {calc.description}
+          {displayDescription}
         </p>
         <div className="flex flex-wrap gap-1.5">
           {calc.features?.map((feature) => (
@@ -449,6 +461,12 @@ const SectionHeader = ({ badge, title, description, icon: Icon }) => (
 export const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   const { isUS, isZA, currentJurisdiction } = useJurisdiction();
+  
+  // Filter calculators based on jurisdiction
+  const filterForJurisdiction = (calcs) => {
+    if (isUS) return calcs.filter(c => !c.isSAOnly);
+    return calcs.filter(c => !c.isUSOnly);
+  };
   
   return (
     <div className="min-h-screen bg-background" data-testid="dashboard">
@@ -526,11 +544,36 @@ export const Dashboard = () => {
           icon={TrendingUp}
         />
         <div className="grid sm:grid-cols-2 gap-5">
-          {investmentCalculators.map((calc, index) => (
+          {filterForJurisdiction(investmentCalculators).map((calc, index) => (
             <CalculatorCard key={calc.id} calc={calc} index={index} />
           ))}
         </div>
       </section>
+
+      {/* US Calculators Section - shown prominently for US users */}
+      {isUS && (
+        <section className="bg-gradient-to-b from-blue-500/5 to-background py-16 border-y border-blue-500/20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <Badge className="mb-3 bg-blue-500/10 text-blue-500 border-blue-500/30 font-medium">
+                <Flag className="h-3 w-3 mr-1.5" />
+                United States
+              </Badge>
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-3 tracking-tight">
+                US Tax & Retirement Calculators
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Specialized tools for American tax planning, 401(k), Roth IRA, HSA, and 529 optimization.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {usCalculators.map((calc, index) => (
+                <CalculatorCard key={calc.id} calc={calc} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Debt Calculators Section */}
       <section className="bg-muted/50 py-16">
@@ -538,7 +581,10 @@ export const Dashboard = () => {
           <SectionHeader
             badge="Debt"
             title="Debt & Loan Calculators"
-            description="Analyze bonds, vehicle finance, and optimize debt repayment strategies."
+            description={isUS
+              ? "Analyze mortgages, auto loans, and optimize debt repayment strategies."
+              : "Analyze bonds, vehicle finance, and optimize debt repayment strategies."
+            }
             icon={CreditCard}
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -564,34 +610,38 @@ export const Dashboard = () => {
         </div>
       </section>
 
-      {/* Retirement Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-background py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionHeader
-            badge="Retirement"
-            title="Retirement Planning Suite"
-            description="Plan, optimize, and manage your retirement with SA-specific tools."
-            icon={PiggyBank}
-          />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {retirementCalculators.map((calc, index) => (
-              <CalculatorCard key={calc.id} calc={calc} index={index} />
-            ))}
+      {/* Retirement Section - SA only shown to SA users */}
+      {!isUS && (
+        <section className="bg-gradient-to-b from-primary/5 to-background py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeader
+              badge="Retirement"
+              title="Retirement Planning Suite"
+              description="Plan, optimize, and manage your retirement with SA-specific tools including RA and Living Annuity."
+              icon={PiggyBank}
+            />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {filterForJurisdiction(retirementCalculators).map((calc, index) => (
+                <CalculatorCard key={calc.id} calc={calc} index={index} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-
+        </section>
+      )}
       {/* Personal Finance Section */}
       <section className="bg-muted/50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeader
             badge="Personal Finance"
             title="Personal Finance Tools"
-            description="Take control with budgeting, tax planning, and wealth tracking."
+            description={isUS
+              ? "Take control with budgeting, expense tracking, and wealth monitoring."
+              : "Take control with budgeting, tax planning, and wealth tracking."
+            }
             icon={Wallet}
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {personalFinanceTools.map((calc, index) => (
+            {filterForJurisdiction(personalFinanceTools).map((calc, index) => (
               <CalculatorCard key={calc.id} calc={calc} index={index} />
             ))}
           </div>
@@ -613,30 +663,6 @@ export const Dashboard = () => {
         </div>
       </section>
 
-      {/* US Calculators Section - Only show when US is selected */}
-      {isUS && (
-        <section className="bg-gradient-to-b from-blue-500/5 to-background py-16 border-t border-blue-500/20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-10">
-              <Badge className="mb-3 bg-blue-500/10 text-blue-500 border-blue-500/30 font-medium">
-                <Flag className="h-3 w-3 mr-1.5" />
-                🇺🇸 United States
-              </Badge>
-              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-3 tracking-tight">
-                US Tax & Retirement Calculators
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Specialized tools for American tax planning, retirement accounts, and financial optimization.
-              </p>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {usCalculators.map((calc, index) => (
-                <CalculatorCard key={calc.id} calc={calc} index={index} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Features Section */}
       <section className="border-t border-border py-16">

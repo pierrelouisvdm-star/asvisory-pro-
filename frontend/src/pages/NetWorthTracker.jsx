@@ -62,7 +62,7 @@ const LIABILITY_CATEGORIES = [
 ];
 
 export const NetWorthTracker = () => {
-  const { symbol, formatCurrency } = useCurrency();
+  const { symbol, formatCurrency, locale } = useCurrency();
   const { token } = useAuth();
   
   // Core state
@@ -727,16 +727,16 @@ export const NetWorthTracker = () => {
                     <XAxis 
                       dataKey="date" 
                       stroke="#94a3b8"
-                      tickFormatter={(val) => new Date(val).toLocaleDateString('en-ZA', { month: 'short', year: '2-digit' })}
+                      tickFormatter={(val) => new Date(val).toLocaleDateString(locale, { month: 'short', year: '2-digit' })}
                     />
                     <YAxis 
                       stroke="#94a3b8"
-                      tickFormatter={(val) => `R${(val / 1000000).toFixed(1)}M`}
+                      tickFormatter={(val) => `${symbol}${(val / 1000000).toFixed(1)}M`}
                     />
                     <Tooltip 
                       contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155' }}
                       formatter={(val) => [formatCurrency(val), 'Net Worth']}
-                      labelFormatter={(val) => new Date(val).toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      labelFormatter={(val) => new Date(val).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })}
                     />
                     <Area 
                       type="monotone" 
@@ -773,7 +773,7 @@ export const NetWorthTracker = () => {
                     <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-navy-800/30">
                       <div>
                         <p className="font-medium text-white">
-                          {new Date(snapshot.date).toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' })}
+                          {new Date(snapshot.date).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' })}
                         </p>
                         <p className="text-sm text-slate-400">
                           Assets: {formatCurrency(snapshot.total_assets)} | Liabilities: {formatCurrency(snapshot.total_liabilities)}
@@ -853,7 +853,7 @@ export const NetWorthTracker = () => {
                       <div>
                         <CardTitle className="text-lg">{goal.name}</CardTitle>
                         <CardDescription>
-                          Target: {formatCurrency(goal.target_amount)} by {new Date(goal.target_date).toLocaleDateString('en-ZA')}
+                          Target: {formatCurrency(goal.target_amount)} by {new Date(goal.target_date).toLocaleDateString(locale)}
                         </CardDescription>
                       </div>
                       <Button variant="ghost" size="icon" onClick={() => deleteGoal(goal.id)}>

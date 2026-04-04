@@ -1,0 +1,87 @@
+{
+  "summary": "Frontend testing of US jurisdiction features. All 13 test scenarios passed. Tested: jurisdiction switch (ZA→US), currency auto-sync ($USD), 4 new US calculator routes, dashboard SA/US filtering, Income/Expense US categories, Net Worth Tracker $ currency.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/test_reports/iteration_20.json"],
+  "action_items": [],
+  "critical_code_review_comments": [],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "N/A (frontend only)",
+    "frontend": "100%"
+  },
+  "test_credentials": "Pierrelouisvdm@gmail.com / Scorpio@57!! (Admin - premium access)",
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All US jurisdiction features tested and working. Test admin user has premium access so GatedCalculator was bypassed for all 4 new US calculators. The jurisdiction selector is in the header (ZA/US button). Switch persists within session but NOT across browser sessions (localStorage-based). Next agent should verify non-premium user sees upgrade gate for US calculators.",
+  "test_results": {
+    "jurisdiction_switch_to_us": {
+      "status": "PASS",
+      "details": "Header shows 🇺🇸 US and $ USD. Dashboard subtitle updates to 'for Americans'. Badge shows 'United States • 2024/2025 Tax Year'"
+    },
+    "currency_auto_sync_to_usd": {
+      "status": "PASS",
+      "details": "Currency in header auto-changes from R ZAR to $ USD when switching to US jurisdiction"
+    },
+    "roth_ira_calculator": {
+      "status": "PASS",
+      "route": "/us/roth-ira",
+      "details": "Loads with full functionality: inputs (age, income, filing status), growth breakdown chart, milestone table, 'Why Roth IRA?' educational section. Shows $ amounts."
+    },
+    "social_security_estimator": {
+      "status": "PASS",
+      "route": "/us/social-security",
+      "details": "Loads with: Birth Year input, Average Annual Earnings ($), Years Worked, Marital Status dropdown, Claiming Age slider. Shows Monthly/FRA/Max benefits comparison table with break-even points."
+    },
+    "hsa_calculator": {
+      "status": "PASS",
+      "route": "/us/hsa",
+      "details": "Loads with: Current Age, Coverage Type, Federal Tax Bracket (22%), State Tax Rate slider, Annual Contribution slider, Current HSA Balance. Shows Triple Tax Advantage section and Growth Projection."
+    },
+    "529_college_savings": {
+      "status": "PASS",
+      "route": "/us/529",
+      "details": "Loads with: Child's Age, College Type dropdown, Years of College slider, College Cost Inflation. Shows Total College Cost, 529 at College, Funding Gap, Tax Savings with progress chart."
+    },
+    "dashboard_us_mode_sa_tools_hidden": {
+      "status": "PASS",
+      "details": "All SA-only tools hidden: TFSA Calculator, Living Annuity, RA Tax Savings, SA Tax Hub, SA Tax Calculator"
+    },
+    "dashboard_us_mode_us_section_visible": {
+      "status": "PASS",
+      "details": "US Tax & Retirement Calculators section visible after Investment Calculators. Shows 6 US tools: US Tax Calculator, 401(k) Calculator, Roth IRA Calculator, Social Security Estimator, HSA Calculator, 529 College Savings."
+    },
+    "dashboard_sa_mode_sa_tools_visible": {
+      "status": "PASS",
+      "details": "SA mode: TFSA Calculator visible, Retirement Planning Suite visible, US Tax section hidden"
+    },
+    "bond_renamed_mortgage_us": {
+      "status": "PASS",
+      "details": "US mode: Bond card shows 'Mortgage Calculator'. SA mode: Bond card shows 'Bond / Mortgage Calculator'"
+    },
+    "income_expense_expense_categories_us": {
+      "status": "PASS",
+      "details": "US expense categories: Housing/Rent, Transportation, Food, Utilities, Phone, Healthcare, Health Insurance, 401(k) Contribution, HSA Contribution, Education/529, Entertainment, Travel, Shopping, Business Expense, Other (15 total)"
+    },
+    "income_expense_income_categories_us": {
+      "status": "PASS",
+      "details": "US income categories: Salary/W-2 Wages, Bonus, Investment Returns, Rental Income, 1099/Freelance Income, Social Security, 401(k)/IRA Distribution, Other Income (8 total)"
+    },
+    "net_worth_tracker_usd": {
+      "status": "PASS",
+      "details": "Net Worth shows $0.00 in US mode. All cards (Assets, Liabilities, Net Worth) show $ prefix. Input fields show $ prefix. No ZAR/R currency visible."
+    },
+    "income_expense_tax_hint_22pct": {
+      "status": "PASS",
+      "details": "Tax deductible hint shows '22% federal rate' (was 31% in SA mode). Visible in Overview tab."
+    }
+  }
+}

@@ -13,9 +13,11 @@ import {
   PiggyBank, Car, Home, ShoppingCart, Utensils, Zap, Phone,
   GraduationCap, Heart, Plane, Gift, BarChart3, Calendar,
   Download, Filter, ArrowUpRight, ArrowDownRight, CheckCircle2,
-  AlertCircle, Tag, RefreshCw, FileText, Upload, Image, Eye, X, Paperclip, Loader2
+  AlertCircle, Tag, RefreshCw, FileText, Upload, Image, Eye, X, Paperclip, Loader2,
+  ShieldPlus
 } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
+import { useJurisdiction } from '../context/JurisdictionContext';
 import { PrintReport } from '../components/calculators/PrintReport';
 import { Disclaimer } from '../components/calculators/Disclaimer';
 import { CalculatorGate } from '../components/FeatureGate';
@@ -24,8 +26,8 @@ import { toast } from 'sonner';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Expense categories with icons and colors
-const EXPENSE_CATEGORIES = [
+// SA Expense categories
+const SA_EXPENSE_CATEGORIES = [
   { id: 'housing', name: 'Housing', icon: Home, color: 'blue', taxDeductible: false },
   { id: 'transport', name: 'Transport', icon: Car, color: 'amber', taxDeductible: false },
   { id: 'food', name: 'Food & Groceries', icon: Utensils, color: 'orange', taxDeductible: false },
@@ -40,8 +42,27 @@ const EXPENSE_CATEGORIES = [
   { id: 'other', name: 'Other', icon: Tag, color: 'gray', taxDeductible: false },
 ];
 
-// Income categories
-const INCOME_CATEGORIES = [
+// US Expense categories
+const US_EXPENSE_CATEGORIES = [
+  { id: 'housing', name: 'Housing / Rent', icon: Home, color: 'blue', taxDeductible: false },
+  { id: 'transport', name: 'Transportation', icon: Car, color: 'amber', taxDeductible: false },
+  { id: 'food', name: 'Food & Groceries', icon: Utensils, color: 'orange', taxDeductible: false },
+  { id: 'utilities', name: 'Utilities', icon: Zap, color: 'yellow', taxDeductible: false },
+  { id: 'communication', name: 'Phone & Internet', icon: Phone, color: 'purple', taxDeductible: true },
+  { id: 'healthcare', name: 'Healthcare', icon: Heart, color: 'red', taxDeductible: true },
+  { id: 'health_insurance', name: 'Health Insurance', icon: ShieldPlus, color: 'teal', taxDeductible: true },
+  { id: 'retirement_401k', name: '401(k) Contribution', icon: PiggyBank, color: 'emerald', taxDeductible: true },
+  { id: 'hsa', name: 'HSA Contribution', icon: ShieldPlus, color: 'cyan', taxDeductible: true },
+  { id: 'education', name: 'Education / 529', icon: GraduationCap, color: 'indigo', taxDeductible: true },
+  { id: 'entertainment', name: 'Entertainment', icon: Gift, color: 'pink', taxDeductible: false },
+  { id: 'travel', name: 'Travel', icon: Plane, color: 'cyan', taxDeductible: false },
+  { id: 'shopping', name: 'Shopping', icon: ShoppingCart, color: 'emerald', taxDeductible: false },
+  { id: 'business', name: 'Business Expense', icon: Receipt, color: 'slate', taxDeductible: true },
+  { id: 'other', name: 'Other', icon: Tag, color: 'gray', taxDeductible: false },
+];
+
+// SA Income categories
+const SA_INCOME_CATEGORIES = [
   { id: 'salary', name: 'Salary', icon: Wallet, color: 'emerald' },
   { id: 'bonus', name: 'Bonus', icon: Gift, color: 'amber' },
   { id: 'investment', name: 'Investment Returns', icon: TrendingUp, color: 'blue' },
@@ -49,6 +70,22 @@ const INCOME_CATEGORIES = [
   { id: 'freelance', name: 'Freelance/Side Income', icon: Receipt, color: 'indigo' },
   { id: 'other', name: 'Other Income', icon: Tag, color: 'gray' },
 ];
+
+// US Income categories
+const US_INCOME_CATEGORIES = [
+  { id: 'salary', name: 'Salary / W-2 Wages', icon: Wallet, color: 'emerald' },
+  { id: 'bonus', name: 'Bonus', icon: Gift, color: 'amber' },
+  { id: 'investment', name: 'Investment Returns', icon: TrendingUp, color: 'blue' },
+  { id: 'rental', name: 'Rental Income', icon: Home, color: 'purple' },
+  { id: 'freelance', name: '1099 / Freelance Income', icon: Receipt, color: 'indigo' },
+  { id: 'social_security', name: 'Social Security', icon: ShieldPlus, color: 'teal' },
+  { id: 'retirement_dist', name: '401(k) / IRA Distribution', icon: PiggyBank, color: 'cyan' },
+  { id: 'other', name: 'Other Income', icon: Tag, color: 'gray' },
+];
+
+// Backward compatibility — these will be replaced by jurisdiction-aware ones at runtime
+const EXPENSE_CATEGORIES = SA_EXPENSE_CATEGORIES;
+const INCOME_CATEGORIES = SA_INCOME_CATEGORIES;
 
 // Standalone Input component
 const TrackerInput = ({ label, id, value, onChange, prefix, type = 'number', placeholder }) => {
@@ -107,7 +144,16 @@ const TrackerInput = ({ label, id, value, onChange, prefix, type = 'number', pla
 };
 
 const IncomeExpenseTrackerContent = () => {
-  const { formatCurrency, currencySymbol } = useCurrency();
+  const { formatCurrency, currencySymbol, locale } = useCurrency();
+  const { isUS } = useJurisdiction();
+  
+  // Use jurisdiction-appropriate categories
+  const ACTIVE_EXPENSE_CATEGORIES = isUS ? US_EXPENSE_CATEGORIES : SA_EXPENSE_CATEGORIES;
+  const ACTIVE_INCOME_CATEGORIES = isUS ? US_INCOME_CATEGORIES : SA_INCOME_CATEGORIES;
+  
+  // Tax rate for savings hint
+  const taxHintRate = isUS ? 0.22 : 0.31;
+  const taxHintLabel = isUS ? '22% federal rate' : '31% marginal rate';
   const { token } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
@@ -483,7 +529,7 @@ const IncomeExpenseTrackerContent = () => {
 
   // Get category info
   const getCategoryInfo = (categoryId, type) => {
-    const categories = type === 'income' ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
+    const categories = type === 'income' ? ACTIVE_INCOME_CATEGORIES : ACTIVE_EXPENSE_CATEGORIES;
     return categories.find(c => c.id === categoryId) || categories[categories.length - 1];
   };
 
@@ -518,7 +564,7 @@ const IncomeExpenseTrackerContent = () => {
             <SelectContent>
               {months.map(month => (
                 <SelectItem key={month} value={month}>
-                  {new Date(month + '-01').toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' })}
+                  {new Date(month + '-01').toLocaleDateString(locale, { month: 'long', year: 'numeric' })}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -647,7 +693,7 @@ const IncomeExpenseTrackerContent = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {EXPENSE_CATEGORIES.map(category => {
+                {ACTIVE_EXPENSE_CATEGORIES.map(category => {
                   const amount = totals.byCategory[category.id] || 0;
                   const percentage = totals.expenses > 0 ? (amount / totals.expenses) * 100 : 0;
                   const Icon = category.icon;
@@ -685,7 +731,7 @@ const IncomeExpenseTrackerContent = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                {EXPENSE_CATEGORIES.filter(c => budgets[c.id] > 0).map(category => {
+                {ACTIVE_EXPENSE_CATEGORIES.filter(c => budgets[c.id] > 0).map(category => {
                   const actual = totals.byCategory[category.id] || 0;
                   const budget = budgets[category.id];
                   const percentage = budget > 0 ? (actual / budget) * 100 : 0;
@@ -742,7 +788,7 @@ const IncomeExpenseTrackerContent = () => {
                     Categories like business expenses, education, healthcare, and work-related phone/internet may qualify.
                   </p>
                   <Badge className="bg-purple-500/20 text-purple-300">
-                    Potential tax saving: {formatCurrency(totals.taxDeductible * 0.31)} (at 31% marginal rate)
+                    Potential tax saving: {formatCurrency(totals.taxDeductible * taxHintRate)} (at {taxHintLabel})
                   </Badge>
                 </div>
               </div>
@@ -805,7 +851,7 @@ const IncomeExpenseTrackerContent = () => {
                   <Select
                     value={newTransaction.category}
                     onValueChange={(val) => {
-                      const cat = EXPENSE_CATEGORIES.find(c => c.id === val);
+                      const cat = ACTIVE_EXPENSE_CATEGORIES.find(c => c.id === val);
                       setNewTransaction({ 
                         ...newTransaction, 
                         category: val,
@@ -817,7 +863,7 @@ const IncomeExpenseTrackerContent = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {(newTransaction.type === 'income' ? INCOME_CATEGORIES : EXPENSE_CATEGORIES).map(cat => {
+                      {(newTransaction.type === 'income' ? ACTIVE_INCOME_CATEGORIES : ACTIVE_EXPENSE_CATEGORIES).map(cat => {
                         const Icon = cat.icon;
                         return (
                           <SelectItem key={cat.id} value={cat.id}>
@@ -1046,7 +1092,7 @@ const IncomeExpenseTrackerContent = () => {
                               )}
                             </div>
                             <p className="text-xs text-slate-500">
-                              {transaction.description || new Date(transaction.date).toLocaleDateString('en-ZA')}
+                              {transaction.description || new Date(transaction.date).toLocaleDateString(locale)}
                             </p>
                           </div>
                         </div>
@@ -1147,7 +1193,7 @@ const IncomeExpenseTrackerContent = () => {
                             {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
                           </p>
                           <p className="text-xs text-slate-500 mt-1">
-                            {new Date(transaction.date).toLocaleDateString('en-ZA')}
+                            {new Date(transaction.date).toLocaleDateString(locale)}
                           </p>
                           {transaction.taxDeductible && (
                             <Badge className="mt-2 text-xs bg-purple-500/20 text-purple-300">Tax Deductible</Badge>
@@ -1195,7 +1241,7 @@ const IncomeExpenseTrackerContent = () => {
               <CardDescription>Set spending limits for each category</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {EXPENSE_CATEGORIES.map(category => {
+              {ACTIVE_EXPENSE_CATEGORIES.map(category => {
                 const Icon = category.icon;
                 return (
                   <div key={category.id} className="flex items-center gap-4">
@@ -1234,7 +1280,7 @@ const IncomeExpenseTrackerContent = () => {
         title="Income & Expense Report"
         calculatorType="Income & Expense Tracker"
         inputs={[
-          { label: 'Period', value: new Date(selectedMonth + '-01').toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' }) },
+          { label: 'Period', value: new Date(selectedMonth + '-01').toLocaleDateString(locale, { month: 'long', year: 'numeric' }) },
           { label: 'Total Transactions', value: filteredTransactions.length.toString() },
           { label: 'Receipts Attached', value: transactionsWithReceipts.length.toString() },
         ]}
