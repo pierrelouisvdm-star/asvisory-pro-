@@ -113,15 +113,69 @@ export default function FIRECalculator() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-2">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10">
-          <Flame className="h-6 w-6 text-orange-500" />
+      <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
+        <div className="flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500/10">
+            <Flame className="h-6 w-6 text-orange-500" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-foreground font-display">FIRE Calculator</h1>
+            <p className="text-muted-foreground text-sm">Financial Independence, Retire Early — find your number</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold text-foreground font-display">FIRE Calculator</h1>
-          <p className="text-muted-foreground text-sm">Financial Independence, Retire Early — find your number</p>
-        </div>
+        <button
+          onClick={() => setShowShare(s => !s)}
+          data-testid="fire-share-btn"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-500 text-sm font-medium transition-colors border border-orange-500/20"
+        >
+          <Share2 className="h-4 w-4" />
+          Share my FIRE Number
+        </button>
       </div>
+
+      {/* Social Share Panel */}
+      {showShare && activeResult && (
+        <div className="p-4 rounded-xl border border-orange-500/30 bg-orange-500/5 space-y-3" data-testid="fire-share-panel">
+          <p className="text-sm font-semibold text-foreground">Share your {activeResult.label} number</p>
+          <div className="p-3 bg-background/80 rounded-lg border border-border text-xs text-muted-foreground font-mono whitespace-pre-wrap leading-relaxed">
+            {`🔥 My ${activeResult.label} number is $${Math.round(activeResult.fireNumber).toLocaleString()}!\n\nSavings Rate: ${savingsRate.toFixed(1)}%\nYears to FIRE: ${activeResult.years !== null ? activeResult.years : 'Need more savings'}\nTarget Retirement Age: ${activeResult.fireAge !== null ? activeResult.fireAge : 'TBD'}\n\nCalculate yours → ${window.location.origin}/us/fire-calculator\n#FIRE #FinancialIndependence #${activeResult.label.replace(/\s/g, '')}`}
+          </div>
+          <div className="flex gap-2 flex-wrap">
+            <button
+              onClick={() => {
+                const text = `🔥 My ${activeResult.label} number is $${Math.round(activeResult.fireNumber).toLocaleString()}!\n\nSavings Rate: ${savingsRate.toFixed(1)}% · Years to FIRE: ${activeResult.years !== null ? activeResult.years : 'N/A'} · Target Age: ${activeResult.fireAge || 'TBD'}\n\nCalculate yours → ${window.location.origin}/us/fire-calculator\n#FIRE #FinancialIndependence #${activeResult.label.replace(/\s/g, '')}`;
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+              }}
+              data-testid="fire-share-twitter"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-black hover:bg-black/80 text-white text-xs font-medium transition-colors"
+            >
+              <Twitter className="h-3.5 w-3.5" /> Share on X
+            </button>
+            <button
+              onClick={() => {
+                const title = `My ${activeResult.label} number is $${Math.round(activeResult.fireNumber).toLocaleString()} — ${savingsRate.toFixed(1)}% savings rate`;
+                const body = `I used this FIRE calculator to find out my Financial Independence number.\n\nFIRE Variant: ${activeResult.label}\nFIRE Number: $${Math.round(activeResult.fireNumber).toLocaleString()}\nSavings Rate: ${savingsRate.toFixed(1)}%\nYears to FIRE: ${activeResult.years !== null ? activeResult.years : 'N/A'}\nTarget Age: ${activeResult.fireAge || 'TBD'}\n\nCalculator: ${window.location.origin}/us/fire-calculator`;
+                window.open(`https://www.reddit.com/r/financialindependence/submit?title=${encodeURIComponent(title)}&text=${encodeURIComponent(body)}`, '_blank');
+              }}
+              data-testid="fire-share-reddit"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white text-xs font-medium transition-colors"
+            >
+              Share on Reddit
+            </button>
+            <button
+              onClick={() => {
+                const text = `🔥 My ${activeResult.label} number is $${Math.round(activeResult.fireNumber).toLocaleString()}!\nSavings Rate: ${savingsRate.toFixed(1)}% · Target Retirement Age: ${activeResult.fireAge || 'TBD'}\nCalculate yours → ${window.location.origin}/us/fire-calculator #FIRE`;
+                navigator.clipboard.writeText(text);
+                toast.success('Copied to clipboard!');
+              }}
+              data-testid="fire-share-copy"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border hover:bg-muted text-foreground text-xs font-medium transition-colors"
+            >
+              <Copy className="h-3.5 w-3.5" /> Copy Text
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Inputs */}

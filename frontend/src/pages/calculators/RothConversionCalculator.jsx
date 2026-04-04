@@ -82,8 +82,9 @@ export default function RothConversionCalculator() {
     const traditionalAfterTax = traditionalFutureValue - taxAtRetirement;
 
     const rothAdvantage = rothFutureValue - traditionalAfterTax;
-    const breakEvenYears = conversionTaxCost > 0 && rothAdvantage > 0
-      ? Math.log(1 + conversionTaxCost / (conversionAmount * (expectedRetirementRate / 100 - effectiveRateOnConversion))) / Math.log(1 + r)
+    const breakEvenDenom = conversionAmount * (expectedRetirementRate / 100 - effectiveRateOnConversion);
+    const breakEvenYears = conversionTaxCost > 0 && rothAdvantage > 0 && breakEvenDenom > 0
+      ? Math.log(1 + conversionTaxCost / breakEvenDenom) / Math.log(1 + r)
       : null;
 
     // Chart: year by year comparison
