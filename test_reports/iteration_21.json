@@ -1,0 +1,109 @@
+{
+  "summary": "Frontend testing of iteration 21 features: 3 new US calculators (FIRE, Student Loan, Self-Employment Tax), US Onboarding Wizard, Landing Page US-aware copy, Dashboard 9-calculator US section. All core features working correctly.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "LandingPage - Pricing Section (US mode)",
+        "issues": [
+          "Pricing section (line ~724) shows hardcoded R299/month even in US mode. Should show $19/month for US users.",
+          "Final CTA section (line ~971) also shows hardcoded 'R299/month or R1,999/year' in US mode."
+        ],
+        "priority": "MEDIUM"
+      },
+      {
+        "screen": "LandingPage - About/Features/Footer sections (US mode)",
+        "issues": [
+          "About Us section title: 'Empowering South Africans to Plan Smarter' - not conditionally rendered for US mode",
+          "Footer text: 'Professional financial planning tools built for South African regulations' - not jurisdiction-aware",
+          "Feature highlights contain SA-specific text in US mode: 'POPIA Compliant', 'SA Context Aware', 'SA Tax Brackets', 'COFI Compliant', 'Living Annuity Limits'",
+          "SARS appears 4 times in US mode on landing page (in calculator descriptions and feature highlights)"
+        ],
+        "priority": "MINOR"
+      }
+    ]
+  },
+  "test_report_links": ["/app/test_reports/iteration_21.json"],
+  "action_items": [
+    "LandingPage.jsx: Make Pricing section responsive to isUS flag - show $19/month price card for US users (currently hardcoded R299)",
+    "LandingPage.jsx: Update Final CTA 'R299/month or R1,999/year' text to use heroContent.price (isUS conditional) - same as hero section",
+    "LandingPage.jsx: The keyFeatures array, About section, and Footer are static SA content - consider making them jurisdiction-conditional for US users (or at minimum neutralize SA-specific copy)"
+  ],
+  "critical_code_review_comments": [
+    "LandingPage.jsx Pricing section (lines 724-771) uses hardcoded 'R299' and 'R1,999' - should use heroContent.price/priceAnnual which are already correctly set per jurisdiction",
+    "LandingPage.jsx Final CTA (line 971) also uses hardcoded 'R299/month or R1,999/year' - should be isUS conditional",
+    "keyFeatures array in LandingPage.jsx is entirely SA-focused (COFI compliant, Living Annuity, SARS brackets, POPIA) - for US users this shows incorrect feature highlights"
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "N/A (frontend only)",
+    "frontend": "92%"
+  },
+  "test_credentials": "Pierrelouisvdm@gmail.com / Scorpio@57!! (Admin + Premium)",
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "All new features working. Bugs are in LandingPage.jsx content that doesn't adapt to US jurisdiction: (1) Pricing section hardcoded R299 instead of $19, (2) About/Features/Footer sections contain SA-only text visible in US mode. FIRE/StudentLoan/SelfEmployed calculators fully functional. Wizard localStorage key is 'us_onboarding_completed'. SE Tax note: displays $12,010 for $100k income/$15k expenses (test description says ~$12,300 but $12,010 is the correct IRS calculation).",
+  "test_results": {
+    "landing_page_us_headline": {
+      "status": "PASS",
+      "details": "US mode shows 'The Complete Financial Planning Platform for Americans' with correct stats: 30+ Financial Tools, All 50 States Covered, FIRE Retirement Planning, PDF. Badge: '2024/2025 Tax Year · All 50 States'. Hero price: $19/month or $199/year."
+    },
+    "landing_page_sa_mode": {
+      "status": "PASS",
+      "details": "SA mode shows 'South Africans' in headline and R299/month pricing visible"
+    },
+    "landing_page_us_pricing_section_bug": {
+      "status": "FAIL",
+      "details": "The dedicated pricing section further down the page still shows hardcoded R299/month in US mode. Hero section correctly shows $19/month. This is a content consistency bug."
+    },
+    "us_onboarding_wizard_appears": {
+      "status": "PASS",
+      "details": "Wizard appears automatically ~800ms after login when jurisdiction=US and localStorage 'us_onboarding_completed' is not set. Shows 'US Setup · 1/5' badge."
+    },
+    "us_onboarding_wizard_5_steps": {
+      "status": "PASS",
+      "details": "All 5 steps navigable: Step1=Welcome+State+FilingStatus, Step2=Income+Employment, Step3=RetirementAccounts, Step4=Goals, Step5=PersonalizedToolkit. All data-testid selectors working."
+    },
+    "us_onboarding_wizard_completion_persistence": {
+      "status": "PASS",
+      "details": "After completing wizard, 'us_onboarding_completed'='true' is stored in localStorage. On next visit, wizard does NOT appear."
+    },
+    "fire_calculator_loads": {
+      "status": "PASS",
+      "route": "/us/fire-calculator",
+      "details": "Loads with all 4 variants: Lean FIRE, Regular FIRE, Fat FIRE, Barista FIRE. Has sliders (Expected Return, Inflation Rate), AreaChart with Portfolio vs FIRE Number line, Coast FIRE calculations."
+    },
+    "fire_calculator_calculation": {
+      "status": "PASS",
+      "details": "With $120k income, $60k expenses: Regular FIRE Number = $1,500,000 ($60k × 25 = $1.5M) CORRECT. Lean=$900k, Fat=$2.25M, Barista=$750k all correct per formula."
+    },
+    "student_loan_calculator_loads": {
+      "status": "PASS",
+      "route": "/us/student-loan",
+      "details": "Loads with all 5 strategies: Standard 10yr ($397/mo), Extended 25yr ($236/mo), IBR/SAVE ($135/mo), Extra Payments ($597/mo), Refinanced ($363/mo). Best Strategy banner shows Extra Payments. Two charts: Total Interest Comparison + Balance Over Time."
+    },
+    "self_employed_tax_loads": {
+      "status": "PASS",
+      "route": "/us/self-employed",
+      "details": "Loads with income/deductions form. Default $100k income, $15k expenses shows: Net Profit=$85k, SE Tax=$12,010, Total Tax=$19,285, Take-Home=$65,715, Effective Rate=19.3%."
+    },
+    "self_employed_tax_calculation": {
+      "status": "PASS",
+      "details": "SE Tax=$12,010 (correct per IRS formula: $85k × 0.9235 × 0.153 = $12,010). Test description said ~$12,300 but actual calculation is $12,010. QBI Deduction=$12,599 available and visible. W-2 comparison chart shown."
+    },
+    "dashboard_us_new_calculators": {
+      "status": "PASS",
+      "details": "Dashboard US mode shows: FIRE Calculator, Student Loan Payoff, Self-Employment Tax cards (all 9 total US calculators). All 3 new calculators have 'NEW' badge and proper descriptions/features."
+    },
+    "dashboard_us_section_ordering": {
+      "status": "PASS",
+      "details": "US Tax & Retirement section appears BEFORE Debt & Loan Calculators section. Correct ordering confirmed."
+    }
+  }
+}

@@ -45,6 +45,9 @@ import RothIRACalculator from "@/pages/calculators/RothIRACalculator";
 import SocialSecurityCalculator from "@/pages/calculators/SocialSecurityCalculator";
 import HSACalculator from "@/pages/calculators/HSACalculator";
 import Calculator529 from "@/pages/calculators/Calculator529";
+import FIRECalculator from "@/pages/calculators/FIRECalculator";
+import StudentLoanCalculator from "@/pages/calculators/StudentLoanCalculator";
+import SelfEmployedTaxCalculator from "@/pages/calculators/SelfEmployedTaxCalculator";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { Toaster } from "@/components/ui/sonner";
@@ -169,6 +172,9 @@ function App() {
                   <Route path="/us/social-security" element={<ProtectedRoute><GatedCalculator path="/us/social-security"><SocialSecurityCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/hsa" element={<ProtectedRoute><GatedCalculator path="/us/hsa"><HSACalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/529" element={<ProtectedRoute><GatedCalculator path="/us/529"><Calculator529 /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/fire-calculator" element={<ProtectedRoute><GatedCalculator path="/us/fire-calculator"><FIRECalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/student-loan" element={<ProtectedRoute><GatedCalculator path="/us/student-loan"><StudentLoanCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/self-employed" element={<ProtectedRoute><GatedCalculator path="/us/self-employed"><SelfEmployedTaxCalculator /></GatedCalculator></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />

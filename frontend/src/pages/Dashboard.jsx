@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MarketTracker } from '@/components/MarketTracker';
 import { QuickActionsWidget } from '@/components/QuickActionsWidget';
+import { USOnboardingWizard, useUSOnboarding } from '@/components/USOnboardingWizard';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
 import { useJurisdiction } from '@/context/JurisdictionContext';
@@ -37,7 +38,9 @@ import {
   Award,
   Newspaper,
   Globe,
-  Flag
+  Flag,
+  Flame,
+  Briefcase
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -335,6 +338,37 @@ const usCalculators = [
     features: ['State Tax Benefits', 'College Costs', 'Gift Tax'],
     isFree: false,
   },
+  {
+    id: 'us-fire',
+    title: 'FIRE Calculator',
+    description: 'Find your Financial Independence number and retirement timeline',
+    icon: Flame,
+    path: '/us/fire-calculator',
+    features: ['FIRE Number', 'Lean/Fat/Coast', 'Years to FIRE'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
+  {
+    id: 'us-student-loan',
+    title: 'Student Loan Payoff',
+    description: 'Compare Standard, IBR, PSLF & refinancing strategies',
+    icon: GraduationCap,
+    path: '/us/student-loan',
+    features: ['IBR/SAVE Plan', 'PSLF Eligible', 'Refinance Compare'],
+    isFree: false,
+    isNew: true,
+  },
+  {
+    id: 'us-self-employed',
+    title: 'Self-Employment Tax',
+    description: '1099 tax estimator with QBI, SE tax & all deductions',
+    icon: Briefcase,
+    path: '/us/self-employed',
+    features: ['QBI Deduction', 'SE Tax', 'W-2 Compare'],
+    isFree: false,
+    isNew: true,
+  },
 ];
 
 const features = [
@@ -461,7 +495,8 @@ const SectionHeader = ({ badge, title, description, icon: Icon }) => (
 export const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   const { isUS, isZA, currentJurisdiction } = useJurisdiction();
-  
+  const { showWizard, closeWizard } = useUSOnboarding(isUS);
+
   // Filter calculators based on jurisdiction
   const filterForJurisdiction = (calcs) => {
     if (isUS) return calcs.filter(c => !c.isSAOnly);
@@ -470,7 +505,8 @@ export const Dashboard = () => {
   
   return (
     <div className="min-h-screen bg-background" data-testid="dashboard">
-      {/* Hero Section */}
+      {/* US Onboarding Wizard */}
+      {showWizard && <USOnboardingWizard onClose={closeWizard} />}
       <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
           <div className="text-center max-w-3xl mx-auto">

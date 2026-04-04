@@ -8,19 +8,20 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { JurisdictionSelector } from '@/components/JurisdictionSelector';
+import { useJurisdiction } from '@/context/JurisdictionContext';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
   PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail, Phone, MapPin,
-  Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle
+  Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 
-// Calculator categories with detailed descriptions
-const calculatorCategories = [
+// SA Calculator categories
+const SA_CALCULATOR_CATEGORIES = [
   {
     title: 'Investment Planning',
     icon: TrendingUp,
@@ -29,7 +30,7 @@ const calculatorCategories = [
       { name: 'Future Value Calculator', desc: 'Project investment growth over time' },
       { name: 'Fee Comparison (EAC)', desc: 'See how fees impact your returns' },
       { name: 'Compound Interest', desc: 'See the power of compounding' },
-      { name: 'Monte Carlo Simulator', desc: 'Probability-based projections' },
+      { name: 'TFSA Calculator', desc: 'Maximize tax-free growth' },
     ]
   },
   {
@@ -60,6 +61,53 @@ const calculatorCategories = [
       { name: 'Retirement Planner', desc: 'Plan for financial independence' },
       { name: 'Living Annuity', desc: 'Sustainable drawdown rates' },
       { name: 'Bond & Debt Payoff', desc: 'SA Prime Rate integrated' },
+    ]
+  },
+];
+
+// US Calculator categories
+const US_CALCULATOR_CATEGORIES = [
+  {
+    title: 'Tax & Income',
+    icon: DollarSign,
+    color: 'emerald',
+    calculators: [
+      { name: 'Federal + State Tax Calculator', desc: 'All 50 states, real 2024 brackets' },
+      { name: 'Self-Employment Tax Estimator', desc: 'QBI, SE tax & all deductions' },
+      { name: 'Capital Gains Calculator', desc: 'Short-term vs long-term rates' },
+      { name: 'Budget Planner', desc: 'The 50/30/20 rule for Americans' },
+    ]
+  },
+  {
+    title: 'Retirement Accounts',
+    icon: PiggyBank,
+    color: 'blue',
+    calculators: [
+      { name: '401(k) Calculator', desc: 'Maximize employer match & tax savings' },
+      { name: 'Roth IRA Calculator', desc: 'Tax-free growth projections' },
+      { name: 'HSA Calculator', desc: 'Triple tax advantage strategy' },
+      { name: 'Social Security Estimator', desc: 'Optimize your claiming age' },
+    ]
+  },
+  {
+    title: 'Protection Planning',
+    icon: Shield,
+    color: 'amber',
+    calculators: [
+      { name: 'Life Insurance (DIME)', desc: 'Calculate your coverage needs' },
+      { name: 'Emergency Fund', desc: 'Build your financial safety net' },
+      { name: 'Student Loan Payoff', desc: 'IBR, PSLF & refinancing compare' },
+    ]
+  },
+  {
+    title: 'FIRE & Wealth',
+    icon: Flame,
+    color: 'orange',
+    calculators: [
+      { name: 'FIRE Calculator', desc: 'Lean, Regular, Fat & Coast FIRE' },
+      { name: 'Net Worth Tracker', desc: 'Assets, liabilities & wealth score' },
+      { name: 'Mortgage Calculator', desc: 'Payments, amortization & equity' },
+      { name: '529 College Savings', desc: 'Education funding with tax benefits' },
     ]
   },
 ];
@@ -220,19 +268,53 @@ const ContactForm = () => {
 };
 
 export const LandingPage = () => {
+  const { isUS } = useJurisdiction();
+
+  const calculatorCategories = isUS ? US_CALCULATOR_CATEGORIES : SA_CALCULATOR_CATEGORIES;
+
+  const heroContent = isUS ? {
+    tagline: 'Plan Better. Track Smarter. Grow Faster.',
+    badge: '2024/2025 Tax Year · All 50 States',
+    headline: 'The Complete Financial Planning Platform for Americans',
+    sub: 'From FIRE planning to 401(k) optimization — powerful tools built for real American financial decisions. 30+ professional calculators, US Tax Suite, and instant PDF reports.',
+    stats: [
+      { value: '30+', label: 'Financial Tools' },
+      { value: 'All 50', label: 'States Covered' },
+      { value: 'FIRE', label: 'Retirement Planning' },
+      { value: 'PDF', label: 'Instant Reports' },
+    ],
+    price: '$19/month',
+    priceAnnual: '$199/year',
+    priceNote: 'or $199/year — save $29',
+  } : {
+    tagline: 'Plan Better. Track Smarter. Grow Faster.',
+    badge: '2026/2027 Tax Year Ready',
+    headline: 'The Complete Financial Planning Platform for South Africans',
+    sub: 'Plan, track and optimise your finances with powerful tools built for real-world decisions. 20+ professional calculators, Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.',
+    stats: [
+      { value: '20+', label: 'Financial Calculators' },
+      { value: 'Tax Hub', label: 'Complete Tax Suite' },
+      { value: '24/7', label: 'Access Anywhere' },
+      { value: 'PDF', label: 'Instant Reports' },
+    ],
+    price: 'R299/month',
+    priceAnnual: 'R1,999/year',
+    priceNote: 'or R1,999/year — save R590',
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[70vh] flex items-center">
         {/* Background */}
         <div className="absolute inset-0 bg-[#0a0a18]" />
-        {/* Spotlight effect - more blue */}
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-b from-blue-500/30 via-blue-600/20 to-transparent rounded-full blur-[100px]" />
+        {/* Spotlight effect */}
+        <div className={`absolute top-[10%] left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-b ${isUS ? 'from-blue-500/30 via-blue-600/20' : 'from-blue-500/30 via-blue-600/20'} to-transparent rounded-full blur-[100px]`} />
         <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[300px] h-[200px] bg-gradient-to-b from-sky-400/25 to-transparent rounded-full blur-[60px]" />
         
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <div className="flex flex-col items-center text-center">
-            {/* Region Selector - for future jurisdictions */}
+            {/* Region Selector */}
             <div className="mb-6">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50">
                 <Globe className="h-4 w-4 text-slate-400" />
@@ -247,27 +329,29 @@ export const LandingPage = () => {
             </div>
             
             <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase mb-6">
-              Plan Better. Track Smarter. Grow Faster.
+              {heroContent.tagline}
             </p>
             
             <p className="mb-6 text-indigo-300 text-sm flex items-center justify-center gap-2">
               <Sparkles className="h-3 w-3" />
-              2026/2027 Tax Year Ready
+              {heroContent.badge}
             </p>
             
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-              The Complete Financial Planning Platform for South Africans
+              {heroContent.headline}
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Plan, track and optimise your finances with powerful tools built for real-world decisions. 
-              <span className="text-white font-medium"> 20+ professional calculators</span>, 
-              Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.
+              {isUS ? (
+                <>From <span className="text-white font-medium">FIRE planning</span> to <span className="text-white font-medium">401(k) optimization</span> — powerful tools built for real American financial decisions. 30+ professional calculators, US Tax Suite, and instant PDF reports.</>
+              ) : (
+                <>Plan, track and optimise your finances with powerful tools built for real-world decisions. <span className="text-white font-medium">20+ professional calculators</span>, Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.</>
+              )}
             </p>
 
             {/* Stats Row */}
             <div className="flex flex-wrap justify-center gap-8 mb-10">
-              {stats.map((stat, idx) => (
+              {heroContent.stats.map((stat, idx) => (
                 <div key={idx} className="text-center group">
                   <p className="text-3xl font-bold text-indigo-400 group-hover:scale-110 transition-transform">{stat.value}</p>
                   <p className="text-sm text-slate-400">{stat.label}</p>
@@ -291,7 +375,7 @@ export const LandingPage = () => {
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup
+              {isUS ? '$19/month or $199/year (Save $29!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
             </p>
           </div>
         </div>
@@ -328,7 +412,10 @@ export const LandingPage = () => {
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-3">Optimise Your Tax</h3>
               <p className="text-muted-foreground">
-                Stay ahead with a fully integrated Tax Planning Hub built around South African tax rules.
+                {isUS
+                  ? 'Federal + State tax for all 50 states, QBI deductions, self-employment tax — built for American tax planning.'
+                  : 'Stay ahead with a fully integrated Tax Planning Hub built around South African tax rules.'
+                }
               </p>
             </div>
             
