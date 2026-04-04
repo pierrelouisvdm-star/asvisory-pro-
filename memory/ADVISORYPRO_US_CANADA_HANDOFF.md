@@ -472,7 +472,7 @@ GET  /api/payments/portal   // Customer billing portal
 
 ### Frontend (.env)
 ```
-REACT_APP_BACKEND_URL=https://taxcalc-us.preview.emergentagent.com
+REACT_APP_BACKEND_URL=https://fire-calc-preview.preview.emergentagent.com
 ```
 
 ### Backend (.env)

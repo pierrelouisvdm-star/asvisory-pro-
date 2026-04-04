@@ -11,7 +11,7 @@ export default defineConfig({
     ['json', { outputFile: './test-results/results.json' }],
   ],
   use: {
-    baseURL: process.env.BASE_URL || 'https://taxcalc-us.preview.emergentagent.com',
+    baseURL: process.env.BASE_URL || 'https://fire-calc-preview.preview.emergentagent.com',
     screenshot: 'on',
     trace: 'on-first-retry',
     headless: true,
