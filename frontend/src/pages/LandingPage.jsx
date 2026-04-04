@@ -113,7 +113,7 @@ const US_CALCULATOR_CATEGORIES = [
 ];
 
 // Key features with detailed benefits
-const keyFeatures = [
+const SA_KEY_FEATURES = [
   {
     icon: Scale,
     title: 'Fee Comparison Tool',
@@ -155,6 +155,51 @@ const keyFeatures = [
     title: 'AI Financial Assistant',
     description: 'Get intelligent insights powered by advanced AI. Answer complex financial questions, generate explanations, and get guidance on your financial decisions.',
     highlights: ['GPT-Powered', 'SA Context Aware', 'Clear Explanations'],
+  },
+];
+
+const US_KEY_FEATURES = [
+  {
+    icon: DollarSign,
+    title: 'US Tax Suite (All 50 States)',
+    description: 'Federal + State taxes for all 50 states, self-employment tax with QBI deductions — built on real 2024 IRS brackets.',
+    highlights: ['All 50 States', 'QBI Deduction', '1099 / SE Tax'],
+  },
+  {
+    icon: Flame,
+    title: 'FIRE & Retirement Planning',
+    description: 'Find your Financial Independence number. Model Lean, Fat & Coast FIRE. Optimize 401(k), Roth IRA, HSA, and Social Security claiming age.',
+    highlights: ['FIRE Calculator', '401(k) + Roth IRA', 'HSA Strategy'],
+  },
+  {
+    icon: GraduationCap,
+    title: 'Student Loan Payoff',
+    description: 'Compare Standard, Extended, IBR/SAVE repayment. Model PSLF forgiveness. See exactly how much extra payments save over 10-25 years.',
+    highlights: ['IBR/SAVE Plan', 'PSLF Calculator', 'Refinance Compare'],
+  },
+  {
+    icon: Calculator,
+    title: '30+ Professional Calculators',
+    description: 'From mortgage amortization to net worth tracking — every financial calculation you need, built for American households and advisors.',
+    highlights: ['Mortgage Calculator', 'Auto Loan', '529 College Savings'],
+  },
+  {
+    icon: LineChart,
+    title: 'Net Worth & Budget Tracker',
+    description: 'Track assets, liabilities, set financial milestones, and monitor your wealth growth over time — denominated in USD with US-specific categories.',
+    highlights: ['Dollar-Denominated', 'Budget Tracking', 'Goal Milestones'],
+  },
+  {
+    icon: Shield,
+    title: 'Enterprise Security',
+    description: 'Bank-level encryption, audit trails for all data access, and complete data isolation. Your financial data is always protected.',
+    highlights: ['Encrypted', 'Audit Trails', 'Data Isolation'],
+  },
+  {
+    icon: Bot,
+    title: 'AI Financial Assistant',
+    description: 'Ask complex US tax and financial planning questions. Get instant answers about 401(k) limits, Roth conversions, FIRE numbers, and more.',
+    highlights: ['GPT-Powered', 'US Tax Aware', 'Clear Explanations'],
   },
 ];
 
@@ -271,6 +316,7 @@ export const LandingPage = () => {
   const { isUS } = useJurisdiction();
 
   const calculatorCategories = isUS ? US_CALCULATOR_CATEGORIES : SA_CALCULATOR_CATEGORIES;
+  const keyFeatures = isUS ? US_KEY_FEATURES : SA_KEY_FEATURES;
 
   const heroContent = isUS ? {
     tagline: 'Plan Better. Track Smarter. Grow Faster.',
@@ -724,20 +770,28 @@ export const LandingPage = () => {
           <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
             <CardContent className="p-8">
               <div className="mb-6">
-                <span className="text-5xl font-bold text-foreground">R299</span>
+                <span className="text-5xl font-bold text-foreground">{isUS ? '$19' : 'R299'}</span>
                 <span className="text-muted-foreground ml-2">/month</span>
               </div>
               
               <ul className="space-y-3 text-left mb-8">
-                {[
-                  'All 20 Financial Calculators',
+                {(isUS ? [
+                  'All 30+ US Financial Calculators',
+                  'US Tax Suite (Federal + All 50 States)',
+                  'FIRE Calculator — Lean, Fat & Coast',
+                  'Student Loan Payoff & IBR/PSLF',
+                  'Self-Employment Tax Estimator',
+                  'Professional PDF Reports',
+                  'AI Financial Assistant',
+                ] : [
+                  'All 20+ Financial Calculators',
                   'Tax Planning Hub (2026/27)',
                   'Weekly Market Updates by Analysts',
                   'Tips from Certified Financial Planners',
                   'Income & Expense Tracker',
                   'Professional PDF Reports',
                   'AI Financial Assistant',
-                ].map((feature, idx) => (
+                ]).map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground">
                     <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />
                     {feature}
@@ -779,10 +833,13 @@ export const LandingPage = () => {
               About Us
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
-              Empowering South Africans to Plan Smarter
+              {isUS ? 'Empowering Americans to Plan Smarter' : 'Empowering South Africans to Plan Smarter'}
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
-              Whether you're a professional advisor or managing your own finances, Financial Advisory Pro provides the tools you need - designed specifically for the South African market.
+              {isUS
+                ? 'Whether you\'re a financial advisor or managing your own finances, Financial Advisory Pro provides the tools you need — built for the American market.'
+                : 'Whether you\'re a professional advisor or managing your own finances, Financial Advisory Pro provides the tools you need — designed specifically for the South African market.'
+              }
             </p>
           </div>
 
@@ -790,10 +847,16 @@ export const LandingPage = () => {
             <div>
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Mission</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth.
+                {isUS
+                  ? 'To provide Americans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth.'
+                  : 'To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth.'
+                }
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We would like to be a partner in achieving your financial freedom.
+                {isUS
+                  ? 'Every feature in Financial Advisory Pro is built with the American financial environment in mind — from IRS tax brackets to 401(k) rules. We would like to be a partner in achieving your financial freedom.'
+                  : 'Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We would like to be a partner in achieving your financial freedom.'
+                }
               </p>
               
               <div className="grid grid-cols-2 gap-4">
@@ -968,7 +1031,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            R299/month or R1,999/year • Cancel anytime
+            {isUS ? '$19/month or $199/year • Cancel anytime' : 'R299/month or R1,999/year • Cancel anytime'}
           </p>
         </div>
       </section>
@@ -985,7 +1048,7 @@ export const LandingPage = () => {
                 <span className="text-foreground font-bold text-xl">Financial Advisory Pro</span>
               </div>
               <p className="text-sm text-muted-foreground">
-                Professional financial planning tools built for South African regulations.
+                Professional financial planning tools built for {isUS ? 'American' : 'South African'} regulations.
               </p>
             </div>
             
