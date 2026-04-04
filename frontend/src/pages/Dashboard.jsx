@@ -7,6 +7,7 @@ import { MarketTracker } from '@/components/MarketTracker';
 import { QuickActionsWidget } from '@/components/QuickActionsWidget';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
+import { useJurisdiction } from '@/context/JurisdictionContext';
 import { 
   Calculator, 
   TrendingUp, 
@@ -34,7 +35,9 @@ import {
   Crown,
   Lock,
   Award,
-  Newspaper
+  Newspaper,
+  Globe,
+  Flag
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -262,6 +265,70 @@ const planningTools = [
   },
 ];
 
+// US-specific calculators
+const usCalculators = [
+  {
+    id: 'us-tax-calculator',
+    title: 'US Tax Calculator',
+    description: 'Federal + State income taxes for all 50 states',
+    icon: Receipt,
+    path: '/us/tax-calculator',
+    features: ['2024/25 Brackets', 'All 50 States', 'FICA Taxes'],
+    isFree: false,
+    isFeatured: true,
+    isNew: true,
+  },
+  {
+    id: 'us-401k',
+    title: '401(k) Calculator',
+    description: 'Plan retirement with employer matching & tax benefits',
+    icon: PiggyBank,
+    path: '/us/401k-calculator',
+    features: ['Employer Match', 'Tax Savings', 'Roth vs Traditional'],
+    isFree: false,
+    isFeatured: true,
+    isNew: true,
+  },
+  {
+    id: 'us-roth-ira',
+    title: 'Roth IRA Calculator',
+    description: 'Tax-free retirement growth projections',
+    icon: Shield,
+    path: '/us/roth-ira',
+    features: ['Income Limits', 'Tax-Free Growth', 'Backdoor Roth'],
+    isFree: false,
+    isNew: true,
+  },
+  {
+    id: 'us-social-security',
+    title: 'Social Security Estimator',
+    description: 'Estimate your Social Security benefits',
+    icon: Landmark,
+    path: '/us/social-security',
+    features: ['Benefit Estimate', 'Claiming Age', 'Spousal Benefits'],
+    isFree: false,
+    isNew: true,
+  },
+  {
+    id: 'us-hsa',
+    title: 'HSA Calculator',
+    description: 'Triple tax advantage health savings',
+    icon: ShieldAlert,
+    path: '/us/hsa',
+    features: ['Tax Deduction', 'Tax-Free Growth', 'Medical Expenses'],
+    isFree: false,
+  },
+  {
+    id: 'us-529',
+    title: '529 College Savings',
+    description: 'Education savings with tax benefits',
+    icon: GraduationCap,
+    path: '/us/529',
+    features: ['State Tax Benefits', 'College Costs', 'Gift Tax'],
+    isFree: false,
+  },
+];
+
 const features = [
   {
     icon: BarChart3,
@@ -381,6 +448,7 @@ const SectionHeader = ({ badge, title, description, icon: Icon }) => (
 
 export const Dashboard = () => {
   const { isAuthenticated } = useAuth();
+  const { isUS, isZA, currentJurisdiction } = useJurisdiction();
   
   return (
     <div className="min-h-screen bg-background" data-testid="dashboard">
@@ -399,12 +467,22 @@ export const Dashboard = () => {
             </h1>
             
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
-              A comprehensive suite of 20+ professional calculators for South Africans. 
-              Make informed financial decisions with precision tools.
+              {isUS 
+                ? "A comprehensive suite of 20+ professional calculators for Americans. Make informed financial decisions with precision tools."
+                : "A comprehensive suite of 20+ professional calculators for South Africans. Make informed financial decisions with precision tools."
+              }
             </p>
             
+            {/* Region indicator */}
+            <div className="flex justify-center mb-6 animate-fade-in" style={{ animationDelay: '250ms' }}>
+              <Badge variant="outline" className="px-3 py-1 text-sm bg-background/50">
+                <span className="mr-2">{currentJurisdiction?.flag}</span>
+                {currentJurisdiction?.name} • {currentJurisdiction?.taxYear || '2024/2025'} Tax Year
+              </Badge>
+            </div>
+            
             <div className="flex flex-wrap justify-center gap-3 animate-fade-in" style={{ animationDelay: '300ms' }}>
-              <Link to="/future-value">
+              <Link to={isUS ? "/us/tax-calculator" : "/future-value"}>
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-6" data-testid="get-started-btn">
                   Get Started
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -534,6 +612,31 @@ export const Dashboard = () => {
           ))}
         </div>
       </section>
+
+      {/* US Calculators Section - Only show when US is selected */}
+      {isUS && (
+        <section className="bg-gradient-to-b from-blue-500/5 to-background py-16 border-t border-blue-500/20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <Badge className="mb-3 bg-blue-500/10 text-blue-500 border-blue-500/30 font-medium">
+                <Flag className="h-3 w-3 mr-1.5" />
+                🇺🇸 United States
+              </Badge>
+              <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-3 tracking-tight">
+                US Tax & Retirement Calculators
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Specialized tools for American tax planning, retirement accounts, and financial optimization.
+              </p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {usCalculators.map((calc, index) => (
+                <CalculatorCard key={calc.id} calc={calc} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Features Section */}
       <section className="border-t border-border py-16">

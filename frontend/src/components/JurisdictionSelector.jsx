@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -11,55 +11,10 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { ChevronDown, Globe, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const jurisdictions = [
-  { 
-    code: 'ZA', 
-    name: 'South Africa', 
-    flag: '🇿🇦', 
-    currency: 'ZAR',
-    available: true 
-  },
-  { 
-    code: 'US', 
-    name: 'United States', 
-    flag: '🇺🇸', 
-    currency: 'USD',
-    available: false 
-  },
-  { 
-    code: 'CA', 
-    name: 'Canada', 
-    flag: '🇨🇦', 
-    currency: 'CAD',
-    available: false 
-  },
-  { 
-    code: 'UK', 
-    name: 'United Kingdom', 
-    flag: '🇬🇧', 
-    currency: 'GBP',
-    available: false 
-  },
-  { 
-    code: 'AU', 
-    name: 'Australia', 
-    flag: '🇦🇺', 
-    currency: 'AUD',
-    available: false 
-  },
-];
+import { useJurisdiction } from '@/context/JurisdictionContext';
 
 export const JurisdictionSelector = ({ className }) => {
-  const [jurisdiction, setJurisdiction] = useState('ZA');
-  const currentJurisdiction = jurisdictions.find(j => j.code === jurisdiction);
-
-  const handleSelect = (code) => {
-    const selected = jurisdictions.find(j => j.code === code);
-    if (selected?.available) {
-      setJurisdiction(code);
-    }
-  };
+  const { jurisdiction, currentJurisdiction, switchJurisdiction, jurisdictions } = useJurisdiction();
 
   return (
     <DropdownMenu>
@@ -87,7 +42,7 @@ export const JurisdictionSelector = ({ className }) => {
         {jurisdictions.map((j) => (
           <DropdownMenuItem
             key={j.code}
-            onClick={() => handleSelect(j.code)}
+            onClick={() => switchJurisdiction(j.code)}
             data-testid={`jurisdiction-option-${j.code}`}
             disabled={!j.available}
             className={cn(
