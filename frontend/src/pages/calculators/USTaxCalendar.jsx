@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, CheckCircle2, AlertCircle, Clock, DollarSign, Info } from 'lucide-react';
+import SEOHead from '@/components/SEOHead';
 
 const CURRENT_YEAR = 2025;
 const NEXT_YEAR = 2026;
@@ -90,6 +91,12 @@ export default function USTaxCalendar() {
           <p className="text-muted-foreground text-sm">Never miss a deadline — estimated taxes, contribution limits, and year-end actions</p>
         </div>
       </div>
+      <SEOHead
+        title="US Tax Calendar 2025–2026 — Every Deadline You Need"
+        description="Complete US tax deadline calendar for 2025–2026. Estimated tax due dates, IRA/HSA contribution deadlines, RMD deadline, tax filing dates, and 2025 contribution limits."
+        path="/us/tax-calendar"
+        keywords="tax calendar 2025, tax deadlines 2025, estimated tax due dates, IRA contribution deadline 2025, April 15 2026 tax deadline"
+      />
 
       {/* Filter tabs */}
       <div className="flex flex-wrap gap-2">

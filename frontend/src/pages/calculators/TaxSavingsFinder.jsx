@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TrendingDown, DollarSign, CheckCircle2, AlertCircle, ChevronRight, Sparkles, Target, Info } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import SEOHead from '@/components/SEOHead';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 
@@ -257,6 +258,12 @@ export default function TaxSavingsFinder() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <SEOHead
+        title="2025 Tax Savings Finder — Personalized Ways to Cut Your Tax Bill"
+        description="Enter your income and situation. Get a personalized list of every legal way to reduce your 2025 federal tax bill: 401k, HSA, IRA, QBI deduction, student loan interest, and more."
+        path="/us/tax-savings-finder"
+        keywords="tax savings 2025, how to reduce taxes 2025, tax deductions 2025, 401k tax savings, HSA tax benefit, IRA deduction 2025"
+      />
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10">
           <TrendingDown className="h-6 w-6 text-emerald-500" />

@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { TrendingDown, DollarSign, Clock, AlertCircle, CheckCircle2, Plus, Trash2, Info } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import SEOHead from '@/components/SEOHead';
 import { US_STATE_TAX_DATA, getStateList } from '@/data/usTaxData';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
@@ -162,6 +163,12 @@ export default function CapitalGainsTaxCalculator() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <SEOHead
+        title="2025 Capital Gains Tax Calculator — Short vs Long-Term + NIIT"
+        description="Calculate your 2025 capital gains tax for stocks, crypto, real estate. Includes NIIT (3.8%), all 50 states, short vs long-term rates, and tax-loss harvesting tips."
+        path="/us/capital-gains"
+        keywords="capital gains tax calculator 2025, long term capital gains 2025, NIIT calculator, stock tax calculator, crypto tax calculator 2025"
+      />
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10">
           <TrendingDown className="h-6 w-6 text-indigo-500" />

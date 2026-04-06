@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Home, DollarSign, CheckCircle2, AlertCircle, Info } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import SEOHead from '@/components/SEOHead';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 const fmtD = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(n || 0);
@@ -94,6 +95,12 @@ export default function HomeAffordabilityCalculator() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <SEOHead
+        title="Home Affordability Calculator 2025 — How Much House Can I Afford?"
+        description="Use the 28/36 DTI rule to find your maximum home price. Calculates monthly PITI payment, PMI, and compares debt-to-income ratio. Updated for 2025 mortgage rates."
+        path="/us/home-affordability"
+        keywords="home affordability calculator 2025, how much house can I afford, mortgage affordability calculator, DTI calculator, PITI calculator"
+      />
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10">
           <Home className="h-6 w-6 text-emerald-500" />

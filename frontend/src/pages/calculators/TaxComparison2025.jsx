@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { TrendingDown, DollarSign, CheckCircle2, ArrowRight, Sparkles, Info } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import SEOHead from '@/components/SEOHead';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 
@@ -105,6 +106,12 @@ export default function TaxComparison2025() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <SEOHead
+        title="2025 vs 2024 Tax Comparison — How Much More Do You Keep?"
+        description="See exactly how much less you'll pay in 2025 vs 2024 taxes. Wider brackets and higher standard deduction ($15,750 single, $31,500 MFJ) mean most Americans keep more money."
+        path="/us/tax-comparison-2025"
+        keywords="2025 tax changes, 2025 vs 2024 tax brackets, tax bracket comparison 2025, standard deduction 2025, how much tax savings 2025"
+      />
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10">
           <Sparkles className="h-6 w-6 text-blue-500" />

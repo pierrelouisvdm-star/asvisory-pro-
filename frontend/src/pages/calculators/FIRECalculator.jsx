@@ -12,6 +12,7 @@ import {
 import { Flame, Target, TrendingUp, PiggyBank, Zap, DollarSign, Clock, CheckCircle2, Info, Share2, Twitter, Copy, X } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 import { getSavingsRatePercentile, getPercentileLabel } from '@/data/usBenchmarks';
+import SEOHead from '@/components/SEOHead';
 
 const formatCurrency = (amount) => new Intl.NumberFormat('en-US', {
   style: 'currency', currency: 'USD', maximumFractionDigits: 0,
@@ -113,6 +114,12 @@ export default function FIRECalculator() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <SEOHead
+        title="FIRE Calculator 2025 — Find Your Financial Independence Number"
+        description="Calculate your FIRE number for Lean, Regular, Fat, and Coast FIRE. Find how many years to financial independence with real inflation adjustments. Free and shareable."
+        path="/us/fire-calculator"
+        keywords="FIRE calculator 2025, financial independence calculator, retire early calculator, FIRE number, Coast FIRE calculator, Fat FIRE calculator"
+      />
       {/* Header */}
       <div className="flex items-center justify-between gap-3 mb-2 flex-wrap">
         <div className="flex items-center gap-3">

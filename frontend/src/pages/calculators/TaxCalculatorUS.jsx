@@ -19,6 +19,7 @@ import {
   getStateList
 } from '@/data/usTaxData';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import SEOHead from '@/components/SEOHead';
 
 const TaxCalculatorUS = () => {
   const [income, setIncome] = useState(75000);
@@ -122,6 +123,12 @@ const TaxCalculatorUS = () => {
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+      <SEOHead
+        title="2025 US Tax Calculator — Federal + All 50 States"
+        description="Calculate your 2025 federal and state income taxes. Updated 2025 IRS brackets (Rev. Proc. 2024-40), all 50 states, FICA taxes, and retirement contribution deductions. Free."
+        path="/us/tax-calculator"
+        keywords="2025 tax calculator, federal income tax calculator 2025, 2025 tax brackets, state income tax calculator, income tax estimator 2025, IRS tax calculator"
+      />
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center mb-8">

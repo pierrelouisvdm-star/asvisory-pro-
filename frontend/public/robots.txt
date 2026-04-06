@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Allow: /tools
+Allow: /welcome
+Allow: /pricing
+Allow: /us/
+Disallow: /auth
+Disallow: /analytics
+Disallow: /security
+
+Sitemap: https://fire-calc-preview.preview.emergentagent.com/sitemap.xml

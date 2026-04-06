@@ -14,6 +14,8 @@ import {
   Receipt, Wallet, Bot, Award, Flame, DollarSign
 } from 'lucide-react';
 import { toast } from 'sonner';
+import CountdownTimer from '@/components/CountdownTimer';
+import SEOHead from '@/components/SEOHead';
 
 const PREMIUM_FEATURES = [
   { icon: Calculator, label: 'All 20 Financial Calculators' },
@@ -143,6 +145,12 @@ export const PricingPage = () => {
 
   return (
     <div className="min-h-screen bg-navy-950" data-testid="pricing-page">
+      <SEOHead
+        title="AdvisoryPro Pricing — $99 Annual (Limited Time) or $19/month"
+        description="Professional financial planning tools. $19/month or $99 one-time annual access (limited time, regularly $149). All 30+ US calculators. Advisor-level tools, without the advisor."
+        path="/pricing"
+        keywords="financial calculator pricing, AdvisoryPro pricing, financial tools subscription, tax calculator subscription"
+      />
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header */}
         <div className="text-center mb-12">
@@ -268,6 +276,9 @@ export const PricingPage = () => {
                         <p className="text-emerald-400 text-sm mt-2">
                           Full year access · Normally $149
                         </p>
+                        <div className="mt-3">
+                          <CountdownTimer label="Price goes up in" />
+                        </div>
                       </>
                     ) : (
                       <>

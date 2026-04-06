@@ -9,6 +9,7 @@ import {
   Home, Briefcase, TrendingDown, Sparkles, CheckCircle2, Users, Star, Zap
 } from 'lucide-react';
 import { toast } from 'sonner';
+import SEOHead from '@/components/SEOHead';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -115,8 +116,30 @@ export default function PublicToolsPage() {
     }
   };
 
+  const TOOLS_JSON_LD = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Free US Financial Calculators 2025",
+    "description": "Professional financial calculators for Americans — tax, FIRE, paycheck, home affordability, FI score quiz.",
+    "url": `${process.env.REACT_APP_BACKEND_URL?.replace(/\/api.*$/, '')}/tools`,
+    "itemListElement": FREE_TOOLS.map((tool, i) => ({
+      "@type": "ListItem",
+      "position": i + 1,
+      "name": tool.title,
+      "description": tool.desc,
+      "url": `${process.env.REACT_APP_BACKEND_URL?.replace(/\/api.*$/, '')}${tool.path}`,
+    })),
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Free US Financial Calculators 2025"
+        description="Free US financial tools: 2025 vs 2024 tax comparison, FIRE calculator, FI score quiz, home affordability calculator, tax calendar. No account required. Advisor-level tools, without the advisor."
+        path="/tools"
+        keywords="free financial calculators 2025, FIRE calculator free, 2025 tax calculator, financial independence quiz, home affordability calculator, tax savings calculator"
+        jsonLd={TOOLS_JSON_LD}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-500/8 to-background py-24 border-b border-border">
         <div className="max-w-5xl mx-auto px-4 text-center">

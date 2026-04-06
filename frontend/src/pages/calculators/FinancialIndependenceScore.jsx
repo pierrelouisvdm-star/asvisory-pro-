@@ -6,6 +6,7 @@ import { RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer } from '
 import { Award, CheckCircle2, AlertCircle, TrendingUp, Share2, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import SEOHead from '@/components/SEOHead';
 
 const QUESTIONS = [
   {
@@ -176,6 +177,12 @@ export default function FinancialIndependenceScore() {
     const radarData = [{ value: score, fill: tier.color }];
     return (
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
+        <SEOHead
+          title="Financial Independence Score — Your FI Progress"
+          description="Take our 6-question Financial Independence quiz to score your savings rate, net worth, retirement contributions, and more. Free, instant, shareable."
+          path="/us/fi-score"
+          keywords="financial independence score, FI quiz, financial independence calculator, savings rate calculator, FIRE progress quiz"
+        />
         <div className="text-center">
           <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl mb-4" style={{ backgroundColor: `${tier.color}20` }}>
             <Award className="h-8 w-8" style={{ color: tier.color }} />

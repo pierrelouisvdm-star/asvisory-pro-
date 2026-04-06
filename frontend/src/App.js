@@ -79,6 +79,7 @@ import { JurisdictionProvider } from "@/context/JurisdictionContext";
 import { CalculatorGate } from "@/components/FeatureGate";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AIAdvisorButton } from "@/components/AIAdvisorChat";
+import { HelmetProvider } from "react-helmet-async";
 
 // Wrap a calculator with feature gate
 const GatedCalculator = ({ path, children }) => (
@@ -126,6 +127,7 @@ const AppLayout = ({ children }) => {
 
 function App() {
   return (
+    <HelmetProvider>
     <ThemeProvider>
       <AuthProvider>
         <JurisdictionProvider>
@@ -231,6 +233,7 @@ function App() {
       </JurisdictionProvider>
     </AuthProvider>
     </ThemeProvider>
+    </HelmetProvider>
   );
 }
 

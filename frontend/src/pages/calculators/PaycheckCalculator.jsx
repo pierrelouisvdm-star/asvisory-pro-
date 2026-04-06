@@ -8,6 +8,7 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis
 import { Briefcase, DollarSign, TrendingUp, CheckCircle2, Info } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 import { US_STATE_TAX_DATA, getStateList } from '@/data/usTaxData';
+import SEOHead from '@/components/SEOHead';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 const fmtPct = (r) => `${(r * 100).toFixed(1)}%`;
@@ -146,6 +147,12 @@ export default function PaycheckCalculator() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
+      <SEOHead
+        title="2025 Paycheck Calculator — Exact Take-Home Pay After Taxes"
+        description="See your exact take-home pay after 2025 federal, state, FICA taxes and pre-tax deductions (401k, HSA). All 50 states, bi-weekly, monthly, and weekly pay periods."
+        path="/us/paycheck"
+        keywords="paycheck calculator 2025, take home pay calculator, salary after tax calculator, FICA tax calculator, net pay calculator 2025"
+      />
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/10">
           <Briefcase className="h-6 w-6 text-green-500" />

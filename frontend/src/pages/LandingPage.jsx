@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
+import CountdownTimer from '@/components/CountdownTimer';
+import SEOHead from '@/components/SEOHead';
 
 // SA Calculator categories
 const SA_CALCULATOR_CATEGORIES = [
@@ -350,6 +352,18 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title={isUS ? "AdvisoryPro — Every Financial Calculator. One Intelligent Platform." : "AdvisoryPro — Professional Financial Planning for South Africans"}
+        description={isUS
+          ? "Make better financial decisions, faster. 30+ professional financial calculators for Americans. 2025 IRS brackets, FIRE planning, RSU taxes, home affordability, Medicare IRMAA."
+          : "20+ professional financial calculators for South Africans. SA Tax Hub, RA, TFSA, CGT, retirement planning — updated for 2026/2027 tax year."
+        }
+        path="/welcome"
+        keywords={isUS
+          ? "financial calculators 2025, FIRE calculator, tax calculator 2025, RSU tax calculator, home affordability, financial independence"
+          : "South African financial calculators, SA tax calculator, TFSA calculator, RA tax savings, CGT calculator South Africa"
+        }
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[70vh] flex items-center">
         {/* Background */}
@@ -785,6 +799,9 @@ export const LandingPage = () => {
                   </div>
                   <p className="text-emerald-500 text-sm mt-1">Full year access · Regular price $149</p>
                   <p className="text-xs text-muted-foreground mt-1">or $19/month — cancel anytime</p>
+                  <div className="mt-3">
+                    <CountdownTimer label="Price goes up in" />
+                  </div>
                 </div>
               ) : (
                 <div className="mb-6">
