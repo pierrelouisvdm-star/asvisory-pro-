@@ -25,6 +25,7 @@ import { useAuth } from '../context/AuthContext';
 import { toast } from 'sonner';
 import VoiceTransactionRecorder from '../components/VoiceTransactionRecorder';
 import VoiceReceiptAnalyzer from '../components/VoiceReceiptAnalyzer';
+import VoiceLoggerSession from '../components/VoiceLoggerSession';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -187,13 +188,13 @@ const IncomeExpenseTrackerContent = () => {
     receipt: null, // { name, type, file (File object) }
   });
 
-  // Receipt preview modal
   const [viewingReceipt, setViewingReceipt] = useState(null);
   const [receiptBlobUrls, setReceiptBlobUrls] = useState({});
   
   // OCR state
   const [ocrData, setOcrData] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [showVoiceSession, setShowVoiceSession] = useState(false);
 
   // Load transactions from backend
   const loadTransactions = useCallback(async () => {
@@ -586,6 +587,17 @@ const IncomeExpenseTrackerContent = () => {
     <div className="space-y-6" data-testid="income-expense-tracker">
       <Disclaimer />
       
+      {/* Voice Logger Session Overlay */}
+      {showVoiceSession && (
+        <VoiceLoggerSession
+          onClose={() => setShowVoiceSession(false)}
+          onSessionSaved={() => { loadTransactions(); setShowVoiceSession(false); }}
+          jurisdiction={isUS ? 'us' : 'sa'}
+          currencySymbol={currencySymbol}
+          token={token}
+        />
+      )}
+
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -597,6 +609,15 @@ const IncomeExpenseTrackerContent = () => {
         </div>
         
         <div className="flex items-center gap-3">
+          {/* Voice Session Button */}
+          <button
+            onClick={() => setShowVoiceSession(true)}
+            data-testid="start-voice-session-btn"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/30 text-violet-400 text-sm font-medium transition-all hover:scale-105 active:scale-95"
+          >
+            <Mic className="h-4 w-4" />
+            Voice Session
+          </button>
           <Select value={selectedMonth} onValueChange={setSelectedMonth}>
             <SelectTrigger className="w-[180px] bg-navy-800 border-navy-600">
               <Calendar className="h-4 w-4 mr-2" />

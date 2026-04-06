@@ -258,6 +258,46 @@ async def create_transaction(
     return transaction_doc
 
 
+@router.post("/batch")
+async def batch_create_transactions(
+    transactions: list[TransactionCreate],
+    current_user: dict = Depends(get_current_user)
+):
+    """Save multiple transactions at once (for voice logging sessions)."""
+    if not transactions:
+        raise HTTPException(status_code=400, detail="No transactions provided")
+    if len(transactions) > 50:
+        raise HTTPException(status_code=400, detail="Maximum 50 transactions per batch")
+
+    now = datetime.now(timezone.utc).isoformat()
+    docs = []
+    for t in transactions:
+        doc = {
+            "id": str(uuid.uuid4()),
+            "user_id": current_user["id"],
+            "type": t.type,
+            "amount": t.amount,
+            "category": t.category,
+            "description": t.description or "",
+            "date": t.date,
+            "is_recurring": t.is_recurring,
+            "tax_deductible": t.tax_deductible,
+            "receipt_id": None,
+            "receipt_filename": None,
+            "is_deleted": False,
+            "created_at": now,
+            "updated_at": now,
+        }
+        docs.append(doc)
+
+    await db.transactions.insert_many(docs)
+    # Strip _id from each before returning
+    for d in docs:
+        d.pop("_id", None)
+
+    return {"saved": len(docs), "transactions": docs}
+
+
 @router.put("/{transaction_id}")
 async def update_transaction(
     transaction_id: str,
