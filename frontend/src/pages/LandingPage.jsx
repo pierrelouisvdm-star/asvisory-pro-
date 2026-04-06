@@ -164,7 +164,7 @@ const US_KEY_FEATURES = [
   {
     icon: DollarSign,
     title: 'US Tax Suite (All 50 States)',
-    description: 'Federal + State taxes for all 50 states, self-employment tax with QBI deductions — built on real 2024 IRS brackets.',
+    description: 'Federal + State taxes for all 50 states, self-employment tax with QBI deductions, built on real 2024 IRS brackets.',
     highlights: ['All 50 States', 'QBI Deduction', '1099 / SE Tax'],
   },
   {
@@ -182,13 +182,13 @@ const US_KEY_FEATURES = [
   {
     icon: Calculator,
     title: '30+ Professional Calculators',
-    description: 'From mortgage amortization to net worth tracking — every financial calculation you need, built for American households and advisors.',
+    description: 'From mortgage amortization to net worth tracking, every financial calculation you need, built for American households and advisors.',
     highlights: ['Mortgage Calculator', 'Auto Loan', '529 College Savings'],
   },
   {
     icon: LineChart,
     title: 'Net Worth & Budget Tracker',
-    description: 'Track assets, liabilities, set financial milestones, and monitor your wealth growth over time — denominated in USD with US-specific categories.',
+    description: 'Track assets, liabilities, set financial milestones, and monitor your wealth growth over time, denominated in USD with US-specific categories.',
     highlights: ['Dollar-Denominated', 'Budget Tracking', 'Goal Milestones'],
   },
   {
@@ -324,7 +324,7 @@ export const LandingPage = () => {
     tagline: 'Advisor-Level Tools. Without the Advisor.',
     badge: '2025 Tax Year · All 50 States',
     headline: 'Every Financial Calculator. One Intelligent Platform.',
-    sub: 'Make better financial decisions, faster. 30+ professional-grade tools for tax planning, FIRE, retirement, RSUs, real estate, and more — built on 2025 IRS data.',
+    sub: 'Make better financial decisions, faster. 30+ professional-grade tools for tax planning, FIRE, retirement, RSUs, real estate, and more, built on 2025 IRS data.',
     stats: [
       { value: '30+', label: 'Financial Tools' },
       { value: 'All 50', label: 'States Covered' },
@@ -333,12 +333,12 @@ export const LandingPage = () => {
     ],
     price: '$19/month',
     priceAnnual: '$99 one-time',
-    priceNote: 'or $99 one-time (limited offer — reg. $149)',
+    priceNote: 'or $99 one-time (limited offer, reg. $149)',
   } : {
     tagline: 'Plan Better. Track Smarter. Grow Faster.',
     badge: '2026/2027 Tax Year Ready',
     headline: 'The Complete Financial Planning Platform for South Africans',
-    sub: 'Plan, track and optimise your finances with powerful tools built for real-world decisions. 20+ professional calculators, Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.',
+    sub: 'Plan, track and optimise your finances with powerful tools built for real-world decisions. 20+ professional calculators, Tax Planning Hub, Income Tracker, and instant PDF reports, all localized for SA regulations.',
     stats: [
       { value: '20+', label: 'Financial Calculators' },
       { value: 'Tax Hub', label: 'Complete Tax Suite' },
@@ -347,16 +347,16 @@ export const LandingPage = () => {
     ],
     price: 'R299/month',
     priceAnnual: 'R1,999/year',
-    priceNote: 'or R1,999/year — save R590',
+    priceNote: 'or R1,999/year, save R590',
   };
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title={isUS ? "AdvisoryPro — Every Financial Calculator. One Intelligent Platform." : "AdvisoryPro — Professional Financial Planning for South Africans"}
+        title={isUS ? "AdvisoryPro, Every Financial Calculator. One Intelligent Platform." : "AdvisoryPro, Professional Financial Planning for South Africans"}
         description={isUS
           ? "Make better financial decisions, faster. 30+ professional financial calculators for Americans. 2025 IRS brackets, FIRE planning, RSU taxes, home affordability, Medicare IRMAA."
-          : "20+ professional financial calculators for South Africans. SA Tax Hub, RA, TFSA, CGT, retirement planning — updated for 2026/2027 tax year."
+          : "20+ professional financial calculators for South Africans. SA Tax Hub, RA, TFSA, CGT, retirement planning, updated for 2026/2027 tax year."
         }
         path="/welcome"
         keywords={isUS
@@ -403,9 +403,9 @@ export const LandingPage = () => {
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
               {isUS ? (
-                <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more — built on 2025 IRS data.</>
+                <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2025 IRS data.</>
               ) : (
-                <>Plan, track and optimise your finances with powerful tools built for real-world decisions. <span className="text-white font-medium">20+ professional calculators</span>, Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.</>
+                <>Plan, track and optimise your finances with powerful tools built for real-world decisions. <span className="text-white font-medium">20+ professional calculators</span>, Tax Planning Hub, Income Tracker, and instant PDF reports, all localized for SA regulations.</>
               )}
             </p>
 
@@ -473,7 +473,7 @@ export const LandingPage = () => {
               <h3 className="text-xl font-semibold text-foreground mb-3">Optimise Your Tax</h3>
               <p className="text-muted-foreground">
                 {isUS
-                  ? 'Federal + State tax for all 50 states, QBI deductions, self-employment tax — built for American tax planning.'
+                  ? 'Federal + State tax for all 50 states, QBI deductions, self-employment tax, built for American tax planning.'
                   : 'Stay ahead with a fully integrated Tax Planning Hub built around South African tax rules.'
                 }
               </p>
@@ -563,7 +563,7 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Tax Hub Feature Highlight — SA only */}
+      {/* Tax Hub Feature Highlight, SA only */}
       {!isUS && (
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/50 via-background to-background" />
@@ -684,7 +684,7 @@ export const LandingPage = () => {
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {isUS
-                ? 'From FIRE planning to capital gains tax, every calculation built for American financial decisions — 2025 IRS brackets (Rev. Proc. 2024-40), all 50 states.'
+                ? 'From FIRE planning to capital gains tax, every calculation built for American financial decisions, 2025 IRS brackets (Rev. Proc. 2024-40), all 50 states.'
                 : 'From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.'
               }
             </p>
@@ -798,7 +798,7 @@ export const LandingPage = () => {
                     <span className="text-muted-foreground">one-time</span>
                   </div>
                   <p className="text-emerald-500 text-sm mt-1">Full year access · Regular price $149</p>
-                  <p className="text-xs text-muted-foreground mt-1">or $19/month — cancel anytime</p>
+                  <p className="text-xs text-muted-foreground mt-1">or $19/month, cancel anytime</p>
                   <div className="mt-3">
                     <CountdownTimer label="Price goes up in" />
                   </div>
@@ -807,7 +807,7 @@ export const LandingPage = () => {
                 <div className="mb-6">
                   <span className="text-5xl font-bold text-foreground">R299</span>
                   <span className="text-muted-foreground ml-2">/month</span>
-                  <p className="text-emerald-500 text-sm mt-1">or R1,999/year — save R590</p>
+                  <p className="text-emerald-500 text-sm mt-1">or R1,999/year, save R590</p>
                 </div>
               )}
               
@@ -815,7 +815,7 @@ export const LandingPage = () => {
                 {(isUS ? [
                   'All 30+ US Financial Calculators',
                   'US Tax Suite (Federal + All 50 States)',
-                  'FIRE Calculator — Lean, Fat & Coast FIRE',
+                  'FIRE Calculator, Lean, Fat & Coast FIRE',
                   'RSU, AMT, Paycheck & Capital Gains Tax',
                   'Home Affordability & Rent vs Buy',
                   'Professional PDF Reports',
@@ -874,8 +874,8 @@ export const LandingPage = () => {
             </h2>
             <p className="text-muted-foreground max-w-3xl mx-auto text-lg">
               {isUS
-                ? 'Whether you\'re a financial advisor or managing your own finances, Financial Advisory Pro provides the tools you need — built for the American market.'
-                : 'Whether you\'re a professional advisor or managing your own finances, Financial Advisory Pro provides the tools you need — designed specifically for the South African market.'
+                ? 'Whether you\'re a financial advisor or managing your own finances, Financial Advisory Pro provides the tools you need, built for the American market.'
+                : 'Whether you\'re a professional advisor or managing your own finances, Financial Advisory Pro provides the tools you need, designed specifically for the South African market.'
               }
             </p>
           </div>
@@ -891,7 +891,7 @@ export const LandingPage = () => {
               </p>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 {isUS
-                  ? 'Every feature in Financial Advisory Pro is built with the American financial environment in mind — from IRS tax brackets to 401(k) rules. We would like to be a partner in achieving your financial freedom.'
+                  ? 'Every feature in Financial Advisory Pro is built with the American financial environment in mind, from IRS tax brackets to 401(k) rules. We would like to be a partner in achieving your financial freedom.'
                   : 'Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We would like to be a partner in achieving your financial freedom.'
                 }
               </p>

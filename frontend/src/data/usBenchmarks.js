@@ -1,4 +1,4 @@
-// US Financial Benchmarks — Federal Reserve 2022 SCF + BEA + Vanguard/Fidelity data
+// US Financial Benchmarks, Federal Reserve 2022 SCF + BEA + Vanguard/Fidelity data
 // Used for "How do you compare?" features across calculators
 
 export const US_SAVINGS_RATE_PERCENTILES = {
@@ -36,7 +36,7 @@ export const US_RETIREMENT_SAVINGS_MEDIAN = {
 };
 
 export const US_EFFECTIVE_TAX_RATE_MEDIAN = {
-  // IRS SOI data — median effective federal income tax rate by income band
+  // IRS SOI data, median effective federal income tax rate by income band
   'under30k': 0.04,
   '30k-50k':  0.08,
   '50k-75k':  0.10,

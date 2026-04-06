@@ -5,7 +5,7 @@ const SITE_URL = (process.env.REACT_APP_BACKEND_URL || 'https://advisorypro.com'
 const SITE_NAME = 'AdvisoryPro';
 
 const DEFAULTS = {
-  title: 'AdvisoryPro — Every Financial Calculator. One Intelligent Platform.',
+  title: 'AdvisoryPro, Every Financial Calculator. One Intelligent Platform.',
   description: '30+ professional financial calculators for Americans. 2025 IRS brackets, FIRE planning, RSU taxes, home affordability, paycheck calculator, Medicare IRMAA, AMT. Free to start.',
   keywords: '2025 tax calculator, FIRE calculator, paycheck calculator, home affordability calculator, financial independence, RSU tax calculator, capital gains tax 2025',
 };

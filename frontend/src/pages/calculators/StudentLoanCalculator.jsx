@@ -233,7 +233,7 @@ export default function StudentLoanCalculator() {
               <div>
                 <p className="font-semibold text-foreground text-sm">Best Strategy: {bestOption.name}</p>
                 <p className="text-xs text-muted-foreground">
-                  Saves most on interest — total interest: {formatCurrency(bestOption.totalInterest)} over {Math.round(bestOption.months / 12)} years
+                  Saves most on interest, total interest: {formatCurrency(bestOption.totalInterest)} over {Math.round(bestOption.months / 12)} years
                 </p>
               </div>
             </CardContent>

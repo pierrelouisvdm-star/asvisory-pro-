@@ -149,7 +149,7 @@ export default function SavingsComparisonCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">Savings Vehicle Comparison</h1>
-          <p className="text-muted-foreground text-sm">I-Bonds vs HYSA vs T-Bills vs CDs — after-tax returns with current rates</p>
+          <p className="text-muted-foreground text-sm">I-Bonds vs HYSA vs T-Bills vs CDs, after-tax returns with current rates</p>
         </div>
       </div>
 

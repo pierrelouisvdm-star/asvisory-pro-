@@ -66,7 +66,7 @@ function SessionItem({ item, index, onDelete, onEdit, categoryDisplay }) {
               </Badge>
               {item.status === 'saved' && <CheckCircle2 className="h-3 w-3 text-emerald-500 flex-shrink-0" />}
             </div>
-            <p className="text-xs text-muted-foreground truncate">{item.description || '—'}</p>
+            <p className="text-xs text-muted-foreground truncate">{item.description || ','}</p>
             {item.voiceTranscription && (
               <p className="text-[10px] text-muted-foreground/60 italic truncate">"{item.voiceTranscription}"</p>
             )}
@@ -503,7 +503,7 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
 
       {/* Body */}
       <div className="flex-1 flex overflow-hidden">
-        {/* LEFT — Current Item */}
+        {/* LEFT, Current Item */}
         <div className="flex-1 flex flex-col p-6 border-r border-border overflow-y-auto min-w-0">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4 flex items-center gap-1.5">
             <Sparkles className="h-3 w-3 text-violet-500" /> Current Item
@@ -620,7 +620,7 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
                     { l: 'Type', v: currentParsed.type, c: currentParsed.type === 'income' ? 'emerald' : 'red' },
                     { l: 'Amount', v: `$${(currentParsed.amount || 0).toFixed(2)}`, c: 'blue' },
                     { l: 'Category', v: (currentParsed.category || 'other').replace(/_/g, ' '), c: 'purple' },
-                    { l: 'Description', v: currentParsed.description || currentParsed.merchant || '—', c: 'amber' },
+                    { l: 'Description', v: currentParsed.description || currentParsed.merchant || ',', c: 'amber' },
                   ].map((item, i) => (
                     <div key={i} className={`p-2 rounded-lg bg-${item.c}-500/10 border border-${item.c}-500/20`}>
                       <p className="text-[10px] text-muted-foreground">{item.l}</p>
@@ -655,7 +655,7 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
           </div>
         </div>
 
-        {/* RIGHT — Session Queue */}
+        {/* RIGHT, Session Queue */}
         <div className="w-80 flex flex-col p-4 overflow-hidden flex-shrink-0">
           <div className="flex items-center justify-between mb-3">
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">

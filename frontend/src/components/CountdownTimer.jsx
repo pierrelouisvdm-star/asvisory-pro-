@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-// Target: April 15, 2026 — US Tax Day (creates real urgency during tax season)
+// Target: April 15, 2026, US Tax Day (creates real urgency during tax season)
 const DEFAULT_TARGET = '2026-04-15T23:59:59';
 
 export default function CountdownTimer({ targetDate = DEFAULT_TARGET, label = 'Offer expires in' }) {

@@ -37,7 +37,7 @@ const FREE_TOOLS = [
   {
     icon: CalendarDays,
     title: 'US Tax Calendar 2025–2026',
-    desc: 'Every deadline you need — estimated taxes, IRA/HSA, year-end moves.',
+    desc: 'Every deadline you need, estimated taxes, IRA/HSA, year-end moves.',
     path: '/us/tax-calendar',
     badge: 'Free',
     color: 'indigo',
@@ -55,7 +55,7 @@ const FREE_TOOLS = [
   {
     icon: Home,
     title: 'Home Affordability Calculator',
-    desc: '28/36 DTI rule — find out how much house you can actually afford.',
+    desc: '28/36 DTI rule, find out how much house you can actually afford.',
     path: '/us/home-affordability',
     badge: 'Free Trial',
     color: 'emerald',
@@ -64,7 +64,7 @@ const FREE_TOOLS = [
   {
     icon: TrendingDown,
     title: 'Tax Savings Finder',
-    desc: 'Enter your situation — get a personalized list of ways to cut your tax bill.',
+    desc: 'Enter your situation, get a personalized list of ways to cut your tax bill.',
     path: '/us/tax-savings-finder',
     badge: 'Free Trial',
     color: 'green',
@@ -120,7 +120,7 @@ export default function PublicToolsPage() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Free US Financial Calculators 2025",
-    "description": "Professional financial calculators for Americans — tax, FIRE, paycheck, home affordability, FI score quiz.",
+    "description": "Professional financial calculators for Americans, tax, FIRE, paycheck, home affordability, FI score quiz.",
     "url": `${process.env.REACT_APP_BACKEND_URL?.replace(/\/api.*$/, '')}/tools`,
     "itemListElement": FREE_TOOLS.map((tool, i) => ({
       "@type": "ListItem",
@@ -165,7 +165,7 @@ export default function PublicToolsPage() {
             </Link>
             <Link to="/us/fi-score">
               <Button size="lg" variant="outline" className="px-8 h-12 border-border">
-                Take the FI Score Quiz — Free
+                Take the FI Score Quiz, Free
               </Button>
             </Link>
           </div>
@@ -178,7 +178,7 @@ export default function PublicToolsPage() {
         <div className="text-center mb-10">
           <Badge className="mb-3 bg-emerald-500/10 text-emerald-500 border-emerald-500/20">Start for Free</Badge>
           <h2 className="font-display text-3xl font-extrabold text-foreground mb-2">Know Your Numbers. Build Your Wealth.</h2>
-          <p className="text-muted-foreground">No account needed to start — sign up to save your results</p>
+          <p className="text-muted-foreground">No account needed to start, sign up to save your results</p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {FREE_TOOLS.map((tool, i) => {
@@ -243,7 +243,7 @@ export default function PublicToolsPage() {
       {/* Premium Preview */}
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-10">
-          <Badge className="mb-3 bg-amber-500/10 text-amber-500 border-amber-500/20">Premium — $19/mo or $99 once-off</Badge>
+          <Badge className="mb-3 bg-amber-500/10 text-amber-500 border-amber-500/20">Premium, $19/mo or $99 once-off</Badge>
           <h2 className="font-display text-3xl font-extrabold text-foreground mb-2">Institutional Tools for Everyday Investors.</h2>
           <p className="text-muted-foreground">Professional-grade financial tools, simplified. From paycheck to RSUs to Medicare surcharges.</p>
         </div>
@@ -262,7 +262,7 @@ export default function PublicToolsPage() {
         <div className="text-center">
           <Link to="/auth">
             <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-10 h-12">
-              Start Free — Upgrade Anytime
+              Start Free, Upgrade Anytime
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
@@ -282,7 +282,7 @@ export default function PublicToolsPage() {
                     {[...Array(5)].map((_, j) => <Star key={j} className="h-3.5 w-3.5 fill-amber-400 text-amber-400" />)}
                   </div>
                   <p className="text-sm text-muted-foreground italic mb-3">"{item.quote}"</p>
-                  <p className="text-xs text-foreground font-medium">— {item.name}</p>
+                  <p className="text-xs text-foreground font-medium">, {item.name}</p>
                 </CardContent>
               </Card>
             ))}

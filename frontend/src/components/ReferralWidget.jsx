@@ -56,7 +56,7 @@ export default function ReferralWidget() {
 
   const handleShare = () => {
     if (!referralLink) return;
-    const text = `I've been using AdvisoryPro for my financial planning — 30+ US calculators including FIRE, RSU taxes, paycheck, home affordability, and more. Try it free: ${referralLink}`;
+    const text = `I've been using AdvisoryPro for my financial planning, 30+ US calculators including FIRE, RSU taxes, paycheck, home affordability, and more. Try it free: ${referralLink}`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
   };
 

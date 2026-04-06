@@ -11,7 +11,7 @@ import { Disclaimer } from '@/components/calculators/Disclaimer';
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 const fmtD = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(n || 0);
 
-// 2025 IRMAA Brackets (based on 2023 MAGI — Medicare uses income from 2 years prior)
+// 2025 IRMAA Brackets (based on 2023 MAGI, Medicare uses income from 2 years prior)
 const IRMAA_BRACKETS = {
   single: [
     { maxMAGI: 106000, partBSurcharge: 0, partDSurcharge: 0, tier: 0 },
@@ -87,7 +87,7 @@ export default function MedicareIRMAA() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">Medicare IRMAA Calculator</h1>
-          <p className="text-muted-foreground text-sm">Income-Related Monthly Adjustment Amount — 2024 Medicare premium surcharges</p>
+          <p className="text-muted-foreground text-sm">Income-Related Monthly Adjustment Amount, 2024 Medicare premium surcharges</p>
         </div>
       </div>
 

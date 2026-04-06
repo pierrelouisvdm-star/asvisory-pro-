@@ -155,7 +155,7 @@ export default function FinancialIndependenceScore() {
     }
   };
 
-  const shareText = `My Financial Independence Score: ${score}/${MAX_SCORE} (${pct}%) — "${tier.label}" 🏆\nCalculated at Financial Advisory Pro: ${window.location.origin}/us/fi-score`;
+  const shareText = `My Financial Independence Score: ${score}/${MAX_SCORE} (${pct}%), "${tier.label}" 🏆\nCalculated at Financial Advisory Pro: ${window.location.origin}/us/fi-score`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareText);
@@ -178,7 +178,7 @@ export default function FinancialIndependenceScore() {
     return (
       <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
         <SEOHead
-          title="Financial Independence Score — Your FI Progress"
+          title="Financial Independence Score, Your FI Progress"
           description="Take our 6-question Financial Independence quiz to score your savings rate, net worth, retirement contributions, and more. Free, instant, shareable."
           path="/us/fi-score"
           keywords="financial independence score, FI quiz, financial independence calculator, savings rate calculator, FIRE progress quiz"
@@ -221,7 +221,7 @@ export default function FinancialIndependenceScore() {
             ) : (
               <>
                 <p className="font-semibold text-foreground mb-1">Get your personalized FI roadmap</p>
-                <p className="text-sm text-muted-foreground mb-4">Based on your {tier.label} score — we'll send you the highest-impact next steps to accelerate your path to financial independence.</p>
+                <p className="text-sm text-muted-foreground mb-4">Based on your {tier.label} score, we'll send you the highest-impact next steps to accelerate your path to financial independence.</p>
                 <form onSubmit={handleLeadCapture} className="flex gap-2 max-w-sm mx-auto">
                   <input
                     type="email"
@@ -235,7 +235,7 @@ export default function FinancialIndependenceScore() {
                     {leadLoading ? '...' : 'Send Roadmap'}
                   </Button>
                 </form>
-                <p className="text-xs text-muted-foreground mt-2">No spam — just actionable steps based on your score.</p>
+                <p className="text-xs text-muted-foreground mt-2">No spam, just actionable steps based on your score.</p>
               </>
             )}
           </CardContent>
@@ -304,7 +304,7 @@ export default function FinancialIndependenceScore() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="Financial Independence Score — Where Do You Stand on the Path to FI?"
+        title="Financial Independence Score, Where Do You Stand on the Path to FI?"
         description="Take our free 6-question Financial Independence quiz. Score your savings rate, emergency fund, debt, retirement contributions, and net worth. Instant results, shareable."
         path="/us/fi-score"
         keywords="financial independence score, FI quiz, financial independence calculator, savings rate calculator, FIRE progress quiz, where do I stand financially"

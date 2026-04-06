@@ -199,7 +199,7 @@ export default function FreelancerRateCalculator() {
               <div>
                 <p className="font-medium text-sm text-foreground mb-1">SE Tax Reality Check</p>
                 <p className="text-xs text-muted-foreground">
-                  Self-employment tax is <span className="font-medium text-emerald-500">{fmt(results.seTax)}/year</span> (15.3% on 92.35% of net income) — this replaces
+                  Self-employment tax is <span className="font-medium text-emerald-500">{fmt(results.seTax)}/year</span> (15.3% on 92.35% of net income), this replaces
                   the employer + employee share of FICA. You get to deduct 50% of it, which helps. Open a SEP-IRA to shelter up to 25% of net income tax-free.
                 </p>
               </div>

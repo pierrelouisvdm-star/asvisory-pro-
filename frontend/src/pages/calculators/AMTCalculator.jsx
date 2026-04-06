@@ -105,7 +105,7 @@ export default function AMTCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">AMT Calculator</h1>
-          <p className="text-muted-foreground text-sm">Alternative Minimum Tax — check if you owe more than the regular tax, especially with ISO stock options</p>
+          <p className="text-muted-foreground text-sm">Alternative Minimum Tax, check if you owe more than the regular tax, especially with ISO stock options</p>
         </div>
       </div>
 
@@ -177,8 +177,8 @@ export default function AMTCalculator() {
                 <div>
                   <p className="font-bold text-foreground">
                     {results.amtApplies
-                      ? `AMT Applies — you owe ${fmt(results.amtLiability)} extra`
-                      : 'No AMT due — regular tax exceeds your AMT liability'
+                      ? `AMT Applies, you owe ${fmt(results.amtLiability)} extra`
+                      : 'No AMT due, regular tax exceeds your AMT liability'
                     }
                   </p>
                   <p className="text-xs text-muted-foreground">

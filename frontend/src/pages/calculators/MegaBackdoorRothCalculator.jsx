@@ -157,7 +157,7 @@ export default function MegaBackdoorRothCalculator() {
             {[
               { step: '1', title: 'Max Employee Contribution', desc: `Contribute ${fmt(results.employeeLimit)} to your 401(k) (Traditional or Roth)`, color: 'indigo' },
               { step: '2', title: 'Add After-Tax Contributions', desc: `Add up to ${fmt(results.afterTaxCapacity)} in after-tax (non-deductible) contributions`, color: 'amber' },
-              { step: '3', title: 'Convert to Roth', desc: 'Do an in-service Roth conversion — now it grows tax-free forever', color: 'emerald' },
+              { step: '3', title: 'Convert to Roth', desc: 'Do an in-service Roth conversion, now it grows tax-free forever', color: 'emerald' },
             ].map((item, i) => (
               <Card key={i} className={`bg-${item.color}-500/5 border-${item.color}-500/20`}>
                 <CardContent className="p-4">

@@ -86,7 +86,7 @@ const US_INCOME_CATEGORIES = [
   { id: 'other', name: 'Other Income', icon: Tag, color: 'gray' },
 ];
 
-// Backward compatibility — these will be replaced by jurisdiction-aware ones at runtime
+// Backward compatibility, these will be replaced by jurisdiction-aware ones at runtime
 const EXPENSE_CATEGORIES = SA_EXPENSE_CATEGORIES;
 const INCOME_CATEGORIES = SA_INCOME_CATEGORIES;
 
@@ -1033,7 +1033,7 @@ const IncomeExpenseTrackerContent = () => {
                         </Button>
                       </div>
                     </div>
-                    {/* Voice Receipt Analyzer — only for image files */}
+                    {/* Voice Receipt Analyzer, only for image files */}
                     {newTransaction.receipt.type.startsWith('image/') && (
                       <VoiceReceiptAnalyzer
                         receiptFile={newTransaction.receipt.file}

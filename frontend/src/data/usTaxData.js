@@ -1,4 +1,4 @@
-// US Federal Tax Data — 2025 Tax Year (Rev. Proc. 2024-40)
+// US Federal Tax Data, 2025 Tax Year (Rev. Proc. 2024-40)
 // Returns filed in 2026 for income earned in 2025
 // All 50 State Tax Rates included
 

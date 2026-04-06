@@ -146,7 +146,7 @@ export const PricingPage = () => {
   return (
     <div className="min-h-screen bg-navy-950" data-testid="pricing-page">
       <SEOHead
-        title="AdvisoryPro Pricing — $99 Annual (Limited Time) or $19/month"
+        title="AdvisoryPro Pricing, $99 Annual (Limited Time) or $19/month"
         description="Professional financial planning tools. $19/month or $99 one-time annual access (limited time, regularly $149). All 30+ US calculators. Advisor-level tools, without the advisor."
         path="/pricing"
         keywords="financial calculator pricing, AdvisoryPro pricing, financial tools subscription, tax calculator subscription"
@@ -166,7 +166,7 @@ export const PricingPage = () => {
           </p>
         </div>
 
-        {/* Billing Toggle — SA only */}
+        {/* Billing Toggle, SA only */}
         {!isUS && (
         <div className="flex items-center justify-center gap-4 mb-8">
           <button
@@ -345,7 +345,7 @@ export const PricingPage = () => {
                   data-testid="us-payment-btn"
                 >
                   <CreditCard className="h-5 w-5 mr-2" />
-                  {billingPeriod === 'annual' ? 'Get Annual Access — $99' : 'Get Monthly Access — $19/mo'}
+                  {billingPeriod === 'annual' ? 'Get Annual Access, $99' : 'Get Monthly Access, $19/mo'}
                 </Button>
               ) : (
                 <Button 

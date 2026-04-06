@@ -111,7 +111,7 @@ export default function RMDCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">RMD Calculator</h1>
-          <p className="text-muted-foreground text-sm">Required Minimum Distributions from IRAs and 401(k)s — SECURE 2.0 Act (age 73)</p>
+          <p className="text-muted-foreground text-sm">Required Minimum Distributions from IRAs and 401(k)s, SECURE 2.0 Act (age 73)</p>
         </div>
       </div>
 
@@ -284,7 +284,7 @@ export default function RMDCalculator() {
                 <p className="font-medium text-sm text-foreground mb-1">Qualified Charitable Distribution (QCD)</p>
                 <p className="text-xs text-muted-foreground">
                   If you're 70½ or older, you can donate up to <span className="text-blue-500 font-medium">{fmt(qualifiedCharitableMax)}</span> directly
-                  from your IRA to charity as a QCD. This satisfies your RMD requirement but is excluded from taxable income —
+                  from your IRA to charity as a QCD. This satisfies your RMD requirement but is excluded from taxable income ,
                   a better deal than taking the RMD and then donating the after-tax amount.
                 </p>
               </div>

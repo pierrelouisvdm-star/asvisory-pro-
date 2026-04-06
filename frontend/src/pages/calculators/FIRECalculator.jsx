@@ -115,7 +115,7 @@ export default function FIRECalculator() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="FIRE Calculator 2025 — Find Your Financial Independence Number"
+        title="FIRE Calculator 2025, Find Your Financial Independence Number"
         description="Calculate your FIRE number for Lean, Regular, Fat, and Coast FIRE. Find how many years to financial independence with real inflation adjustments. Free and shareable."
         path="/us/fire-calculator"
         keywords="FIRE calculator 2025, financial independence calculator, retire early calculator, FIRE number, Coast FIRE calculator, Fat FIRE calculator"
@@ -128,7 +128,7 @@ export default function FIRECalculator() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-foreground font-display">FIRE Calculator</h1>
-            <p className="text-muted-foreground text-sm">Financial Independence, Retire Early — find your number</p>
+            <p className="text-muted-foreground text-sm">Financial Independence, Retire Early, find your number</p>
           </div>
         </div>
         <button
@@ -161,7 +161,7 @@ export default function FIRECalculator() {
             </button>
             <button
               onClick={() => {
-                const title = `My ${activeResult.label} number is $${Math.round(activeResult.fireNumber).toLocaleString()} — ${savingsRate.toFixed(1)}% savings rate`;
+                const title = `My ${activeResult.label} number is $${Math.round(activeResult.fireNumber).toLocaleString()}, ${savingsRate.toFixed(1)}% savings rate`;
                 const body = `I used this FIRE calculator to find out my Financial Independence number.\n\nFIRE Variant: ${activeResult.label}\nFIRE Number: $${Math.round(activeResult.fireNumber).toLocaleString()}\nSavings Rate: ${savingsRate.toFixed(1)}%\nYears to FIRE: ${activeResult.years !== null ? activeResult.years : 'N/A'}\nTarget Age: ${activeResult.fireAge || 'TBD'}\n\nCalculator: ${window.location.origin}/us/fire-calculator`;
                 window.open(`https://www.reddit.com/r/financialindependence/submit?title=${encodeURIComponent(title)}&text=${encodeURIComponent(body)}`, '_blank');
               }}
@@ -303,7 +303,7 @@ export default function FIRECalculator() {
                   </div>
                   <div className="text-center p-3 rounded-lg bg-muted/50">
                     <p className="text-2xl font-bold text-foreground">
-                      {activeResult.fireAge !== null ? `Age ${activeResult.fireAge}` : '—'}
+                      {activeResult.fireAge !== null ? `Age ${activeResult.fireAge}` : ','}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">Retirement Age</p>
                   </div>
@@ -357,7 +357,7 @@ export default function FIRECalculator() {
             icon: PiggyBank,
             title: 'Coast FIRE',
             color: 'emerald',
-            text: 'Coast FIRE is the amount you need today so that compound growth alone gets you to your FIRE Number by retirement — without saving another dollar.',
+            text: 'Coast FIRE is the amount you need today so that compound growth alone gets you to your FIRE Number by retirement, without saving another dollar.',
           },
         ].map((item, i) => {
           const Icon = item.icon;

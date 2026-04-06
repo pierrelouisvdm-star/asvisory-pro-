@@ -211,7 +211,7 @@ export default function RothConversionCalculator() {
               <div>
                 <p className="font-semibold text-foreground text-sm">
                   {results.convertWorthIt
-                    ? `Roth conversion looks favorable — ${fmt(Math.abs(results.rothAdvantage))} ahead at retirement`
+                    ? `Roth conversion looks favorable, ${fmt(Math.abs(results.rothAdvantage))} ahead at retirement`
                     : `Roth conversion may not be optimal at your expected future tax rate`
                   }
                 </p>

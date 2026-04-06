@@ -206,7 +206,7 @@ export const ComparisonMode = ({
                                   ${diff.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </span>
                               ) : (
-                                <span className="text-muted-foreground">—</span>
+                                <span className="text-muted-foreground">,</span>
                               )}
                             </td>
                           </tr>

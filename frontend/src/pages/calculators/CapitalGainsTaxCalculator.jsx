@@ -164,7 +164,7 @@ export default function CapitalGainsTaxCalculator() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="2025 Capital Gains Tax Calculator — Short vs Long-Term + NIIT"
+        title="2025 Capital Gains Tax Calculator, Short vs Long-Term + NIIT"
         description="Calculate your 2025 capital gains tax for stocks, crypto, real estate. Includes NIIT (3.8%), all 50 states, short vs long-term rates, and tax-loss harvesting tips."
         path="/us/capital-gains"
         keywords="capital gains tax calculator 2025, long term capital gains 2025, NIIT calculator, stock tax calculator, crypto tax calculator 2025"

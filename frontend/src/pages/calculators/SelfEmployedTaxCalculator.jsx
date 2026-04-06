@@ -29,7 +29,7 @@ const getEffectiveStateRate = (stateCode, income) => {
   return 0;
 };
 
-// 2025 Federal Tax Brackets (Single) — Rev. Proc. 2024-40
+// 2025 Federal Tax Brackets (Single), Rev. Proc. 2024-40
 const BRACKETS_SINGLE = [
   { min: 0, max: 11925, rate: 0.10 },
   { min: 11925, max: 48475, rate: 0.12 },
@@ -196,7 +196,7 @@ export default function SelfEmployedTaxCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">Self-Employment Tax Estimator</h1>
-          <p className="text-muted-foreground text-sm">1099 freelancers, consultants & small business owners — know your full tax burden</p>
+          <p className="text-muted-foreground text-sm">1099 freelancers, consultants & small business owners, know your full tax burden</p>
         </div>
       </div>
 

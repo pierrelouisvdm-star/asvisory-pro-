@@ -148,7 +148,7 @@ export default function PaycheckCalculator() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="2025 Paycheck Calculator — Exact Take-Home Pay After Taxes"
+        title="2025 Paycheck Calculator, Exact Take-Home Pay After Taxes"
         description="See your exact take-home pay after 2025 federal, state, FICA taxes and pre-tax deductions (401k, HSA). All 50 states, bi-weekly, monthly, and weekly pay periods."
         path="/us/paycheck"
         keywords="paycheck calculator 2025, take home pay calculator, salary after tax calculator, FICA tax calculator, net pay calculator 2025"
@@ -361,7 +361,7 @@ export default function PaycheckCalculator() {
                 <div className="flex items-center gap-2 mt-3 p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
                   <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                   <p className="text-xs text-emerald-500">
-                    You live in a state with no income tax — saving {fmt(results.grossPay * periods * 0.05)} vs the average 5% state rate!
+                    You live in a state with no income tax, saving {fmt(results.grossPay * periods * 0.05)} vs the average 5% state rate!
                   </p>
                 </div>
               )}

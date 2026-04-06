@@ -381,7 +381,7 @@ const usCalculators = [
     isFree: false,
     isNew: true,
   },
-  // Batch 2 — Newly routed
+  // Batch 2, Newly routed
   {
     id: 'us-capital-gains',
     title: 'Capital Gains Tax',
@@ -395,7 +395,7 @@ const usCalculators = [
   {
     id: 'us-rmd',
     title: 'RMD Calculator',
-    description: 'Required Minimum Distributions — SECURE 2.0 (age 73)',
+    description: 'Required Minimum Distributions, SECURE 2.0 (age 73)',
     icon: PiggyBank,
     path: '/us/rmd',
     features: ['IRS Table', '20-yr Schedule', 'QCD Strategy'],
@@ -423,7 +423,7 @@ const usCalculators = [
     isNew: true,
     isFeatured: true,
   },
-  // Tier 1 — High value
+  // Tier 1, High value
   {
     id: 'us-irmaa',
     title: 'Medicare IRMAA Calculator',
@@ -448,7 +448,7 @@ const usCalculators = [
   {
     id: 'us-home-affordability',
     title: 'Home Affordability',
-    description: '28/36 DTI rule — how much house can you actually afford?',
+    description: '28/36 DTI rule, how much house can you actually afford?',
     icon: Home,
     path: '/us/home-affordability',
     features: ['28/36 Rule', 'PITI Breakdown', 'PMI Analysis'],
@@ -470,7 +470,7 @@ const usCalculators = [
   {
     id: 'us-rsu',
     title: 'RSU & Stock Options Tax',
-    description: 'RSUs, NSOs, and ISOs — true tax bill at vest and sale',
+    description: 'RSUs, NSOs, and ISOs, true tax bill at vest and sale',
     icon: Zap,
     path: '/us/rsu-calculator',
     features: ['RSU/NSO/ISO', 'LTCG Strategy', 'NIIT Check'],
@@ -512,7 +512,7 @@ const usCalculators = [
   {
     id: 'us-dca',
     title: 'DCA vs. Lump Sum',
-    description: 'Dollar-Cost Averaging vs investing all at once — the math',
+    description: 'Dollar-Cost Averaging vs investing all at once, the math',
     icon: BarChart3,
     path: '/us/dca-vs-lump-sum',
     features: ['Cash Drag', 'Growth Chart', 'Risk Analysis'],
@@ -522,14 +522,14 @@ const usCalculators = [
   {
     id: 'us-amt',
     title: 'AMT Calculator',
-    description: 'Alternative Minimum Tax — critical for ISO stock option holders',
+    description: 'Alternative Minimum Tax, critical for ISO stock option holders',
     icon: Calculator,
     path: '/us/amt-calculator',
     features: ['ISO Spread', 'Exemption Phase-Out', 'AMT Credit'],
     isFree: false,
     isNew: true,
   },
-  // Tier 3 — Engagement & content
+  // Tier 3, Engagement & content
   {
     id: 'us-fi-score',
     title: 'FI Score Quiz',
@@ -554,7 +554,7 @@ const usCalculators = [
   {
     id: 'us-savings-comparison',
     title: 'Savings Vehicle Comparison',
-    description: 'I-Bonds vs HYSA vs T-Bills vs CDs — after-tax returns',
+    description: 'I-Bonds vs HYSA vs T-Bills vs CDs, after-tax returns',
     icon: BarChart3,
     path: '/us/savings-comparison',
     features: ['After-Tax Rates', 'Tax Treatment', 'Side-by-Side'],

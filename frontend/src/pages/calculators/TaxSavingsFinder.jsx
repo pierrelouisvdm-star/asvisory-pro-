@@ -161,9 +161,9 @@ export default function TaxSavingsFinder() {
         opportunities.push({
           id: 'roth_conversion',
           title: 'Roth Conversion Opportunity',
-          subtitle: `You're in the ${(marginalRate * 100).toFixed(0)}% bracket — convert up to ${fmt(conversionAmount)} at a favorable rate`,
+          subtitle: `You're in the ${(marginalRate * 100).toFixed(0)}% bracket, convert up to ${fmt(conversionAmount)} at a favorable rate`,
           savings: null,
-          savingsNote: `Future tax-free growth — estimated benefit varies by retirement tax rate`,
+          savingsNote: `Future tax-free growth, estimated benefit varies by retirement tax rate`,
           effort: 'Medium',
           effortColor: 'blue',
           how: `Converting Traditional IRA/401k funds to Roth now (while in a lower bracket) creates tax-free growth forever and reduces future RMDs.`,
@@ -182,12 +182,12 @@ export default function TaxSavingsFinder() {
       const sepContrib = Math.min(LIMITS.sep_ira_max, netEarnings * LIMITS.sep_ira_pct);
       opportunities.push({
         id: 'sep_ira',
-        title: 'SEP-IRA — Massive Self-Employed Tax Shelter',
+        title: 'SEP-IRA, Massive Self-Employed Tax Shelter',
         subtitle: `Contribute up to ${fmt(sepContrib)} (25% of net self-employment income)`,
         savings: Math.round(sepContrib * combinedTaxRate(marginalRate)),
         effort: 'Easy',
         effortColor: 'emerald',
-        how: `SEP-IRA lets you contribute up to $70,000/year (2025) — far more than a regular IRA. Deadline is your tax return due date including extensions.`,
+        how: `SEP-IRA lets you contribute up to $70,000/year (2025), far more than a regular IRA. Deadline is your tax return due date including extensions.`,
         icon: '🧾',
         action: '/us/self-employed',
         actionLabel: 'Self-Employment Tax',
@@ -226,7 +226,7 @@ export default function TaxSavingsFinder() {
       opportunities.push({
         id: 'itemize',
         title: 'Consider Itemizing Deductions',
-        subtitle: `Your charitable giving alone is ${fmt(charitableGiving)} — you may beat the ${fmt(stdDed)} standard deduction`,
+        subtitle: `Your charitable giving alone is ${fmt(charitableGiving)}, you may beat the ${fmt(stdDed)} standard deduction`,
         savings: Math.round(Math.max(0, charitableGiving - stdDed) * marginalRate),
         effort: 'Medium',
         effortColor: 'blue',
@@ -241,7 +241,7 @@ export default function TaxSavingsFinder() {
     opportunities.push({
       id: 'tax_loss',
       title: 'Tax-Loss Harvesting',
-      subtitle: 'Offset capital gains — sell losing investments before Dec 31',
+      subtitle: 'Offset capital gains, sell losing investments before Dec 31',
       savings: null,
       savingsNote: 'Up to $3,000/yr offsets ordinary income; unlimited gains offset',
       effort: 'Medium',
@@ -259,7 +259,7 @@ export default function TaxSavingsFinder() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="2025 Tax Savings Finder — Personalized Ways to Cut Your Tax Bill"
+        title="2025 Tax Savings Finder, Personalized Ways to Cut Your Tax Bill"
         description="Enter your income and situation. Get a personalized list of every legal way to reduce your 2025 federal tax bill: 401k, HSA, IRA, QBI deduction, student loan interest, and more."
         path="/us/tax-savings-finder"
         keywords="tax savings 2025, how to reduce taxes 2025, tax deductions 2025, 401k tax savings, HSA tax benefit, IRA deduction 2025"
@@ -270,7 +270,7 @@ export default function TaxSavingsFinder() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">Tax Savings Finder</h1>
-          <p className="text-muted-foreground text-sm">Enter your situation — we'll show you every legal way to cut your 2025 tax bill</p>
+          <p className="text-muted-foreground text-sm">Enter your situation, we'll show you every legal way to cut your 2025 tax bill</p>
         </div>
       </div>
 

@@ -142,7 +142,7 @@ export default function RSUCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">RSU & Stock Options Tax Calculator</h1>
-          <p className="text-muted-foreground text-sm">RSUs, NSOs, and ISOs — understand your true tax bill at vest and sale</p>
+          <p className="text-muted-foreground text-sm">RSUs, NSOs, and ISOs, understand your true tax bill at vest and sale</p>
         </div>
       </div>
 
@@ -185,8 +185,8 @@ export default function RSUCalculator() {
                 <Select value={holdingPeriod} onValueChange={setHoldingPeriod}>
                   <SelectTrigger className="h-9 mt-1"><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="long">Long-term (&gt;1 year) — LTCG rates</SelectItem>
-                    <SelectItem value="short">Short-term (&lt;1 year) — Ordinary rates</SelectItem>
+                    <SelectItem value="long">Long-term (&gt;1 year), LTCG rates</SelectItem>
+                    <SelectItem value="short">Short-term (&lt;1 year), Ordinary rates</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -299,7 +299,7 @@ export default function RSUCalculator() {
                 <p className="font-medium text-sm text-foreground mb-1">Key Strategy: Hold RSUs for Long-Term Gains</p>
                 <p className="text-xs text-muted-foreground">
                   If you sell immediately at vest, all gain is ordinary income. Holding for &gt;1 year qualifies the post-vest appreciation
-                  for LTCG rates (0%, 15%, or 20%) — significantly lower than your marginal ordinary rate.
+                  for LTCG rates (0%, 15%, or 20%), significantly lower than your marginal ordinary rate.
                   Only the FMV at vest is ordinary income regardless.
                 </p>
               </div>

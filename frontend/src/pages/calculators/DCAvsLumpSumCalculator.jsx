@@ -70,7 +70,7 @@ export default function DCAvsLumpSumCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">DCA vs. Lump Sum Calculator</h1>
-          <p className="text-muted-foreground text-sm">Dollar-Cost Averaging vs. Investing All At Once — the numbers behind the debate</p>
+          <p className="text-muted-foreground text-sm">Dollar-Cost Averaging vs. Investing All At Once, the numbers behind the debate</p>
         </div>
       </div>
 
@@ -165,7 +165,7 @@ export default function DCAvsLumpSumCalculator() {
                 <p className="font-semibold text-sm text-foreground mb-2">When Lump Sum Wins</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
                   In ~66% of historical periods, investing all at once beats DCA because markets trend upward over time.
-                  The opportunity cost of holding cash is real — every month uninvested is a month missing returns.
+                  The opportunity cost of holding cash is real, every month uninvested is a month missing returns.
                 </p>
               </CardContent>
             </Card>
@@ -173,7 +173,7 @@ export default function DCAvsLumpSumCalculator() {
               <CardContent className="p-4">
                 <p className="font-semibold text-sm text-foreground mb-2">When DCA Wins</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  In volatile or declining markets, DCA lowers your average cost. It also reduces psychological risk —
+                  In volatile or declining markets, DCA lowers your average cost. It also reduces psychological risk ,
                   you won't regret timing a market top. DCA is often the right choice for behavioral reasons.
                 </p>
               </CardContent>

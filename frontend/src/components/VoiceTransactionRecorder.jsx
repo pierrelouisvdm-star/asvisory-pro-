@@ -48,7 +48,7 @@ export default function VoiceTransactionRecorder({ onParsed, jurisdiction = 'us'
       };
       drawWave();
 
-      // MediaRecorder — try webm first, fallback to mp4
+      // MediaRecorder, try webm first, fallback to mp4
       let mimeType = 'audio/webm';
       if (!MediaRecorder.isTypeSupported('audio/webm')) {
         mimeType = 'audio/mp4';
@@ -229,7 +229,7 @@ export default function VoiceTransactionRecorder({ onParsed, jurisdiction = 'us'
             { label: 'Type', value: parsedData.type, color: parsedData.type === 'income' ? 'emerald' : 'red' },
             { label: 'Amount', value: `${currencySymbol}${parsedData.amount.toFixed(2)}`, color: 'blue' },
             { label: 'Category', value: parsedData.category.replace(/_/g, ' '), color: 'purple' },
-            { label: 'Description', value: parsedData.description || '—', color: 'amber' },
+            { label: 'Description', value: parsedData.description || ',', color: 'amber' },
           ].map((item, i) => (
             <div key={i} className={`p-2 rounded-lg bg-${item.color}-500/10 border border-${item.color}-500/20`}>
               <p className="text-xs text-muted-foreground mb-0.5">{item.label}</p>

@@ -20,7 +20,7 @@ const DEADLINES = [
   { date: '2025-09-15', label: 'Q3 2025 Estimated Tax', type: 'estimated', description: '3rd quarter estimated tax due. Covers income from June 1 – August 31.', urgency: 'upcoming', amount: null },
   { date: '2025-10-15', label: 'Extended Return Deadline', type: 'filing', description: 'If you filed Form 4868, your extended federal return is due today. No further extensions available.', urgency: 'upcoming', amount: null },
   { date: '2025-12-01', label: 'RMD Deadline Reminder', type: 'contribution', description: 'Required Minimum Distributions for ages 73+ must be taken by Dec 31. Start early to avoid penalties.', urgency: 'upcoming', amount: null },
-  { date: '2025-12-31', label: 'Tax-Year End — Action Required', type: 'year_end', description: 'Last day for: Tax-loss harvesting, RMDs, charitable donations (for current-year deduction), FSA spend-down, 401(k) contributions.', urgency: 'upcoming', amount: null },
+  { date: '2025-12-31', label: 'Tax-Year End, Action Required', type: 'year_end', description: 'Last day for: Tax-loss harvesting, RMDs, charitable donations (for current-year deduction), FSA spend-down, 401(k) contributions.', urgency: 'upcoming', amount: null },
   // 2026 dates
   { date: '2026-01-15', label: 'Q4 2025 Estimated Tax', type: 'estimated', description: '4th quarter estimated tax payment for 2025 income.', urgency: 'future', amount: null },
   { date: '2026-01-31', label: 'W-2 & 1099 Distribution (2025)', type: 'document', description: 'Tax documents for 2025 tax year must be mailed/delivered.', urgency: 'future', amount: null },
@@ -49,7 +49,7 @@ const LIMITS_2025 = [
   { name: 'FSA Healthcare', limit: '$3,300', catchup: 'N/A', note: 'Use-it-or-lose-it (some plans allow $660 rollover)' },
   { name: 'SEP-IRA', limit: '25% net income', catchup: '$70,000 max', note: 'Deadline: tax return + extensions' },
   { name: 'SIMPLE IRA', limit: '$16,500', catchup: '$20,000 (50+)', note: '' },
-  { name: 'Gift Tax Annual Exclusion', limit: '$19,000', catchup: 'N/A', note: 'Per recipient — no gift tax return needed below this' },
+  { name: 'Gift Tax Annual Exclusion', limit: '$19,000', catchup: 'N/A', note: 'Per recipient, no gift tax return needed below this' },
   { name: 'Social Security Wage Base', limit: '$176,100', catchup: 'N/A', note: 'FICA stops above this for SS portion' },
 ];
 
@@ -88,11 +88,11 @@ export default function USTaxCalendar() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">US Tax Calendar 2025–2026</h1>
-          <p className="text-muted-foreground text-sm">Never miss a deadline — estimated taxes, contribution limits, and year-end actions</p>
+          <p className="text-muted-foreground text-sm">Never miss a deadline, estimated taxes, contribution limits, and year-end actions</p>
         </div>
       </div>
       <SEOHead
-        title="US Tax Calendar 2025–2026 — Every Deadline You Need"
+        title="US Tax Calendar 2025–2026, Every Deadline You Need"
         description="Complete US tax deadline calendar for 2025–2026. Estimated tax due dates, IRA/HSA contribution deadlines, RMD deadline, tax filing dates, and 2025 contribution limits."
         path="/us/tax-calendar"
         keywords="tax calendar 2025, tax deadlines 2025, estimated tax due dates, IRA contribution deadline 2025, April 15 2026 tax deadline"

@@ -107,7 +107,7 @@ export default function TaxComparison2025() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="2025 vs 2024 Tax Comparison — How Much More Do You Keep?"
+        title="2025 vs 2024 Tax Comparison, How Much More Do You Keep?"
         description="See exactly how much less you'll pay in 2025 vs 2024 taxes. Wider brackets and higher standard deduction ($15,750 single, $31,500 MFJ) mean most Americans keep more money."
         path="/us/tax-comparison-2025"
         keywords="2025 tax changes, 2025 vs 2024 tax brackets, tax bracket comparison 2025, standard deduction 2025, how much tax savings 2025"
@@ -158,7 +158,7 @@ export default function TaxComparison2025() {
             <CardContent className="space-y-2 text-xs">
               {[
                 { label: 'Standard Deduction', val2024: fmt(results.ded2024), val2025: fmt(results.ded2025), diff: `+${fmt(results.ded2025 - results.ded2024)}` },
-                { label: 'Taxable Income 2024', val2024: fmt(results.taxable2024), val2025: fmt(results.taxable2025), diff: results.taxable2025 < results.taxable2024 ? `-${fmt(results.taxable2024 - results.taxable2025)}` : '—' },
+                { label: 'Taxable Income 2024', val2024: fmt(results.taxable2024), val2025: fmt(results.taxable2025), diff: results.taxable2025 < results.taxable2024 ? `-${fmt(results.taxable2024 - results.taxable2025)}` : ',' },
               ].map((item, i) => (
                 <div key={i} className="p-2 rounded-lg bg-muted/40">
                   <p className="font-medium text-foreground">{item.label}</p>
@@ -166,7 +166,7 @@ export default function TaxComparison2025() {
                     <span className="text-muted-foreground">2024: {item.val2024}</span>
                     <span className="text-primary">2025: {item.val2025}</span>
                   </div>
-                  {item.diff !== '—' && <p className="text-emerald-500 font-medium mt-0.5">{item.diff} lower taxable income</p>}
+                  {item.diff !== ',' && <p className="text-emerald-500 font-medium mt-0.5">{item.diff} lower taxable income</p>}
                 </div>
               ))}
             </CardContent>
@@ -253,7 +253,7 @@ export default function TaxComparison2025() {
                         <td className="py-1.5 pr-4 text-muted-foreground">{row.top2024}</td>
                         <td className="py-1.5 pr-4 text-foreground">{row.top2025}</td>
                         <td className="py-1.5 pr-4">
-                          {row.wider ? <span className="text-emerald-500 font-medium">Wider ↑</span> : <span className="text-muted-foreground">—</span>}
+                          {row.wider ? <span className="text-emerald-500 font-medium">Wider ↑</span> : <span className="text-muted-foreground">,</span>}
                         </td>
                       </tr>
                     ))}

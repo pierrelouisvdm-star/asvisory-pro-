@@ -197,31 +197,31 @@ function App() {
                   <Route path="/us/fire-calculator" element={<ProtectedRoute><GatedCalculator path="/us/fire-calculator"><FIRECalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/student-loan" element={<ProtectedRoute><GatedCalculator path="/us/student-loan"><StudentLoanCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/self-employed" element={<ProtectedRoute><GatedCalculator path="/us/self-employed"><SelfEmployedTaxCalculator /></GatedCalculator></ProtectedRoute>} />
-                  {/* US Calculators — Batch 2 */}
+                  {/* US Calculators, Batch 2 */}
                   <Route path="/us/capital-gains" element={<ProtectedRoute><GatedCalculator path="/us/capital-gains"><CapitalGainsTaxCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/rmd" element={<ProtectedRoute><GatedCalculator path="/us/rmd"><RMDCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/roth-conversion" element={<ProtectedRoute><GatedCalculator path="/us/roth-conversion"><RothConversionCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/paycheck" element={<ProtectedRoute><GatedCalculator path="/us/paycheck"><PaycheckCalculator /></GatedCalculator></ProtectedRoute>} />
-                  {/* US Calculators — Tier 1 */}
+                  {/* US Calculators, Tier 1 */}
                   <Route path="/us/irmaa" element={<ProtectedRoute><GatedCalculator path="/us/irmaa"><MedicareIRMAA /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/w4-optimizer" element={<ProtectedRoute><GatedCalculator path="/us/w4-optimizer"><W4Optimizer /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/home-affordability" element={<ProtectedRoute><GatedCalculator path="/us/home-affordability"><HomeAffordabilityCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/rent-vs-buy" element={<ProtectedRoute><GatedCalculator path="/us/rent-vs-buy"><RentVsBuyCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/rsu-calculator" element={<ProtectedRoute><GatedCalculator path="/us/rsu-calculator"><RSUCalculator /></GatedCalculator></ProtectedRoute>} />
-                  {/* US Calculators — Tier 2 */}
+                  {/* US Calculators, Tier 2 */}
                   <Route path="/us/aca-subsidy" element={<ProtectedRoute><GatedCalculator path="/us/aca-subsidy"><ACASubsidyCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/mega-backdoor-roth" element={<ProtectedRoute><GatedCalculator path="/us/mega-backdoor-roth"><MegaBackdoorRothCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/freelancer-rate" element={<ProtectedRoute><GatedCalculator path="/us/freelancer-rate"><FreelancerRateCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/dca-vs-lump-sum" element={<ProtectedRoute><GatedCalculator path="/us/dca-vs-lump-sum"><DCAvsLumpSumCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/amt-calculator" element={<ProtectedRoute><GatedCalculator path="/us/amt-calculator"><AMTCalculator /></GatedCalculator></ProtectedRoute>} />
-                  {/* US Calculators — Tier 3 */}
+                  {/* US Calculators, Tier 3 */}
                   <Route path="/us/fi-score" element={<ProtectedRoute><FinancialIndependenceScore /></ProtectedRoute>} />
                   <Route path="/us/tax-calendar" element={<ProtectedRoute><USTaxCalendar /></ProtectedRoute>} />
                   <Route path="/us/savings-comparison" element={<ProtectedRoute><GatedCalculator path="/us/savings-comparison"><SavingsComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
                   {/* Growth & Viral Tools */}
                   <Route path="/us/tax-savings-finder" element={<ProtectedRoute><GatedCalculator path="/us/tax-savings-finder"><TaxSavingsFinder /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/tax-comparison-2025" element={<ProtectedRoute><TaxComparison2025 /></ProtectedRoute>} />
-                  {/* Public landing page — no login required */}
+                  {/* Public landing page, no login required */}
                   <Route path="/tools" element={<PublicToolsPage />} />
                 </Routes>
               </AppLayout>

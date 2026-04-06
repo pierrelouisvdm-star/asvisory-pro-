@@ -212,10 +212,10 @@ export default function W4Optimizer() {
                 <div>
                   <p className="font-semibold text-foreground">
                     {results.willOwe
-                      ? `You're under-withholding by ${fmt(Math.abs(results.difference))} — you'll owe at tax time`
+                      ? `You're under-withholding by ${fmt(Math.abs(results.difference))}, you'll owe at tax time`
                       : results.difference > 200
-                        ? `You're over-withholding by ${fmt(results.difference)} — getting a large refund`
-                        : `Withholding looks accurate — within ${fmt(Math.abs(results.difference))} of your liability`
+                        ? `You're over-withholding by ${fmt(results.difference)}, getting a large refund`
+                        : `Withholding looks accurate, within ${fmt(Math.abs(results.difference))} of your liability`
                     }
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">

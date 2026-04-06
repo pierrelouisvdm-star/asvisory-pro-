@@ -230,7 +230,7 @@ export const LoanComparisonTool = () => {
                         </td>
                         <td className="text-right py-4 px-4">
                           {difference === 0 ? (
-                            <span className="text-emerald-600 font-semibold">—</span>
+                            <span className="text-emerald-600 font-semibold">,</span>
                           ) : (
                             <span className="text-red-600">
                               +{currencySymbol}{difference.toLocaleString()}

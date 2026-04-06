@@ -96,7 +96,7 @@ export default function HomeAffordabilityCalculator() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="Home Affordability Calculator 2025 — How Much House Can I Afford?"
+        title="Home Affordability Calculator 2025, How Much House Can I Afford?"
         description="Use the 28/36 DTI rule to find your maximum home price. Calculates monthly PITI payment, PMI, and compares debt-to-income ratio. Updated for 2025 mortgage rates."
         path="/us/home-affordability"
         keywords="home affordability calculator 2025, how much house can I afford, mortgage affordability calculator, DTI calculator, PITI calculator"
@@ -107,7 +107,7 @@ export default function HomeAffordabilityCalculator() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground font-display">Home Affordability Calculator</h1>
-          <p className="text-muted-foreground text-sm">28/36 DTI rule — how much house can you actually afford?</p>
+          <p className="text-muted-foreground text-sm">28/36 DTI rule, how much house can you actually afford?</p>
         </div>
       </div>
 
@@ -224,7 +224,7 @@ export default function HomeAffordabilityCalculator() {
             <Card className="bg-blue-500/5 border-blue-500/20">
               <CardContent className="p-4">
                 <p className="text-sm font-semibold text-foreground mb-2">The 28% Rule</p>
-                <p className="text-xs text-muted-foreground">Your housing costs (PITI) should not exceed <span className="font-medium text-blue-500">{fmt(results.maxHousing28)}/month</span> — 28% of your gross monthly income of {fmt(results.monthlyIncome)}.</p>
+                <p className="text-xs text-muted-foreground">Your housing costs (PITI) should not exceed <span className="font-medium text-blue-500">{fmt(results.maxHousing28)}/month</span>, 28% of your gross monthly income of {fmt(results.monthlyIncome)}.</p>
               </CardContent>
             </Card>
             <Card className="bg-emerald-500/5 border-emerald-500/20">

@@ -11,7 +11,7 @@ import { Disclaimer } from '@/components/calculators/Disclaimer';
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 const fmtD = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(n || 0);
 
-// 2024 Federal Poverty Level (FPL) — 48 contiguous states
+// 2024 Federal Poverty Level (FPL), 48 contiguous states
 const FPL_2024 = { 1: 15060, 2: 20440, 3: 25820, 4: 31200, 5: 36580, 6: 41960, 7: 47340, 8: 52720 };
 
 // 2024 ACA Premium Contribution Cap (% of income) by FPL range
@@ -129,7 +129,7 @@ export default function ACASubsidyCalculator() {
               <div>
                 <Label className="text-xs text-muted-foreground">Monthly Benchmark Premium ($, optional)</Label>
                 <Input type="number" value={customBenchmarkPremium} onChange={e => setCustomBenchmarkPremium(+e.target.value)} className="h-9 mt-1" placeholder="Leave 0 to use estimate" />
-                <p className="text-xs text-muted-foreground mt-1">Find on healthcare.gov — 2nd-lowest cost silver plan</p>
+                <p className="text-xs text-muted-foreground mt-1">Find on healthcare.gov, 2nd-lowest cost silver plan</p>
               </div>
             </CardContent>
           </Card>
@@ -200,11 +200,11 @@ export default function ACASubsidyCalculator() {
               <div>
                 <p className="font-medium text-sm text-foreground mb-1">Important Notes</p>
                 <ul className="text-xs text-muted-foreground space-y-1">
-                  <li>• Subsidies are Premium Tax Credits — taken monthly or as refund at filing</li>
+                  <li>• Subsidies are Premium Tax Credits, taken monthly or as refund at filing</li>
                   <li>• American Rescue Plan enhanced subsidies (8.5% cap) extended through 2025</li>
                   <li>• Benchmark = 2nd-lowest Silver plan in your county. Visit healthcare.gov for exact rates</li>
                   {results.medicaidEligible && !results.stateExpandedMedicaid && (
-                    <li className="text-amber-400">• Your state ({state}) hasn't expanded Medicaid — you may fall in the "coverage gap" below 100% FPL</li>
+                    <li className="text-amber-400">• Your state ({state}) hasn't expanded Medicaid, you may fall in the "coverage gap" below 100% FPL</li>
                   )}
                 </ul>
               </div>
