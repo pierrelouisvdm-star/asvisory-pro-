@@ -49,7 +49,13 @@ Build and deploy "Financial Advisory Pro" — a dual-jurisdiction (SA + US) fina
 - **Landing page fully US-aware**: Hero copy, stats, pricing ($19/mo, $199/yr)
 - **Income & Expense Tracker** — US-specific categories; **Net Worth Tracker** — locale/currency adapt
 
-### Phase 3 — US Version Phase 2 (Complete — Feb 2026)
+### Phase 4 — Voice & Growth Features (Complete — Apr 2026)
+- **Voice Transaction Recorder** on Income & Expense Tracker:
+  - Mic button "Speak Transaction" in Add Transaction form
+  - Browser MediaRecorder API records audio (webm/mp4)
+  - Backend `POST /api/voice/parse-transaction`: Whisper (whisper-1) transcribes → GPT-4o parses → extracts type/amount/category/description/date
+  - Works for both US and SA jurisdictions with correct category sets
+  - Real-time waveform visualization, processing state, result preview card, "Apply to Form" button
 - **All US tax data updated to 2025 (Rev. Proc. 2024-40)**:
   - Federal brackets: Single top 10%→$11,925, 12%→$48,475, 22%→$103,350, etc.
   - Standard deductions: Single $15,750, MFJ $31,500, HOH $23,625
