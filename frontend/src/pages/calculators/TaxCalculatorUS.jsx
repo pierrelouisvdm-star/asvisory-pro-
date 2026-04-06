@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   Calculator, DollarSign, Building2, TrendingUp, PieChart, 
-  FileText, Info, CheckCircle2, MapPin
+  FileText, Info, CheckCircle2, MapPin, ChevronDown, ChevronUp, TrendingDown, Sparkles
 } from 'lucide-react';
 import { 
   US_FEDERAL_TAX_BRACKETS_2024, 
@@ -24,6 +24,7 @@ const TaxCalculatorUS = () => {
   const [income, setIncome] = useState(75000);
   const [filingStatus, setFilingStatus] = useState('single');
   const [selectedState, setSelectedState] = useState('CA');
+  const [show2025Changes, setShow2025Changes] = useState(false);
   const [useStandardDeduction, setUseStandardDeduction] = useState(true);
   const [itemizedDeductions, setItemizedDeductions] = useState(0);
   const [retirement401k, setRetirement401k] = useState(0);
@@ -139,6 +140,47 @@ const TaxCalculatorUS = () => {
           <Badge className="mt-3 bg-blue-500/10 text-blue-500 border-blue-500/20">
             2025 Tax Year
           </Badge>
+
+          {/* What Changed in 2025 */}
+          <div className="mt-4 max-w-2xl mx-auto">
+            <button
+              onClick={() => setShow2025Changes(s => !s)}
+              className="flex items-center gap-2 text-sm text-amber-500 hover:text-amber-400 transition-colors mx-auto"
+              data-testid="what-changed-toggle"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              What changed for 2025?
+              {show2025Changes ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+            </button>
+            {show2025Changes && (
+              <div className="mt-3 p-4 rounded-xl border border-amber-500/20 bg-amber-500/5 text-left animate-fade-in" data-testid="what-changed-panel">
+                <p className="text-xs font-semibold text-amber-500 mb-3 uppercase tracking-wide">Key 2025 Changes vs 2024 (Rev. Proc. 2024-40)</p>
+                <div className="grid sm:grid-cols-2 gap-2">
+                  {[
+                    { label: 'Standard Deduction (Single)', change: '+$1,150', detail: '$15,750 (was $14,600)', positive: true },
+                    { label: 'Standard Deduction (MFJ)', change: '+$2,300', detail: '$31,500 (was $29,200)', positive: true },
+                    { label: 'SS Wage Base', change: '+$7,500', detail: '$176,100 (was $168,600)', positive: false },
+                    { label: '401(k) Employee Limit', change: '+$500', detail: '$23,500 (was $23,000)', positive: true },
+                    { label: 'HSA Individual Limit', change: '+$150', detail: '$4,300 (was $4,150)', positive: true },
+                    { label: 'HSA Family Limit', change: '+$250', detail: '$8,550 (was $8,300)', positive: true },
+                    { label: '22% Bracket Top (Single)', change: 'Widened', detail: 'Now $103,350 (was $100,525)', positive: true },
+                    { label: 'IRMAA Part B Base', change: '+$10.30', detail: '$185/mo (was $174.70)', positive: false },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-background/60">
+                      <span className={`text-xs font-bold mt-0.5 flex-shrink-0 ${item.positive ? 'text-emerald-500' : 'text-red-400'}`}>{item.change}</span>
+                      <div>
+                        <p className="text-xs font-medium text-foreground">{item.label}</p>
+                        <p className="text-xs text-muted-foreground">{item.detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-xs text-muted-foreground mt-3">
+                  Wider brackets + higher standard deduction = most Americans will owe slightly <span className="text-emerald-500 font-medium">less tax in 2025</span> on the same income.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
