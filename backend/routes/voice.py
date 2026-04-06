@@ -285,9 +285,19 @@ Use null for values you cannot determine. Extract the FINAL total amount paid.""
         img = ImageContent(image_base64=image_b64)
         response = await chat.send_message(UserMessage(text=analyze_text, file_contents=[img]))
 
-        json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
+        json_match = re.search(r'\{.*?\}', response, re.DOTALL)
         if not json_match:
-            raise ValueError("No JSON in response")
+            # GPT-4o didn't return JSON — possibly not a receipt image
+            return {
+                "transcription": transcription,
+                "amount": 0,
+                "date": today,
+                "merchant": "",
+                "category": "other",
+                "description": "",
+                "dual_context": bool(transcription),
+                "note": "Could not extract data from image. Please fill in fields manually.",
+            }
 
         parsed = json.loads(json_match.group())
         return {
