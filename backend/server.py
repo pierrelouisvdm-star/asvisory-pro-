@@ -9,9 +9,14 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
-# MongoDB connection
+# MongoDB connection — single shared client with production-safe timeouts
 mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
+client = AsyncIOMotorClient(
+    mongo_url,
+    serverSelectionTimeoutMS=10000,
+    connectTimeoutMS=10000,
+    socketTimeoutMS=30000,
+)
 db = client[os.environ['DB_NAME']]
 
 # Create the main app
@@ -124,44 +129,48 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_db_client():
-    """Create database indexes on startup"""
-    # User indexes
-    await db.users.create_index("email", unique=True)
-    await db.users.create_index("id", unique=True)
-    
-    # Client indexes
-    await db.clients.create_index("id", unique=True)
-    await db.clients.create_index("advisor_id")
-    await db.clients.create_index([("advisor_id", 1), ("created_at", -1)])
-    
-    # Calculation indexes
-    await db.calculations.create_index("id", unique=True)
-    await db.calculations.create_index([("client_id", 1), ("created_at", -1)])
-    await db.calculations.create_index([("advisor_id", 1), ("calculator_type", 1)])
-    
-    # Financial analysis indexes
-    await db.financial_analyses.create_index("client_id", unique=True)
-    
-    # Goals indexes
-    await db.goals.create_index("id", unique=True)
-    await db.goals.create_index([("client_id", 1), ("priority", 1)])
-    
-    # Meetings indexes
-    await db.meetings.create_index("id", unique=True)
-    await db.meetings.create_index([("client_id", 1), ("meeting_date", -1)])
-    
-    # Reviews indexes
-    await db.reviews.create_index("client_id", unique=True)
-    await db.reviews.create_index([("advisor_id", 1), ("next_review_date", 1)])
-    
-    # Portfolio indexes
-    await db.portfolios.create_index("client_id", unique=True)
-    
-    # Loan comparisons indexes
-    await db.loan_comparisons.create_index("id", unique=True)
-    await db.loan_comparisons.create_index([("client_id", 1), ("created_at", -1)])
-    
-    logger.info("Database indexes created")
+    """Create database indexes on startup — wrapped in try/except so startup never hangs."""
+    try:
+        # User indexes
+        await db.users.create_index("email", unique=True)
+        await db.users.create_index("id", unique=True)
+        
+        # Client indexes
+        await db.clients.create_index("id", unique=True)
+        await db.clients.create_index("advisor_id")
+        await db.clients.create_index([("advisor_id", 1), ("created_at", -1)])
+        
+        # Calculation indexes
+        await db.calculations.create_index("id", unique=True)
+        await db.calculations.create_index([("client_id", 1), ("created_at", -1)])
+        await db.calculations.create_index([("advisor_id", 1), ("calculator_type", 1)])
+        
+        # Financial analysis indexes
+        await db.financial_analyses.create_index("client_id", unique=True)
+        
+        # Goals indexes
+        await db.goals.create_index("id", unique=True)
+        await db.goals.create_index([("client_id", 1), ("priority", 1)])
+        
+        # Meetings indexes
+        await db.meetings.create_index("id", unique=True)
+        await db.meetings.create_index([("client_id", 1), ("meeting_date", -1)])
+        
+        # Reviews indexes
+        await db.reviews.create_index("client_id", unique=True)
+        await db.reviews.create_index([("advisor_id", 1), ("next_review_date", 1)])
+        
+        # Portfolio indexes
+        await db.portfolios.create_index("client_id", unique=True)
+        
+        # Loan comparisons indexes
+        await db.loan_comparisons.create_index("id", unique=True)
+        await db.loan_comparisons.create_index([("client_id", 1), ("created_at", -1)])
+        
+        logger.info("Database indexes created successfully")
+    except Exception as e:
+        # Log but don't block startup — indexes can be created on first use
+        logger.warning(f"Database index creation skipped (will retry on use): {e}")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

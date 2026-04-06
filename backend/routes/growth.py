@@ -10,7 +10,7 @@ router = APIRouter(prefix="/growth", tags=["growth"])
 
 # DB access
 mongo_url = os.environ['MONGO_URL']
-client = AsyncIOMotorClient(mongo_url)
+client = AsyncIOMotorClient(mongo_url, serverSelectionTimeoutMS=10000, connectTimeoutMS=10000, socketTimeoutMS=30000)
 db = client[os.environ['DB_NAME']]
 
 
