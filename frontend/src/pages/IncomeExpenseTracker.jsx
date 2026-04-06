@@ -591,10 +591,11 @@ const IncomeExpenseTrackerContent = () => {
       {showVoiceSession && (
         <VoiceLoggerSession
           onClose={() => setShowVoiceSession(false)}
-          onSessionSaved={() => { loadTransactions(); setShowVoiceSession(false); }}
+          onSessionSaved={() => { loadTransactions(); }}
           jurisdiction={isUS ? 'us' : 'sa'}
           currencySymbol={currencySymbol}
           token={token}
+          monthTotals={totals}
         />
       )}
 

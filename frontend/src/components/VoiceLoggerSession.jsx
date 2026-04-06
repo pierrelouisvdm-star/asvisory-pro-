@@ -6,7 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import {
   Mic, MicOff, Loader2, X, CheckCircle2, Trash2, Edit3,
   Upload, Image as ImageIcon, Wand2, Sparkles, Save, Plus,
-  ArrowRight, TrendingUp, TrendingDown, Volume2
+  ArrowRight, TrendingUp, TrendingDown, Volume2, Trophy, Flame,
+  BarChart3, Clock, Target, Star
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -86,7 +87,7 @@ function SessionItem({ item, index, onDelete, onEdit, categoryDisplay }) {
   );
 }
 
-export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdiction = 'us', currencySymbol = '$', token }) {
+export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdiction = 'us', currencySymbol = '$', token, monthTotals = null }) {
   const [sessionItems, setSessionItems] = useState([]);
   const [currentReceipt, setCurrentReceipt] = useState(null); // { file, previewUrl, type }
   const [voiceStatus, setVoiceStatus] = useState('idle'); // idle|recording|processing|preview
@@ -96,6 +97,8 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
   const [seconds, setSeconds] = useState(0);
   const [savingAll, setSavingAll] = useState(false);
   const [sessionTimer, setSessionTimer] = useState(0);
+  const [summaryData, setSummaryData] = useState(null); // null=logging, object=summary screen
+  const [dismissCountdown, setDismissCountdown] = useState(6);
 
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
@@ -104,16 +107,36 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
   const animFrameRef = useRef(null);
   const streamRef = useRef(null);
   const fileInputRef = useRef(null);
+  const dismissTimerRef = useRef(null);
 
   useEffect(() => {
     sessionTimerRef.current = setInterval(() => setSessionTimer(s => s + 1), 1000);
     return () => {
       clearInterval(timerRef.current);
       clearInterval(sessionTimerRef.current);
+      clearInterval(dismissTimerRef.current);
       cancelAnimationFrame(animFrameRef.current);
       if (streamRef.current) streamRef.current.getTracks().forEach(t => t.stop());
     };
   }, []);
+
+  // Auto-dismiss summary after countdown reaches 0
+  useEffect(() => {
+    if (!summaryData) return;
+    setDismissCountdown(6);
+    dismissTimerRef.current = setInterval(() => {
+      setDismissCountdown(c => {
+        if (c <= 1) {
+          clearInterval(dismissTimerRef.current);
+          onSessionSaved?.();
+          onClose?.();
+          return 0;
+        }
+        return c - 1;
+      });
+    }, 1000);
+    return () => clearInterval(dismissTimerRef.current);
+  }, [summaryData]);
 
   const fmtTime = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 
@@ -283,11 +306,47 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
       setSessionItems(prev => prev.map(i =>
         readyItems.find(r => r.id === i.id) ? { ...i, status: 'saved' } : i
       ));
-      toast.success(`${data.saved} transactions saved!`);
-      setTimeout(() => {
-        onSessionSaved?.();
-        onClose?.();
-      }, 1200);
+
+      // Compute stats for summary screen
+      const expenses = readyItems.filter(i => i.type === 'expense');
+      const incomes = readyItems.filter(i => i.type === 'income');
+      const totalExpenses = expenses.reduce((s, i) => s + i.amount, 0);
+      const totalIncome = incomes.reduce((s, i) => s + i.amount, 0);
+
+      // Top category by total amount
+      const catTotals = {};
+      expenses.forEach(i => { catTotals[i.category] = (catTotals[i.category] || 0) + i.amount; });
+      const topCat = Object.entries(catTotals).sort((a, b) => b[1] - a[1])[0];
+      const biggestExpense = expenses.sort((a, b) => b.amount - a.amount)[0];
+
+      // Motivational message
+      const mins = Math.round(sessionTimer / 60);
+      const messages = [
+        readyItems.length >= 5 ? `You tracked ${readyItems.length} transactions in ${fmtTime(sessionTimer)}. Impressive discipline!` : null,
+        mins < 2 ? `Lightning fast! All logged in under 2 minutes.` : null,
+        totalExpenses > 0 && monthTotals?.income > 0 ? `That's ${((totalExpenses / monthTotals.income) * 100).toFixed(0)}% of your monthly income tracked.` : null,
+        `${data.saved} transactions saved. Your finances are under control.`,
+        `Logged in ${fmtTime(sessionTimer)}. Every tracked dollar helps you build wealth.`,
+      ].filter(Boolean);
+      const message = messages[Math.floor(Math.random() * Math.min(messages.length, 2))];
+
+      setSummaryData({
+        saved: data.saved,
+        totalExpenses,
+        totalIncome,
+        netChange: totalIncome - totalExpenses,
+        topCategory: topCat ? { name: topCat[0], amount: topCat[1] } : null,
+        biggestExpense,
+        sessionDuration: sessionTimer,
+        message,
+        monthExpensesBefore: monthTotals?.expenses || null,
+        monthExpensesAfter: monthTotals ? (monthTotals.expenses + totalExpenses) : null,
+        items: readyItems,
+      });
+
+      // Notify parent to reload data in background
+      onSessionSaved?.();
+
     } catch (err) {
       toast.error('Failed to save transactions. Please try again.');
     } finally {
@@ -297,6 +356,123 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
 
   const totalAmount = sessionItems.reduce((sum, i) => i.type === 'expense' ? sum - i.amount : sum + i.amount, 0);
   const readyCount = sessionItems.filter(i => i.status === 'ready').length;
+
+  // ── SUMMARY SCREEN ──
+  if (summaryData) {
+    const catIcon = CATEGORY_ICONS[summaryData.topCategory?.name] || '📌';
+    const bigIcon = CATEGORY_ICONS[summaryData.biggestExpense?.category] || '📌';
+
+    return (
+      <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col items-center justify-center p-6" data-testid="session-summary">
+        <div className="max-w-lg w-full space-y-4 animate-fade-in">
+          {/* Hero */}
+          <div className="text-center space-y-2">
+            <div className="flex justify-center mb-3">
+              <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-emerald-500/10 border-2 border-emerald-500/30">
+                <Trophy className="h-9 w-9 text-emerald-500" />
+                <div className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500 text-white text-xs font-bold shadow">
+                  {summaryData.saved}
+                </div>
+              </div>
+            </div>
+            <h2 className="text-2xl font-extrabold text-foreground font-display">Session Complete!</h2>
+            <p className="text-sm text-muted-foreground max-w-sm mx-auto">{summaryData.message}</p>
+          </div>
+
+          {/* Stat Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              {
+                icon: <BarChart3 className="h-4 w-4 text-blue-500" />,
+                label: 'Items Logged',
+                value: summaryData.saved,
+                sub: 'transactions',
+                color: 'blue',
+              },
+              {
+                icon: <TrendingDown className="h-4 w-4 text-red-400" />,
+                label: 'Total Spent',
+                value: `${currencySymbol}${summaryData.totalExpenses.toFixed(2)}`,
+                sub: 'expenses',
+                color: 'red',
+              },
+              {
+                icon: <Clock className="h-4 w-4 text-amber-500" />,
+                label: 'Session Time',
+                value: fmtTime(summaryData.sessionDuration),
+                sub: 'to log all',
+                color: 'amber',
+              },
+              summaryData.topCategory ? {
+                icon: <span className="text-base">{catIcon}</span>,
+                label: 'Top Category',
+                value: summaryData.topCategory.name.replace(/_/g, ' '),
+                sub: `${currencySymbol}${summaryData.topCategory.amount.toFixed(0)}`,
+                color: 'purple',
+              } : {
+                icon: <TrendingUp className="h-4 w-4 text-emerald-500" />,
+                label: 'Income Logged',
+                value: `${currencySymbol}${summaryData.totalIncome.toFixed(2)}`,
+                sub: 'recorded',
+                color: 'emerald',
+              },
+            ].map((card, i) => (
+              <div key={i} className={`p-3 rounded-xl border bg-${card.color}-500/5 border-${card.color}-500/20 text-center`}>
+                <div className="flex justify-center mb-1">{card.icon}</div>
+                <p className="text-xs text-muted-foreground">{card.label}</p>
+                <p className={`font-bold text-sm text-${card.color}-500 capitalize truncate`}>{card.value}</p>
+                <p className="text-[10px] text-muted-foreground">{card.sub}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Biggest expense highlight */}
+          {summaryData.biggestExpense && (
+            <div className="flex items-center gap-3 p-3 rounded-xl border border-border bg-card/80">
+              <span className="text-2xl">{bigIcon}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs text-muted-foreground">Biggest expense</p>
+                <p className="text-sm font-semibold text-foreground truncate">{summaryData.biggestExpense.description || summaryData.biggestExpense.category}</p>
+              </div>
+              <span className="text-base font-bold text-red-400 flex-shrink-0">{currencySymbol}{summaryData.biggestExpense.amount.toFixed(2)}</span>
+            </div>
+          )}
+
+          {/* Month comparison if available */}
+          {summaryData.monthExpensesBefore !== null && (
+            <div className="flex items-center gap-3 p-3 rounded-xl border border-blue-500/20 bg-blue-500/5">
+              <Target className="h-5 w-5 text-blue-500 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">Month-to-date expenses</p>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span className="text-sm text-muted-foreground">{currencySymbol}{summaryData.monthExpensesBefore.toFixed(0)}</span>
+                  <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                  <span className="text-sm font-bold text-foreground">{currencySymbol}{summaryData.monthExpensesAfter.toFixed(0)}</span>
+                  <Badge className="text-[9px] bg-blue-500/10 text-blue-400 border-0">+{currencySymbol}{summaryData.totalExpenses.toFixed(0)} this session</Badge>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Auto-dismiss + close */}
+          <div className="flex items-center justify-between pt-2">
+            <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+              <Loader2 className="h-3 w-3 animate-spin" />
+              Auto-closing in {dismissCountdown}s
+            </p>
+            <Button
+              onClick={() => { clearInterval(dismissTimerRef.current); onClose?.(); }}
+              size="sm"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              data-testid="summary-close-btn"
+            >
+              Done <X className="h-3.5 w-3.5 ml-1.5" />
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex flex-col" data-testid="voice-logger-session">
