@@ -303,6 +303,12 @@ export default function FinancialIndependenceScore() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+      <SEOHead
+        title="Financial Independence Score — Where Do You Stand on the Path to FI?"
+        description="Take our free 6-question Financial Independence quiz. Score your savings rate, emergency fund, debt, retirement contributions, and net worth. Instant results, shareable."
+        path="/us/fi-score"
+        keywords="financial independence score, FI quiz, financial independence calculator, savings rate calculator, FIRE progress quiz, where do I stand financially"
+      />
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-500/10">
           <Award className="h-6 w-6 text-amber-500" />
