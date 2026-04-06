@@ -372,6 +372,14 @@ export const Header = () => {
                 More Tools
               </h3>
               <Link
+                to="/tools"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-2 text-amber-500 rounded-lg hover:bg-amber-500/10 font-medium"
+              >
+                <span className="text-xs bg-amber-500/20 px-1.5 py-0.5 rounded">FREE</span>
+                Free Tools &amp; Calculators
+              </Link>
+              <Link
                 to="/financial-literacy"
                 onClick={() => setIsMenuOpen(false)}
                 className="flex items-center gap-3 px-4 py-2 text-muted-foreground rounded-lg hover:bg-muted hover:text-foreground"

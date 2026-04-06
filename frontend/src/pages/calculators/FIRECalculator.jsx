@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { Flame, Target, TrendingUp, PiggyBank, Zap, DollarSign, Clock, CheckCircle2, Info, Share2, Twitter, Copy, X } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import { getSavingsRatePercentile, getPercentileLabel } from '@/data/usBenchmarks';
 
 const formatCurrency = (amount) => new Intl.NumberFormat('en-US', {
   style: 'currency', currency: 'USD', maximumFractionDigits: 0,
@@ -232,6 +233,15 @@ export default function FIRECalculator() {
                   {savingsRate.toFixed(1)}%
                 </p>
                 <p className="text-xs text-muted-foreground">{formatCurrency(annualSavings)}/year saved</p>
+                {savingsRate > 0 && (() => {
+                  const pct = getSavingsRatePercentile(savingsRate);
+                  const label = getPercentileLabel(pct);
+                  return (
+                    <Badge className={`mt-1.5 text-[10px] bg-${label.color}-500/10 text-${label.color}-500 border-0`}>
+                      {label.label}
+                    </Badge>
+                  );
+                })()}
               </div>
             </CardContent>
           </Card>

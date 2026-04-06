@@ -1,0 +1,106 @@
+{
+  "summary": "Tested all 9 growth/viral features for the Financial Advisory Pro app. Backend: 9/9 growth endpoint tests passed. Frontend: 8/8 feature tests passed. All new features working correctly end-to-end.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_growth.py",
+    "/app/test_reports/pytest/pytest_growth.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Minor: DataCloneError in emergent-main.js ('Failed to fetch subscription: Request object could not be cloned') appears on every page load. This is a non-blocking console error from Emergent infrastructure, not app code.",
+    "TaxCalculatorUS FICA tab still shows old SS wage base description text '6.2% on income up to $168,600' in the FICA tab (line 518) but uses correct $176,100 in calculations. Text label should be updated to $176,100 for consistency.",
+    "PublicToolsPage: Header shows 'R ZAR' currency selector and SA jurisdiction flag even on the public /tools page (no login). Minor UX concern since /tools is US-focused."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_growth.py"
+  ],
+  "success_rate": {
+    "backend": "100% (9/9 growth endpoint tests)",
+    "frontend": "100% (8/8 feature tests)"
+  },
+  "test_credentials": "Pierrelouisvdm@gmail.com / Scorpio@57!! (Admin + Premium)",
+  "seed_data_creation": "Created test leads via /api/growth/capture-lead: TEST_lead_* emails, test_growthfeature@example.com, test_tools_capture@example.com. Created test referral codes via /api/growth/referral for TEST_user_* user_ids.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All 9 growth/viral features working. Backend growth.py has 4 endpoints: POST /capture-lead, POST /referral, GET /referral/{user_id}/stats, POST /referral/use/{referral_code}, GET /lead-count. Frontend routes: /tools (public, no auth), /us/tax-comparison-2025 (ProtectedRoute only), /us/fi-score (ProtectedRoute only), all others are ProtectedRoute + GatedCalculator (Premium). Referral Widget appears on Dashboard at line 784 in Dashboard.jsx. Minor: TaxCalculatorUS FICA tab description still mentions old $168,600 SS wage base (code is correct at $176,100).",
+  "test_results": {
+    "backend_capture_lead_new": {
+      "status": "PASS",
+      "endpoint": "POST /api/growth/capture-lead",
+      "details": "Returns {status: 'captured', message: '...'} for new email"
+    },
+    "backend_capture_lead_duplicate": {
+      "status": "PASS",
+      "endpoint": "POST /api/growth/capture-lead",
+      "details": "Returns {status: 'updated'} for duplicate email"
+    },
+    "backend_capture_lead_invalid_email": {
+      "status": "PASS",
+      "endpoint": "POST /api/growth/capture-lead",
+      "details": "Returns 400 for invalid email"
+    },
+    "backend_referral_create": {
+      "status": "PASS",
+      "endpoint": "POST /api/growth/referral",
+      "details": "Creates referral code (8 char uppercase alphanumeric), referral_count=0"
+    },
+    "backend_referral_idempotent": {
+      "status": "PASS",
+      "endpoint": "POST /api/growth/referral",
+      "details": "Same user_id always returns same referral code"
+    },
+    "backend_lead_count": {
+      "status": "PASS",
+      "endpoint": "GET /api/growth/lead-count",
+      "details": "Returns {total_leads, total_users, combined} integers"
+    },
+    "tax_calculator_us_what_changed_2025": {
+      "status": "PASS",
+      "route": "/us/tax-calculator",
+      "details": "Toggle [data-testid='what-changed-toggle'] works. Panel hidden by default, shows 8 items when clicked: Standard Deduction Single/MFJ, SS Wage Base, 401k Limit, HSA Individual/Family, 22% Bracket Top, IRMAA Part B. All 5/5 keywords found. Toggle closes panel on second click."
+    },
+    "fi_score_quiz_email_capture": {
+      "status": "PASS",
+      "route": "/us/fi-score",
+      "details": "All 6 questions answered. Completion screen shows score 120/235 (51%), tier 'Financially Stable'. Email capture form visible with 'Get your personalized FI roadmap'. Submitted test email, success message 'You're on the list! Your personalized FI roadmap is on its way.' shown inline + toast notification."
+    },
+    "fire_calculator_savings_benchmark": {
+      "status": "PASS",
+      "route": "/us/fire-calculator",
+      "details": "$80k income, $48k expenses = 40% savings rate. Badge 'Top 10% of Americans' shows correctly via getSavingsRatePercentile(40) → 90th percentile → getPercentileLabel(90) → 'Top 10% of Americans' (emerald color)."
+    },
+    "paycheck_calculator_median_badge": {
+      "status": "PASS",
+      "route": "/us/paycheck",
+      "details": "Median comparison badge shows '$44,901 above the US median household take-home' with default $6,500 bi-weekly pay. Uses US median $77,397 * 0.72 = ~$55,726 estimated take-home."
+    },
+    "tax_savings_finder": {
+      "status": "PASS",
+      "route": "/us/tax-savings-finder",
+      "details": "$95k income, $5k 401k shows 'We found 3 tax-saving opportunities: $8,358 in 2025 taxes'. Opportunities: Max Out Your 401(k) $7,770, Deductible Traditional IRA Contribution $588, Tax-Loss Harvesting (no $ amount). All 3 have dollar amounts or savings notes."
+    },
+    "tax_comparison_2025": {
+      "status": "PASS",
+      "route": "/us/tax-comparison-2025",
+      "details": "$85k income Single shows $392 savings in [data-testid='tc-savings']. Text: '$10,541 tax in 2024 → $10,149 tax in 2025'. Bar chart rendered (25 SVG elements). Bracket comparison table shows 'Wider ↑' for 10%, 12%, 22%, 24% brackets."
+    },
+    "public_tools_page": {
+      "status": "PASS",
+      "route": "/tools",
+      "details": "Loads without login. Hero: 'Every Calculator an American Needs. In One Place.'. All 6 free tool cards found: Financial Independence Score, 2025 vs 2024 Tax Comparison, US Tax Calendar 2025-2026, FIRE Calculator, Home Affordability Calculator, Tax Savings Finder. Email capture form works, shows 'You're on the list! We'll keep you in the loop.' on submit."
+    },
+    "dashboard_referral_widget": {
+      "status": "PASS",
+      "route": "/",
+      "details": "Referral Widget [data-testid='referral-widget'] present on dashboard. Shows 'Refer Friends & Earn Rewards' title. Referral link with /auth?ref=XXXXXXXX format. All 3 reward tiers visible: 'Thank you badge + priority support' (1 ref), '1 month Premium free' (3 refs), 'Full year Premium free' (10 refs). Copy button [data-testid='referral-copy-btn'] present."
+    }
+  }
+}

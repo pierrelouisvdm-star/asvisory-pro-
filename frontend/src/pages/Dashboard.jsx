@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { MarketTracker } from '@/components/MarketTracker';
 import { QuickActionsWidget } from '@/components/QuickActionsWidget';
 import { USOnboardingWizard, useUSOnboarding } from '@/components/USOnboardingWizard';
+import ReferralWidget from '@/components/ReferralWidget';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
 import { useJurisdiction } from '@/context/JurisdictionContext';
@@ -48,7 +49,10 @@ import {
   CalendarDays,
   TrendingDown,
   RefreshCcw,
-  Star
+  Star,
+  Search,
+  Users,
+  Gift
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -557,6 +561,29 @@ const usCalculators = [
     isFree: false,
     isNew: true,
   },
+  // Growth & Viral
+  {
+    id: 'us-tax-savings-finder',
+    title: 'Tax Savings Finder',
+    description: 'Personalized list of every legal way to cut your 2025 tax bill',
+    icon: Search,
+    path: '/us/tax-savings-finder',
+    features: ['401k', 'HSA', 'IRA', 'QBI', 'Student Loan'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
+  {
+    id: 'us-tax-comparison-2025',
+    title: '2025 vs 2024 Tax Comparison',
+    description: 'See exactly how much more you keep in 2025',
+    icon: Sparkles,
+    path: '/us/tax-comparison-2025',
+    features: ['Side-by-Side', 'All Incomes', 'Shareable'],
+    isFree: true,
+    isNew: true,
+    isFeatured: true,
+  },
 ];
 
 const features = [
@@ -752,8 +779,9 @@ export const Dashboard = () => {
             <MarketTracker />
           </div>
           {isAuthenticated && (
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 space-y-4">
               <QuickActionsWidget />
+              <ReferralWidget />
             </div>
           )}
         </div>

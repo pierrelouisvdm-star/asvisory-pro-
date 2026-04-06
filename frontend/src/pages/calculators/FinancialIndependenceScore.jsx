@@ -96,6 +96,9 @@ export default function FinancialIndependenceScore() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [leadEmail, setLeadEmail] = useState('');
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
+  const [leadLoading, setLeadLoading] = useState(false);
 
   const score = useMemo(() =>
     Object.values(answers).reduce((sum, pts) => sum + pts, 0)
@@ -121,9 +124,37 @@ export default function FinancialIndependenceScore() {
     setCurrentQuestion(0);
     setCompleted(false);
     setShowShare(false);
+    setLeadSubmitted(false);
+    setLeadEmail('');
   };
 
-  const shareText = `My Financial Independence Score: ${score}/${MAX_SCORE} (${pct}%) — "${tier.label}" 🏆\nCalculated at Financial Advisory Pro: ${window.location.origin}`;
+  const handleLeadCapture = async (e) => {
+    e.preventDefault();
+    if (!leadEmail.trim() || !leadEmail.includes('@')) return;
+    setLeadLoading(true);
+    try {
+      const API_URL = process.env.REACT_APP_BACKEND_URL;
+      const res = await fetch(`${API_URL}/api/growth/capture-lead`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: leadEmail.trim(),
+          source: 'fi_score_quiz',
+          score,
+          tier: tier.label,
+        }),
+      });
+      const data = await res.json();
+      setLeadSubmitted(true);
+      toast.success(data.message || "You're on the list!");
+    } catch {
+      toast.error('Something went wrong. Please try again.');
+    } finally {
+      setLeadLoading(false);
+    }
+  };
+
+  const shareText = `My Financial Independence Score: ${score}/${MAX_SCORE} (${pct}%) — "${tier.label}" 🏆\nCalculated at Financial Advisory Pro: ${window.location.origin}/us/fi-score`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareText);
@@ -169,6 +200,37 @@ export default function FinancialIndependenceScore() {
               {tier.label}
             </Badge>
             <p className="text-muted-foreground text-sm max-w-lg mx-auto">{tier.desc}</p>
+          </CardContent>
+        </Card>
+
+        {/* Email Capture */}
+        <Card className="bg-gradient-to-br from-blue-500/10 to-card border-blue-500/30 border-2">
+          <CardContent className="p-5 text-center">
+            {leadSubmitted ? (
+              <div className="flex items-center justify-center gap-2 text-emerald-500 py-2">
+                <CheckCircle2 className="h-5 w-5" />
+                <span className="font-medium">You're on the list! Your personalized FI roadmap is on its way.</span>
+              </div>
+            ) : (
+              <>
+                <p className="font-semibold text-foreground mb-1">Get your personalized FI roadmap</p>
+                <p className="text-sm text-muted-foreground mb-4">Based on your {tier.label} score — we'll send you the highest-impact next steps to accelerate your path to financial independence.</p>
+                <form onSubmit={handleLeadCapture} className="flex gap-2 max-w-sm mx-auto">
+                  <input
+                    type="email"
+                    placeholder="your@email.com"
+                    value={leadEmail}
+                    onChange={e => setLeadEmail(e.target.value)}
+                    className="flex-1 h-10 px-3 rounded-lg border border-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    data-testid="fi-email-input"
+                  />
+                  <Button type="submit" disabled={leadLoading} size="sm" className="h-10 px-4 bg-blue-500 hover:bg-blue-600 text-white" data-testid="fi-email-submit">
+                    {leadLoading ? '...' : 'Send Roadmap'}
+                  </Button>
+                </form>
+                <p className="text-xs text-muted-foreground mt-2">No spam — just actionable steps based on your score.</p>
+              </>
+            )}
           </CardContent>
         </Card>
 

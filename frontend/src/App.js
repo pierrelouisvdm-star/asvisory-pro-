@@ -65,6 +65,9 @@ import AMTCalculator from "@/pages/calculators/AMTCalculator";
 import FinancialIndependenceScore from "@/pages/calculators/FinancialIndependenceScore";
 import USTaxCalendar from "@/pages/calculators/USTaxCalendar";
 import SavingsComparisonCalculator from "@/pages/calculators/SavingsComparisonCalculator";
+import TaxSavingsFinder from "@/pages/calculators/TaxSavingsFinder";
+import TaxComparison2025 from "@/pages/calculators/TaxComparison2025";
+import PublicToolsPage from "@/pages/PublicToolsPage";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { Toaster } from "@/components/ui/sonner";
@@ -213,6 +216,11 @@ function App() {
                   <Route path="/us/fi-score" element={<ProtectedRoute><FinancialIndependenceScore /></ProtectedRoute>} />
                   <Route path="/us/tax-calendar" element={<ProtectedRoute><USTaxCalendar /></ProtectedRoute>} />
                   <Route path="/us/savings-comparison" element={<ProtectedRoute><GatedCalculator path="/us/savings-comparison"><SavingsComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
+                  {/* Growth & Viral Tools */}
+                  <Route path="/us/tax-savings-finder" element={<ProtectedRoute><GatedCalculator path="/us/tax-savings-finder"><TaxSavingsFinder /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/tax-comparison-2025" element={<ProtectedRoute><TaxComparison2025 /></ProtectedRoute>} />
+                  {/* Public landing page — no login required */}
+                  <Route path="/tools" element={<PublicToolsPage />} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />

@@ -242,7 +242,7 @@ export default function PaycheckCalculator() {
             <CardContent className="p-5 text-center">
               <p className="text-sm text-muted-foreground mb-1">{FREQ_LABELS[payFrequency]} Take-Home Pay</p>
               <p className="text-5xl font-bold text-emerald-500 mb-2" data-testid="pc-net-pay">{fmt(results.netPay)}</p>
-              <div className="flex justify-center gap-6 text-sm">
+              <div className="flex justify-center gap-6 text-sm mb-3">
                 <div>
                   <p className="text-muted-foreground text-xs">Annual Net</p>
                   <p className="font-semibold text-foreground">{fmt(results.annualNet)}</p>
@@ -256,6 +256,21 @@ export default function PaycheckCalculator() {
                   <p className="font-semibold text-foreground">{fmtPct(results.marginalRate)}</p>
                 </div>
               </div>
+              {/* US Median Comparison */}
+              {(() => {
+                const annualGross = results.annualGross;
+                const usMedianHousehold = 77397; // US median household income 2024 (Census Bureau)
+                const usMedianTakeHome = usMedianHousehold * 0.72; // estimated
+                const diff = results.annualNet - usMedianTakeHome;
+                return (
+                  <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium ${diff >= 0 ? 'bg-blue-500/10 text-blue-500' : 'bg-amber-500/10 text-amber-500'}`}>
+                    {diff >= 0
+                      ? `${fmt(Math.abs(diff))} above the US median household take-home`
+                      : `${fmt(Math.abs(diff))} below the US median household take-home`
+                    }
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
 
