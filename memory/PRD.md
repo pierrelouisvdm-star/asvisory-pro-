@@ -50,7 +50,13 @@ Build and deploy "Financial Advisory Pro" — a dual-jurisdiction (SA + US) fina
 - **Income & Expense Tracker** — US-specific categories; **Net Worth Tracker** — locale/currency adapt
 
 ### Phase 4 — Voice & Growth Features (Complete — Apr 2026)
-- **Voice Transaction Recorder** on Income & Expense Tracker:
+- **Voice Logging Session** (`VoiceLoggerSession.jsx`):
+  - Full-screen overlay opened via "Voice Session" button in tracker header
+  - Log multiple transactions in one session — voice + optional receipt photo per item
+  - Left panel: receipt drop zone + mic button; GPT-4o parses each item (dual context if receipt attached)
+  - Right panel: live session queue with edit/delete per item
+  - "Save All N Transactions" → batch saves via `POST /api/transactions/batch`
+  - Session timer, item count, net total; works for both US and SA with correct currency
   - Mic button "Speak Transaction" in Add Transaction form
   - Browser MediaRecorder API records audio (webm/mp4)
   - Backend `POST /api/voice/parse-transaction`: Whisper (whisper-1) transcribes → GPT-4o parses → extracts type/amount/category/description/date

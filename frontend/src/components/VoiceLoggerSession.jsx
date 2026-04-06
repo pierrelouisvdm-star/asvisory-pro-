@@ -58,7 +58,7 @@ function SessionItem({ item, index, onDelete, onEdit, categoryDisplay }) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5">
               <span className={`text-sm font-bold ${item.type === 'income' ? 'text-emerald-500' : 'text-foreground'}`}>
-                {item.type === 'income' ? '+' : '-'}${item.amount.toFixed(2)}
+                {item.type === 'income' ? '+' : '-'}{item.currencySymbol || '$'}{item.amount.toFixed(2)}
               </span>
               <Badge className="text-[9px] bg-muted text-muted-foreground border-0 px-1 py-0 capitalize">
                 {item.category.replace(/_/g, ' ')}
@@ -238,6 +238,7 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
       voiceTranscription: voiceTranscript,
       hasReceipt: !!currentReceipt,
       status: 'ready',
+      currencySymbol,
     };
     setSessionItems(prev => [item, ...prev]);
     setCurrentParsed(null);
@@ -509,7 +510,7 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
               <div className="flex justify-between items-center text-sm mb-3">
                 <span className="text-muted-foreground">{readyCount} unsaved</span>
                 <span className={`font-bold ${totalAmount >= 0 ? 'text-emerald-500' : 'text-red-400'}`}>
-                  {totalAmount >= 0 ? '+' : ''}${Math.abs(totalAmount).toFixed(2)} net
+                  {totalAmount >= 0 ? '+' : ''}{currencySymbol}{Math.abs(totalAmount).toFixed(2)} net
                 </span>
               </div>
               <Button onClick={saveAll} disabled={savingAll || readyCount === 0}
