@@ -24,6 +24,7 @@ import { CalculatorGate } from '../components/FeatureGate';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'sonner';
 import VoiceTransactionRecorder from '../components/VoiceTransactionRecorder';
+import VoiceReceiptAnalyzer from '../components/VoiceReceiptAnalyzer';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -528,6 +529,22 @@ const IncomeExpenseTrackerContent = () => {
     toast.success('OCR data applied to form');
   };
 
+  // Apply dual-context receipt+voice analysis result
+  const handleReceiptVoiceAnalyzed = (data) => {
+    if (!data) return;
+    const expCats = ACTIVE_EXPENSE_CATEGORIES.map(c => c.id);
+    const validCat = expCats.includes(data.category) ? data.category : 'other';
+    const cat = ACTIVE_EXPENSE_CATEGORIES.find(c => c.id === validCat);
+    setNewTransaction(prev => ({
+      ...prev,
+      amount: data.amount > 0 ? data.amount : prev.amount,
+      category: validCat,
+      description: data.description || data.merchant || prev.description,
+      date: data.date || prev.date,
+      taxDeductible: cat?.taxDeductible || prev.taxDeductible,
+    }));
+  };
+
   // Apply voice-parsed data to form
   const handleVoiceParsed = (data) => {
     if (!data) return;
@@ -958,47 +975,58 @@ const IncomeExpenseTrackerContent = () => {
                 </Label>
                 
                 {newTransaction.receipt ? (
-                  <div className="flex items-center justify-between p-3 bg-navy-800 rounded-lg border border-navy-600">
-                    <div className="flex items-center gap-3">
-                      {newTransaction.receipt.type.startsWith('image/') ? (
-                        <Image className="h-8 w-8 text-blue-400" />
-                      ) : (
-                        <FileText className="h-8 w-8 text-red-400" />
-                      )}
-                      <div>
-                        <p className="text-sm font-medium text-white truncate max-w-[200px]">
-                          {newTransaction.receipt.name}
-                        </p>
-                        <p className="text-xs text-slate-500">
-                          {(newTransaction.receipt.size / 1024).toFixed(1)} KB
-                        </p>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between p-3 bg-navy-800 rounded-lg border border-navy-600">
+                      <div className="flex items-center gap-3">
+                        {newTransaction.receipt.type.startsWith('image/') ? (
+                          <Image className="h-8 w-8 text-blue-400" />
+                        ) : (
+                          <FileText className="h-8 w-8 text-red-400" />
+                        )}
+                        <div>
+                          <p className="text-sm font-medium text-white truncate max-w-[200px]">
+                            {newTransaction.receipt.name}
+                          </p>
+                          <p className="text-xs text-slate-500">
+                            {(newTransaction.receipt.size / 1024).toFixed(1)} KB
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setViewingReceipt(newTransaction.receipt)}
+                          className="text-blue-400 hover:text-blue-300"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={removeReceipt}
+                          className="text-red-400 hover:text-red-300"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setViewingReceipt(newTransaction.receipt)}
-                        className="text-blue-400 hover:text-blue-300"
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={removeReceipt}
-                        className="text-red-400 hover:text-red-300"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
+                    {/* Voice Receipt Analyzer — only for image files */}
+                    {newTransaction.receipt.type.startsWith('image/') && (
+                      <VoiceReceiptAnalyzer
+                        receiptFile={newTransaction.receipt.file}
+                        onAnalyzed={handleReceiptVoiceAnalyzed}
+                        jurisdiction={isUS ? 'us' : 'sa'}
+                        token={token}
+                      />
+                    )}
                   </div>
                 ) : (
                   <label className="flex flex-col items-center justify-center p-6 cursor-pointer hover:bg-navy-800/50 rounded-lg transition-colors">
                     <Upload className="h-8 w-8 text-slate-500 mb-2" />
-                    <span className="text-sm text-slate-400">Click to upload receipt or invoice</span>
+                    <span className="text-xs text-slate-400">Click to upload receipt or invoice</span>
                     <span className="text-xs text-slate-600 mt-1">JPG, PNG, WebP or PDF (max 5MB)</span>
-                    <span className="text-xs text-emerald-500 mt-1">AI will auto-extract amount, date & merchant</span>
+                    <span className="text-xs text-emerald-500 mt-1">AI + voice = near-perfect extraction</span>
                     <input
                       type="file"
                       accept="image/jpeg,image/png,image/webp,application/pdf"

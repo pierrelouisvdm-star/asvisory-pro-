@@ -91,10 +91,11 @@ def get_object(path: str) -> tuple:
     return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
 
 
-async def analyze_receipt_with_ocr(image_content: bytes, content_type: str) -> dict:
+async def analyze_receipt_with_ocr(image_content: bytes, content_type: str, voice_description: str = None) -> dict:
     """
     Use AI vision to extract data from receipt image.
     Returns dict with: amount, date, merchant, category, description
+    Optionally enhanced with voice_description for dual-context parsing.
     """
     # Only analyze images, not PDFs
     if not content_type.startswith("image/"):
@@ -104,33 +105,44 @@ async def analyze_receipt_with_ocr(image_content: bytes, content_type: str) -> d
         # Convert to base64
         image_base64 = base64.b64encode(image_content).decode('utf-8')
         
-        # Initialize chat with vision model
-        chat = LlmChat(
-            api_key=EMERGENT_KEY,
-            session_id=f"ocr-{uuid.uuid4()}",
-            system_message="""You are a receipt/invoice OCR assistant. Analyze the receipt image and extract:
-1. Total amount (the final amount paid, in ZAR)
+        # Build context-aware system message
+        voice_context = ""
+        if voice_description:
+            voice_context = f"\n\nThe user also described this receipt verbally: \"{voice_description}\"\nUse this as additional context to improve accuracy — especially for category, description, and any values that may be hard to read."
+
+        system_message = f"""You are a receipt/invoice OCR assistant. Analyze the receipt image and extract:
+1. Total amount (the final amount paid)
 2. Date (in YYYY-MM-DD format)
 3. Merchant/Store name
 4. Suggested category (one of: housing, transport, food, utilities, communication, education, healthcare, entertainment, travel, shopping, business, other)
-5. Brief description
+5. Brief description{voice_context}
 
 Respond ONLY with valid JSON in this exact format:
-{
+{{
   "amount": 123.45,
   "date": "2026-03-27",
   "merchant": "Store Name",
   "category": "food",
   "description": "Brief description of purchase"
-}
+}}
 
 If you cannot determine a value, use null. Always try to extract the total/final amount, not subtotals."""
+        
+        # Initialize chat with vision model
+        chat = LlmChat(
+            api_key=EMERGENT_KEY,
+            session_id=f"ocr-{uuid.uuid4()}",
+            system_message=system_message
         ).with_model("openai", "gpt-4o")
         
         # Create message with image
         image = ImageContent(image_base64=image_base64)
+        analyze_text = "Please analyze this receipt/invoice and extract the relevant information."
+        if voice_description:
+            analyze_text = f"Analyze this receipt. The user described it as: \"{voice_description}\""
+        
         user_message = UserMessage(
-            text="Please analyze this receipt/invoice and extract the relevant information.",
+            text=analyze_text,
             file_contents=[image]
         )
         
@@ -139,7 +151,6 @@ If you cannot determine a value, use null. Always try to extract the total/final
         logger.info(f"OCR response: {response}")
         
         # Parse JSON from response
-        # Try to extract JSON from the response
         json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
         if json_match:
             extracted_data = json.loads(json_match.group())

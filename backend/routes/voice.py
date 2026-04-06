@@ -1,12 +1,15 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from typing import Optional
 from datetime import datetime, timezone
 import tempfile
 import os
 import json
+import base64
+import re
 import logging
 
 from emergentintegrations.llm.openai import OpenAISpeechToText
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
 
 router = APIRouter(prefix="/voice", tags=["voice"])
 logger = logging.getLogger(__name__)
@@ -184,3 +187,119 @@ Classification rules:
     finally:
         if tmp_path and os.path.exists(tmp_path):
             os.unlink(tmp_path)
+
+
+@router.post("/analyze-receipt-with-voice")
+async def analyze_receipt_with_voice(
+    image: UploadFile = File(...),
+    audio: Optional[UploadFile] = File(None),
+    voice_text: Optional[str] = Form(None),
+    jurisdiction: str = Form("us"),
+):
+    """
+    Dual-context receipt analysis: image + optional voice description.
+    Transcribes audio (if provided) then sends both image + text to GPT-4o Vision.
+    Returns enhanced OCR data: { transcription, amount, date, merchant, category, description }
+    """
+    key = os.environ.get("EMERGENT_LLM_KEY")
+    if not key:
+        raise HTTPException(status_code=500, detail="LLM key not configured")
+
+    image_bytes = await image.read()
+    if len(image_bytes) < 100:
+        raise HTTPException(status_code=400, detail="Image too small or empty")
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    transcription = voice_text or ""
+    audio_tmp = None
+
+    # Step 1: Transcribe audio if provided
+    if audio and not voice_text:
+        audio_bytes = await audio.read()
+        if len(audio_bytes) > 100:
+            content_type = audio.content_type or ""
+            if "webm" in content_type or (audio.filename or "").endswith(".webm"):
+                suffix = ".webm"
+            elif "mp4" in content_type:
+                suffix = ".mp4"
+            else:
+                suffix = ".webm"
+
+            with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
+                tmp.write(audio_bytes)
+                audio_tmp = tmp.name
+
+            try:
+                stt = OpenAISpeechToText(api_key=key)
+                with open(audio_tmp, "rb") as f:
+                    whisper_resp = await stt.transcribe(
+                        file=f,
+                        model="whisper-1",
+                        language="en",
+                        response_format="text",
+                        prompt="Receipt description. Financial transaction. Store name, amount, category.",
+                    )
+                transcription = (whisper_resp if isinstance(whisper_resp, str) else whisper_resp.text or "").strip()
+                logger.info(f"Voice description transcription: {transcription}")
+            except Exception as e:
+                logger.warning(f"Audio transcription failed, continuing image-only: {e}")
+                transcription = ""
+            finally:
+                if audio_tmp and os.path.exists(audio_tmp):
+                    os.unlink(audio_tmp)
+
+    # Step 2: GPT-4o Vision with dual context
+    is_us = jurisdiction.lower() == "us"
+    expense_cats = US_EXPENSE_CATEGORIES if is_us else SA_EXPENSE_CATEGORIES
+
+    voice_ctx = ""
+    if transcription:
+        voice_ctx = f"\n\nUser's voice description: \"{transcription}\"\nUse this to improve accuracy — especially for category and any text that may be unclear in the image."
+
+    system_msg = f"""You are a receipt/invoice OCR assistant. Analyze the receipt image and extract transaction data.{voice_ctx}
+
+Return ONLY valid JSON:
+{{
+  "amount": 123.45,
+  "date": "YYYY-MM-DD (today is {today})",
+  "merchant": "Store Name",
+  "category": "one of: {', '.join(expense_cats)}",
+  "description": "brief 3-6 word description"
+}}
+
+Use null for values you cannot determine. Extract the FINAL total amount paid."""
+
+    try:
+        image_b64 = base64.b64encode(image_bytes).decode("utf-8")
+        chat = LlmChat(
+            api_key=key,
+            session_id=f"dual-ocr-{os.urandom(4).hex()}",
+            system_message=system_msg
+        ).with_model("openai", "gpt-4o")
+
+        analyze_text = "Analyze this receipt."
+        if transcription:
+            analyze_text = f"Analyze this receipt. The user described it as: \"{transcription}\""
+
+        content_type = image.content_type or "image/jpeg"
+        img = ImageContent(image_base64=image_b64)
+        response = await chat.send_message(UserMessage(text=analyze_text, file_contents=[img]))
+
+        json_match = re.search(r'\{[^{}]*\}', response, re.DOTALL)
+        if not json_match:
+            raise ValueError("No JSON in response")
+
+        parsed = json.loads(json_match.group())
+        return {
+            "transcription": transcription,
+            "amount": float(parsed.get("amount") or 0),
+            "date": parsed.get("date") or today,
+            "merchant": parsed.get("merchant") or "",
+            "category": parsed.get("category") or "other",
+            "description": parsed.get("description") or "",
+            "dual_context": bool(transcription),
+        }
+
+    except Exception as e:
+        logger.error(f"Dual-context receipt analysis failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Receipt analysis failed: {str(e)}")
