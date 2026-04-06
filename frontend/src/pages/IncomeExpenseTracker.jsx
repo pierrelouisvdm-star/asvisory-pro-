@@ -14,7 +14,7 @@ import {
   GraduationCap, Heart, Plane, Gift, BarChart3, Calendar,
   Download, Filter, ArrowUpRight, ArrowDownRight, CheckCircle2,
   AlertCircle, Tag, RefreshCw, FileText, Upload, Image, Eye, X, Paperclip, Loader2,
-  ShieldPlus
+  ShieldPlus, Mic
 } from 'lucide-react';
 import { useCurrency } from '../context/CurrencyContext';
 import { useJurisdiction } from '../context/JurisdictionContext';
@@ -23,6 +23,7 @@ import { Disclaimer } from '../components/calculators/Disclaimer';
 import { CalculatorGate } from '../components/FeatureGate';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'sonner';
+import VoiceTransactionRecorder from '../components/VoiceTransactionRecorder';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -527,6 +528,29 @@ const IncomeExpenseTrackerContent = () => {
     toast.success('OCR data applied to form');
   };
 
+  // Apply voice-parsed data to form
+  const handleVoiceParsed = (data) => {
+    if (!data) return;
+    const expCats = ACTIVE_EXPENSE_CATEGORIES.map(c => c.id);
+    const incCats = ACTIVE_INCOME_CATEGORIES.map(c => c.id);
+    const validCat = data.type === 'income'
+      ? (incCats.includes(data.category) ? data.category : 'other')
+      : (expCats.includes(data.category) ? data.category : 'other');
+
+    const cat = ACTIVE_EXPENSE_CATEGORIES.find(c => c.id === validCat);
+    setNewTransaction(prev => ({
+      ...prev,
+      type: data.type || prev.type,
+      amount: data.amount > 0 ? data.amount : prev.amount,
+      category: validCat,
+      description: data.description || prev.description,
+      date: data.date || prev.date,
+      taxDeductible: cat?.taxDeductible || false,
+    }));
+    toast.success('Voice transaction applied! Review and confirm.');
+    setActiveTab('add');
+  };
+
   // Get category info
   const getCategoryInfo = (categoryId, type) => {
     const categories = type === 'income' ? ACTIVE_INCOME_CATEGORIES : ACTIVE_EXPENSE_CATEGORIES;
@@ -801,9 +825,19 @@ const IncomeExpenseTrackerContent = () => {
           <Card className="bg-navy-900/50 border-navy-700">
             <CardHeader>
               <CardTitle className="text-white">Add New Transaction</CardTitle>
-              <CardDescription>Record your income or expenses</CardDescription>
+              <CardDescription>Record your income or expenses — type manually or speak it</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+              {/* Voice Recorder */}
+              <div className="pb-2 border-b border-navy-700">
+                <VoiceTransactionRecorder
+                  onParsed={handleVoiceParsed}
+                  jurisdiction={isUS ? 'us' : 'sa'}
+                  currencySymbol={currencySymbol}
+                  token={token}
+                />
+              </div>
+
               {/* Transaction Type */}
               <div className="flex gap-4">
                 <Button

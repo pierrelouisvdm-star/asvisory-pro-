@@ -42,6 +42,7 @@ from routes.documents import router as documents_router
 from routes.admin import router as admin_router
 from routes.transactions import router as transactions_router
 from routes.growth import router as growth_router
+from routes.voice import router as voice_router
 
 # Include route modules
 api_router.include_router(auth_router)
@@ -61,6 +62,7 @@ api_router.include_router(documents_router)
 api_router.include_router(admin_router)
 api_router.include_router(transactions_router)
 api_router.include_router(growth_router)
+api_router.include_router(voice_router)
 
 # Health check endpoint
 @api_router.get("/health")
