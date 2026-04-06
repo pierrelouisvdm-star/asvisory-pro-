@@ -97,14 +97,20 @@ Build and deploy "Financial Advisory Pro" — a dual-jurisdiction (SA + US) fina
 ## Prioritized Backlog
 
 ### P0 — Immediate Next
-- **Stripe Integration** — US premium subscriptions via Stripe checkout (SA keeps PayFast)
+- **Stripe Integration** — US premium subscriptions via Stripe checkout ($99 one-time / $19/month)
 
-### P1 — Soon
-- **Light Theme Audit** — Systematic fix of hardcoded dark colors for full light mode support
+### P1 — Growth & Retention
+- **SEO Blog** — Articles ranking for "2025 tax brackets", "FIRE number calculator", "paycheck calculator 2025"
+- **ProductHunt Launch** — app is ready; prepare screenshots and launch copy
+- **Finance Newsletter Outreach** — Morning Brew, The Hustle, 1440 Daily
+- **Reddit Strategy** — post in r/personalfinance, r/financialindependence, r/cscareerquestions (RSU), r/freelance
 
-### P2 — Future
+### P2 — Features
+- **Light Theme Audit** — fix hardcoded dark colors for light mode consistency
 - **IRP5 File Storage Backend** — Parse and store SA IRP5 tax documents
 - **US Retirement Planner Adaptation** — Integrate Social Security + 401k into retirement planner
+
+### P3 — Future
 - **Market Insights Real Data** — Connect to real market API/RSS feed (currently static)
 - **Refactor TaxPlanningHub.jsx** — 1700+ lines, break into smaller components
 - **White-labeling** for financial firms

@@ -515,7 +515,7 @@ const TaxCalculatorUS = () => {
                         <div className="flex justify-between items-center">
                           <div>
                             <p className="font-medium">Social Security</p>
-                            <p className="text-sm text-muted-foreground">6.2% on income up to $168,600</p>
+                            <p className="text-sm text-muted-foreground">6.2% on income up to $176,100 (2025)</p>
                           </div>
                           <span className="font-bold">{formatCurrency(calculations.socialSecurityTax)}</span>
                         </div>
