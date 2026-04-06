@@ -330,8 +330,8 @@ export const LandingPage = () => {
       { value: 'PDF', label: 'Instant Reports' },
     ],
     price: '$19/month',
-    priceAnnual: '$199/year',
-    priceNote: 'or $199/year — save $29',
+    priceAnnual: '$99 one-time',
+    priceNote: 'or $99 one-time (limited offer — reg. $149)',
   } : {
     tagline: 'Plan Better. Track Smarter. Grow Faster.',
     badge: '2026/2027 Tax Year Ready',
@@ -421,7 +421,7 @@ export const LandingPage = () => {
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              {isUS ? '$19/month or $199/year (Save $29!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
+              {isUS ? '$19/month or $99 one-time (Limited offer!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
             </p>
           </div>
         </div>
@@ -510,7 +510,7 @@ export const LandingPage = () => {
                 </li>
                 <li className="flex items-center gap-3 text-muted-foreground">
                   <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
-                  SARS-compliant tax calculations
+                  {isUS ? 'IRS & state-compliant tax calculations' : 'SARS-compliant tax calculations'}
                 </li>
                 <li className="flex items-center gap-3 text-muted-foreground">
                   <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
@@ -549,7 +549,8 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Tax Hub Feature Highlight */}
+      {/* Tax Hub Feature Highlight — SA only */}
+      {!isUS && (
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/50 via-background to-background" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
@@ -652,6 +653,7 @@ export const LandingPage = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* Calculator Categories */}
       <section className="relative py-20">
@@ -661,13 +663,16 @@ export const LandingPage = () => {
           <div className="text-center mb-12">
             <p className="mb-4 text-blue-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
               <Calculator className="h-4 w-4" />
-              20+ Professional Calculators
+              {isUS ? '30+ Professional Calculators' : '20+ Professional Calculators'}
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
               Every Calculation You Need
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.
+              {isUS
+                ? 'From FIRE planning to capital gains tax, every calculation built for American financial decisions — 2024/2025 IRS brackets, all 50 states.'
+                : 'From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.'
+              }
             </p>
           </div>
           
@@ -769,18 +774,33 @@ export const LandingPage = () => {
           
           <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
             <CardContent className="p-8">
-              <div className="mb-6">
-                <span className="text-5xl font-bold text-foreground">{isUS ? '$19' : 'R299'}</span>
-                <span className="text-muted-foreground ml-2">/month</span>
-              </div>
+              {isUS ? (
+                <div className="mb-6">
+                  <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-500 mb-3">
+                    LIMITED TIME OFFER
+                  </div>
+                  <div className="flex items-baseline justify-center gap-2">
+                    <span className="text-5xl font-bold text-foreground">$99</span>
+                    <span className="text-muted-foreground">one-time</span>
+                  </div>
+                  <p className="text-emerald-500 text-sm mt-1">Full year access · Regular price $149</p>
+                  <p className="text-xs text-muted-foreground mt-1">or $19/month — cancel anytime</p>
+                </div>
+              ) : (
+                <div className="mb-6">
+                  <span className="text-5xl font-bold text-foreground">R299</span>
+                  <span className="text-muted-foreground ml-2">/month</span>
+                  <p className="text-emerald-500 text-sm mt-1">or R1,999/year — save R590</p>
+                </div>
+              )}
               
               <ul className="space-y-3 text-left mb-8">
                 {(isUS ? [
                   'All 30+ US Financial Calculators',
                   'US Tax Suite (Federal + All 50 States)',
-                  'FIRE Calculator — Lean, Fat & Coast',
-                  'Student Loan Payoff & IBR/PSLF',
-                  'Self-Employment Tax Estimator',
+                  'FIRE Calculator — Lean, Fat & Coast FIRE',
+                  'RSU, AMT, Paycheck & Capital Gains Tax',
+                  'Home Affordability & Rent vs Buy',
                   'Professional PDF Reports',
                   'AI Financial Assistant',
                 ] : [
@@ -807,7 +827,7 @@ export const LandingPage = () => {
               </Link>
               
               <p className="mt-4 text-sm text-muted-foreground">
-                Cancel anytime • Have a coupon code? Enter it at signup
+                {isUS ? 'Secure checkout • Have a coupon code? Enter it at signup' : 'Cancel anytime • Have a coupon code? Enter it at signup'}
               </p>
             </CardContent>
           </Card>
@@ -1031,7 +1051,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            {isUS ? '$19/month or $199/year • Cancel anytime' : 'R299/month or R1,999/year • Cancel anytime'}
+            {isUS ? '$19/month or $99 one-time (limited offer) • Secure checkout' : 'R299/month or R1,999/year • Cancel anytime'}
           </p>
         </div>
       </section>

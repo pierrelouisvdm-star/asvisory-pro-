@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
+import { useJurisdiction } from '@/context/JurisdictionContext';
 import { couponApi } from '@/services/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { 
   Check, Crown, Gift, Loader2, CreditCard, Mail, Phone,
   Calculator, Users, FileText, BarChart3, TrendingUp, Target, Calendar, PieChart,
-  Receipt, Wallet, Bot, Award
+  Receipt, Wallet, Bot, Award, Flame, DollarSign
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -20,6 +21,16 @@ const PREMIUM_FEATURES = [
   { icon: TrendingUp, label: 'Weekly Market Updates by Analysts' },
   { icon: Award, label: 'Tips from Certified Financial Planners' },
   { icon: Wallet, label: 'Income & Expense Tracker' },
+  { icon: FileText, label: 'PDF Report Generation' },
+  { icon: Bot, label: 'AI Financial Assistant' },
+];
+
+const US_PREMIUM_FEATURES = [
+  { icon: Calculator, label: 'All 30+ US Financial Calculators' },
+  { icon: Receipt, label: 'US Tax Suite (Federal + All 50 States)' },
+  { icon: Flame, label: 'FIRE, RMD, Roth Conversion, Paycheck' },
+  { icon: DollarSign, label: 'RSU, AMT & Capital Gains Tax' },
+  { icon: Wallet, label: 'Home Affordability & Rent vs Buy' },
   { icon: FileText, label: 'PDF Report Generation' },
   { icon: Bot, label: 'AI Financial Assistant' },
 ];
@@ -40,6 +51,7 @@ export const PricingPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
   const { refreshSubscription } = useSubscription();
+  const { isUS } = useJurisdiction();
   
   // Billing period toggle
   const [billingPeriod, setBillingPeriod] = useState('annual'); // 'monthly' or 'annual'
@@ -146,7 +158,8 @@ export const PricingPage = () => {
           </p>
         </div>
 
-        {/* Billing Toggle */}
+        {/* Billing Toggle — SA only */}
+        {!isUS && (
         <div className="flex items-center justify-center gap-4 mb-8">
           <button
             onClick={() => setBillingPeriod('monthly')}
@@ -172,6 +185,7 @@ export const PricingPage = () => {
             </span>
           </button>
         </div>
+        )}
 
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -184,7 +198,7 @@ export const PricingPage = () => {
               </div>
               <CardTitle className="text-2xl text-white">Free Plan</CardTitle>
               <div className="mt-4">
-                <span className="text-5xl font-bold text-white">R0</span>
+                <span className="text-5xl font-bold text-white">{isUS ? '$0' : 'R0'}</span>
                 <span className="text-slate-400 ml-2">/forever</span>
               </div>
               <p className="text-slate-400 text-sm mt-2">Get started today</p>
@@ -192,7 +206,15 @@ export const PricingPage = () => {
 
             <CardContent className="pb-8">
               <div className="space-y-3 mb-8">
-                {[
+                {(isUS ? [
+                  { label: 'FI Score Quiz', included: true },
+                  { label: 'US Tax Calendar', included: true },
+                  { label: 'Mortgage Calculator', included: true },
+                  { label: 'Compound Interest Calculator', included: true },
+                  { label: '26+ Premium US Calculators', included: false },
+                  { label: 'PDF Reports', included: false },
+                  { label: 'AI Financial Assistant', included: false },
+                ] : [
                   { label: 'TFSA Calculator', included: true },
                   { label: 'Bond/Mortgage Calculator', included: true },
                   { label: 'Future Value Calculator', included: true },
@@ -200,7 +222,7 @@ export const PricingPage = () => {
                   { label: '15+ Premium Calculators', included: false },
                   { label: 'PDF Reports', included: false },
                   { label: 'AI Document Analysis', included: false },
-                ].map(({ label, included }) => (
+                ]).map(({ label, included }) => (
                   <div key={label} className="flex items-center gap-3 p-2">
                     <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${included ? 'bg-emerald-500/20' : 'bg-slate-700/50'}`}>
                       <Check className={`h-3 w-3 ${included ? 'text-emerald-500' : 'text-slate-500'}`} />
@@ -223,7 +245,7 @@ export const PricingPage = () => {
           {/* Premium Tier */}
           <Card className="border-emerald-500/50 bg-gradient-to-b from-navy-900 to-navy-950 overflow-hidden relative">
             <div className="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
-              RECOMMENDED
+              {isUS ? 'BEST VALUE' : 'RECOMMENDED'}
             </div>
             
             <CardHeader className="text-center pt-8 pb-6">
@@ -232,19 +254,60 @@ export const PricingPage = () => {
               </div>
               <CardTitle className="text-2xl text-white">Premium Plan</CardTitle>
               <div className="mt-4">
-                {billingPeriod === 'annual' ? (
+                {isUS ? (
                   <>
-                    <span className="text-5xl font-bold text-white">R{ANNUAL_PRICE}</span>
-                    <span className="text-slate-400 ml-2">/year</span>
-                    <p className="text-emerald-400 text-sm mt-2">
-                      Only R{Math.round(ANNUAL_PRICE / 12)}/month • Save R{ANNUAL_SAVINGS}
-                    </p>
+                    {billingPeriod === 'annual' ? (
+                      <>
+                        <div className="inline-block bg-amber-500/20 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-400 mb-2">
+                          LIMITED TIME OFFER
+                        </div>
+                        <div>
+                          <span className="text-5xl font-bold text-white">$99</span>
+                          <span className="text-slate-400 ml-2">one-time</span>
+                        </div>
+                        <p className="text-emerald-400 text-sm mt-2">
+                          Full year access · Normally $149
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-5xl font-bold text-white">$19</span>
+                        <span className="text-slate-400 ml-2">/month</span>
+                        <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
+                      </>
+                    )}
+                    <div className="flex justify-center gap-2 mt-3">
+                      <button
+                        onClick={() => setBillingPeriod('monthly')}
+                        className={`px-3 py-1 rounded text-xs font-medium transition-colors ${billingPeriod === 'monthly' ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-400 hover:text-white'}`}
+                      >
+                        Monthly
+                      </button>
+                      <button
+                        onClick={() => setBillingPeriod('annual')}
+                        className={`px-3 py-1 rounded text-xs font-medium transition-colors relative ${billingPeriod === 'annual' ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-400 hover:text-white'}`}
+                      >
+                        Annual ($99) 🔥
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <>
-                    <span className="text-5xl font-bold text-white">R{PREMIUM_PRICE}</span>
-                    <span className="text-slate-400 ml-2">/month</span>
-                    <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
+                    {billingPeriod === 'annual' ? (
+                      <>
+                        <span className="text-5xl font-bold text-white">R{ANNUAL_PRICE}</span>
+                        <span className="text-slate-400 ml-2">/year</span>
+                        <p className="text-emerald-400 text-sm mt-2">
+                          Only R{Math.round(ANNUAL_PRICE / 12)}/month • Save R{ANNUAL_SAVINGS}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-5xl font-bold text-white">R{PREMIUM_PRICE}</span>
+                        <span className="text-slate-400 ml-2">/month</span>
+                        <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
+                      </>
+                    )}
                   </>
                 )}
               </div>
@@ -253,7 +316,7 @@ export const PricingPage = () => {
             <CardContent className="pb-8">
               {/* Features Grid */}
               <div className="space-y-3 mb-8">
-                {PREMIUM_FEATURES.map(({ icon: Icon, label }) => (
+                {(isUS ? US_PREMIUM_FEATURES : PREMIUM_FEATURES).map(({ icon: Icon, label }) => (
                   <div key={label} className="flex items-center gap-3 p-2">
                     <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
                       <Check className="h-3 w-3 text-emerald-500" />
@@ -263,23 +326,34 @@ export const PricingPage = () => {
                 ))}
               </div>
 
-              {/* PayFast Button */}
-              <Button 
-                className="w-full h-12 text-lg btn-premium"
-                onClick={handlePayFastPayment}
-                disabled={paymentLoading}
-                data-testid="payfast-payment-btn"
-              >
-                {paymentLoading ? (
-                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
+              {/* Payment Button */}
+              {isUS ? (
+                <Button 
+                  className="w-full h-12 text-lg btn-premium"
+                  onClick={() => navigate(isAuthenticated ? '/dashboard' : '/auth?redirect=/pricing')}
+                  data-testid="us-payment-btn"
+                >
                   <CreditCard className="h-5 w-5 mr-2" />
-                )}
-                Subscribe with PayFast
-              </Button>
+                  {billingPeriod === 'annual' ? 'Get Annual Access — $99' : 'Get Monthly Access — $19/mo'}
+                </Button>
+              ) : (
+                <Button 
+                  className="w-full h-12 text-lg btn-premium"
+                  onClick={handlePayFastPayment}
+                  disabled={paymentLoading}
+                  data-testid="payfast-payment-btn"
+                >
+                  {paymentLoading ? (
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  ) : (
+                    <CreditCard className="h-5 w-5 mr-2" />
+                  )}
+                  Subscribe with PayFast
+                </Button>
+              )}
               
               <p className="text-center text-xs text-slate-500 mt-3">
-                Secure payment via PayFast • Cards, EFT, SnapScan & more
+                {isUS ? 'Secure checkout • Cancel or upgrade anytime' : 'Secure payment via PayFast • Cards, EFT, SnapScan & more'}
               </p>
             </CardContent>
           </Card>
