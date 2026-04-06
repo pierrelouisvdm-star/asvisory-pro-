@@ -731,13 +731,22 @@ export const Dashboard = () => {
             </Badge>
             
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-5 tracking-tight animate-fade-in" style={{ animationDelay: '100ms' }}>
-              Financial Calculations
-              <span className="block text-primary">Made Simple</span>
+              {isUS ? (
+                <>
+                  Every Financial Calculator.
+                  <span className="block text-primary">One Intelligent Platform.</span>
+                </>
+              ) : (
+                <>
+                  Financial Calculations
+                  <span className="block text-primary">Made Simple</span>
+                </>
+              )}
             </h1>
             
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
               {isUS 
-                ? "A comprehensive suite of 20+ professional calculators for Americans. Make informed financial decisions with precision tools."
+                ? "Make better financial decisions, faster. Professional-grade tools built on 2025 IRS data, all 50 states."
                 : "A comprehensive suite of 20+ professional calculators for South Africans. Make informed financial decisions with precision tools."
               }
             </p>

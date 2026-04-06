@@ -118,19 +118,20 @@ export default function PublicToolsPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-500/10 to-background py-20 border-b border-border">
+      <section className="relative overflow-hidden bg-gradient-to-b from-blue-500/8 to-background py-24 border-b border-border">
         <div className="max-w-5xl mx-auto px-4 text-center">
-          <Badge className="mb-4 bg-blue-500/10 text-blue-500 border-blue-500/20">
-            <Sparkles className="h-3 w-3 mr-1.5" />
-            30+ Free & Premium US Financial Tools
-          </Badge>
-          <h1 className="font-display text-4xl sm:text-5xl font-extrabold text-foreground mb-5 tracking-tight">
-            Every Calculator an American Needs.
-            <span className="block text-blue-500">In One Place.</span>
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-blue-500/80 mb-4">
+            Advisor-Level Tools. Without the Advisor.
+          </p>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold text-foreground mb-5 tracking-tight leading-tight">
+            Every Financial Calculator.
+            <span className="block text-blue-500">One Intelligent Platform.</span>
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            2025 IRS brackets, all 50 states, FIRE planning, RSU taxes, Medicare IRMAA, home affordability
-            — professional-grade tools, no spreadsheets needed.
+          <p className="text-xl font-medium text-foreground/80 max-w-xl mx-auto mb-3">
+            Make Better Financial Decisions. Faster.
+          </p>
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto mb-10">
+            2025 IRS brackets · All 50 states · FIRE planning · RSU taxes · Medicare IRMAA · Home affordability
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/auth">
@@ -141,7 +142,7 @@ export default function PublicToolsPage() {
             </Link>
             <Link to="/us/fi-score">
               <Button size="lg" variant="outline" className="px-8 h-12 border-border">
-                Take the FI Score Quiz
+                Take the FI Score Quiz — Free
               </Button>
             </Link>
           </div>
@@ -153,7 +154,7 @@ export default function PublicToolsPage() {
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-10">
           <Badge className="mb-3 bg-emerald-500/10 text-emerald-500 border-emerald-500/20">Start for Free</Badge>
-          <h2 className="font-display text-3xl font-extrabold text-foreground mb-3">Try These Free Right Now</h2>
+          <h2 className="font-display text-3xl font-extrabold text-foreground mb-2">Know Your Numbers. Build Your Wealth.</h2>
           <p className="text-muted-foreground">No account needed to start — sign up to save your results</p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -189,10 +190,10 @@ export default function PublicToolsPage() {
             <Users className="h-3 w-3 mr-1.5" />
             Join 1,000+ Americans
           </Badge>
-          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-3">
-            Get notified when we add new tools
+          <h2 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-2">
+            The Smartest Way to Run Your Financial Life.
           </h2>
-          <p className="text-muted-foreground mb-6">New calculators added monthly. Plus: tax deadline reminders, year-end action checklists, and early access to new features.</p>
+          <p className="text-muted-foreground mb-6">New tools added monthly. Tax deadline reminders, year-end action checklists, and early access to new calculators.</p>
           {submitted ? (
             <div className="flex items-center justify-center gap-2 text-emerald-500">
               <CheckCircle2 className="h-5 w-5" />
@@ -220,8 +221,8 @@ export default function PublicToolsPage() {
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-10">
           <Badge className="mb-3 bg-amber-500/10 text-amber-500 border-amber-500/20">Premium — $19/mo or $99 once-off</Badge>
-          <h2 className="font-display text-3xl font-extrabold text-foreground mb-3">Unlock All 30+ Calculators</h2>
-          <p className="text-muted-foreground">For when you need the full picture — from paycheck to RSUs to Medicare surcharges.</p>
+          <h2 className="font-display text-3xl font-extrabold text-foreground mb-2">Institutional Tools for Everyday Investors.</h2>
+          <p className="text-muted-foreground">Professional-grade financial tools, simplified. From paycheck to RSUs to Medicare surcharges.</p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-8">
           {PREMIUM_TOOLS.map((tool, i) => {
@@ -248,6 +249,7 @@ export default function PublicToolsPage() {
       {/* Social Proof */}
       <section className="bg-muted/30 border-t border-border py-16">
         <div className="max-w-5xl mx-auto px-4">
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-muted-foreground text-center mb-2">Where Financial Intelligence Lives</p>
           <h2 className="font-display text-2xl font-extrabold text-foreground text-center mb-8">What people are saying</h2>
           <div className="grid sm:grid-cols-3 gap-5">
             {SOCIAL_PROOF.map((item, i) => (

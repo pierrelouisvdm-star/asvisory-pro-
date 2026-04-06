@@ -319,10 +319,10 @@ export const LandingPage = () => {
   const keyFeatures = isUS ? US_KEY_FEATURES : SA_KEY_FEATURES;
 
   const heroContent = isUS ? {
-    tagline: 'Plan Better. Track Smarter. Grow Faster.',
+    tagline: 'Advisor-Level Tools. Without the Advisor.',
     badge: '2025 Tax Year · All 50 States',
-    headline: 'The Complete Financial Planning Platform for Americans',
-    sub: 'From FIRE planning to 401(k) optimization — powerful tools built for real American financial decisions. 30+ professional calculators, US Tax Suite, and instant PDF reports.',
+    headline: 'Every Financial Calculator. One Intelligent Platform.',
+    sub: 'Make better financial decisions, faster. 30+ professional-grade tools for tax planning, FIRE, retirement, RSUs, real estate, and more — built on 2025 IRS data.',
     stats: [
       { value: '30+', label: 'Financial Tools' },
       { value: 'All 50', label: 'States Covered' },
@@ -389,7 +389,7 @@ export const LandingPage = () => {
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
               {isUS ? (
-                <>From <span className="text-white font-medium">FIRE planning</span> to <span className="text-white font-medium">401(k) optimization</span> — powerful tools built for real American financial decisions. 30+ professional calculators, US Tax Suite, and instant PDF reports.</>
+                <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more — built on 2025 IRS data.</>
               ) : (
                 <>Plan, track and optimise your finances with powerful tools built for real-world decisions. <span className="text-white font-medium">20+ professional calculators</span>, Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.</>
               )}
