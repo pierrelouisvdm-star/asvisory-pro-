@@ -11,27 +11,27 @@ import { Disclaimer } from '@/components/calculators/Disclaimer';
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 const fmtD = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(n || 0);
 
-// 2024 IRMAA Brackets (based on 2022 MAGI)
+// 2025 IRMAA Brackets (based on 2023 MAGI — Medicare uses income from 2 years prior)
 const IRMAA_BRACKETS = {
   single: [
-    { maxMAGI: 103000, partBSurcharge: 0, partDSurcharge: 0, tier: 0 },
-    { maxMAGI: 129000, partBSurcharge: 69.90, partDSurcharge: 12.90, tier: 1 },
-    { maxMAGI: 161000, partBSurcharge: 174.70, partDSurcharge: 33.30, tier: 2 },
-    { maxMAGI: 193000, partBSurcharge: 279.50, partDSurcharge: 53.80, tier: 3 },
-    { maxMAGI: 500000, partBSurcharge: 384.30, partDSurcharge: 74.20, tier: 4 },
-    { maxMAGI: Infinity, partBSurcharge: 419.30, partDSurcharge: 81.00, tier: 5 },
+    { maxMAGI: 106000, partBSurcharge: 0, partDSurcharge: 0, tier: 0 },
+    { maxMAGI: 133000, partBSurcharge: 74.00, partDSurcharge: 13.70, tier: 1 },
+    { maxMAGI: 167000, partBSurcharge: 185.00, partDSurcharge: 35.30, tier: 2 },
+    { maxMAGI: 200000, partBSurcharge: 295.90, partDSurcharge: 57.00, tier: 3 },
+    { maxMAGI: 500000, partBSurcharge: 406.90, partDSurcharge: 78.60, tier: 4 },
+    { maxMAGI: Infinity, partBSurcharge: 443.90, partDSurcharge: 85.80, tier: 5 },
   ],
   mfj: [
-    { maxMAGI: 206000, partBSurcharge: 0, partDSurcharge: 0, tier: 0 },
-    { maxMAGI: 258000, partBSurcharge: 69.90, partDSurcharge: 12.90, tier: 1 },
-    { maxMAGI: 322000, partBSurcharge: 174.70, partDSurcharge: 33.30, tier: 2 },
-    { maxMAGI: 386000, partBSurcharge: 279.50, partDSurcharge: 53.80, tier: 3 },
-    { maxMAGI: 750000, partBSurcharge: 384.30, partDSurcharge: 74.20, tier: 4 },
-    { maxMAGI: Infinity, partBSurcharge: 419.30, partDSurcharge: 81.00, tier: 5 },
+    { maxMAGI: 212000, partBSurcharge: 0, partDSurcharge: 0, tier: 0 },
+    { maxMAGI: 266000, partBSurcharge: 74.00, partDSurcharge: 13.70, tier: 1 },
+    { maxMAGI: 334000, partBSurcharge: 185.00, partDSurcharge: 35.30, tier: 2 },
+    { maxMAGI: 400000, partBSurcharge: 295.90, partDSurcharge: 57.00, tier: 3 },
+    { maxMAGI: 750000, partBSurcharge: 406.90, partDSurcharge: 78.60, tier: 4 },
+    { maxMAGI: Infinity, partBSurcharge: 443.90, partDSurcharge: 85.80, tier: 5 },
   ],
 };
 
-const BASE_PART_B = 174.70;
+const BASE_PART_B = 185.00; // 2025 standard Part B premium
 const TIER_LABELS = ['Standard', 'Tier 1', 'Tier 2', 'Tier 3', 'Tier 4', 'Tier 5 (Max)'];
 const TIER_COLORS = ['#10b981', '#6366f1', '#f59e0b', '#f97316', '#ef4444', '#dc2626'];
 
@@ -101,7 +101,7 @@ export default function MedicareIRMAA() {
               <div>
                 <Label className="text-xs text-muted-foreground">2022 MAGI (used for 2024 premiums) ($)</Label>
                 <Input type="number" value={magi} onChange={e => setMagi(+e.target.value)} className="h-9 mt-1" data-testid="irmaa-magi" />
-                <p className="text-xs text-muted-foreground mt-1">Medicare uses income from 2 years prior</p>
+                <p className="text-xs text-muted-foreground mt-1">Medicare uses income from 2 years prior (2023 MAGI for 2025 premiums)</p>
               </div>
               <div>
                 <Label className="text-xs text-muted-foreground">Filing Status</Label>
@@ -161,7 +161,7 @@ export default function MedicareIRMAA() {
                 <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-foreground">No IRMAA Surcharge</p>
-                  <p className="text-xs text-muted-foreground mt-1">Your income is below the IRMAA threshold. You pay the standard Part B premium of {fmtD(BASE_PART_B)}/month.</p>
+                  <p className="text-xs text-muted-foreground mt-1">Your income is below the IRMAA threshold. You pay the standard Part B premium of {fmtD(BASE_PART_B)}/month (2025).</p>
                 </div>
               </CardContent>
             </Card>
@@ -208,7 +208,7 @@ export default function MedicareIRMAA() {
 
           <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">2024 IRMAA Threshold Table ({filingStatus === 'mfj' ? 'Married Filing Jointly' : 'Single'})</CardTitle>
+              <CardTitle className="text-sm">2025 IRMAA Threshold Table ({filingStatus === 'mfj' ? 'Married Filing Jointly' : 'Single'})</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="overflow-x-auto">

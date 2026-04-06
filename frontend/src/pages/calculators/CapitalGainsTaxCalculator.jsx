@@ -16,44 +16,44 @@ import { US_STATE_TAX_DATA, getStateList } from '@/data/usTaxData';
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 const fmtPct = (r) => `${(r * 100).toFixed(2)}%`;
 
-// 2024 Long-Term Capital Gains Rates
+// 2025 Long-Term Capital Gains Rates (Rev. Proc. 2024-40)
 const LTCG_BRACKETS = {
   single: [
-    { max: 47025, rate: 0.00 },
-    { max: 518900, rate: 0.15 },
+    { max: 48350, rate: 0.00 },
+    { max: 533400, rate: 0.15 },
     { max: Infinity, rate: 0.20 },
   ],
   mfj: [
-    { max: 94050, rate: 0.00 },
-    { max: 583750, rate: 0.15 },
+    { max: 96700, rate: 0.00 },
+    { max: 600050, rate: 0.15 },
     { max: Infinity, rate: 0.20 },
   ],
   mfs: [
-    { max: 47025, rate: 0.00 },
-    { max: 291850, rate: 0.15 },
+    { max: 48350, rate: 0.00 },
+    { max: 300000, rate: 0.15 },
     { max: Infinity, rate: 0.20 },
   ],
   hoh: [
-    { max: 63000, rate: 0.00 },
-    { max: 551350, rate: 0.15 },
+    { max: 64750, rate: 0.00 },
+    { max: 566700, rate: 0.15 },
     { max: Infinity, rate: 0.20 },
   ],
 };
 
-// 2024 Ordinary Income Brackets (Single) for short-term
+// 2025 Ordinary Income Brackets for short-term gains
 const STCG_BRACKETS = {
   single: [
-    { max: 11600, rate: 0.10 }, { max: 47150, rate: 0.12 }, { max: 100525, rate: 0.22 },
-    { max: 191950, rate: 0.24 }, { max: 243725, rate: 0.32 }, { max: 609350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+    { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
+    { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
   ],
   mfj: [
-    { max: 23200, rate: 0.10 }, { max: 94300, rate: 0.12 }, { max: 201050, rate: 0.22 },
-    { max: 383900, rate: 0.24 }, { max: 487450, rate: 0.32 }, { max: 731200, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+    { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
+    { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
   ],
 };
 
 const NIIT_THRESHOLDS = { single: 200000, mfj: 250000, mfs: 125000, hoh: 200000 };
-const STANDARD_DEDUCTIONS_2024 = { single: 14600, mfj: 29200, mfs: 14600, hoh: 21900 };
+const STANDARD_DEDUCTIONS_2024 = { single: 15750, mfj: 31500, mfs: 15750, hoh: 23625 };
 
 const getLTCGRate = (taxableIncome, filingStatus) => {
   const brackets = LTCG_BRACKETS[filingStatus] || LTCG_BRACKETS.single;

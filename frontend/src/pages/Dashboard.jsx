@@ -292,7 +292,7 @@ const usCalculators = [
     description: 'Federal + State income taxes for all 50 states',
     icon: Receipt,
     path: '/us/tax-calculator',
-    features: ['2024/25 Brackets', 'All 50 States', 'FICA Taxes'],
+    features: ['2025 Brackets', 'All 50 States', 'FICA Taxes'],
     isFree: false,
     isFeatured: true,
     isNew: true,

@@ -10,25 +10,25 @@ import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 
-// 2024 AMT
-const AMT_EXEMPTION = { single: 85700, mfj: 133300, mfs: 66650 };
-const AMT_PHASEOUT = { single: 609350, mfj: 1218700, mfs: 609350 };
+// 2025 AMT (Rev. Proc. 2024-40)
+const AMT_EXEMPTION = { single: 88100, mfj: 137000, mfs: 68550 };
+const AMT_PHASEOUT = { single: 626350, mfj: 1252700, mfs: 626350 };
 const AMT_RATE_LOW = 0.26;
 const AMT_RATE_HIGH = 0.28;
-const AMT_BRACKET = 220700; // 26% up to here, 28% above
+const AMT_BRACKET = 232600; // 26% up to here, 28% above (2025)
 
-// Regular tax brackets 2024
+// Regular tax brackets 2025
 const REG_BRACKETS = {
   single: [
-    { max: 11600, rate: 0.10 }, { max: 47150, rate: 0.12 }, { max: 100525, rate: 0.22 },
-    { max: 191950, rate: 0.24 }, { max: 243725, rate: 0.32 }, { max: 609350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+    { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
+    { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
   ],
   mfj: [
-    { max: 23200, rate: 0.10 }, { max: 94300, rate: 0.12 }, { max: 201050, rate: 0.22 },
-    { max: 383900, rate: 0.24 }, { max: 487450, rate: 0.32 }, { max: 731200, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+    { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
+    { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
   ],
 };
-const STD_DED = { single: 14600, mfj: 29200, mfs: 14600 };
+const STD_DED = { single: 15750, mfj: 31500, mfs: 15750 };
 
 const calcRegTax = (taxableIncome, brackets) => {
   if (taxableIncome <= 0) return 0;

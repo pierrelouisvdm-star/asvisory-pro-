@@ -12,20 +12,21 @@ const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency:
 const fmtD = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(n || 0);
 
 const FED_BRACKETS_SINGLE = [
-  { max: 11600, rate: 0.10 }, { max: 47150, rate: 0.12 }, { max: 100525, rate: 0.22 },
-  { max: 191950, rate: 0.24 }, { max: 243725, rate: 0.32 }, { max: 609350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+  { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
+  { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
 ];
 const FED_BRACKETS_MFJ = [
-  { max: 23200, rate: 0.10 }, { max: 94300, rate: 0.12 }, { max: 201050, rate: 0.22 },
-  { max: 383900, rate: 0.24 }, { max: 487450, rate: 0.32 }, { max: 731200, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+  { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
+  { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
 ];
+// 2025 LTCG rates
 const LTCG_BRACKETS_SINGLE = [
-  { max: 47025, rate: 0.00 }, { max: 518900, rate: 0.15 }, { max: Infinity, rate: 0.20 },
+  { max: 48350, rate: 0.00 }, { max: 533400, rate: 0.15 }, { max: Infinity, rate: 0.20 },
 ];
 const LTCG_BRACKETS_MFJ = [
-  { max: 94050, rate: 0.00 }, { max: 583750, rate: 0.15 }, { max: Infinity, rate: 0.20 },
+  { max: 96700, rate: 0.00 }, { max: 600050, rate: 0.15 }, { max: Infinity, rate: 0.20 },
 ];
-const STD_DED = { single: 14600, mfj: 29200 };
+const STD_DED = { single: 15750, mfj: 31500 };
 
 const calcProgressiveTax = (income, brackets) => {
   if (income <= 0) return 0;

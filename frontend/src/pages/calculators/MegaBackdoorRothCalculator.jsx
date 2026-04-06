@@ -9,16 +9,16 @@ import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 
-// 2024 limits
-const EMPLOYEE_LIMIT_UNDER50 = 23000;
-const EMPLOYEE_LIMIT_OVER50 = 30500; // includes $7,500 catch-up
-const TOTAL_LIMIT_UNDER50 = 69000;
-const TOTAL_LIMIT_OVER50 = 76500;
+// 2025 limits
+const EMPLOYEE_LIMIT_UNDER50 = 23500;
+const EMPLOYEE_LIMIT_OVER50 = 31000; // $23,500 + $7,500 catch-up
+const TOTAL_LIMIT_UNDER50 = 70000;
+const TOTAL_LIMIT_OVER50 = 77500; // $70,000 + $7,500 catch-up
 
 export default function MegaBackdoorRothCalculator() {
   const [salary, setSalary] = useState(180000);
   const [age, setAge] = useState(40);
-  const [employeeContribution, setEmployeeContribution] = useState(23000);
+  const [employeeContribution, setEmployeeContribution] = useState(23500);
   const [employerMatch, setEmployerMatch] = useState(6500);
   const [marginalTaxRate, setMarginalTaxRate] = useState(24);
   const [returnRate, setReturnRate] = useState(7);

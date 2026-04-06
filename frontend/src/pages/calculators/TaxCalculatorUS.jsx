@@ -71,7 +71,7 @@ const TaxCalculatorUS = () => {
     const stateResult = calculateStateTax(taxableIncome, selectedState, filingStatus);
     
     // FICA taxes (Social Security + Medicare)
-    const socialSecurityTax = Math.min(income, 168600) * 0.062;
+    const socialSecurityTax = Math.min(income, 176100) * 0.062;
     const medicareTax = income * 0.0145;
     const additionalMedicare = income > 200000 ? (income - 200000) * 0.009 : 0;
     const ficaTax = socialSecurityTax + medicareTax + additionalMedicare;
@@ -133,11 +133,11 @@ const TaxCalculatorUS = () => {
             </h1>
           </div>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Calculate your federal and state income taxes for the 2024/2025 tax year. 
+            Calculate your federal and state income taxes for the 2025 tax year. 
             Includes all 50 states, FICA taxes, and retirement contribution deductions.
           </p>
           <Badge className="mt-3 bg-blue-500/10 text-blue-500 border-blue-500/20">
-            2024/2025 Tax Year
+            2025 Tax Year
           </Badge>
         </div>
 
@@ -258,12 +258,12 @@ const TaxCalculatorUS = () => {
                       id="401k"
                       type="number"
                       value={retirement401k}
-                      onChange={(e) => setRetirement401k(Math.min(Number(e.target.value), 23000))}
+                      onChange={(e) => setRetirement401k(Math.min(Number(e.target.value), 23500))}
                       className="pl-8"
-                      max={23000}
+                      max={23500}
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">Max: $23,000 (2024)</p>
+                  <p className="text-xs text-muted-foreground mt-1">Max: $23,500 (2025)</p>
                 </div>
 
                 <div>
@@ -274,12 +274,12 @@ const TaxCalculatorUS = () => {
                       id="hsa"
                       type="number"
                       value={hsaContribution}
-                      onChange={(e) => setHsaContribution(Math.min(Number(e.target.value), 4150))}
+                      onChange={(e) => setHsaContribution(Math.min(Number(e.target.value), 4300))}
                       className="pl-8"
-                      max={4150}
+                      max={4300}
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-1">Max: $4,150 individual (2024)</p>
+                  <p className="text-xs text-muted-foreground mt-1">Max: $4,300 individual (2025)</p>
                 </div>
               </CardContent>
             </Card>
@@ -537,7 +537,7 @@ const TaxCalculatorUS = () => {
         </div>
 
         <Disclaimer 
-          text="This calculator provides estimates based on 2024 federal and state tax rates. Your actual tax liability may differ based on credits, additional income sources, and other factors. Consult a CPA or tax professional for personalized advice."
+          text="This calculator provides estimates based on 2025 federal and state tax rates (Rev. Proc. 2024-40). Your actual tax liability may differ based on credits, additional income sources, and other factors. Consult a CPA or tax professional for personalized advice."
         />
       </div>
     </div>

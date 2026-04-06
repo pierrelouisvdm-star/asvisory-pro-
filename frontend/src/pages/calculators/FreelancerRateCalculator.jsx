@@ -35,7 +35,7 @@ export default function FreelancerRateCalculator() {
     // SE tax deduction = 50% of SE tax, so effectively seTaxRate * 0.5 reduces taxable income
     const seTax = grossNeeded * seTaxRate;
     const halfSETax = seTax * 0.5;
-    const fedTaxableIncome = Math.max(0, grossNeeded + seTax - halfSETax - 14600); // simplified
+    const fedTaxableIncome = Math.max(0, grossNeeded + seTax - halfSETax - 15750); // 2025 standard deduction
     const fedTaxEstimate = fedTaxableIncome * 0.22; // simplified 22% bracket
     const stateTaxEstimate = grossNeeded * (stateIncomeTaxRate / 100);
 

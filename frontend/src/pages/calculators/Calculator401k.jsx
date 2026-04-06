@@ -159,7 +159,7 @@ const Calculator401k = () => {
             compound growth projections.
           </p>
           <Badge className="mt-3 bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
-            2024 Limits: ${limits.employeeLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
+            2025 Limits: ${limits.employeeLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
           </Badge>
         </div>
 

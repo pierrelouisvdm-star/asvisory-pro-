@@ -122,7 +122,7 @@ const RothIRACalculator = () => {
             after-tax dollars, but qualified withdrawals are completely tax-free.
           </p>
           <Badge className="mt-3 bg-purple-500/10 text-purple-500 border-purple-500/20">
-            2024 Limit: ${limits.annualLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
+            2025 Limit: ${limits.annualLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
           </Badge>
         </div>
 

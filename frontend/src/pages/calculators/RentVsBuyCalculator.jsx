@@ -70,7 +70,7 @@ export default function RentVsBuyCalculator() {
       const annualTax = monthlyTax * 12;
       const saltCapped = Math.min(annualTax, 10000);
       const totalItemized = annualInterest + saltCapped;
-      const stdDed = 14600; // single
+      const stdDed = 15750; // 2025 single standard deduction
       const deductionBenefit = totalItemized > stdDed ? (totalItemized - stdDed) * marginalTaxRate / 100 : 0;
       buyTotalCost -= deductionBenefit;
 

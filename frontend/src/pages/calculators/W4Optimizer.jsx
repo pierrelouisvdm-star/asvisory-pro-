@@ -13,19 +13,19 @@ const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency:
 
 const BRACKETS_2024 = {
   single: [
-    { max: 11600, rate: 0.10 }, { max: 47150, rate: 0.12 }, { max: 100525, rate: 0.22 },
-    { max: 191950, rate: 0.24 }, { max: 243725, rate: 0.32 }, { max: 609350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+    { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
+    { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
   ],
   mfj: [
-    { max: 23200, rate: 0.10 }, { max: 94300, rate: 0.12 }, { max: 201050, rate: 0.22 },
-    { max: 383900, rate: 0.24 }, { max: 487450, rate: 0.32 }, { max: 731200, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+    { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
+    { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
   ],
   hoh: [
-    { max: 16550, rate: 0.10 }, { max: 63100, rate: 0.12 }, { max: 100500, rate: 0.22 },
-    { max: 191950, rate: 0.24 }, { max: 243700, rate: 0.32 }, { max: 609350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+    { max: 17000, rate: 0.10 }, { max: 64850, rate: 0.12 }, { max: 103350, rate: 0.22 },
+    { max: 197300, rate: 0.24 }, { max: 250500, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
   ],
 };
-const STD_DED = { single: 14600, mfj: 29200, hoh: 21900 };
+const STD_DED = { single: 15750, mfj: 31500, hoh: 23625 };
 
 const calcTax = (taxableIncome, brackets) => {
   if (taxableIncome <= 0) return 0;
@@ -72,7 +72,7 @@ export default function W4Optimizer() {
     const finalTax = Math.max(0, grossTax - totalCredits);
 
     // FICA
-    const ssTax = Math.min(wages, 168600) * 0.062;
+    const ssTax = Math.min(wages, 176100) * 0.062;
     const medicareTax = wages * 0.0145;
 
     // Recommended per-period withholding (federal only)

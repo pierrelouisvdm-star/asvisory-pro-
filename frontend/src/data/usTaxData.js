@@ -1,73 +1,74 @@
-// US Federal Tax Data for 2024/2025 Tax Year
+// US Federal Tax Data — 2025 Tax Year (Rev. Proc. 2024-40)
+// Returns filed in 2026 for income earned in 2025
 // All 50 State Tax Rates included
 
 export const US_FEDERAL_TAX_BRACKETS_2024 = {
   single: [
-    { min: 0, max: 11600, rate: 0.10 },
-    { min: 11600, max: 47150, rate: 0.12 },
-    { min: 47150, max: 100525, rate: 0.22 },
-    { min: 100525, max: 191950, rate: 0.24 },
-    { min: 191950, max: 243725, rate: 0.32 },
-    { min: 243725, max: 609350, rate: 0.35 },
-    { min: 609350, max: Infinity, rate: 0.37 },
+    { min: 0, max: 11925, rate: 0.10 },
+    { min: 11925, max: 48475, rate: 0.12 },
+    { min: 48475, max: 103350, rate: 0.22 },
+    { min: 103350, max: 197300, rate: 0.24 },
+    { min: 197300, max: 250525, rate: 0.32 },
+    { min: 250525, max: 626350, rate: 0.35 },
+    { min: 626350, max: Infinity, rate: 0.37 },
   ],
   marriedJoint: [
-    { min: 0, max: 23200, rate: 0.10 },
-    { min: 23200, max: 94300, rate: 0.12 },
-    { min: 94300, max: 201050, rate: 0.22 },
-    { min: 201050, max: 383900, rate: 0.24 },
-    { min: 383900, max: 487450, rate: 0.32 },
-    { min: 487450, max: 731200, rate: 0.35 },
-    { min: 731200, max: Infinity, rate: 0.37 },
+    { min: 0, max: 23850, rate: 0.10 },
+    { min: 23850, max: 96950, rate: 0.12 },
+    { min: 96950, max: 206700, rate: 0.22 },
+    { min: 206700, max: 394600, rate: 0.24 },
+    { min: 394600, max: 501050, rate: 0.32 },
+    { min: 501050, max: 751600, rate: 0.35 },
+    { min: 751600, max: Infinity, rate: 0.37 },
   ],
   marriedSeparate: [
-    { min: 0, max: 11600, rate: 0.10 },
-    { min: 11600, max: 47150, rate: 0.12 },
-    { min: 47150, max: 100525, rate: 0.22 },
-    { min: 100525, max: 191950, rate: 0.24 },
-    { min: 191950, max: 243725, rate: 0.32 },
-    { min: 243725, max: 365600, rate: 0.35 },
-    { min: 365600, max: Infinity, rate: 0.37 },
+    { min: 0, max: 11925, rate: 0.10 },
+    { min: 11925, max: 48475, rate: 0.12 },
+    { min: 48475, max: 103350, rate: 0.22 },
+    { min: 103350, max: 197300, rate: 0.24 },
+    { min: 197300, max: 250525, rate: 0.32 },
+    { min: 250525, max: 375800, rate: 0.35 },
+    { min: 375800, max: Infinity, rate: 0.37 },
   ],
   headOfHousehold: [
-    { min: 0, max: 16550, rate: 0.10 },
-    { min: 16550, max: 63100, rate: 0.12 },
-    { min: 63100, max: 100500, rate: 0.22 },
-    { min: 100500, max: 191950, rate: 0.24 },
-    { min: 191950, max: 243700, rate: 0.32 },
-    { min: 243700, max: 609350, rate: 0.35 },
-    { min: 609350, max: Infinity, rate: 0.37 },
+    { min: 0, max: 17000, rate: 0.10 },
+    { min: 17000, max: 64850, rate: 0.12 },
+    { min: 64850, max: 103350, rate: 0.22 },
+    { min: 103350, max: 197300, rate: 0.24 },
+    { min: 197300, max: 250500, rate: 0.32 },
+    { min: 250500, max: 626350, rate: 0.35 },
+    { min: 626350, max: Infinity, rate: 0.37 },
   ],
 };
 
 export const US_STANDARD_DEDUCTIONS_2024 = {
-  single: 14600,
-  marriedJoint: 29200,
-  marriedSeparate: 14600,
-  headOfHousehold: 21900,
+  single: 15750,
+  marriedJoint: 31500,
+  marriedSeparate: 15750,
+  headOfHousehold: 23625,
 };
 
-// Long-term Capital Gains Tax Brackets (held >= 1 year)
+// Long-term Capital Gains Tax Brackets 2025 (held >= 1 year)
 export const US_CAPITAL_GAINS_BRACKETS_2024 = {
   single: [
-    { min: 0, max: 47025, rate: 0.00 },
-    { min: 47025, max: 518900, rate: 0.15 },
-    { min: 518900, max: Infinity, rate: 0.20 },
+    { min: 0, max: 48350, rate: 0.00 },
+    { min: 48350, max: 533400, rate: 0.15 },
+    { min: 533400, max: Infinity, rate: 0.20 },
   ],
   marriedJoint: [
-    { min: 0, max: 94050, rate: 0.00 },
-    { min: 94050, max: 583750, rate: 0.15 },
-    { min: 583750, max: Infinity, rate: 0.20 },
+    { min: 0, max: 96700, rate: 0.00 },
+    { min: 96700, max: 600050, rate: 0.15 },
+    { min: 600050, max: Infinity, rate: 0.20 },
   ],
   marriedSeparate: [
-    { min: 0, max: 47025, rate: 0.00 },
-    { min: 47025, max: 291850, rate: 0.15 },
-    { min: 291850, max: Infinity, rate: 0.20 },
+    { min: 0, max: 48350, rate: 0.00 },
+    { min: 48350, max: 300000, rate: 0.15 },
+    { min: 300000, max: Infinity, rate: 0.20 },
   ],
   headOfHousehold: [
-    { min: 0, max: 63000, rate: 0.00 },
-    { min: 63000, max: 551350, rate: 0.15 },
-    { min: 551350, max: Infinity, rate: 0.20 },
+    { min: 0, max: 64750, rate: 0.00 },
+    { min: 64750, max: 566700, rate: 0.15 },
+    { min: 566700, max: Infinity, rate: 0.20 },
   ],
 };
 
@@ -80,19 +81,20 @@ export const US_NIIT_THRESHOLDS = {
   rate: 0.038, // 3.8%
 };
 
-// Retirement Account Limits 2024
+// Retirement Account Limits 2025
 export const US_RETIREMENT_LIMITS_2024 = {
   traditional401k: {
-    employeeLimit: 23000,
+    employeeLimit: 23500,
     catchUp50Plus: 7500,
-    totalWithEmployer: 69000,
+    catchUp6063: 11250, // SECURE 2.0: special catch-up for ages 60-63
+    totalWithEmployer: 70000,
   },
   rothIRA: {
     annualLimit: 7000,
     catchUp50Plus: 1000,
     incomePhaseOut: {
-      single: { start: 146000, end: 161000 },
-      marriedJoint: { start: 230000, end: 240000 },
+      single: { start: 150000, end: 165000 },
+      marriedJoint: { start: 236000, end: 246000 },
     },
   },
   traditionalIRA: {
@@ -100,26 +102,26 @@ export const US_RETIREMENT_LIMITS_2024 = {
     catchUp50Plus: 1000,
   },
   sepIRA: {
-    maxContribution: 69000,
+    maxContribution: 70000,
     percentOfCompensation: 0.25,
   },
   hsa: {
-    individual: 4150,
-    family: 8300,
+    individual: 4300,
+    family: 8550,
     catchUp55Plus: 1000,
   },
   plan529: {
-    giftTaxExclusion: 18000,
-    fiveYearFrontLoad: 90000,
+    giftTaxExclusion: 19000,
+    fiveYearFrontLoad: 95000,
   },
 };
 
-// Social Security Data
+// Social Security Data 2025
 export const US_SOCIAL_SECURITY_2024 = {
-  maxTaxableEarnings: 168600,
+  maxTaxableEarnings: 176100,
   taxRate: 0.062, // 6.2% employee portion
-  cola: 0.032, // 3.2% cost of living adjustment
-  maxBenefitAtFRA: 3822, // per month
+  cola: 0.025, // 2.5% cost of living adjustment for 2025
+  maxBenefitAtFRA: 4018, // per month (2025)
   fullRetirementAge: {
     1943: { years: 66, months: 0 },
     1954: { years: 66, months: 0 },
@@ -134,12 +136,12 @@ export const US_SOCIAL_SECURITY_2024 = {
   delayedCreditPerYear: 0.08, // 8% per year after FRA (up to 70)
 };
 
-// Estate & Gift Tax 2024
+// Estate & Gift Tax 2025
 export const US_ESTATE_TAX_2024 = {
-  exemptionIndividual: 13610000,
-  exemptionMarried: 27220000,
+  exemptionIndividual: 13990000,
+  exemptionMarried: 27980000,
   topRate: 0.40,
-  giftAnnualExclusion: 18000,
+  giftAnnualExclusion: 19000,
 };
 
 // All 50 State Tax Data

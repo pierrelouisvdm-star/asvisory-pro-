@@ -320,7 +320,7 @@ export const LandingPage = () => {
 
   const heroContent = isUS ? {
     tagline: 'Plan Better. Track Smarter. Grow Faster.',
-    badge: '2024/2025 Tax Year · All 50 States',
+    badge: '2025 Tax Year · All 50 States',
     headline: 'The Complete Financial Planning Platform for Americans',
     sub: 'From FIRE planning to 401(k) optimization — powerful tools built for real American financial decisions. 30+ professional calculators, US Tax Suite, and instant PDF reports.',
     stats: [
@@ -670,7 +670,7 @@ export const LandingPage = () => {
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {isUS
-                ? 'From FIRE planning to capital gains tax, every calculation built for American financial decisions — 2024/2025 IRS brackets, all 50 states.'
+                ? 'From FIRE planning to capital gains tax, every calculation built for American financial decisions — 2025 IRS brackets (Rev. Proc. 2024-40), all 50 states.'
                 : 'From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.'
               }
             </p>

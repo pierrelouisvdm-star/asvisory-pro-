@@ -50,6 +50,16 @@ Build and deploy "Financial Advisory Pro" — a dual-jurisdiction (SA + US) fina
 - **Income & Expense Tracker** — US-specific categories; **Net Worth Tracker** — locale/currency adapt
 
 ### Phase 3 — US Version Phase 2 (Complete — Feb 2026)
+- **All US tax data updated to 2025 (Rev. Proc. 2024-40)**:
+  - Federal brackets: Single top 10%→$11,925, 12%→$48,475, 22%→$103,350, etc.
+  - Standard deductions: Single $15,750, MFJ $31,500, HOH $23,625
+  - LTCG brackets updated for 2025 (single 0%→$48,350, 15%→$533,400)
+  - SS wage base: $176,100
+  - 401k employee: $23,500; total: $70,000
+  - HSA individual: $4,300; family: $8,550
+  - IRMAA Part B base: $185/mo; thresholds: single $106k+, MFJ $212k+
+  - AMT exemption: single $88,100, MFJ $137,000
+  - Gift/529 exclusion: $19,000; Estate exemption: $13,990,000
 - **13 NEW US Calculators fully built and routed** (total: 26 US calculators):
   - `CapitalGainsTaxCalculator.jsx` — `/us/capital-gains` — Short/LT rates, NIIT, all 50 states
   - `RMDCalculator.jsx` — `/us/rmd` — SECURE 2.0 (age 73), IRS uniform table, 20-yr schedule

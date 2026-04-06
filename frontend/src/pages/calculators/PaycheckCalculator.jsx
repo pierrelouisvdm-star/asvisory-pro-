@@ -13,16 +13,16 @@ const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency:
 const fmtPct = (r) => `${(r * 100).toFixed(1)}%`;
 
 const FEDERAL_BRACKETS_SINGLE = [
-  { max: 11600, rate: 0.10 }, { max: 47150, rate: 0.12 }, { max: 100525, rate: 0.22 },
-  { max: 191950, rate: 0.24 }, { max: 243725, rate: 0.32 }, { max: 609350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+  { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
+  { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
 ];
 const FEDERAL_BRACKETS_MFJ = [
-  { max: 23200, rate: 0.10 }, { max: 94300, rate: 0.12 }, { max: 201050, rate: 0.22 },
-  { max: 383900, rate: 0.24 }, { max: 487450, rate: 0.32 }, { max: 731200, rate: 0.35 }, { max: Infinity, rate: 0.37 },
+  { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
+  { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
 ];
 
-const STANDARD_DEDUCTIONS = { single: 14600, mfj: 29200, hoh: 21900 };
-const SS_WAGE_BASE = 168600;
+const STANDARD_DEDUCTIONS = { single: 15750, mfj: 31500, hoh: 23625 };
+const SS_WAGE_BASE = 176100;
 const PAY_PERIODS = { weekly: 52, biweekly: 26, semimonthly: 24, monthly: 12, annual: 1 };
 
 const calcFederalTax = (taxableIncome, brackets) => {
