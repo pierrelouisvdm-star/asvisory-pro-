@@ -864,7 +864,7 @@ const IncomeExpenseTrackerContent = () => {
           <Card className="bg-navy-900/50 border-navy-700">
             <CardHeader>
               <CardTitle className="text-white">Add New Transaction</CardTitle>
-              <CardDescription>Record your income or expenses — type manually or speak it</CardDescription>
+              <CardDescription>Record your income or expenses, type manually or speak it</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Voice Recorder */}

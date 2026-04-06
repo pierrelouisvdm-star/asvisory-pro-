@@ -530,7 +530,7 @@ export default function VoiceLoggerSession({ onClose, onSessionSaved, jurisdicti
                 )}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">{currentReceipt.name}</p>
-                  <p className="text-xs text-violet-400">Receipt attached — describe it with voice</p>
+                  <p className="text-xs text-violet-400">Receipt attached, describe it with voice</p>
                 </div>
                 <button onClick={e => { e.stopPropagation(); clearReceipt(); }} className="text-muted-foreground hover:text-destructive flex-shrink-0">
                   <X className="h-4 w-4" />
