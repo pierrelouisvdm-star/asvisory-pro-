@@ -192,7 +192,7 @@ export const PrintReport = ({
                 {currentDate}
               </div>
               <div className="text-xs text-muted-foreground mt-1">
-                Currency: {currentCurrency?.name || 'South African Rand'} ({currency || 'ZAR'})
+                Currency: {currentCurrency?.name || 'US Dollar'} ({currency || 'USD'})
               </div>
             </div>
           </div>

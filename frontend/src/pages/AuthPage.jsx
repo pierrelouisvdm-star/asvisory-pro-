@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
+import { useJurisdiction } from '@/context/JurisdictionContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,13 +11,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { 
   Calculator, Mail, Lock, User, Building2, ArrowRight, AlertCircle, 
-  Check, Crown, Ticket, Sparkles, Users, FileText, TrendingUp, Bot
+  Check, Crown, Ticket, Sparkles, Users, FileText, TrendingUp, Bot, Flame, DollarSign
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { couponApi } from '@/services/api';
 import { AdvisoryProLogo } from '@/components/AdvisoryProLogo';
 
-const tiers = [
+const SA_TIERS = [
   {
     name: 'Free',
     price: 'R0',
@@ -36,7 +37,7 @@ const tiers = [
     annualPrice: 'R1,999',
     period: '/month',
     annualPeriod: '/year',
-    annualSavings: 'Save R1,489',
+    annualSavings: 'Save R1,589',
     description: 'Full professional suite',
     features: [
       'All 20 Financial Calculators',
@@ -50,12 +51,49 @@ const tiers = [
   },
 ];
 
+const US_TIERS = [
+  {
+    name: 'Free',
+    price: '$0',
+    period: '/forever',
+    description: 'Start exploring today',
+    features: [
+      'FI Score Quiz',
+      'US Tax Calendar 2025-2026',
+      'Mortgage Calculator',
+      'Compound Interest Calculator',
+    ],
+    highlight: false,
+  },
+  {
+    name: 'Premium',
+    price: '$19',
+    annualPrice: '$99',
+    period: '/month',
+    annualPeriod: ' one-time',
+    annualSavings: 'Limited offer',
+    description: 'Advisor-level tools, without the advisor',
+    features: [
+      'All 30+ US Financial Calculators',
+      'US Tax Suite (Federal + All 50 States)',
+      'FIRE, RMD, Roth Conversion, Paycheck',
+      'RSU, AMT & Capital Gains Tax',
+      'Home Affordability & Rent vs Buy',
+      'PDF Reports & AI Assistant',
+    ],
+    highlight: true,
+  },
+];
+
 export const AuthPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const { login, register, isAuthenticated } = useAuth();
   const { refreshSubscription } = useSubscription();
+  const { isUS } = useJurisdiction();
   const navigate = useNavigate();
+
+  const tiers = isUS ? US_TIERS : SA_TIERS;
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
@@ -417,7 +455,14 @@ export const AuthPage = () => {
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
               <p className="text-muted-foreground text-sm">
-                R299/month or <span className="text-emerald-500 font-medium">R1,999/year</span> (Save R1,589!)
+                {isUS ? (
+                  <>
+                    <span className="inline-block bg-amber-500/10 text-amber-500 text-xs font-semibold px-2 py-0.5 rounded mr-2">LIMITED OFFER</span>
+                    $19/month or <span className="text-emerald-500 font-medium">$99 one-time</span> (reg. $149)
+                  </>
+                ) : (
+                  <>R299/month or <span className="text-emerald-500 font-medium">R1,999/year</span> (Save R1,589!)</>
+                )}
               </p>
             </div>
 
@@ -434,6 +479,9 @@ export const AuthPage = () => {
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-display font-bold text-foreground">{tier.name}</h3>
                         {tier.name === 'Premium' && <Sparkles className="h-4 w-4 text-amber-500" />}
+                        {tier.name === 'Premium' && isUS && (
+                          <Badge className="text-[9px] bg-amber-500/10 text-amber-500 border-0 px-1.5">LIMITED OFFER</Badge>
+                        )}
                       </div>
                       <p className="text-muted-foreground text-xs mb-3">{tier.description}</p>
                       <ul className="space-y-1.5">
@@ -450,6 +498,11 @@ export const AuthPage = () => {
                         <span className="text-2xl font-bold text-foreground">{tier.price}</span>
                         <span className="text-muted-foreground text-sm">{tier.period}</span>
                       </div>
+                      {tier.name === 'Premium' && tier.annualPrice && (
+                        <p className="text-xs text-emerald-500 mt-0.5">
+                          or {tier.annualPrice}{tier.annualPeriod}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -464,26 +517,57 @@ export const AuthPage = () => {
                   Premium Features Include
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="flex items-center gap-2 text-foreground">
-                    <Calculator className="h-3.5 w-3.5 text-primary" />
-                    20 Calculators
-                  </div>
-                  <div className="flex items-center gap-2 text-foreground">
-                    <FileText className="h-3.5 w-3.5 text-primary" />
-                    PDF Reports
-                  </div>
-                  <div className="flex items-center gap-2 text-foreground">
-                    <TrendingUp className="h-3.5 w-3.5 text-primary" />
-                    Live Market Data
-                  </div>
-                  <div className="flex items-center gap-2 text-foreground">
-                    <Bot className="h-3.5 w-3.5 text-primary" />
-                    AI Assistant
-                  </div>
-                  <div className="flex items-center gap-2 text-foreground">
-                    <Crown className="h-3.5 w-3.5 text-primary" />
-                    Priority Support
-                  </div>
+                  {isUS ? (
+                    <>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Calculator className="h-3.5 w-3.5 text-primary" />
+                        30+ Calculators
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <FileText className="h-3.5 w-3.5 text-primary" />
+                        PDF Reports
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Flame className="h-3.5 w-3.5 text-primary" />
+                        FIRE Planning
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Bot className="h-3.5 w-3.5 text-primary" />
+                        AI Assistant
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <DollarSign className="h-3.5 w-3.5 text-primary" />
+                        All 50 States
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Crown className="h-3.5 w-3.5 text-primary" />
+                        Priority Support
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Calculator className="h-3.5 w-3.5 text-primary" />
+                        20 Calculators
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <FileText className="h-3.5 w-3.5 text-primary" />
+                        PDF Reports
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <TrendingUp className="h-3.5 w-3.5 text-primary" />
+                        Live Market Data
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Bot className="h-3.5 w-3.5 text-primary" />
+                        AI Assistant
+                      </div>
+                      <div className="flex items-center gap-2 text-foreground">
+                        <Crown className="h-3.5 w-3.5 text-primary" />
+                        Priority Support
+                      </div>
+                    </>
+                  )}
                 </div>
               </CardContent>
             </Card>

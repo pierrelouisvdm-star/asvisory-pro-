@@ -13,10 +13,12 @@ import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { useAuth } from '@/context/AuthContext';
+import { useJurisdiction } from '@/context/JurisdictionContext';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { AdvisoryProLogoCompact } from '@/components/AdvisoryProLogo';
 
 // All calculators organized by category for the mega menu
+// saOnly: true items are filtered out when jurisdiction is US
 const allCalculators = [
   { 
     category: 'Investment',
@@ -25,7 +27,7 @@ const allCalculators = [
       { path: '/future-value', label: 'Future Value', icon: TrendingUp },
       { path: '/compound-interest', label: 'Compound Interest', icon: Percent },
       { path: '/fee-comparison', label: 'Fee Comparison (EAC)', icon: Scale },
-      { path: '/tfsa-calculator', label: 'TFSA Calculator', icon: PiggyBank },
+      { path: '/tfsa-calculator', label: 'TFSA Calculator', icon: PiggyBank, saOnly: true },
       { path: '/monte-carlo', label: 'Monte Carlo', icon: BarChart3 },
     ]
   },
@@ -53,17 +55,17 @@ const allCalculators = [
     color: 'purple',
     items: [
       { path: '/retirement', label: 'Retirement Planner', icon: PiggyBank },
-      { path: '/living-annuity', label: 'Living Annuity', icon: Wallet },
-      { path: '/retirement-tax', label: 'RA Tax Savings', icon: Receipt },
-      { path: '/tax-directive', label: 'Withdrawal Tax', icon: Target },
+      { path: '/living-annuity', label: 'Living Annuity', icon: Wallet, saOnly: true },
+      { path: '/retirement-tax', label: 'RA Tax Savings', icon: Receipt, saOnly: true },
+      { path: '/tax-directive', label: 'Withdrawal Tax', icon: Target, saOnly: true },
     ]
   },
   { 
     category: 'Tax',
     color: 'rose',
     items: [
-      { path: '/tax-planning', label: 'Tax Planning Hub', icon: Receipt },
-      { path: '/tax-calculator', label: 'Income Tax', icon: Calculator },
+      { path: '/tax-planning', label: 'Tax Planning Hub', icon: Receipt, saOnly: true },
+      { path: '/tax-calculator', label: 'Income Tax', icon: Calculator, saOnly: true },
     ]
   },
   { 
@@ -91,6 +93,15 @@ export const Header = () => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth();
+  const { isUS } = useJurisdiction();
+
+  // Filter SA-only items from mega menu when in US mode
+  const visibleCalculators = allCalculators
+    .map(cat => ({
+      ...cat,
+      items: cat.items.filter(item => !isUS || !item.saOnly),
+    }))
+    .filter(cat => cat.items.length > 0);
 
   const handleLogout = () => {
     logout();
@@ -150,7 +161,7 @@ export const Header = () => {
 
             {/* Quick Tools */}
             <NavLink to="/document-reader" icon={FileText}>AI Docs</NavLink>
-            <NavLink to="/tax-planning" icon={Receipt}>Tax Hub</NavLink>
+            {!isUS && <NavLink to="/tax-planning" icon={Receipt}>Tax Hub</NavLink>}
           </nav>
 
           {/* Right Side */}
@@ -210,7 +221,7 @@ export const Header = () => {
         <div className="hidden lg:block absolute left-0 right-0 top-16 bg-card border-b border-border shadow-lg">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="grid grid-cols-6 gap-6">
-              {allCalculators.map((category) => (
+              {visibleCalculators.map((category) => (
                 <div key={category.category}>
                   <h3 className={cn(
                     "text-xs font-semibold uppercase tracking-wider mb-3",
@@ -300,6 +311,7 @@ export const Header = () => {
                 <FileText className="h-5 w-5 text-primary" />
                 AI Document Reader
               </Link>
+              {!isUS && (
               <Link
                 to="/tax-planning"
                 onClick={() => setIsMenuOpen(false)}
@@ -308,6 +320,7 @@ export const Header = () => {
                 <Receipt className="h-5 w-5 text-primary" />
                 Tax Planning Hub
               </Link>
+              )}
             </div>
 
             {/* Calculator Categories - Collapsible on Mobile */}
@@ -315,7 +328,7 @@ export const Header = () => {
               <h3 className="px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
                 Calculators
               </h3>
-              {allCalculators.map((category) => (
+              {visibleCalculators.map((category) => (
                 <div key={category.category} className="mb-1">
                   <button
                     onClick={() => toggleCategory(category.category)}
