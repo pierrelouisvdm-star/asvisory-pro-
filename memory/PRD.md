@@ -28,6 +28,10 @@
    - Removed US routes from App.js
    - Removed US calculators section from Dashboard.jsx
    - Removed JurisdictionSelector from Header.jsx and LandingPage.jsx
+3. **What's New Section** - Added to Dashboard highlighting:
+   - 2026/2027 Tax Year updates
+   - AI Receipt Scanner feature
+   - Tax Planning Hub
 
 ### Previous Session (March 27, 2026)
 1. **Tax Hub 2026/2027 Complete Update** - All tax values verified and updated

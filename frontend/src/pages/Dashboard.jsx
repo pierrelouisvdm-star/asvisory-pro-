@@ -34,7 +34,10 @@ import {
   Crown,
   Lock,
   Award,
-  Newspaper
+  Newspaper,
+  Zap,
+  Camera,
+  RefreshCw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -285,6 +288,34 @@ const features = [
   },
 ];
 
+// What's New updates
+const whatsNewItems = [
+  {
+    icon: RefreshCw,
+    title: '2026/2027 Tax Year Ready',
+    description: 'All calculators updated with new tax brackets, rebates, CGT exclusions, and TFSA limits.',
+    tag: 'Updated',
+    tagColor: 'emerald',
+    link: '/tax-planning',
+  },
+  {
+    icon: Camera,
+    title: 'AI Receipt Scanner',
+    description: 'Upload receipts and let AI automatically extract amounts, dates, merchants, and categories.',
+    tag: 'New',
+    tagColor: 'blue',
+    link: '/income-expense-tracker',
+  },
+  {
+    icon: Receipt,
+    title: 'Tax Planning Hub',
+    description: 'Complete tax suite: Income tax, CGT, medical credits, donations, and retirement deductions.',
+    tag: 'Featured',
+    tagColor: 'amber',
+    link: '/tax-planning',
+  },
+];
+
 const CalculatorCard = ({ calc, index }) => {
   const Icon = calc.icon;
   const { canAccessCalculator, isPremium } = useSubscription();
@@ -429,6 +460,64 @@ export const Dashboard = () => {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* What's New Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-6">
+          <div className="flex items-center gap-2 mb-2">
+            <Zap className="h-5 w-5 text-amber-500" />
+            <h2 className="font-display text-lg font-bold text-foreground">What's New</h2>
+          </div>
+          <p className="text-sm text-muted-foreground">Latest updates and features</p>
+        </div>
+        <div className="grid sm:grid-cols-3 gap-4">
+          {whatsNewItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <Link 
+                key={item.title} 
+                to={item.link}
+                className="group block"
+                data-testid={`whats-new-${index}`}
+              >
+                <Card className="h-full border-border bg-card hover:border-primary/50 hover:shadow-md transition-all duration-300">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className={cn(
+                        "flex h-10 w-10 items-center justify-center rounded-lg",
+                        item.tagColor === 'emerald' && "bg-emerald-500/10",
+                        item.tagColor === 'blue' && "bg-blue-500/10",
+                        item.tagColor === 'amber' && "bg-amber-500/10",
+                      )}>
+                        <Icon className={cn(
+                          "h-5 w-5",
+                          item.tagColor === 'emerald' && "text-emerald-500",
+                          item.tagColor === 'blue' && "text-blue-500",
+                          item.tagColor === 'amber' && "text-amber-500",
+                        )} />
+                      </div>
+                      <Badge className={cn(
+                        "text-xs",
+                        item.tagColor === 'emerald' && "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
+                        item.tagColor === 'blue' && "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+                        item.tagColor === 'amber' && "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+                      )}>
+                        {item.tag}
+                      </Badge>
+                    </div>
+                    <h3 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
