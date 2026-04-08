@@ -39,8 +39,6 @@ import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
 import TFSACalculator from "@/pages/TFSACalculator";
 import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
 import MarketInsights from "@/pages/MarketInsights";
-import TaxCalculatorUS from "@/pages/calculators/TaxCalculatorUS";
-import Calculator401k from "@/pages/calculators/Calculator401k";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { Toaster } from "@/components/ui/sonner";
@@ -48,7 +46,6 @@ import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { SubscriptionProvider } from "@/context/SubscriptionContext";
 import { ThemeProvider } from "@/context/ThemeContext";
-import { JurisdictionProvider } from "@/context/JurisdictionContext";
 import { CalculatorGate } from "@/components/FeatureGate";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AIAdvisorButton } from "@/components/AIAdvisorChat";
@@ -101,12 +98,11 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <JurisdictionProvider>
-          <CurrencyProvider>
-            <SubscriptionProvider>
-              <div className="min-h-screen flex flex-col bg-background">
-                <BrowserRouter>
-                  <AppLayout>
+        <CurrencyProvider>
+          <SubscriptionProvider>
+            <div className="min-h-screen flex flex-col bg-background">
+              <BrowserRouter>
+                <AppLayout>
                     <Routes>
                     {/* Public Routes */}
                     <Route path="/" element={<AuthenticatedRoute><Dashboard /></AuthenticatedRoute>} />
@@ -157,18 +153,13 @@ function App() {
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
                   <Route path="/market-insights" element={<ProtectedRoute><MarketInsights /></ProtectedRoute>} />
-                  
-                  {/* US Calculators */}
-                  <Route path="/us/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/us/tax-calculator"><TaxCalculatorUS /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/401k-calculator" element={<ProtectedRoute><GatedCalculator path="/us/401k-calculator"><Calculator401k /></GatedCalculator></ProtectedRoute>} />
                 </Routes>
               </AppLayout>
-              <Toaster position="top-right" />
-            </BrowserRouter>
-          </div>
-        </SubscriptionProvider>
-      </CurrencyProvider>
-      </JurisdictionProvider>
+            <Toaster position="top-right" />
+          </BrowserRouter>
+        </div>
+      </SubscriptionProvider>
+    </CurrencyProvider>
     </AuthProvider>
     </ThemeProvider>
   );

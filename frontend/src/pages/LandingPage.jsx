@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
@@ -232,12 +231,11 @@ export const LandingPage = () => {
         
         <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
           <div className="flex flex-col items-center text-center">
-            {/* Region Selector - for future jurisdictions */}
+            {/* Region Badge */}
             <div className="mb-6">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50">
-                <Globe className="h-4 w-4 text-slate-400" />
-                <span className="text-sm text-slate-400">Select your region:</span>
-                <JurisdictionSelector />
+                <span className="text-lg">🇿🇦</span>
+                <span className="text-sm text-slate-400">South Africa</span>
               </div>
             </div>
             
@@ -291,7 +289,7 @@ export const LandingPage = () => {
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup
+              R299/month or R1,299/year (Save R2,289!) • Have a coupon? Apply at signup
             </p>
           </div>
         </div>

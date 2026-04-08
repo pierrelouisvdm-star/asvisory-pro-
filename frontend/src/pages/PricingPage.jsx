@@ -33,8 +33,8 @@ const PAYFAST_CONFIG = {
 };
 
 const PREMIUM_PRICE = 299;
-const ANNUAL_PRICE = 1999;
-const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1999 vs R3588 = R1589 savings
+const ANNUAL_PRICE = 1299;
+const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1299 vs R3588 = R2289 savings
 
 export const PricingPage = () => {
   const navigate = useNavigate();
