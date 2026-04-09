@@ -392,3 +392,7 @@ export const analyticsApi = {
     return handleResponse(response);
   },
 };
+
+
+// Export API_URL for direct use where needed
+export { API_URL };

@@ -13,7 +13,7 @@ import {
   Check, Crown, Ticket, Sparkles, Users, FileText, TrendingUp, Bot
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { couponApi } from '@/services/api';
+import { couponApi, API_URL } from '@/services/api';
 import { AdvisoryProLogo } from '@/components/AdvisoryProLogo';
 
 const tiers = [
@@ -103,7 +103,7 @@ export const AuthPage = () => {
         try {
           // Use the token directly from registration response
           const token = registerData.access_token;
-          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/coupons/redeem`, {
+          const response = await fetch(`${API_URL}/api/coupons/redeem`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
