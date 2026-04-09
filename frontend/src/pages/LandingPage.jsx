@@ -298,6 +298,31 @@ export const LandingPage = () => {
         </div>
       </section>
 
+      {/* Is This App For Me? CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-amber-500/10 via-amber-600/5 to-amber-500/10 border-y border-amber-500/20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/20 mb-6">
+            <Target className="h-8 w-8 text-amber-400" />
+          </div>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Is This App For Me?
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Not sure if AdvisoryPro is right for you? Take our free 2-minute diagnostic to discover your financial control score and see exactly where you stand.
+          </p>
+          <a href="#diagnostic">
+            <Button size="lg" className="bg-amber-500 hover:bg-amber-600 text-white font-semibold text-lg px-8 h-14 shadow-lg shadow-amber-500/25">
+              <Target className="mr-2 h-5 w-5" />
+              Take the Free Diagnostic
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </a>
+          <p className="mt-4 text-sm text-muted-foreground">
+            No signup required • Get instant results • Personalized recommendations
+          </p>
+        </div>
+      </section>
+
       {/* Financial Diagnostic Tool Section */}
       <section id="diagnostic" className="py-20 bg-gradient-to-b from-background to-muted/30 border-y border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
