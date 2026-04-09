@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { FinancialDiagnostic } from '@/components/FinancialDiagnostic';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
@@ -219,6 +220,8 @@ const ContactForm = () => {
 };
 
 export const LandingPage = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -280,18 +283,25 @@ export const LandingPage = () => {
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <Link to="/dashboard">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-emerald-400/50 text-emerald-300 hover:bg-emerald-500/10 h-14 group">
-                  <Play className="mr-2 h-5 w-5" />
-                  Explore the Platform
+              <a href="#diagnostic">
+                <Button size="lg" variant="outline" className="text-lg px-8 border-amber-400/50 text-amber-300 hover:bg-amber-500/10 h-14 group">
+                  <Target className="mr-2 h-5 w-5" />
+                  Take Free Diagnostic
                 </Button>
-              </Link>
+              </a>
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
               R299/month (cancel anytime) or R1,499/year (7-day refund policy) • Have a coupon? Apply at signup
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Financial Diagnostic Tool Section */}
+      <section id="diagnostic" className="py-20 bg-gradient-to-b from-background to-muted/30 border-y border-border">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FinancialDiagnostic onStartTrial={() => navigate('/auth')} />
         </div>
       </section>
 
