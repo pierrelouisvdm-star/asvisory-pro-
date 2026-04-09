@@ -33,8 +33,8 @@ const PAYFAST_CONFIG = {
 };
 
 const PREMIUM_PRICE = 299;
-const ANNUAL_PRICE = 1299;
-const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1299 vs R3588 = R2289 savings
+const ANNUAL_PRICE = 1499;
+const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1499 vs R3588 = R2089 savings
 
 export const PricingPage = () => {
   const navigate = useNavigate();
@@ -239,6 +239,7 @@ export const PricingPage = () => {
                     <p className="text-emerald-400 text-sm mt-2">
                       Only R{Math.round(ANNUAL_PRICE / 12)}/month • Save R{ANNUAL_SAVINGS}
                     </p>
+                    <p className="text-slate-500 text-xs mt-1">7-day refund policy</p>
                   </>
                 ) : (
                   <>

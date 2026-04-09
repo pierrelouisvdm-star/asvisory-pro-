@@ -417,7 +417,7 @@ export const AuthPage = () => {
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
               <p className="text-muted-foreground text-sm">
-                R299/month or <span className="text-emerald-500 font-medium">R1,299/year</span> (Save R2,289!)
+                R299/month or <span className="text-emerald-500 font-medium">R1,499/year</span> (Save R2,089!)
               </p>
             </div>
 

@@ -82,8 +82,8 @@
 
 ### Subscription Model (South Africa)
 - **Free:** R0/forever - 4 calculators
-- **Premium Monthly:** R299/month
-- **Premium Annual:** R1,299/year (Save R2,289!)
+- **Premium Monthly:** R299/month (cancel anytime)
+- **Premium Annual:** R1,499/year once-off (7-day refund policy, Save R2,089!)
 
 ---
 
