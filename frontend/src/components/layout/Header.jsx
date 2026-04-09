@@ -12,7 +12,6 @@ import {
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import { useAuth } from '@/context/AuthContext';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { AdvisoryProLogoCompact } from '@/components/AdvisoryProLogo';
 
 // All calculators organized by category for the mega menu
@@ -154,7 +153,6 @@ export const Header = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
-            <ThemeToggle />
             <CurrencySelector />
             
             {isAuthenticated ? (
