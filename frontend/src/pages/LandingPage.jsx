@@ -292,7 +292,12 @@ export const LandingPage = () => {
             </div>
             
             <p className="mt-4 text-sm text-slate-500">
-              R299/month (cancel anytime) or R1,499/year (7-day refund policy) • Have a coupon? Apply at signup
+              R299/month (cancel anytime) or{' '}
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold">
+                <Sparkles className="h-3.5 w-3.5" />
+                R1,499/year — Save R2,089!
+              </span>
+              {' '}(7-day refund policy)
             </p>
           </div>
         </div>
@@ -892,6 +897,37 @@ export const LandingPage = () => {
         </div>
       </section>
 
+      {/* Special Annual Pricing Banner */}
+      <section className="py-12 bg-gradient-to-r from-emerald-500/10 via-emerald-600/20 to-emerald-500/10 border-y border-emerald-500/30">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
+                <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+                  <Sparkles className="h-3 w-3 mr-1" />
+                  Limited Time Offer
+                </Badge>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-1">
+                Annual Plan: <span className="text-emerald-400">R1,499</span>
+              </h3>
+              <p className="text-muted-foreground">
+                That's only <span className="text-emerald-400 font-semibold">R125/month</span> — Save R2,089 vs monthly!
+              </p>
+            </div>
+            <div className="flex flex-col items-center gap-2">
+              <Link to="/auth">
+                <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 h-14 shadow-lg shadow-emerald-500/25">
+                  Get Annual Plan
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <p className="text-xs text-muted-foreground">7-day refund policy • One-time payment</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="relative py-24">
         <div className="absolute inset-0 bg-gradient-to-t from-background to-muted/30" />
@@ -914,8 +950,13 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            R299/month (cancel anytime) or R1,499/year (7-day refund policy)
+            R299/month (cancel anytime) or{' '}
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold">
+              <Sparkles className="h-3.5 w-3.5" />
+              R1,499/year — Save R2,089!
+            </span>
           </p>
+          <p className="mt-2 text-sm text-muted-foreground">7-day refund policy on annual plan</p>
         </div>
       </section>
 
