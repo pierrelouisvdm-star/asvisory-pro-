@@ -7,7 +7,10 @@ import { Label } from '@/components/ui/label';
 import { Mail, ArrowLeft, AlertCircle, Check, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+// Auto-detect API URL
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+  ? window.location.origin 
+  : process.env.REACT_APP_BACKEND_URL;
 
 export const RequestPasswordResetPage = () => {
   const [email, setEmail] = useState('');

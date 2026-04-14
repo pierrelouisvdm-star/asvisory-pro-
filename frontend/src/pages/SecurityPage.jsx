@@ -11,7 +11,10 @@ import {
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 
-const API = process.env.REACT_APP_BACKEND_URL;
+// Auto-detect API URL
+const API = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+  ? window.location.origin 
+  : process.env.REACT_APP_BACKEND_URL;
 
 const SecurityPage = () => {
   const { user, token } = useAuth();

@@ -17,7 +17,10 @@ import { Disclaimer } from '@/components/calculators/Disclaimer';
 import { toast } from 'sonner';
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+// Auto-detect API URL
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+  ? window.location.origin 
+  : process.env.REACT_APP_BACKEND_URL;
 
 // Document type icons
 const docTypeIcons = {

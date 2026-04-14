@@ -1,4 +1,7 @@
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+// Auto-detect API URL: use current domain in production, env variable in development
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+  ? window.location.origin 
+  : process.env.REACT_APP_BACKEND_URL;
 
 // Helper to get auth headers
 const getHeaders = () => {

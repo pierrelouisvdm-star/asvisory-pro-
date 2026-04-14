@@ -88,12 +88,15 @@ export const PricingPage = () => {
     const paymentAmount = isAnnual ? ANNUAL_PRICE : PREMIUM_PRICE;
 
     // Build PayFast payment form
+    const apiUrl = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+      ? window.location.origin 
+      : process.env.REACT_APP_BACKEND_URL;
     const paymentData = {
       merchant_id: PAYFAST_CONFIG.merchantId,
       merchant_key: PAYFAST_CONFIG.merchantKey,
       return_url: `${window.location.origin}/payment/success`,
       cancel_url: `${window.location.origin}/pricing`,
-      notify_url: `${process.env.REACT_APP_BACKEND_URL}/api/payments/payfast-notify`,
+      notify_url: `${apiUrl}/api/payments/payfast-notify`,
       email_address: user?.email || '',
       m_payment_id: `AP-${Date.now()}`,
       amount: paymentAmount.toFixed(2),

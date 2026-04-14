@@ -24,7 +24,10 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart
 } from 'recharts';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+// Auto-detect API URL
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
+  ? window.location.origin 
+  : process.env.REACT_APP_BACKEND_URL;
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
 // Milestone icons mapping
