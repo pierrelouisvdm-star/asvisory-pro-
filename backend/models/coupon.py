@@ -28,6 +28,9 @@ class Coupon(BaseModel):
     redeemed_by_email: Optional[str] = None
     expires_at: Optional[datetime] = None
     description: Optional[str] = None
+    max_uses: Optional[int] = 1  # Number of times coupon can be used (None = unlimited)
+    use_count: int = 0  # How many times it's been used
+    redeemed_by_users: List[str] = []  # List of user IDs who redeemed
 
 class RedeemCouponRequest(BaseModel):
     code: str

@@ -59,9 +59,14 @@ async def redeem_coupon(
     if not coupon:
         raise HTTPException(status_code=404, detail="Invalid coupon code")
     
+    # Check if user already redeemed this coupon
+    redeemed_by_users = coupon.get("redeemed_by_users", [])
+    if user_id in redeemed_by_users:
+        raise HTTPException(status_code=400, detail="You have already redeemed this coupon")
+    
     if coupon["status"] != CouponStatus.ACTIVE.value:
         if coupon["status"] == CouponStatus.REDEEMED.value:
-            raise HTTPException(status_code=400, detail="This coupon has already been redeemed")
+            raise HTTPException(status_code=400, detail="This coupon has reached its maximum uses")
         elif coupon["status"] == CouponStatus.EXPIRED.value:
             raise HTTPException(status_code=400, detail="This coupon has expired")
         else:
@@ -74,6 +79,17 @@ async def redeem_coupon(
             {"$set": {"status": CouponStatus.EXPIRED.value}}
         )
         raise HTTPException(status_code=400, detail="This coupon has expired")
+    
+    # Check max uses
+    max_uses = coupon.get("max_uses", 1)
+    use_count = coupon.get("use_count", 0)
+    
+    if max_uses is not None and use_count >= max_uses:
+        await db.coupons.update_one(
+            {"code": code},
+            {"$set": {"status": CouponStatus.REDEEMED.value}}
+        )
+        raise HTTPException(status_code=400, detail="This coupon has reached its maximum uses")
     
     # Get subscription details from coupon type
     coupon_type = coupon["coupon_type"]
@@ -113,15 +129,25 @@ async def redeem_coupon(
         upsert=True
     )
     
-    # Mark coupon as redeemed
+    # Update coupon usage
+    new_use_count = use_count + 1
+    new_redeemed_users = redeemed_by_users + [user_id]
+    
+    update_data = {
+        "use_count": new_use_count,
+        "redeemed_by_users": new_redeemed_users,
+        "redeemed_at": now,
+        "redeemed_by": user_id,
+        "redeemed_by_email": user_email
+    }
+    
+    # Mark as fully redeemed if max uses reached
+    if max_uses is not None and new_use_count >= max_uses:
+        update_data["status"] = CouponStatus.REDEEMED.value
+    
     await db.coupons.update_one(
         {"code": code},
-        {"$set": {
-            "status": CouponStatus.REDEEMED.value,
-            "redeemed_at": now,
-            "redeemed_by": user_id,
-            "redeemed_by_email": user_email
-        }}
+        {"$set": update_data}
     )
     
     return RedeemCouponResponse(
