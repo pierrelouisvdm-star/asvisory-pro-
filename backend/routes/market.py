@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-from models.market import MarketIndex, CurrencyPair, Commodity, MarketDataResponse
+from models.market import MarketIndex, CurrencyPair, Commodity, Crypto, Stock, MarketDataResponse
 from server import db
 
 router = APIRouter(prefix="/market", tags=["Market Data"])
@@ -21,6 +21,8 @@ UPDATE_INTERVAL_MINUTES = 15
 INDICES = {
     "^IXIC": {"name": "Nasdaq Composite", "region": "US"},
     "^GSPC": {"name": "S&P 500", "region": "US"},
+    "^DJI": {"name": "Dow Jones", "region": "US"},
+    "URTH": {"name": "MSCI World ETF", "region": "Global"},
     "^NSEI": {"name": "Nifty 50", "region": "IN"},
     "VNQI": {"name": "SA Property (ETF Proxy)", "region": "ZA"},
 }
@@ -31,11 +33,36 @@ JSE_INDICES = {
     "JSE Top 40": {"symbol": "J200", "region": "ZA"},
 }
 
-# Commodities & Crypto
+# Magnificent 7 Stocks
+MAG7_STOCKS = {
+    "AAPL": {"name": "Apple", "category": "Mag 7"},
+    "MSFT": {"name": "Microsoft", "category": "Mag 7"},
+    "GOOGL": {"name": "Alphabet (Google)", "category": "Mag 7"},
+    "AMZN": {"name": "Amazon", "category": "Mag 7"},
+    "META": {"name": "Meta", "category": "Mag 7"},
+    "NVDA": {"name": "Nvidia", "category": "Mag 7"},
+    "TSLA": {"name": "Tesla", "category": "Mag 7"},
+}
+
+# Commodities
 COMMODITIES = {
     "GC=F": {"name": "Gold", "unit": "USD/oz"},
     "SI=F": {"name": "Silver", "unit": "USD/oz"},
-    "BTC-USD": {"name": "Bitcoin", "unit": "USD"},
+    "BZ=F": {"name": "Brent Crude", "unit": "USD/bbl"},
+    "CL=F": {"name": "WTI Crude", "unit": "USD/bbl"},
+    "PL=F": {"name": "Platinum", "unit": "USD/oz"},
+}
+
+# Cryptocurrencies
+CRYPTO = {
+    "BTC-USD": {"name": "Bitcoin", "symbol": "BTC"},
+    "ETH-USD": {"name": "Ethereum", "symbol": "ETH"},
+    "XRP-USD": {"name": "XRP", "symbol": "XRP"},
+    "SOL-USD": {"name": "Solana", "symbol": "SOL"},
+    "BNB-USD": {"name": "BNB", "symbol": "BNB"},
+    "ADA-USD": {"name": "Cardano", "symbol": "ADA"},
+    "DOGE-USD": {"name": "Dogecoin", "symbol": "DOGE"},
+    "LINK-USD": {"name": "Chainlink", "symbol": "LINK"},
 }
 
 # Currency pairs to ZAR
@@ -163,7 +190,6 @@ def fetch_ticker_data(symbol: str) -> Optional[dict]:
     """Fetch data for a single ticker"""
     try:
         ticker = yf.Ticker(symbol)
-        info = ticker.fast_info
         hist = ticker.history(period="2d")
         
         if len(hist) >= 1:
@@ -207,7 +233,21 @@ async def fetch_market_data() -> dict:
                 "region": meta.get("region", "US")
             })
     
-    # Fetch commodities & crypto
+    # Fetch Magnificent 7 stocks
+    mag7_data = []
+    for symbol, meta in MAG7_STOCKS.items():
+        data = await loop.run_in_executor(executor, fetch_ticker_data, symbol)
+        if data:
+            mag7_data.append({
+                "symbol": symbol,
+                "name": meta["name"],
+                "value": data["price"],
+                "change": data["change"],
+                "change_percent": data["change_percent"],
+                "category": meta["category"]
+            })
+    
+    # Fetch commodities
     commodities_data = []
     for symbol, meta in COMMODITIES.items():
         data = await loop.run_in_executor(executor, fetch_ticker_data, symbol)
@@ -219,6 +259,20 @@ async def fetch_market_data() -> dict:
                 "change": data["change"],
                 "change_percent": data["change_percent"],
                 "unit": meta["unit"]
+            })
+    
+    # Fetch cryptocurrencies
+    crypto_data = []
+    for symbol, meta in CRYPTO.items():
+        data = await loop.run_in_executor(executor, fetch_ticker_data, symbol)
+        if data:
+            crypto_data.append({
+                "symbol": meta["symbol"],
+                "name": meta["name"],
+                "value": data["price"],
+                "change": data["change"],
+                "change_percent": data["change_percent"],
+                "unit": "USD"
             })
     
     # Fetch currencies
@@ -241,7 +295,9 @@ async def fetch_market_data() -> dict:
     
     return {
         "indices": indices_data,
+        "mag7": mag7_data,
         "commodities": commodities_data,
+        "crypto": crypto_data,
         "currencies": currencies_data
     }
 
@@ -265,7 +321,9 @@ async def save_cache(data: dict):
     cache_data = {
         "type": "market_data",
         "indices": data["indices"],
+        "mag7": data.get("mag7", []),
         "commodities": data.get("commodities", []),
+        "crypto": data.get("crypto", []),
         "currencies": data["currencies"],
         "last_updated": now,
         "next_update": now + timedelta(minutes=UPDATE_INTERVAL_MINUTES)
@@ -280,7 +338,7 @@ async def save_cache(data: dict):
 @router.get("/data", response_model=MarketDataResponse)
 async def get_market_data():
     """
-    Get live market data for indices, commodities, and currency pairs.
+    Get live market data for indices, commodities, crypto, and currency pairs.
     Data is cached and refreshed every 15 minutes.
     """
     # Check cache first
@@ -295,6 +353,15 @@ async def get_market_data():
                 change_percent=idx["change_percent"],
                 last_updated=cached["last_updated"]
             ) for idx in cached.get("indices", [])],
+            mag7=[Stock(
+                symbol=stock["symbol"],
+                name=stock["name"],
+                value=stock["value"],
+                change=stock["change"],
+                change_percent=stock["change_percent"],
+                category=stock.get("category"),
+                last_updated=cached["last_updated"]
+            ) for stock in cached.get("mag7", [])],
             commodities=[Commodity(
                 symbol=com["symbol"],
                 name=com["name"],
@@ -304,6 +371,15 @@ async def get_market_data():
                 unit=com["unit"],
                 last_updated=cached["last_updated"]
             ) for com in cached.get("commodities", [])],
+            crypto=[Crypto(
+                symbol=cry["symbol"],
+                name=cry["name"],
+                value=cry["value"],
+                change=cry["change"],
+                change_percent=cry["change_percent"],
+                unit=cry.get("unit", "USD"),
+                last_updated=cached["last_updated"]
+            ) for cry in cached.get("crypto", [])],
             currencies=[CurrencyPair(
                 pair=cur["pair"],
                 base=cur["base"],
@@ -331,6 +407,15 @@ async def get_market_data():
                 change_percent=idx["change_percent"],
                 last_updated=cached["last_updated"]
             ) for idx in data.get("indices", [])],
+            mag7=[Stock(
+                symbol=stock["symbol"],
+                name=stock["name"],
+                value=stock["value"],
+                change=stock["change"],
+                change_percent=stock["change_percent"],
+                category=stock.get("category"),
+                last_updated=cached["last_updated"]
+            ) for stock in data.get("mag7", [])],
             commodities=[Commodity(
                 symbol=com["symbol"],
                 name=com["name"],
@@ -340,6 +425,15 @@ async def get_market_data():
                 unit=com["unit"],
                 last_updated=cached["last_updated"]
             ) for com in data.get("commodities", [])],
+            crypto=[Crypto(
+                symbol=cry["symbol"],
+                name=cry["name"],
+                value=cry["value"],
+                change=cry["change"],
+                change_percent=cry["change_percent"],
+                unit=cry.get("unit", "USD"),
+                last_updated=cached["last_updated"]
+            ) for cry in data.get("crypto", [])],
             currencies=[CurrencyPair(
                 pair=cur["pair"],
                 base=cur["base"],

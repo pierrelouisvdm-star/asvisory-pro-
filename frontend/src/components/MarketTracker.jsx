@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
   TrendingUp, TrendingDown, RefreshCw, Clock, 
-  BarChart3, DollarSign, Globe, Coins
+  BarChart3, DollarSign, Globe, Coins, Cpu, Bitcoin
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -69,12 +69,12 @@ export const MarketTracker = ({ compact = false }) => {
     );
   }
 
-  const MarketItem = ({ name, value, change, changePercent, isIndex = true }) => (
+  const MarketItem = ({ name, value, change, changePercent, isIndex = true, prefix = '' }) => (
     <div className="flex items-center justify-between py-3 border-b border-border last:border-0">
       <div>
         <p className="font-medium text-sm text-foreground">{name}</p>
         <p className="text-lg font-bold text-foreground">
-          {isIndex ? formatNumber(value) : `R${value.toFixed(4)}`}
+          {isIndex ? `${prefix}${formatNumber(value)}` : `R${value.toFixed(4)}`}
         </p>
       </div>
       <div className={cn(
@@ -140,18 +140,26 @@ export const MarketTracker = ({ compact = false }) => {
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="indices">
-          <TabsList className="w-full mb-4 grid grid-cols-3 bg-muted">
-            <TabsTrigger value="indices">
-              <Globe className="h-4 w-4 mr-2" />
+          <TabsList className="w-full mb-4 grid grid-cols-5 bg-muted">
+            <TabsTrigger value="indices" className="text-xs px-2">
+              <Globe className="h-3 w-3 mr-1" />
               Indices
             </TabsTrigger>
-            <TabsTrigger value="commodities">
-              <Coins className="h-4 w-4 mr-2" />
+            <TabsTrigger value="mag7" className="text-xs px-2">
+              <Cpu className="h-3 w-3 mr-1" />
+              Mag 7
+            </TabsTrigger>
+            <TabsTrigger value="commodities" className="text-xs px-2">
+              <Coins className="h-3 w-3 mr-1" />
               Commodities
             </TabsTrigger>
-            <TabsTrigger value="currencies">
-              <DollarSign className="h-4 w-4 mr-2" />
-              Currencies
+            <TabsTrigger value="crypto" className="text-xs px-2">
+              <Bitcoin className="h-3 w-3 mr-1" />
+              Crypto
+            </TabsTrigger>
+            <TabsTrigger value="currencies" className="text-xs px-2">
+              <DollarSign className="h-3 w-3 mr-1" />
+              FX
             </TabsTrigger>
           </TabsList>
 
@@ -169,6 +177,23 @@ export const MarketTracker = ({ compact = false }) => {
             </div>
           </TabsContent>
 
+          <TabsContent value="mag7" className="mt-0">
+            <div className="space-y-0">
+              {data?.mag7?.length > 0 ? data.mag7.map((stock) => (
+                <MarketItem 
+                  key={stock.symbol} 
+                  name={`${stock.name} (${stock.symbol})`} 
+                  value={stock.value}
+                  change={stock.change}
+                  changePercent={stock.change_percent}
+                  prefix="$"
+                />
+              )) : (
+                <p className="text-sm text-muted-foreground py-4 text-center">Loading Magnificent 7 stocks...</p>
+              )}
+            </div>
+          </TabsContent>
+
           <TabsContent value="commodities" className="mt-0">
             <div className="space-y-0">
               {data?.commodities?.map((com) => (
@@ -178,8 +203,26 @@ export const MarketTracker = ({ compact = false }) => {
                   value={com.value}
                   change={com.change}
                   changePercent={com.change_percent}
+                  prefix="$"
                 />
               ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="crypto" className="mt-0">
+            <div className="space-y-0">
+              {data?.crypto?.length > 0 ? data.crypto.map((cry) => (
+                <MarketItem 
+                  key={cry.symbol} 
+                  name={`${cry.name} (${cry.symbol})`} 
+                  value={cry.value}
+                  change={cry.change}
+                  changePercent={cry.change_percent}
+                  prefix="$"
+                />
+              )) : (
+                <p className="text-sm text-muted-foreground py-4 text-center">Loading crypto prices...</p>
+              )}
             </div>
           </TabsContent>
 
