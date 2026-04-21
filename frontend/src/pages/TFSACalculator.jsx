@@ -95,6 +95,7 @@ const TFSACalculator = () => {
   // Growth assumptions
   const [expectedReturn, setExpectedReturn] = useState(10);
   const [investmentYears, setInvestmentYears] = useState(20);
+  const [inflationRate, setInflationRate] = useState(5);
   
   // Tax rates for comparison
   const [marginalTaxRate, setMarginalTaxRate] = useState(36);
@@ -175,6 +176,16 @@ const TFSACalculator = () => {
     const taxSavings = finalTfsaBalance - finalTaxableBalance;
     const taxSavingsPercent = (taxSavings / finalTaxableBalance) * 100;
     
+    // Calculate present value (future value in today's terms)
+    // PV = FV / (1 + inflation)^years
+    const inflationFactor = Math.pow(1 + inflationRate / 100, investmentYears);
+    const tfsaPresentValue = finalTfsaBalance / inflationFactor;
+    const taxablePresentValue = finalTaxableBalance / inflationFactor;
+    const taxSavingsPresentValue = taxSavings / inflationFactor;
+    
+    // Real return (adjusted for inflation)
+    const realReturn = ((1 + expectedReturn / 100) / (1 + inflationRate / 100) - 1) * 100;
+    
     // Time to reach lifetime limit
     const annualContribRate = monthlyContribution * 12;
     const yearsToLifetimeLimit = annualContribRate > 0 
@@ -195,8 +206,14 @@ const TFSACalculator = () => {
       taxableProjection,
       totalContributions: totalTfsaContributions,
       totalGrowth: finalTfsaBalance - totalTfsaContributions,
+      // Present value (today's money)
+      tfsaPresentValue,
+      taxablePresentValue,
+      taxSavingsPresentValue,
+      realReturn,
+      inflationFactor,
     };
-  }, [currentBalance, lifetimeContributions, monthlyContribution, yearToDateContribution, expectedReturn, investmentYears, marginalTaxRate, dividendTaxRate, cgtInclusionRate]);
+  }, [currentBalance, lifetimeContributions, monthlyContribution, yearToDateContribution, expectedReturn, investmentYears, marginalTaxRate, dividendTaxRate, cgtInclusionRate, inflationRate]);
 
   // Combined chart data
   const chartData = results.tfsaProjection.map((tfsa, idx) => ({
@@ -387,6 +404,19 @@ const TFSACalculator = () => {
             </div>
             
             <div className="space-y-2">
+              <Label className="text-sm text-slate-300">Expected Inflation: {inflationRate}%</Label>
+              <Slider
+                value={[inflationRate]}
+                onValueChange={([val]) => setInflationRate(val)}
+                min={2}
+                max={10}
+                step={0.5}
+                className="mt-2"
+              />
+              <p className="text-xs text-slate-500">SA long-term average: 5-6% p.a.</p>
+            </div>
+            
+            <div className="space-y-2">
               <Label className="text-sm text-slate-300">Your Marginal Tax Rate: {marginalTaxRate}%</Label>
               <Slider
                 value={[marginalTaxRate]}
@@ -415,6 +445,12 @@ const TFSACalculator = () => {
               <p className="text-2xl font-bold text-emerald-400">
                 {formatCurrency(results.finalTfsaBalance)}
               </p>
+              <div className="mt-2 pt-2 border-t border-emerald-500/20">
+                <p className="text-xs text-slate-400">In Today's Money (after inflation)</p>
+                <p className="text-lg font-semibold text-emerald-300">
+                  {formatCurrency(results.tfsaPresentValue)}
+                </p>
+              </div>
             </div>
             
             <div className="p-4 bg-slate-500/10 border border-slate-500/30 rounded-lg">
@@ -422,6 +458,12 @@ const TFSACalculator = () => {
               <p className="text-2xl font-bold text-slate-300">
                 {formatCurrency(results.finalTaxableBalance)}
               </p>
+              <div className="mt-2 pt-2 border-t border-slate-500/20">
+                <p className="text-xs text-slate-400">In Today's Money</p>
+                <p className="text-lg font-semibold text-slate-400">
+                  {formatCurrency(results.taxablePresentValue)}
+                </p>
+              </div>
             </div>
             
             <div className="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
@@ -432,6 +474,12 @@ const TFSACalculator = () => {
               <p className="text-xs text-slate-500">
                 {results.taxSavingsPercent.toFixed(1)}% more in your pocket
               </p>
+              <div className="mt-2 pt-2 border-t border-amber-500/20">
+                <p className="text-xs text-slate-400">Savings in Today's Money</p>
+                <p className="text-lg font-semibold text-amber-300">
+                  {formatCurrency(results.taxSavingsPresentValue)}
+                </p>
+              </div>
             </div>
             
             <div className="grid grid-cols-2 gap-3">
@@ -445,6 +493,15 @@ const TFSACalculator = () => {
                 <p className="text-xs text-slate-400">Total Growth</p>
                 <p className="text-sm font-medium text-emerald-400">
                   +{formatCurrency(results.totalGrowth)}
+                </p>
+              </div>
+            </div>
+            
+            <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-slate-400">Real Return (after inflation)</p>
+                <p className="text-sm font-semibold text-blue-400">
+                  {results.realReturn.toFixed(1)}% p.a.
                 </p>
               </div>
             </div>
@@ -608,6 +665,7 @@ const TFSACalculator = () => {
           { label: 'Lifetime Contributions', value: formatCurrency(lifetimeContributions) },
           { label: 'Monthly Contribution', value: formatCurrency(monthlyContribution) },
           { label: 'Expected Return', value: `${expectedReturn}%` },
+          { label: 'Expected Inflation', value: `${inflationRate}%` },
           { label: 'Investment Period', value: `${investmentYears} years` },
           { label: 'Marginal Tax Rate', value: `${marginalTaxRate}%` },
         ]}
@@ -615,8 +673,12 @@ const TFSACalculator = () => {
           { label: 'Annual Limit Remaining', value: formatCurrency(results.annualRemaining) },
           { label: 'Lifetime Limit Remaining', value: formatCurrency(results.lifetimeRemaining) },
           { label: 'Projected TFSA Value', value: formatCurrency(results.finalTfsaBalance) },
+          { label: 'TFSA Value (Today\'s Money)', value: formatCurrency(results.tfsaPresentValue) },
           { label: 'Projected Taxable Value', value: formatCurrency(results.finalTaxableBalance) },
+          { label: 'Taxable Value (Today\'s Money)', value: formatCurrency(results.taxablePresentValue) },
           { label: 'Total Tax Savings', value: formatCurrency(results.taxSavings) },
+          { label: 'Tax Savings (Today\'s Money)', value: formatCurrency(results.taxSavingsPresentValue) },
+          { label: 'Real Return (After Inflation)', value: `${results.realReturn.toFixed(1)}%` },
           { label: 'Years to Lifetime Limit', value: results.yearsToLifetimeLimit === Infinity ? 'N/A' : `${results.yearsToLifetimeLimit} years` },
         ]}
       />
