@@ -9,7 +9,7 @@
 - Use coupon codes: ADVPRO-XXXXX format for lifetime premium
 
 ## API Endpoints
-- Base URL: https://tax-tracker-preview.preview.emergentagent.com/api
+- Base URL: https://fap-sa-finance.preview.emergentagent.com/api
 - Login: POST /api/auth/login
 - Register: POST /api/auth/register
 - Password Reset Request: POST /api/auth/forgot-password
