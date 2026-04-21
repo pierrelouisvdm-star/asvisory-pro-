@@ -41,28 +41,13 @@ const formatCurrency = (value) => {
 };
 
 // Analysis Result Component
-const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
-  const [selectedClient, setSelectedClient] = useState('');
-  const [saving, setSaving] = useState(false);
-  
+const AnalysisResult = ({ analysis, onDelete }) => {
   const data = analysis.analysis || {};
   const DocIcon = docTypeIcons[analysis.document_type] || FileText;
   
-  const handleSave = async () => {
-    if (!selectedClient) {
-      toast.error('Please select a client');
-      return;
-    }
-    setSaving(true);
-    try {
-      await onSaveToClient(analysis.id, selectedClient);
-      toast.success('Saved to client profile');
-    } catch (error) {
-      toast.error('Failed to save');
-    } finally {
-      setSaving(false);
-    }
-  };
+  // Check if we have structured data or raw analysis
+  const hasStructuredData = data.personal_details || data.account_summary || data.holdings_assets || data.tax_information;
+  const rawAnalysis = data.raw_analysis || data.summary || data.analysis || null;
 
   return (
     <Card className="bg-navy-900/60 border-navy-700">
@@ -77,24 +62,49 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
               <p className="text-sm text-slate-400">{analysis.file_name}</p>
             </div>
           </div>
-          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-            <CheckCircle2 className="h-3 w-3 mr-1" />
-            Analyzed
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+              <CheckCircle2 className="h-3 w-3 mr-1" />
+              Analyzed
+            </Badge>
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-red-400 hover:text-red-300 hover:bg-red-500/10"
+              onClick={() => onDelete(analysis.id)}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </CardHeader>
       
       <CardContent className="space-y-6">
         <Tabs defaultValue="summary" className="w-full">
-          <TabsList className="bg-navy-800 w-full grid grid-cols-4">
+          <TabsList className="bg-navy-800 w-full grid grid-cols-3">
             <TabsTrigger value="summary">Summary</TabsTrigger>
             <TabsTrigger value="details">Details</TabsTrigger>
-            <TabsTrigger value="transactions">Transactions</TabsTrigger>
             <TabsTrigger value="raw">Raw Data</TabsTrigger>
           </TabsList>
           
           {/* Summary Tab */}
           <TabsContent value="summary" className="mt-4 space-y-4">
+            {/* Show AI Summary if available */}
+            {(rawAnalysis || data.key_insights || data.summary_text) && (
+              <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                <h4 className="text-sm font-medium text-emerald-400 mb-3 flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4" />
+                  AI Analysis Summary
+                </h4>
+                <div className="text-sm text-slate-300 whitespace-pre-wrap leading-relaxed">
+                  {typeof rawAnalysis === 'string' ? rawAnalysis : 
+                   data.summary_text ? data.summary_text :
+                   Array.isArray(data.key_insights) ? data.key_insights.join('\n\n') :
+                   JSON.stringify(rawAnalysis, null, 2)}
+                </div>
+              </div>
+            )}
+            
             {/* Personal Details */}
             {data.personal_details && (
               <div className="p-4 rounded-lg bg-navy-800/50 border border-navy-700">
@@ -158,7 +168,7 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
             )}
             
             {/* Fees */}
-            {data.fees_and_charges && (
+            {data.fees_and_charges && Object.keys(data.fees_and_charges).length > 0 && (
               <div className="p-4 rounded-lg bg-navy-800/50 border border-navy-700">
                 <h4 className="text-sm font-medium text-slate-300 mb-3 flex items-center gap-2">
                   <Percent className="h-4 w-4" />
@@ -178,7 +188,7 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
             )}
             
             {/* Key Insights */}
-            {data.key_insights && (
+            {data.key_insights && !rawAnalysis && (
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <h4 className="text-sm font-medium text-amber-400 mb-2">Key Insights</h4>
                 <ul className="space-y-1 text-sm text-slate-300">
@@ -192,6 +202,16 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
                     : <li>{data.key_insights}</li>
                   }
                 </ul>
+              </div>
+            )}
+            
+            {/* If no structured data, show the full analysis in summary */}
+            {!hasStructuredData && !rawAnalysis && (
+              <div className="p-4 rounded-lg bg-navy-800/50 border border-navy-700">
+                <h4 className="text-sm font-medium text-slate-300 mb-3">Analysis</h4>
+                <pre className="text-sm text-slate-300 whitespace-pre-wrap">
+                  {JSON.stringify(data, null, 2)}
+                </pre>
               </div>
             )}
           </TabsContent>
@@ -260,12 +280,11 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
                 </div>
               </div>
             )}
-          </TabsContent>
-          
-          {/* Transactions Tab */}
-          <TabsContent value="transactions" className="mt-4">
-            {data.transactions && Array.isArray(data.transactions) && data.transactions.length > 0 ? (
+            
+            {/* Transactions */}
+            {data.transactions && Array.isArray(data.transactions) && data.transactions.length > 0 && (
               <div className="p-4 rounded-lg bg-navy-800/50 border border-navy-700">
+                <h4 className="text-sm font-medium text-slate-300 mb-3">Transactions</h4>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
@@ -276,7 +295,7 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {data.transactions.map((tx, idx) => (
+                      {data.transactions.slice(0, 10).map((tx, idx) => (
                         <tr key={idx} className="border-b border-navy-700/50">
                           <td className="py-2 text-slate-400">{tx.date}</td>
                           <td className="py-2 text-white">{tx.description}</td>
@@ -287,12 +306,18 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
                       ))}
                     </tbody>
                   </table>
+                  {data.transactions.length > 10 && (
+                    <p className="text-sm text-slate-500 mt-2">+ {data.transactions.length - 10} more transactions</p>
+                  )}
                 </div>
               </div>
-            ) : (
+            )}
+            
+            {/* If no details available */}
+            {!data.holdings_assets && !data.tax_information && !data.transactions && (
               <div className="text-center py-8 text-slate-400">
                 <FileText className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                <p>No transactions found in this document</p>
+                <p>No detailed breakdown available for this document</p>
               </div>
             )}
           </TabsContent>
@@ -306,40 +331,6 @@ const AnalysisResult = ({ analysis, onSaveToClient, onDelete, clients }) => {
             </div>
           </TabsContent>
         </Tabs>
-        
-        {/* Actions */}
-        <div className="flex items-center gap-4 pt-4 border-t border-navy-700">
-          <div className="flex-1 flex items-center gap-2">
-            <Select value={selectedClient} onValueChange={setSelectedClient}>
-              <SelectTrigger className="w-[200px] bg-navy-800 border-navy-600">
-                <SelectValue placeholder="Select client..." />
-              </SelectTrigger>
-              <SelectContent>
-                {clients.map(client => (
-                  <SelectItem key={client.id} value={client.id}>
-                    {client.first_name} {client.last_name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button 
-              onClick={handleSave} 
-              disabled={!selectedClient || saving}
-              className="bg-emerald-500 hover:bg-emerald-400"
-            >
-              {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
-              Save to Client
-            </Button>
-          </div>
-          <Button 
-            variant="outline" 
-            className="text-red-400 border-red-500/50 hover:bg-red-500/10"
-            onClick={() => onDelete(analysis.id)}
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            Delete
-          </Button>
-        </div>
       </CardContent>
     </Card>
   );
