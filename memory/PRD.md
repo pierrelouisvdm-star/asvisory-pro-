@@ -1,6 +1,6 @@
 # Financial Advisory Pro - Product Requirements Document
 
-## Latest Update: April 8, 2026
+## Latest Update: Feb 2026 (AI Document Reader verified)
 
 ---
 
@@ -110,6 +110,9 @@
 ---
 
 ## Future Roadmap
+
+### Recently Completed (Feb 2026)
+- [x] AI Document Reader fixed — client_id now optional, formatted Summary/Details tabs instead of raw JSON, custom prompt flow with 6 presets. Verified end-to-end (backend 8/8 pytest, frontend 10/10 Playwright).
 
 ### P1 - High Priority
 - [ ] IRP5 File Storage implementation
