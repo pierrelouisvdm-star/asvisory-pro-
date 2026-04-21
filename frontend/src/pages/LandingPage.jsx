@@ -963,7 +963,7 @@ export const LandingPage = () => {
       {/* Footer */}
       <footer className="border-t border-border py-12 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+          <div className="grid md:grid-cols-5 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
@@ -997,6 +997,21 @@ export const LandingPage = () => {
                 </li>
                 <li>
                   <Link to="/pricing" className="hover:text-primary transition-colors">Pricing</Link>
+                </li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-foreground mb-4">Legal</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>
+                  <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+                </li>
+                <li>
+                  <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+                </li>
+                <li>
+                  <Link to="/refund-policy" className="hover:text-primary transition-colors">Refund Policy</Link>
                 </li>
               </ul>
             </div>
