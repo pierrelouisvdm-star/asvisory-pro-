@@ -183,7 +183,18 @@ async def startup_db_client():
             "max_uses": 6,
             "use_count": 0,
             "redeemed_by_users": []
-        }
+        },
+        # Beta Tester Codes
+        {"code": "BETA-VIP01", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP02", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP03", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP04", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP05", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP06", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP07", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP08", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP09", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
+        {"code": "BETA-VIP10", "coupon_type": "premium_lifetime", "status": "active", "created_at": datetime.now(timezone.utc), "description": "Beta Tester - Lifetime Premium", "max_uses": 1, "use_count": 0, "redeemed_by_users": []},
     ]
     
     for coupon in permanent_coupons:
