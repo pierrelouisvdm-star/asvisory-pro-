@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Calculator, Shield, Award, Clock, AlertTriangle } from 'lucide-react';
 import { FullDisclaimer } from '@/components/calculators/Disclaimer';
 
@@ -65,9 +66,10 @@ export const Footer = () => {
             © {new Date().getFullYear()} Financial Advisory Pro. Professional Financial Calculator Suite.
           </p>
           <div className="flex items-center gap-4 text-sm text-slate-400">
-            <span className="hover:text-emerald-400 cursor-pointer transition-colors">Privacy</span>
-            <span className="hover:text-emerald-400 cursor-pointer transition-colors">Terms</span>
-            <span className="hover:text-emerald-400 cursor-pointer transition-colors">Support</span>
+            <Link to="/privacy" className="hover:text-emerald-400 transition-colors">Privacy</Link>
+            <Link to="/terms" className="hover:text-emerald-400 transition-colors">Terms</Link>
+            <Link to="/refund-policy" className="hover:text-emerald-400 transition-colors">Refunds</Link>
+            <a href="mailto:support@advisorypro.co.za" className="hover:text-emerald-400 transition-colors">Support</a>
           </div>
         </div>
       </div>

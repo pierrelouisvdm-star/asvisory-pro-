@@ -41,6 +41,9 @@ import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
 import MarketInsights from "@/pages/MarketInsights";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
+import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
+import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
+import { RefundPolicyPage } from "@/pages/RefundPolicyPage";
 import { Toaster } from "@/components/ui/sonner";
 import { CurrencyProvider } from "@/context/CurrencyContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
@@ -153,6 +156,11 @@ function App() {
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
                   <Route path="/market-insights" element={<ProtectedRoute><MarketInsights /></ProtectedRoute>} />
+                  
+                  {/* Legal Pages - Public */}
+                  <Route path="/terms" element={<TermsOfServicePage />} />
+                  <Route path="/privacy" element={<PrivacyPolicyPage />} />
+                  <Route path="/refund-policy" element={<RefundPolicyPage />} />
                 </Routes>
               </AppLayout>
             <Toaster position="top-right" />
