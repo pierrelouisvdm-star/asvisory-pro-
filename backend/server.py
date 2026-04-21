@@ -120,7 +120,9 @@ logger = logging.getLogger(__name__)
 
 @app.on_event("startup")
 async def startup_db_client():
-    """Create database indexes on startup"""
+    """Create database indexes and seed data on startup"""
+    from datetime import datetime, timezone
+    
     # User indexes
     await db.users.create_index("email", unique=True)
     await db.users.create_index("id", unique=True)
@@ -156,6 +158,39 @@ async def startup_db_client():
     # Loan comparisons indexes
     await db.loan_comparisons.create_index("id", unique=True)
     await db.loan_comparisons.create_index([("client_id", 1), ("created_at", -1)])
+    
+    # Coupon indexes
+    await db.coupons.create_index("code", unique=True)
+    
+    # Seed permanent coupons (only if they don't exist)
+    permanent_coupons = [
+        {
+            "code": "OWNERVIP",
+            "coupon_type": "premium_lifetime",
+            "status": "active",
+            "created_at": datetime.now(timezone.utc),
+            "description": "Owner VIP - Lifetime Premium Access",
+            "max_uses": 1,
+            "use_count": 0,
+            "redeemed_by_users": []
+        },
+        {
+            "code": "BOYSNIGHT",
+            "coupon_type": "premium_lifetime",
+            "status": "active",
+            "created_at": datetime.now(timezone.utc),
+            "description": "Boys Night Special - Lifetime Premium Access",
+            "max_uses": 6,
+            "use_count": 0,
+            "redeemed_by_users": []
+        }
+    ]
+    
+    for coupon in permanent_coupons:
+        existing = await db.coupons.find_one({"code": coupon["code"]})
+        if not existing:
+            await db.coupons.insert_one(coupon)
+            logger.info(f"Seeded coupon: {coupon['code']}")
     
     logger.info("Database indexes created")
 
