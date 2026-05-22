@@ -25,6 +25,7 @@ import {
   ScrollText,
   ShieldAlert,
   Layers,
+  Heart,
   CreditCard,
   GraduationCap,
   Wallet,
@@ -263,6 +264,20 @@ const planningTools = [
     path: '/education-savings',
     features: ['Cost Projection', 'Inflation', 'Funding Gap'],
     isFree: false,
+  },
+];
+
+const individualTools = [
+  {
+    id: 'my-money',
+    title: 'My Money',
+    description: 'Personal dashboard: TFSA/RA progress, net worth, retirement readiness',
+    icon: Heart,
+    path: '/my-money',
+    features: ['TFSA Tracker', 'RA Progress', 'Net Worth'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
   },
 ];
 
@@ -598,6 +613,25 @@ export const Dashboard = () => {
           ))}
         </div>
       </section>
+
+      {/* My Money Section - visible only to individuals */}
+      {!isAdvisor && user?.role === 'individual' && (
+        <section className="bg-gradient-to-b from-emerald-950/20 to-background py-16 border-y border-emerald-500/20" data-testid="individual-workflow-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeader
+              badge="Your Money"
+              title="Your Personal Financial Dashboard"
+              description="Track TFSA/RA progress, net worth and retirement readiness — all in one place."
+              icon={Sparkles}
+            />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {individualTools.map((calc, index) => (
+                <CalculatorCard key={calc.id} calc={calc} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Advisor Workflow Section - visible only to advisors */}
       {isAdvisor && (

@@ -1,0 +1,40 @@
+{
+  "summary": "Tested My Money (Individual dashboard) — backend pytest 8/8 passing; frontend full E2E flow verified for Individual user (page loads, profile edit + persist, asset/liability CRUD, allocation pie, save toast, quick links). Dashboard 'Your Money' section gating verified (visible for Individual, hidden for Advisor & non-admin advisor). RoleGate /my-money correctly blocks non-admin advisors; admins bypass by design.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "MyMoney - Net Worth Allocation pie chart", "issues": ["Recharts ResponsiveContainer logs repeated width(-1) height(-1) warnings on initial render; chart still renders visually but inside a hidden-on-first-paint card likely triggers it. Cosmetic console noise."]},
+      {"screen": "MyMoney - Retirement readiness", "issues": ["When net_worth is negative (liabilities > assets) the readiness-pct can render as a negative number e.g. '-32%'. Consider clamping pct to 0 in backend (currently min(ratio*100, 999) without max(0, …))."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_my_money.py",
+    "/app/test_reports/pytest/pytest_my_money.xml"
+  ],
+  "action_items": [
+    "(Optional) Clamp retirement_readiness.pct to max(0, …) in /app/backend/routes/my_money.py so negative net worth doesn't display as -32%.",
+    "(Optional) Suppress Recharts ResponsiveContainer width(-1)/height(-1) console warnings by setting an explicit min-height on the chart container or guarding render until container measured."
+  ],
+  "critical_code_review_comments": [
+    "RoleGate admin bypass is documented in component — advisor-admin users (e.g. pierrelouisvdm@gmail.com is_admin=true) WILL access /my-money. Confirmed intentional via code comment.",
+    "GET /me/financial/profile returns 200 with default profile when none exists — clean behaviour, no need for the FE to handle 404.",
+    "RA personal_cap correctly falls back to RA_DEDUCTION_CAP (350k) when annual_income is missing — verified by test_dashboard_insufficient_data.",
+    "Mongo _id is properly excluded via projection ({'_id': 0, 'user_id': 0}) — no ObjectId leakage.",
+    "User isolation enforced via {user_id: current_user['id']} filter — tested with two distinct users."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_my_money.py (new)"
+  ],
+  "success_rate": {"backend": "100% (8/8)", "frontend": "100% of mandated flows"},
+  "test_credentials": "Created on-the-fly during tests: mm_test_a_<ts>@example.com / Passw0rd! (individual), mm_test_b_<ts>@example.com (individual, for isolation), mm_fe_<ts>@example.com (FE individual), mm_adv_<ts>@example.com (FE advisor non-admin). Admin from test_credentials.md (pierrelouisvdm@gmail.com).",
+  "seed_data_creation": "Multiple ephemeral users created (individual + advisor) during pytest and Playwright runs. Their financial profiles persist in user_financial_profiles collection — harmless test data prefixed with mm_*.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend test file /app/backend/tests/test_my_money.py covers auth, defaults, PUT+GET round-trip, dashboard math (TFSA/RA caps, net_worth, allocation, readiness), insufficient-data fallback and user isolation. FE testing seeded auth via localStorage (advisorypro_token + advisorypro_user) to bypass the AuthPage form. Admin role (is_admin=true) bypasses RoleGate by design; to negative-test a role gate, register a fresh advisor (or individual) user — they will not have is_admin.",
+  "rca of the issue": "N/A — no failures."
+}

@@ -46,6 +46,7 @@ from routes.emails import router as emails_router
 from routes.compliance import router as compliance_router
 from routes.portfolio_review import router as portfolio_review_router
 from routes.client_360 import router as client_360_router
+from routes.my_money import router as my_money_router
 
 # Include route modules
 api_router.include_router(auth_router)
@@ -69,6 +70,7 @@ api_router.include_router(emails_router)
 api_router.include_router(compliance_router)
 api_router.include_router(portfolio_review_router)
 api_router.include_router(client_360_router)
+api_router.include_router(my_money_router)
 
 # Health check endpoint
 @api_router.get("/health")
