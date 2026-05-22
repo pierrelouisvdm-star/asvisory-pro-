@@ -112,8 +112,10 @@
 ## Future Roadmap
 
 ### Recently Completed (Feb 2026)
-- [x] **Smart Suggestions** — deterministic rule-based "next best action" badges per client. 7 rules (no_docs, no_portfolio_review, stale_review ≥12mo, review_due_soon ≥9mo, outdated_products, no_compliance, no_touchpoint ≥3mo) + all_good fallback. Surfaced on Clients list rows and as a panel on Client 360. No AI cost. Verified 10/10 backend + frontend.
-- [x] **Enterprise/Firms contact panel** on Pricing page — no Firm tier; firms email for licensing & white-labeling.
+- [x] **Net Worth History** — backend snapshots monthly (period=YYYY-MM, same-month upsert keeps 1 row), new `GET /api/me/financial/history`. Frontend My Money adds Recharts LineChart "Wealth Growth" card (net worth + assets + liabilities over time, visible from 2 snapshots).
+- [x] **Actionable Smart Suggestions** — every badge on /clients and every row on Client 360 is now a clickable Link that deep-links to the right tool with ?client_id= prefilled (no_compliance → /compliance-notes, no_touchpoint → /email-generator, etc.). Closes the loop from insight → action in one click. Verified 6/6 backend + 4/4 frontend.
+- [x] **Smart Suggestions** — deterministic rule-based "next best action" badges per client.
+- [x] **Enterprise/Firms contact panel** on Pricing page.
 - [x] **My Money (Individual dashboard)** — `/my-money`.
 - [x] **Client 360** — `/clients/:id/360`.
 - [x] **Multi-Document Portfolio Review** — `/portfolio-review`.
