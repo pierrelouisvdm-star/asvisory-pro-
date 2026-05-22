@@ -112,11 +112,12 @@
 ## Future Roadmap
 
 ### Recently Completed (Feb 2026)
-- [x] **Pricing redesigned** — 3-tier side-by-side comparison (Free / Individual R299/R1499 / Financial Advisor R999/R6999 with "BEST FOR PROS" badge). Role-aware: logged-in users see "YOUR PLAN" tag and other tier dimmed. No more toggle hiding the difference.
-- [x] **AI Email & Communication Generator** (Feature #3) — `/email-generator` (advisor-only). 8 templates (review email, follow-up, meeting summary, WhatsApp brief, onboarding, annual review reminder, market update, custom) × 4 tones (professional, simple, HNW, beginner). GPT-4o-powered. Outputs subject/body/HTML/WhatsApp text. Quick actions: Copy / Open in WhatsApp / Open in mail app. Full Compose + History tabs. Verified 10/10 backend pytest + frontend E2E.
-- [x] **Individual vs Financial Advisor workspace split** — role chosen at signup (locked in), existing users see RoleSelectionModal on next login, dashboard renders advisor-only "Advisor Workflow" section, /report-builder + /email-generator routes gated to advisors, dual hero CTAs on landing page. Verified 11/11 backend pytest + frontend role flows.
-- [x] **AI Client Report Builder** (Feature #1 from original vision) — `/report-builder`. Generates GPT-4o powered branded PDF reports with executive summary, portfolio breakdown, fee/risk/retirement analysis, recommendations, plain-language explanations. Editable branding (firm name, advisor, logo URL, primary colour, FSP number, disclaimer). 3 tabs: Build / Branding / History. Client-side PDF via jspdf + html2canvas. Verified 9/9 backend + full frontend.
-- [x] AI Document Reader fixed — client_id now optional, formatted Summary/Details tabs instead of raw JSON, custom prompt flow with 6 presets. Verified end-to-end (backend 8/8 pytest, frontend 10/10 Playwright).
+- [x] **AI Compliance & Advisor Notes** (Feature #4) — `/compliance-notes` (advisor-only). 6 record types (Meeting Notes, Record of Advice, Risk Profile Summary, Product Comparison, Advice Rationale, Action Items). FAIS-aligned schemas (needs analysis, advice given, alternatives considered, fees disclosed, compliance notes). GPT-4o powered. Verified 12/12 backend pytest + frontend E2E.
+- [x] **Pricing redesigned** — 3-tier side-by-side comparison (Free / Individual R299/R1499 / Financial Advisor R999/R6999 with "BEST FOR PROS" badge). Role-aware: logged-in users see "YOUR PLAN" tag and other tier dimmed.
+- [x] **AI Email & Communication Generator** (Feature #3) — `/email-generator` (advisor-only). 8 templates × 4 tones. GPT-4o-powered. WhatsApp deep-link, mailto, copy actions.
+- [x] **Individual vs Financial Advisor workspace split** — role chosen at signup (locked in), existing users see RoleSelectionModal, dashboard renders advisor-only "Advisor Workflow" section.
+- [x] **AI Client Report Builder** (Feature #1) — `/report-builder`. GPT-4o branded PDF reports.
+- [x] **AI Document Reader fix** — client_id optional, formatted Summary/Details tabs.
 
 ### P1 - High Priority
 - [ ] IRP5 File Storage implementation
