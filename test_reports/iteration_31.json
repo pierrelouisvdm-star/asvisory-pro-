@@ -1,0 +1,39 @@
+{
+  "summary": "Monthly Money Digest fully verified end-to-end. Backend pytest: 13/14 PASS, 1 SKIP (no pricing endpoint — frontend-only). GET /api/me/digest/preview correctly returns 400 for users with no snapshot and 200 with {summary, recommendation, html} once a profile is seeded. Real GPT-4o produces a specific, figure-aware recommendation referencing the exact TFSA R21,000 remaining figure. POST /api/me/digest/send returns 200 with a Resend email_id and sent_to fields — Resend send works against support@advisorypro.co.za. Regression: net-worth snapshot upsert is idempotent per (user_id, period); advisor-only routes still 403 for individuals with the spec'd detail; advisor users can still call /digest/preview (intended — endpoint uses get_current_user, not require_advisor); pricing page renders Free / Individual R299/mo / Advisor R999/mo + Enterprise contact panel on the Monthly toggle.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_money_digest.py",
+    "/app/test_reports/pytest/pytest_money_digest.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "money_digest.py:168 — send_digest calls preview_digest(current_user) directly. This works but couples send to preview's exact error semantics; if preview ever changes to support different snapshot shapes, send will silently inherit it. Non-blocking, just a coupling note.",
+    "money_digest.py:84 — LlmChat session_id uses `digest-<user_id>-<period>`. Each call to preview within the same calendar month reuses the same session — fine for a stateless single-message prompt, but worth knowing if you later switch to multi-turn.",
+    "money_digest.py:96 — when EMERGENT_LLM_KEY is set but the LlmChat call raises, recommendation is set to a generic fallback. When the key is absent (unset), recommendation stays as empty string '' — the html template handles this with 'Keep saving consistently.' fallback, but the JSON payload to the frontend will contain '' and the MyMoney UI renders an empty paragraph above the HTML preview. Minor UX nit: consider always populating recommendation with the fallback so the frontend's <p>{recommendation}</p> never goes blank.",
+    "my_money.py:93-97 — Snapshot upsert key is (user_id, period). Verified by test_idempotent_snapshot_for_same_period — re-saving the profile in the same calendar month overwrites the row instead of appending. Good.",
+    "MyMoney.jsx:22-24 — API_URL fallback logic prefers window.location.origin in non-localhost contexts, then REACT_APP_BACKEND_URL. This is fine in production but means if you ever serve the SPA from a different host than the API, calls will silently hit the wrong origin. Document or unify with the rest of the app.",
+    "MyMoney.jsx:127 — sendDigest toast.success uses res.data.sent_to which is correct, but on the 502 path the error toast only surfaces e.response?.data?.detail which is the raw Resend exception string. Consider mapping known Resend failures (e.g. invalid sender) to friendlier copy.",
+    "money_digest.py:24 — SENDER_EMAIL defaults to 'support@advisorypro.co.za' which is verified in Resend; .env has RESEND_API_KEY and SENDER_EMAIL set. Real send tested successfully — id returned."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_money_digest.py (new — 14 tests covering digest preview/send + regression for snapshots, role gating)"
+  ],
+  "success_rate": {
+    "backend": "100% (13/13 executed; 1 skipped — pricing has no public API)",
+    "frontend": "100% (MyMoney load, digest card render, Preview rendered with AI rec, Send fired with 200, Pricing shows 3 tiers + Enterprise on monthly toggle)"
+  },
+  "test_credentials": "Individual: ind_digest_<ts>@example.com / Passw0rd! (registered fresh each run, role=individual). Admin/Advisor: pierrelouisvdm@gmail.com / Scorpio@57!!.",
+  "seed_data_creation": "Each test run registers a fresh individual user via /api/auth/register and PUTs /api/me/financial/profile to seed a snapshot. One real email is sent via Resend per run (to the synthetic test address). No cleanup performed; volume is negligible.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Money digest feature is stable. test_money_digest.py covers: 400 without snapshot, snapshot creation via PUT /me/financial/profile, preview payload shape, idempotent monthly snapshot, Resend send 200 + email_id, unauth 401/403, advisor-can-also-hit-digest, individual blocked from advisor routes, and pricing tiers (skipped — no API). Run with `pytest backend/tests/test_money_digest.py -v`. Reuse test_role_enforcement.py from iteration_30 for full role regression. The MyMoney UI uses data-testid='money-digest-card', 'digest-preview-btn', 'digest-send-btn', 'digest-preview' — stable for future Playwright runs.",
+  "rca of the issue": "N/A — no defects observed during this verification pass."
+}

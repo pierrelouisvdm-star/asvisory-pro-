@@ -11,7 +11,7 @@ export default defineConfig({
     ['json', { outputFile: '/root/.emergent/automation_output/20260318_151825/results.json' }],
   ],
   use: {
-    baseURL: 'https://fap-sa-finance.preview.emergentagent.com',
+    baseURL: 'https://fin-advisor-pro-2.preview.emergentagent.com',
     screenshot: 'only-on-failure',
     trace: 'off',
     headless: true,

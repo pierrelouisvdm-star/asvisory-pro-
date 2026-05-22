@@ -28,7 +28,7 @@
     "/app/backend/tests/test_client_360.py (new)"
   ],
   "success_rate": {"backend": "100% (6/6)", "frontend": "92% (12/13 review items verified, /clients page rendering blocked by missing route)"},
-  "test_credentials": "Admin: pierrelouisvdm@gmail.com / Scorpio@57!! (role=advisor, has 1 client id=3474c87b-7435-4885-9658-d1b94acd28d5 'Test Client'). Individual: TEST_ind_1779453426@example.com / Passw0rd! (registered during this run).",
+  "test_credentials": "Admin: pierrelouisvdm@gmail.com / Scorpio@57!! (role=advisor, has 1 client id=fin-advisor-pro-2 'Test Client'). Individual: TEST_ind_1779453426@example.com / Passw0rd! (registered during this run).",
   "seed_data_creation": "Aggregation test seeded 1 email + 1 compliance record + 1 client report against Test Client during pytest. These remain in DB (small footprint, advisor-scoped). No cleanup since they validate downstream timeline behaviour for any future re-run.",
   "retest_needed": true,
   "main_agent_can_self_test": true,

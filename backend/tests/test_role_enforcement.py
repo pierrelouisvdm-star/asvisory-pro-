@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 
 load_dotenv("/app/backend/.env")
 
-BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://fap-sa-finance.preview.emergentagent.com").rstrip("/")
+BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://fin-advisor-pro-2.preview.emergentagent.com").rstrip("/")
 
 INDIVIDUAL_EMAIL = "ind_test_1779457267@example.com"
 INDIVIDUAL_PASSWORD = "Passw0rd!"
