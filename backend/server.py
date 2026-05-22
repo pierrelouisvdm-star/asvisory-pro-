@@ -42,6 +42,7 @@ from routes.documents import router as documents_router
 from routes.admin import router as admin_router
 from routes.transactions import router as transactions_router
 from routes.reports import router as reports_router
+from routes.emails import router as emails_router
 
 # Include route modules
 api_router.include_router(auth_router)
@@ -61,6 +62,7 @@ api_router.include_router(documents_router)
 api_router.include_router(admin_router)
 api_router.include_router(transactions_router)
 api_router.include_router(reports_router)
+api_router.include_router(emails_router)
 
 # Health check endpoint
 @api_router.get("/health")

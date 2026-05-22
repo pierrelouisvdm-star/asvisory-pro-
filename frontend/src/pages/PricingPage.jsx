@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { 
   Check, Crown, Gift, Loader2, CreditCard, Mail, Phone,
   Calculator, Users, FileText, BarChart3, TrendingUp, Target, Calendar, PieChart,
-  Receipt, Wallet, Bot, Award
+  Receipt, Wallet, Bot, Award, User, Briefcase
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -96,7 +96,7 @@ export const PricingPage = () => {
     }
   };
 
-  const handlePayFastPayment = () => {
+  const handlePayFastPayment = (tierRole = null) => {
     if (!isAuthenticated) {
       toast.error('Please sign in to make a payment');
       navigate('/auth?redirect=/pricing');
@@ -106,8 +106,11 @@ export const PricingPage = () => {
     setPaymentLoading(true);
     
     const isAnnual = billingPeriod === 'annual';
-    const paymentAmount = isAnnual ? annualPrice : monthlyPrice;
-    const planLabel = pricingRole === 'advisor' ? 'Advisor' : 'Premium';
+    const effectiveRole = tierRole || user?.role || pricingRole;
+    const paymentAmount = effectiveRole === 'advisor'
+      ? (isAnnual ? ADVISOR_ANNUAL : ADVISOR_MONTHLY)
+      : (isAnnual ? INDIVIDUAL_ANNUAL : INDIVIDUAL_MONTHLY);
+    const planLabel = effectiveRole === 'advisor' ? 'Advisor' : 'Individual';
 
     // Build PayFast payment form
     const apiUrl = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
@@ -156,56 +159,29 @@ export const PricingPage = () => {
 
   return (
     <div className="min-h-screen bg-navy-950" data-testid="pricing-page">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-10">
           <Badge className="mb-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
             <Crown className="h-3 w-3 mr-1" />
             Simple Pricing
           </Badge>
           <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-            Choose Your Plan
+            Pricing built for both sides of the table
           </h1>
           <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-            Start free with essential calculators, or unlock everything with Premium.
+            Whether you're managing your own money or running an advisory practice — pick the plan that fits.
           </p>
         </div>
 
-        {/* Role Toggle */}
-        <div className="flex items-center justify-center gap-2 mb-4" data-testid="pricing-role-toggle">
-          <button
-            data-testid="pricing-role-individual"
-            onClick={() => setPricingRole('individual')}
-            disabled={user?.role === 'advisor'}
-            className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
-              pricingRole === 'individual'
-                ? 'bg-emerald-600 text-white'
-                : 'bg-slate-800 text-slate-400 hover:text-white'
-            } ${user?.role === 'advisor' ? 'opacity-40 cursor-not-allowed' : ''}`}
-          >
-            For Individuals
-          </button>
-          <button
-            data-testid="pricing-role-advisor"
-            onClick={() => setPricingRole('advisor')}
-            disabled={user?.role === 'individual'}
-            className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
-              pricingRole === 'advisor'
-                ? 'bg-indigo-600 text-white'
-                : 'bg-slate-800 text-slate-400 hover:text-white'
-            } ${user?.role === 'individual' ? 'opacity-40 cursor-not-allowed' : ''}`}
-          >
-            For Advisors
-          </button>
-        </div>
-
         {/* Billing Toggle */}
-        <div className="flex items-center justify-center gap-4 mb-8">
+        <div className="flex items-center justify-center gap-3 mb-10" data-testid="pricing-billing-toggle">
           <button
             onClick={() => setBillingPeriod('monthly')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              billingPeriod === 'monthly' 
-                ? 'bg-emerald-600 text-white' 
+            data-testid="pricing-monthly-btn"
+            className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
+              billingPeriod === 'monthly'
+                ? 'bg-white text-navy-950'
                 : 'bg-slate-800 text-slate-400 hover:text-white'
             }`}
           >
@@ -213,133 +189,177 @@ export const PricingPage = () => {
           </button>
           <button
             onClick={() => setBillingPeriod('annual')}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors relative ${
-              billingPeriod === 'annual' 
-                ? 'bg-emerald-600 text-white' 
+            data-testid="pricing-annual-btn"
+            className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors relative ${
+              billingPeriod === 'annual'
+                ? 'bg-white text-navy-950'
                 : 'bg-slate-800 text-slate-400 hover:text-white'
             }`}
           >
             Annual
             <span className="absolute -top-2 -right-2 bg-amber-500 text-xs text-black px-1.5 py-0.5 rounded-full font-bold">
-              Save R{annualSavings}
+              Save more
             </span>
           </button>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          
-          {/* Free Tier */}
-          <Card className="border-slate-700 bg-gradient-to-b from-navy-900 to-navy-950">
-            <CardHeader className="text-center pt-8 pb-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-700 mx-auto mb-4">
-                <Calculator className="h-8 w-8 text-slate-300" />
-              </div>
-              <CardTitle className="text-2xl text-white">Free Plan</CardTitle>
-              <div className="mt-4">
-                <span className="text-5xl font-bold text-white">R0</span>
-                <span className="text-slate-400 ml-2">/forever</span>
-              </div>
-              <p className="text-slate-400 text-sm mt-2">Get started today</p>
-            </CardHeader>
+        {/* Three-tier comparison */}
+        {(() => {
+          const isAnnual = billingPeriod === 'annual';
+          const tiers = [
+            {
+              key: 'free',
+              name: 'Free',
+              audience: 'Get started',
+              priceLine: 'R0',
+              periodLine: '/forever',
+              monthlyEq: null,
+              accent: 'slate',
+              icon: Calculator,
+              recommended: false,
+              role: null,
+              features: [
+                { label: 'TFSA Calculator', on: true },
+                { label: 'Bond/Mortgage Calculator', on: true },
+                { label: 'Future Value Calculator', on: true },
+                { label: 'Compound Interest Calculator', on: true },
+                { label: 'AI Document Reader', on: false },
+                { label: 'AI Client Report Builder', on: false },
+                { label: 'Multi-document portfolio review', on: false },
+              ],
+              cta: { label: isAuthenticated ? 'Go to Dashboard' : 'Get Started Free', onClick: () => navigate(isAuthenticated ? '/' : '/auth') },
+            },
+            {
+              key: 'individual',
+              name: 'Individual',
+              audience: 'Manage my own money',
+              priceLine: isAnnual ? `R${INDIVIDUAL_ANNUAL.toLocaleString()}` : `R${INDIVIDUAL_MONTHLY}`,
+              periodLine: isAnnual ? '/year' : '/month',
+              monthlyEq: isAnnual ? `Only R${Math.round(INDIVIDUAL_ANNUAL / 12)}/mo · Save R${((INDIVIDUAL_MONTHLY * 12) - INDIVIDUAL_ANNUAL).toLocaleString()}` : 'Cancel anytime',
+              accent: 'emerald',
+              icon: User,
+              recommended: false,
+              role: 'individual',
+              features: [
+                { label: 'All 20+ financial calculators', on: true },
+                { label: 'Tax Planning Hub (2026/27)', on: true },
+                { label: 'AI Document Reader', on: true },
+                { label: 'Live market tracker (35+)', on: true },
+                { label: 'AI financial assistant', on: true },
+                { label: 'Branded PDF client reports', on: false },
+                { label: 'CRM & advisor compliance', on: false },
+              ],
+              cta: { label: 'Subscribe with PayFast', onClick: () => handlePayFastPayment('individual'), disabled: paymentLoading, primary: true, testid: 'subscribe-individual-btn' },
+            },
+            {
+              key: 'advisor',
+              name: 'Financial Advisor',
+              audience: 'AI Copilot for my practice',
+              priceLine: isAnnual ? `R${ADVISOR_ANNUAL.toLocaleString()}` : `R${ADVISOR_MONTHLY}`,
+              periodLine: isAnnual ? '/year' : '/month',
+              monthlyEq: isAnnual ? `Only R${Math.round(ADVISOR_ANNUAL / 12).toLocaleString()}/mo · Save R${((ADVISOR_MONTHLY * 12) - ADVISOR_ANNUAL).toLocaleString()}` : 'Cancel anytime',
+              accent: 'indigo',
+              icon: Briefcase,
+              recommended: true,
+              role: 'advisor',
+              features: [
+                { label: 'Everything in Individual', on: true },
+                { label: 'AI Client Report Builder (branded PDFs)', on: true, highlight: true },
+                { label: 'Client CRM & meeting tracker', on: true, highlight: true },
+                { label: 'Multi-document portfolio review', on: true, highlight: true },
+                { label: 'Compliance & advisor notes', on: true, highlight: true },
+                { label: 'AI Email Generator (coming soon)', on: true },
+                { label: 'White-label branding', on: true },
+              ],
+              cta: { label: 'Subscribe with PayFast', onClick: () => handlePayFastPayment('advisor'), disabled: paymentLoading, primary: true, testid: 'subscribe-advisor-btn' },
+            },
+          ];
 
-            <CardContent className="pb-8">
-              <div className="space-y-3 mb-8">
-                {[
-                  { label: 'TFSA Calculator', included: true },
-                  { label: 'Bond/Mortgage Calculator', included: true },
-                  { label: 'Future Value Calculator', included: true },
-                  { label: 'Compound Interest Calculator', included: true },
-                  { label: '15+ Premium Calculators', included: false },
-                  { label: 'PDF Reports', included: false },
-                  { label: 'AI Document Analysis', included: false },
-                ].map(({ label, included }) => (
-                  <div key={label} className="flex items-center gap-3 p-2">
-                    <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${included ? 'bg-emerald-500/20' : 'bg-slate-700/50'}`}>
-                      <Check className={`h-3 w-3 ${included ? 'text-emerald-500' : 'text-slate-500'}`} />
-                    </div>
-                    <span className={`text-sm ${included ? 'text-slate-300' : 'text-slate-500'}`}>{label}</span>
-                  </div>
-                ))}
-              </div>
+          // Filter / mark based on user's locked role
+          const lockedRole = user?.role;
 
-              <Button 
-                variant="outline"
-                className="w-full h-12 border-slate-600 text-slate-300 hover:bg-slate-800"
-                onClick={() => navigate(isAuthenticated ? '/dashboard' : '/auth')}
-              >
-                {isAuthenticated ? 'Go to Dashboard' : 'Get Started Free'}
-              </Button>
-            </CardContent>
-          </Card>
+          return (
+            <div className="grid md:grid-cols-3 gap-6 mb-12" data-testid="pricing-tier-grid">
+              {tiers.map((tier) => {
+                const accentColors = {
+                  slate: { ring: 'border-slate-700', icon: 'bg-slate-700 text-slate-300', cta: 'bg-slate-700 hover:bg-slate-600 text-white', halo: '' },
+                  emerald: { ring: 'border-emerald-500/40', icon: 'bg-emerald-500/20 text-emerald-400', cta: 'bg-emerald-500 hover:bg-emerald-400 text-navy-950', halo: 'shadow-lg shadow-emerald-500/10' },
+                  indigo: { ring: 'border-indigo-500/50', icon: 'bg-indigo-500/20 text-indigo-300', cta: 'bg-indigo-500 hover:bg-indigo-400 text-white', halo: 'shadow-xl shadow-indigo-500/20' },
+                }[tier.accent];
 
-          {/* Premium Tier */}
-          <Card className="border-emerald-500/50 bg-gradient-to-b from-navy-900 to-navy-950 overflow-hidden relative">
-            <div className="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg">
-              RECOMMENDED
+                // Dim tier if it doesn't match a locked role (and isn't the Free tier)
+                const dimmed = lockedRole && tier.role && tier.role !== lockedRole;
+
+                return (
+                  <Card
+                    key={tier.key}
+                    data-testid={`pricing-tier-${tier.key}`}
+                    className={`relative bg-gradient-to-b from-navy-900 to-navy-950 border-2 ${accentColors.ring} ${accentColors.halo} ${dimmed ? 'opacity-50' : ''} transition-all`}
+                  >
+                    {tier.recommended && !dimmed && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-indigo-500 text-white text-xs font-bold tracking-wide shadow-lg">
+                        BEST FOR PROS
+                      </div>
+                    )}
+                    {lockedRole === tier.role && tier.role && (
+                      <div className="absolute -top-3 right-4 px-2 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-bold tracking-wide">
+                        YOUR PLAN
+                      </div>
+                    )}
+
+                    <CardHeader className="text-center pt-8 pb-4">
+                      <div className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${accentColors.icon} mx-auto mb-3`}>
+                        <tier.icon className="h-7 w-7" />
+                      </div>
+                      <CardTitle className="text-xl text-white" data-testid={`pricing-tier-name-${tier.key}`}>{tier.name}</CardTitle>
+                      <p className="text-xs text-slate-400 mt-1">{tier.audience}</p>
+                      <div className="mt-4">
+                        <span className="text-4xl font-bold text-white" data-testid={`pricing-tier-price-${tier.key}`}>{tier.priceLine}</span>
+                        <span className="text-slate-400 ml-1 text-sm">{tier.periodLine}</span>
+                        {tier.monthlyEq && (
+                          <p className={`text-xs mt-2 ${tier.accent === 'indigo' ? 'text-indigo-300' : 'text-emerald-400'}`}>{tier.monthlyEq}</p>
+                        )}
+                        {tier.role && isAnnual && (
+                          <p className="text-[10px] text-slate-500 mt-1">7-day refund policy</p>
+                        )}
+                      </div>
+                    </CardHeader>
+
+                    <CardContent className="pb-6">
+                      <ul className="space-y-2.5 mb-6">
+                        {tier.features.map((f, i) => (
+                          <li key={i} className="flex items-start gap-2.5 text-sm">
+                            <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5 ${f.on ? (tier.accent === 'indigo' ? 'bg-indigo-500/30' : 'bg-emerald-500/20') : 'bg-slate-700/40'}`}>
+                              <Check className={`h-3 w-3 ${f.on ? (tier.accent === 'indigo' ? 'text-indigo-300' : 'text-emerald-400') : 'text-slate-600'}`} />
+                            </div>
+                            <span className={`${f.on ? (f.highlight ? 'text-white font-medium' : 'text-slate-300') : 'text-slate-500 line-through'}`}>
+                              {f.label}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <Button
+                        onClick={tier.cta.onClick}
+                        disabled={tier.cta.disabled || dimmed}
+                        data-testid={tier.cta.testid || `cta-${tier.key}`}
+                        className={`w-full h-11 ${accentColors.cta}`}
+                      >
+                        {tier.cta.disabled ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                        {tier.cta.label}
+                      </Button>
+                      {tier.role && (
+                        <p className="text-center text-[10px] text-slate-500 mt-2">
+                          Secure payment via PayFast
+                        </p>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
-            
-            <CardHeader className="text-center pt-8 pb-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 mx-auto mb-4">
-                <Crown className="h-8 w-8 text-emerald-600" />
-              </div>
-              <CardTitle className="text-2xl text-white" data-testid="pricing-premium-title">
-                {pricingRole === 'advisor' ? 'Advisor Plan' : 'Premium Plan'}
-              </CardTitle>
-              <div className="mt-4">
-                {billingPeriod === 'annual' ? (
-                  <>
-                    <span className="text-5xl font-bold text-white" data-testid="pricing-price">R{annualPrice.toLocaleString()}</span>
-                    <span className="text-slate-400 ml-2">/year</span>
-                    <p className="text-emerald-400 text-sm mt-2">
-                      Only R{Math.round(annualPrice / 12).toLocaleString()}/month • Save R{annualSavings.toLocaleString()}
-                    </p>
-                    <p className="text-slate-500 text-xs mt-1">7-day refund policy</p>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-5xl font-bold text-white" data-testid="pricing-price">R{monthlyPrice.toLocaleString()}</span>
-                    <span className="text-slate-400 ml-2">/month</span>
-                    <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
-                  </>
-                )}
-              </div>
-            </CardHeader>
-
-            <CardContent className="pb-8">
-              {/* Features Grid */}
-              <div className="space-y-3 mb-8">
-                {PREMIUM_FEATURES.map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex items-center gap-3 p-2">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <Check className="h-3 w-3 text-emerald-500" />
-                    </div>
-                    <span className="text-sm text-slate-300">{label}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* PayFast Button */}
-              <Button 
-                className="w-full h-12 text-lg btn-premium"
-                onClick={handlePayFastPayment}
-                disabled={paymentLoading}
-                data-testid="payfast-payment-btn"
-              >
-                {paymentLoading ? (
-                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
-                  <CreditCard className="h-5 w-5 mr-2" />
-                )}
-                Subscribe with PayFast
-              </Button>
-              
-              <p className="text-center text-xs text-slate-500 mt-3">
-                Secure payment via PayFast • Cards, EFT, SnapScan & more
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+          );
+        })()}
 
         {/* Coupon Section */}
         <Card className="border-dashed border-2 border-emerald-500/30 bg-emerald-950/20 max-w-md mx-auto">

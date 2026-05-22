@@ -277,6 +277,17 @@ const advisorTools = [
     isNew: true,
     isFeatured: true,
   },
+  {
+    id: 'email-generator',
+    title: 'AI Email & Comms Generator',
+    description: 'Draft client emails, WhatsApp briefs, review reminders & meeting notes in seconds',
+    icon: FileText,
+    path: '/email-generator',
+    features: ['8 Templates', '4 Tones', 'WhatsApp Ready'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
 ];
 
 const features = [

@@ -40,6 +40,7 @@ import TFSACalculator from "@/pages/TFSACalculator";
 import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
 import MarketInsights from "@/pages/MarketInsights";
 import ReportBuilder from "@/pages/ReportBuilder";
+import EmailGenerator from "@/pages/EmailGenerator";
 import RoleSelectionModal from "@/components/RoleSelectionModal";
 import { RoleGate } from "@/components/RoleGate";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
@@ -161,6 +162,7 @@ function App() {
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
                   <Route path="/market-insights" element={<ProtectedRoute><MarketInsights /></ProtectedRoute>} />
                   <Route path="/report-builder" element={<ProtectedRoute><RoleGate role="advisor"><GatedCalculator path="/report-builder"><ReportBuilder /></GatedCalculator></RoleGate></ProtectedRoute>} />
+                  <Route path="/email-generator" element={<ProtectedRoute><RoleGate role="advisor"><GatedCalculator path="/email-generator"><EmailGenerator /></GatedCalculator></RoleGate></ProtectedRoute>} />
                   
                   {/* Legal Pages - Public */}
                   <Route path="/terms" element={<TermsOfServicePage />} />
