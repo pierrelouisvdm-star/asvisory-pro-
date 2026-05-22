@@ -112,8 +112,9 @@
 ## Future Roadmap
 
 ### Recently Completed (Feb 2026)
-- [x] **Multi-Document Portfolio Review** (closes "AI Portfolio Review Generator" from original spec) — `/portfolio-review`. Aggregates multiple client docs into one consolidated view: total AUM, weighted EAC, asset allocation, fee audit (annual fee drag + 10yr cost), diversification score, outdated product warnings, retirement readiness, prioritised recommendations, plain-language client summary. Recharts pie + bar visualisations. Verified 10/10 backend + 100% frontend.
-- [x] **AI Compliance & Advisor Notes** (Feature #4) — `/compliance-notes`. 6 FAIS-aligned record types. Verified 12/12 backend + full frontend.
+- [x] **Client 360** — `/clients/:id/360` advisor-only hub with 5 stat tiles + Smart Actions + 6 tabs. New backend `GET /api/client-360/{id}` aggregates docs/reports/emails/compliance/portfolio_reviews. EmailGenerator, ComplianceNotes, PortfolioReview, ReportBuilder updated to read `?client_id=` from URL. ClientsPage gets green "360 View" button. Verified 6/6 backend + frontend. Side-fixes: registered missing `/clients` and `/clients/:id` routes, added Tailwind safelist.
+- [x] **Multi-Document Portfolio Review** — `/portfolio-review`. Aggregates docs into one view with fee audit + diversification.
+- [x] **AI Compliance & Advisor Notes** — `/compliance-notes`. 6 FAIS-aligned record types.
 - [x] **Pricing redesigned** — 3-tier side-by-side comparison.
 - [x] **AI Email & Communication Generator** (Feature #3) — `/email-generator`. 8 templates × 4 tones.
 - [x] **Individual vs Financial Advisor workspace split** — role chosen at signup (locked in), dashboard renders advisor-only sections.

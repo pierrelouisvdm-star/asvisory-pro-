@@ -2,6 +2,13 @@
 module.exports = {
     darkMode: ["class"],
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
+    safelist: [
+        // Dynamic color classes used in Client360 Smart Actions & stat tiles
+        // (color tokens: sky, emerald, amber, rose, indigo)
+        {
+            pattern: /(bg|text|border)-(sky|emerald|amber|rose|indigo)-(300|400|500)(\/(5|10|15|20|30))?/,
+        },
+    ],
     theme: {
         extend: {
             borderRadius: {

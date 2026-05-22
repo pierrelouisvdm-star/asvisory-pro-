@@ -44,6 +44,8 @@ import EmailGenerator from "@/pages/EmailGenerator";
 import ComplianceNotes from "@/pages/ComplianceNotes";
 import PortfolioReview from "@/pages/PortfolioReview";
 import Client360 from "@/pages/Client360";
+import { ClientsPage } from "@/pages/ClientsPage";
+import { ClientProfilePage } from "@/pages/ClientProfilePage";
 import RoleSelectionModal from "@/components/RoleSelectionModal";
 import { RoleGate } from "@/components/RoleGate";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
@@ -168,6 +170,8 @@ function App() {
                   <Route path="/email-generator" element={<ProtectedRoute><RoleGate role="advisor"><GatedCalculator path="/email-generator"><EmailGenerator /></GatedCalculator></RoleGate></ProtectedRoute>} />
                   <Route path="/compliance-notes" element={<ProtectedRoute><RoleGate role="advisor"><GatedCalculator path="/compliance-notes"><ComplianceNotes /></GatedCalculator></RoleGate></ProtectedRoute>} />
                   <Route path="/portfolio-review" element={<ProtectedRoute><RoleGate role="advisor"><GatedCalculator path="/portfolio-review"><PortfolioReview /></GatedCalculator></RoleGate></ProtectedRoute>} />
+                  <Route path="/clients" element={<ProtectedRoute><RoleGate role="advisor"><ClientsPage /></RoleGate></ProtectedRoute>} />
+                  <Route path="/clients/:clientId" element={<ProtectedRoute><RoleGate role="advisor"><ClientProfilePage /></RoleGate></ProtectedRoute>} />
                   <Route path="/clients/:clientId/360" element={<ProtectedRoute><RoleGate role="advisor"><Client360 /></RoleGate></ProtectedRoute>} />
                   
                   {/* Legal Pages - Public */}
