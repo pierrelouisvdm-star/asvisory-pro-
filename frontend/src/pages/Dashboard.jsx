@@ -175,17 +175,6 @@ const retirementCalculators = [
 
 const personalFinanceTools = [
   {
-    id: 'report-builder',
-    title: 'AI Client Report Builder',
-    description: 'Generate branded client-ready PDF reports in seconds with GPT-4o',
-    icon: Sparkles,
-    path: '/report-builder',
-    features: ['Branded PDFs', 'GPT-4o Powered', 'Save Hours'],
-    isFree: false,
-    isNew: true,
-    isFeatured: true,
-  },
-  {
     id: 'tax-planning',
     title: 'Tax Planning Hub',
     description: 'Complete tax suite: Income tax, CGT, medical credits & more',
@@ -273,6 +262,20 @@ const planningTools = [
     path: '/education-savings',
     features: ['Cost Projection', 'Inflation', 'Funding Gap'],
     isFree: false,
+  },
+];
+
+const advisorTools = [
+  {
+    id: 'report-builder',
+    title: 'AI Client Report Builder',
+    description: 'Generate branded client-ready PDF reports in seconds with GPT-4o',
+    icon: Sparkles,
+    path: '/report-builder',
+    features: ['Branded PDFs', 'GPT-4o Powered', 'Save Hours'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
   },
 ];
 
@@ -422,7 +425,8 @@ const SectionHeader = ({ badge, title, description, icon: Icon }) => (
 );
 
 export const Dashboard = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const isAdvisor = user?.role === 'advisor' || user?.is_admin;
   
   return (
     <div className="min-h-screen bg-background" data-testid="dashboard">
@@ -560,6 +564,25 @@ export const Dashboard = () => {
           ))}
         </div>
       </section>
+
+      {/* Advisor Workflow Section - visible only to advisors */}
+      {isAdvisor && (
+        <section className="bg-gradient-to-b from-emerald-950/20 to-background py-16 border-y border-emerald-500/20" data-testid="advisor-workflow-section">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionHeader
+              badge="Advisor Workflow"
+              title="AI Copilot for Your Practice"
+              description="Built for financial advisors — generate branded client reports, manage your book, and automate admin work."
+              icon={Sparkles}
+            />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {advisorTools.map((calc, index) => (
+                <CalculatorCard key={calc.id} calc={calc} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Debt Calculators Section */}
       <section className="bg-muted/50 py-16">

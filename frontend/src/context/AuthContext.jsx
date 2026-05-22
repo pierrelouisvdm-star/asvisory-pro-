@@ -48,13 +48,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (email, password, fullName, company) => {
+  const register = async (email, password, fullName, company, role = null) => {
     try {
       const { data } = await axios.post(`${API_URL}/api/auth/register`, {
         email,
         password,
         full_name: fullName,
-        company
+        company,
+        role,
       });
       
       setToken(data.access_token);
@@ -65,6 +66,17 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       throw new Error(error.response?.data?.detail || 'Registration failed');
     }
+  };
+
+  const setRole = async (role) => {
+    const { data } = await axios.post(
+      `${API_URL}/api/auth/set-role`,
+      { role },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    setUser(data);
+    localStorage.setItem('advisorypro_user', JSON.stringify(data));
+    return data;
   };
 
   const logout = () => {
@@ -79,8 +91,13 @@ export const AuthProvider = ({ children }) => {
     token,
     loading,
     isAuthenticated: !!token && !!user,
+    role: user?.role || null,
+    needsRoleSelection: !!user && !user.role && !user.is_admin ? true : (!!user && !user.role),
+    isAdvisor: user?.role === 'advisor',
+    isIndividual: user?.role === 'individual',
     login,
     register,
+    setRole,
     logout,
   };
 

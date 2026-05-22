@@ -8,6 +8,7 @@ class UserBase(BaseModel):
     email: EmailStr
     full_name: str
     company: Optional[str] = None
+    role: Optional[str] = None  # "individual" | "advisor" | None (not yet selected)
 
 
 class UserCreate(UserBase):

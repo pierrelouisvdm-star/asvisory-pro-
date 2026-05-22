@@ -67,6 +67,7 @@ export const AuthPage = () => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerName, setRegisterName] = useState('');
   const [registerCompany, setRegisterCompany] = useState('');
+  const [registerRole, setRegisterRole] = useState(null); // 'individual' | 'advisor'
 
   // Coupon state
   const [couponCode, setCouponCode] = useState('');
@@ -91,11 +92,16 @@ export const AuthPage = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (!registerRole) {
+      setError('Please choose Individual or Financial Advisor');
+      toast.error('Please choose Individual or Financial Advisor');
+      return;
+    }
     setIsLoading(true);
     setError('');
 
     try {
-      const registerData = await register(registerEmail, registerPassword, registerName, registerCompany);
+      const registerData = await register(registerEmail, registerPassword, registerName, registerCompany, registerRole);
       toast.success('Account created! Welcome to Financial Advisory Pro.');
       
       // If coupon was validated, try to redeem it after registration
@@ -270,6 +276,45 @@ export const AuthPage = () => {
                   {/* Register Tab */}
                   <TabsContent value="register">
                     <form onSubmit={handleRegister} className="space-y-4">
+                      {/* Role Picker - locked in once chosen */}
+                      <div className="space-y-2">
+                        <Label>I am a... <span className="text-destructive">*</span></Label>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            data-testid="register-role-individual"
+                            onClick={() => setRegisterRole('individual')}
+                            className={`p-3 rounded-md border-2 text-left transition-all ${
+                              registerRole === 'individual'
+                                ? 'border-emerald-500 bg-emerald-500/10'
+                                : 'border-border bg-muted/30 hover:border-emerald-500/50'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 mb-1">
+                              <User className="h-4 w-4 text-emerald-500" />
+                              <span className="font-medium text-foreground text-sm">Individual</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">Manage my own money</p>
+                          </button>
+                          <button
+                            type="button"
+                            data-testid="register-role-advisor"
+                            onClick={() => setRegisterRole('advisor')}
+                            className={`p-3 rounded-md border-2 text-left transition-all ${
+                              registerRole === 'advisor'
+                                ? 'border-emerald-500 bg-emerald-500/10'
+                                : 'border-border bg-muted/30 hover:border-emerald-500/50'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 mb-1">
+                              <Building2 className="h-4 w-4 text-emerald-500" />
+                              <span className="font-medium text-foreground text-sm">Financial Advisor</span>
+                            </div>
+                            <p className="text-xs text-muted-foreground">AI copilot for my practice</p>
+                          </button>
+                        </div>
+                      </div>
+
                       <div className="space-y-2">
                         <Label htmlFor="register-name">Full Name</Label>
                         <div className="relative">

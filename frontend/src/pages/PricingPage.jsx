@@ -32,9 +32,15 @@ const PAYFAST_CONFIG = {
   sandboxMode: true, // Set to false in production
 };
 
-const PREMIUM_PRICE = 299;
-const ANNUAL_PRICE = 1499;
-const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1499 vs R3588 = R2089 savings
+const INDIVIDUAL_MONTHLY = 299;
+const INDIVIDUAL_ANNUAL = 1499;
+const ADVISOR_MONTHLY = 999;
+const ADVISOR_ANNUAL = 6999;
+
+// Backwards-compat constants used elsewhere in the file
+const PREMIUM_PRICE = INDIVIDUAL_MONTHLY;
+const ANNUAL_PRICE = INDIVIDUAL_ANNUAL;
+const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE;
 
 export const PricingPage = () => {
   const navigate = useNavigate();
@@ -43,6 +49,14 @@ export const PricingPage = () => {
   
   // Billing period toggle
   const [billingPeriod, setBillingPeriod] = useState('annual'); // 'monthly' or 'annual'
+
+  // Role toggle - auto-picked from logged-in user, otherwise defaults to individual
+  const [pricingRole, setPricingRole] = useState(user?.role === 'advisor' ? 'advisor' : 'individual');
+
+  // Derive prices based on selected role
+  const monthlyPrice = pricingRole === 'advisor' ? ADVISOR_MONTHLY : INDIVIDUAL_MONTHLY;
+  const annualPrice = pricingRole === 'advisor' ? ADVISOR_ANNUAL : INDIVIDUAL_ANNUAL;
+  const annualSavings = (monthlyPrice * 12) - annualPrice;
   
   // Coupon state
   const [couponCode, setCouponCode] = useState('');
@@ -85,7 +99,8 @@ export const PricingPage = () => {
     setPaymentLoading(true);
     
     const isAnnual = billingPeriod === 'annual';
-    const paymentAmount = isAnnual ? ANNUAL_PRICE : PREMIUM_PRICE;
+    const paymentAmount = isAnnual ? annualPrice : monthlyPrice;
+    const planLabel = pricingRole === 'advisor' ? 'Advisor' : 'Premium';
 
     // Build PayFast payment form
     const apiUrl = typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
@@ -100,8 +115,8 @@ export const PricingPage = () => {
       email_address: user?.email || '',
       m_payment_id: `AP-${Date.now()}`,
       amount: paymentAmount.toFixed(2),
-      item_name: isAnnual ? 'Financial Advisory Pro Premium Annual' : 'Financial Advisory Pro Premium Monthly',
-      item_description: isAnnual ? 'Annual premium subscription' : 'Monthly premium subscription',
+      item_name: isAnnual ? `Financial Advisory Pro ${planLabel} Annual` : `Financial Advisory Pro ${planLabel} Monthly`,
+      item_description: isAnnual ? `Annual ${planLabel.toLowerCase()} subscription` : `Monthly ${planLabel.toLowerCase()} subscription`,
       subscription_type: '1', // 1 = subscription
       billing_date: new Date().getDate().toString(),
       recurring_amount: paymentAmount.toFixed(2),
@@ -149,6 +164,34 @@ export const PricingPage = () => {
           </p>
         </div>
 
+        {/* Role Toggle */}
+        <div className="flex items-center justify-center gap-2 mb-4" data-testid="pricing-role-toggle">
+          <button
+            data-testid="pricing-role-individual"
+            onClick={() => setPricingRole('individual')}
+            disabled={user?.role === 'advisor'}
+            className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
+              pricingRole === 'individual'
+                ? 'bg-emerald-600 text-white'
+                : 'bg-slate-800 text-slate-400 hover:text-white'
+            } ${user?.role === 'advisor' ? 'opacity-40 cursor-not-allowed' : ''}`}
+          >
+            For Individuals
+          </button>
+          <button
+            data-testid="pricing-role-advisor"
+            onClick={() => setPricingRole('advisor')}
+            disabled={user?.role === 'individual'}
+            className={`px-5 py-2 rounded-lg text-sm font-medium transition-colors ${
+              pricingRole === 'advisor'
+                ? 'bg-indigo-600 text-white'
+                : 'bg-slate-800 text-slate-400 hover:text-white'
+            } ${user?.role === 'individual' ? 'opacity-40 cursor-not-allowed' : ''}`}
+          >
+            For Advisors
+          </button>
+        </div>
+
         {/* Billing Toggle */}
         <div className="flex items-center justify-center gap-4 mb-8">
           <button
@@ -171,7 +214,7 @@ export const PricingPage = () => {
           >
             Annual
             <span className="absolute -top-2 -right-2 bg-amber-500 text-xs text-black px-1.5 py-0.5 rounded-full font-bold">
-              Save R{ANNUAL_SAVINGS}
+              Save R{annualSavings}
             </span>
           </button>
         </div>
@@ -233,20 +276,22 @@ export const PricingPage = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/30 mx-auto mb-4">
                 <Crown className="h-8 w-8 text-emerald-600" />
               </div>
-              <CardTitle className="text-2xl text-white">Premium Plan</CardTitle>
+              <CardTitle className="text-2xl text-white" data-testid="pricing-premium-title">
+                {pricingRole === 'advisor' ? 'Advisor Plan' : 'Premium Plan'}
+              </CardTitle>
               <div className="mt-4">
                 {billingPeriod === 'annual' ? (
                   <>
-                    <span className="text-5xl font-bold text-white">R{ANNUAL_PRICE}</span>
+                    <span className="text-5xl font-bold text-white" data-testid="pricing-price">R{annualPrice.toLocaleString()}</span>
                     <span className="text-slate-400 ml-2">/year</span>
                     <p className="text-emerald-400 text-sm mt-2">
-                      Only R{Math.round(ANNUAL_PRICE / 12)}/month • Save R{ANNUAL_SAVINGS}
+                      Only R{Math.round(annualPrice / 12).toLocaleString()}/month • Save R{annualSavings.toLocaleString()}
                     </p>
                     <p className="text-slate-500 text-xs mt-1">7-day refund policy</p>
                   </>
                 ) : (
                   <>
-                    <span className="text-5xl font-bold text-white">R{PREMIUM_PRICE}</span>
+                    <span className="text-5xl font-bold text-white" data-testid="pricing-price">R{monthlyPrice.toLocaleString()}</span>
                     <span className="text-slate-400 ml-2">/month</span>
                     <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
                   </>

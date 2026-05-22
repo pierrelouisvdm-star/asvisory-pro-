@@ -261,9 +261,8 @@ export const LandingPage = () => {
             </h2>
             
             <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Plan, track and optimise your finances with powerful tools built for real-world decisions. 
-              <span className="text-white font-medium"> 20+ professional calculators</span>, 
-              Tax Planning Hub, Income Tracker, and instant PDF reports — all localized for SA regulations.
+              Whether you're managing your own money or running an advisory practice — we've built the tools (and the AI copilot) to do it better. 
+              <span className="text-white font-medium"> Localized for SA regulations.</span>
             </p>
 
             {/* Stats Row */}
@@ -275,29 +274,59 @@ export const LandingPage = () => {
                 </div>
               ))}
             </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/auth">
-                <Button size="lg" className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-lg px-8 shadow-lg shadow-indigo-500/25 h-14 group">
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
+
+            {/* Dual Role CTAs */}
+            <div className="grid sm:grid-cols-2 gap-4 max-w-3xl w-full mb-6">
+              <Link to="/auth" className="group" data-testid="hero-cta-individual">
+                <div className="h-full p-6 rounded-2xl border-2 border-slate-700 bg-slate-900/40 hover:border-emerald-500 hover:bg-emerald-500/5 transition-all text-left">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-400">
+                      <Target className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-white">For Individuals</div>
+                      <div className="text-xs text-emerald-400 font-medium">R299/mo · R1,499/yr</div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-400 mb-3">
+                    AI-powered tools to manage your money, plan retirement, optimise tax and grow wealth.
+                  </p>
+                  <div className="inline-flex items-center text-sm text-emerald-400 font-medium group-hover:translate-x-1 transition-transform">
+                    Start managing my money <ArrowRight className="ml-2 h-4 w-4" />
+                  </div>
+                </div>
               </Link>
-              <a href="#diagnostic">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-amber-400/50 text-amber-300 hover:bg-amber-500/10 h-14 group">
-                  <Target className="mr-2 h-5 w-5" />
-                  Take Free Diagnostic
-                </Button>
-              </a>
+
+              <Link to="/auth" className="group" data-testid="hero-cta-advisor">
+                <div className="h-full p-6 rounded-2xl border-2 border-indigo-500/40 bg-gradient-to-br from-indigo-900/30 to-slate-900/40 hover:border-indigo-400 transition-all text-left">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-500/20 text-indigo-300">
+                      <Sparkles className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <div className="text-lg font-bold text-white">For Financial Advisors</div>
+                      <div className="text-xs text-indigo-300 font-medium">R999/mo · R6,999/yr</div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-slate-400 mb-3">
+                    AI Copilot for your practice: branded client reports, CRM, compliance notes, and admin automation.
+                  </p>
+                  <div className="inline-flex items-center text-sm text-indigo-300 font-medium group-hover:translate-x-1 transition-transform">
+                    Run my practice smarter <ArrowRight className="ml-2 h-4 w-4" />
+                  </div>
+                </div>
+              </Link>
             </div>
-            
-            <p className="mt-4 text-sm text-slate-500">
-              R299/month (cancel anytime) or{' '}
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold">
-                <Sparkles className="h-3.5 w-3.5" />
-                R1,499/year — Save R2,089!
-              </span>
-              {' '}(7-day refund policy)
+
+            <a href="#diagnostic">
+              <Button size="lg" variant="outline" className="text-base px-6 border-amber-400/50 text-amber-300 hover:bg-amber-500/10 h-12 group">
+                <Target className="mr-2 h-5 w-5" />
+                Or take the free diagnostic first
+              </Button>
+            </a>
+
+            <p className="mt-4 text-xs text-slate-500">
+              7-day refund policy · Cancel anytime
             </p>
           </div>
         </div>

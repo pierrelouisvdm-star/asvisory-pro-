@@ -1,0 +1,44 @@
+{
+  "summary": "End-to-end testing of the Individual/Advisor workspace split: backend role endpoints (register, /me, /set-role, login) and frontend role picker, RoleGate, RoleSelectionModal, dual hero CTAs, dashboard advisor-workflow gating, and pricing role toggle. All 11 backend pytest cases passed. Frontend critical role flows passed; one minor pricing UX bug found.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "PricingPage",
+        "issue": "For an authenticated ADVISOR user, the pricing role toggle initializes to 'For Individuals' (showing R1,499/yr instead of R6,999/yr). Caused by useState lazy init in line 54 — when AuthContext loads user AFTER first render, pricingRole stays at default 'individual'. Advisor button is correctly clickable to switch, but the default selection is wrong. Add a useEffect to sync pricingRole with user?.role.",
+        "selector": "[data-testid='pricing-role-individual'] / [data-testid='pricing-role-advisor']",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_role_workspace.py",
+    "/app/test_reports/pytest/pytest_role_workspace.xml"
+  ],
+  "action_items": [
+    "PricingPage.jsx: sync pricingRole with user?.role via useEffect so advisor users see advisor pricing by default on mount (currently defaults to 'individual' when user loads asynchronously). Snippet: useEffect(() => { if (user?.role === 'advisor') setPricingRole('advisor'); }, [user?.role]);"
+  ],
+  "critical_code_review_comments": [
+    "PricingPage.jsx (line 54): useState lazy init reads user?.role only on first render. Because AuthContext can hydrate user after mount, advisor users land on individual pricing by default. This is a clear UX bug for the new workspace split.",
+    "auth.py /set-role (line 199): validates role on the request body but does not call `lower()`/`strip()`. Acceptable since the modal/picker only send canonical values, but consider normalising for robustness.",
+    "RoleSelectionModal: works as designed — modal is non-dismissible (no overlay close, no ESC), choice locked in via /set-role. Good UX safeguard."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_role_workspace.py"
+  ],
+  "success_rate": {
+    "backend": "100% (11/11 pytest)",
+    "frontend": "~93% (1 minor UX bug on PricingPage default for advisors; all role-gating, modal, hero CTAs, register picker, dashboard advisor section confirmed working)"
+  },
+  "test_credentials": "Admin: pierrelouisvdm@gmail.com / Scorpio@57!! (now role=advisor, locked). Tests created fresh TEST_-prefixed users via the API.",
+  "seed_data_creation": "Several throwaway TEST_-prefixed users (e.g. TEST_ind_*, TEST_adv_*, TEST_modal_*) created via /api/auth/register for role flow testing. No production data touched.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend role endpoints fully covered in /app/backend/tests/test_role_workspace.py (11 cases — register w/role, register w/o role, /me with/without role, /set-role valid/invalid/duplicate/unauth, login returns role). Frontend confirmed: dual hero CTAs (hero-cta-individual/advisor) with correct prices, register-role-individual/advisor toggles enforce role at register time, error toast when no role chosen, RoleGate blocks individuals from /report-builder with role-gate-blocker, RoleSelectionModal appears for no-role users and persists choice via /set-role. Note: /report-builder is wrapped by GatedCalculator (premium gate) ON TOP OF RoleGate, so a fresh advisor without premium will hit the premium gate first (NOT a bug; matches design).",
+  "rca of the issue": "PricingPage advisor-default bug RCA: useState(user?.role === 'advisor' ? 'advisor' : 'individual') runs once on first render. AuthContext fetches /api/auth/me asynchronously after mount, so on the initial render user is null/undefined and pricingRole resolves to 'individual'. The component never re-syncs. Fix: add useEffect(() => { if (user?.role) setPricingRole(user.role === 'advisor' ? 'advisor' : 'individual'); }, [user?.role]). Reproduction: register a fresh advisor → navigate to /pricing → observe 'For Individuals' tab is highlighted and price is R1,499/yr instead of R6,999/yr."
+}

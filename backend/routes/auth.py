@@ -95,11 +95,13 @@ async def register(user_data: UserCreate):
     is_admin = admin_email and user_data.email.lower() == admin_email
     
     # Create user
+    role = user_data.role if user_data.role in ("individual", "advisor") else None
     user = User(
         email=user_data.email,
         full_name=user_data.full_name,
         company=user_data.company,
-        is_admin=is_admin
+        is_admin=is_admin,
+        role=role,
     )
     
     # Hash password and store
@@ -155,7 +157,8 @@ async def login(credentials: UserLogin):
         full_name=user_doc.get("full_name"),
         company=user_doc.get("company"),
         is_active=user_doc.get("is_active", True),
-        is_admin=user_doc.get("is_admin", False)
+        is_admin=user_doc.get("is_admin", False),
+        role=user_doc.get("role"),
     )
     
     # Create access token - 30 days if remember_me, else 7 days
@@ -180,6 +183,36 @@ async def get_current_user_profile(current_user: dict = Depends(get_current_user
             detail="User not found"
         )
     
+    return User(**user_doc)
+
+
+class SetRoleRequest(BaseModel):
+    role: str  # "individual" or "advisor"
+
+
+@router.post("/set-role", response_model=User)
+async def set_role(
+    body: SetRoleRequest,
+    current_user: dict = Depends(get_current_user),
+):
+    """Lock in the user's role (one-time). Only allowed if role is not already set."""
+    if body.role not in ("individual", "advisor"):
+        raise HTTPException(status_code=400, detail="Role must be 'individual' or 'advisor'")
+
+    user_doc = await db.users.find_one({"id": current_user["id"]}, {"_id": 0})
+    if not user_doc:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user_doc.get("role") in ("individual", "advisor"):
+        raise HTTPException(status_code=400, detail="Role is already set and cannot be changed.")
+
+    await db.users.update_one(
+        {"id": current_user["id"]},
+        {"$set": {"role": body.role, "updated_at": datetime.now(timezone.utc).isoformat()}},
+    )
+
+    user_doc["role"] = body.role
+    user_doc.pop("hashed_password", None)
     return User(**user_doc)
 
 
