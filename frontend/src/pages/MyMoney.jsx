@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import {
   Wallet, PiggyBank, TrendingUp, Target, Loader2, Plus, X, Save,
-  ArrowRight, Sparkles, Home, Briefcase, Coins, Heart, AlertCircle
+  ArrowRight, Sparkles, Home, Briefcase, Coins, Heart, AlertCircle,
+  Mail, Send
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
@@ -48,6 +49,8 @@ export const MyMoney = () => {
   const [dash, setDash] = useState(null);
   const [profile, setProfile] = useState(null);
   const [history, setHistory] = useState([]);
+  const [digestPreview, setDigestPreview] = useState(null);
+  const [digestBusy, setDigestBusy] = useState(false);
 
   const authHeaders = { headers: { Authorization: `Bearer ${token}` } };
 
@@ -101,6 +104,30 @@ export const MyMoney = () => {
   const addLiability = () => setProfile((p) => ({ ...p, liabilities: [...p.liabilities, { name: '', balance: 0 }] }));
   const updateLiability = (i, key, val) => setProfile((p) => ({ ...p, liabilities: p.liabilities.map((a, idx) => idx === i ? { ...a, [key]: val } : a) }));
   const removeLiability = (i) => setProfile((p) => ({ ...p, liabilities: p.liabilities.filter((_, idx) => idx !== i) }));
+
+  const previewDigest = async () => {
+    setDigestBusy(true);
+    try {
+      const res = await axios.get(`${API_URL}/api/me/digest/preview`, authHeaders);
+      setDigestPreview(res.data);
+    } catch (e) {
+      toast.error(e.response?.data?.detail || 'Could not preview');
+    } finally {
+      setDigestBusy(false);
+    }
+  };
+
+  const sendDigest = async () => {
+    setDigestBusy(true);
+    try {
+      const res = await axios.post(`${API_URL}/api/me/digest/send`, {}, authHeaders);
+      toast.success(`Sent to ${res.data.sent_to}`);
+    } catch (e) {
+      toast.error(e.response?.data?.detail || 'Could not send');
+    } finally {
+      setDigestBusy(false);
+    }
+  };
 
   if (loading || !dash || !profile) {
     return (
@@ -300,6 +327,56 @@ export const MyMoney = () => {
             </CardContent>
           </Card>
         )}
+
+        {/* Monthly Money Update — preview + email */}
+        <Card className="bg-gradient-to-br from-amber-950/30 to-navy-900 border-amber-500/30" data-testid="money-digest-card">
+          <CardHeader>
+            <CardTitle className="text-white text-base flex items-center gap-2">
+              <Mail className="h-5 w-5 text-amber-400" /> Monthly Money Update
+            </CardTitle>
+            <p className="text-sm text-slate-400">
+              Get a personalised digest of this month vs last with one AI-recommended action.
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2 mb-4">
+              <Button
+                onClick={previewDigest}
+                disabled={digestBusy}
+                variant="outline"
+                data-testid="digest-preview-btn"
+                className="border-amber-500/40 text-amber-200 hover:bg-amber-500/10"
+              >
+                {digestBusy ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Sparkles className="h-4 w-4 mr-2" />}
+                Preview
+              </Button>
+              <Button
+                onClick={sendDigest}
+                disabled={digestBusy}
+                data-testid="digest-send-btn"
+                className="bg-amber-500 hover:bg-amber-400 text-navy-950"
+              >
+                {digestBusy ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
+                Email it to me
+              </Button>
+            </div>
+            {digestPreview && (
+              <div data-testid="digest-preview">
+                <div className="p-4 rounded-md bg-navy-800/60 border border-amber-500/30 mb-3">
+                  <div className="text-xs uppercase tracking-wide text-amber-300 mb-1">Your focus this month</div>
+                  <p className="text-white leading-relaxed">{digestPreview.recommendation}</p>
+                </div>
+                <details className="text-xs text-slate-400">
+                  <summary className="cursor-pointer hover:text-slate-200">View full HTML preview</summary>
+                  <div
+                    className="mt-2 rounded border border-navy-700 overflow-hidden"
+                    dangerouslySetInnerHTML={{ __html: digestPreview.html }}
+                  />
+                </details>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Editable profile */}
         <Card className="bg-navy-900/60 border-navy-700">
