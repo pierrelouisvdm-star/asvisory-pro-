@@ -42,9 +42,10 @@ import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 
 export const ClientsPage = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, token } = useAuth();
   const navigate = useNavigate();
   const [clients, setClients] = useState([]);
+  const [suggestions, setSuggestions] = useState({}); // { client_id: [...] }
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -73,6 +74,23 @@ export const ClientsPage = () => {
     try {
       const data = await clientsApi.getAll();
       setClients(data);
+      // Fetch smart suggestions for all clients (non-blocking on failure)
+      if (token) {
+        try {
+          const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+            ? window.location.origin
+            : process.env.REACT_APP_BACKEND_URL;
+          const res = await fetch(`${API_URL}/api/smart-suggestions/all`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res.ok) {
+            const body = await res.json();
+            setSuggestions(body.suggestions || {});
+          }
+        } catch (_) {
+          // Silently ignore — suggestions are a nice-to-have
+        }
+      }
     } catch (error) {
       toast.error('Failed to load clients');
     } finally {
@@ -345,6 +363,28 @@ export const ClientsPage = () => {
                             </Badge>
                           )}
                         </div>
+                        {/* Smart Suggestions badges */}
+                        {Array.isArray(suggestions[client.id]) && suggestions[client.id].length > 0 && (
+                          <div className="flex flex-wrap gap-1.5 mt-2" data-testid={`suggestions-${client.id}`}>
+                            {suggestions[client.id].slice(0, 3).map((s, i) => (
+                              <Badge
+                                key={i}
+                                title={s.detail}
+                                className={
+                                  s.priority === 'high'
+                                    ? 'bg-red-500/15 text-red-300 border-red-500/30'
+                                    : s.priority === 'medium'
+                                    ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                                    : s.kind === 'all_good'
+                                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                                    : 'bg-slate-500/15 text-slate-300 border-slate-500/30'
+                                }
+                              >
+                                {s.kind === 'all_good' ? '✓ ' : '⚠ '}{s.label}
+                              </Badge>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
 

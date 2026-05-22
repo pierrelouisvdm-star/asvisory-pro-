@@ -346,6 +346,29 @@ export const PricingPage = () => {
           );
         })()}
 
+        {/* Firms / Enterprise — contact panel */}
+        <Card className="bg-gradient-to-br from-indigo-950/40 to-navy-900 border-indigo-500/30 mb-8" data-testid="enterprise-panel">
+          <CardContent className="p-6 flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-start gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/20 text-indigo-300">
+                <Users className="h-6 w-6" />
+              </div>
+              <div>
+                <div className="text-lg font-semibold text-white">Are you a financial advisory firm or brokerage?</div>
+                <p className="text-sm text-slate-300 mt-1 max-w-2xl">
+                  We offer custom licensing and white-labeling for multi-advisor firms — your logo, your branding, your domain. Get in touch and we'll tailor a plan to your practice.
+                </p>
+              </div>
+            </div>
+            <a href="mailto:pierrelouisvdm@gmail.com?subject=Firm%20Licensing%20Enquiry" data-testid="enterprise-contact-btn">
+              <Button className="bg-indigo-500 hover:bg-indigo-400 text-white">
+                <Mail className="h-4 w-4 mr-2" />
+                Contact us
+              </Button>
+            </a>
+          </CardContent>
+        </Card>
+
         {/* Coupon Section */}
         <Card className="border-dashed border-2 border-emerald-500/30 bg-emerald-950/20 max-w-md mx-auto">
           <CardContent className="pt-6 pb-6">

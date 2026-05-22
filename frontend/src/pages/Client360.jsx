@@ -32,6 +32,7 @@ export const Client360 = () => {
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -39,10 +40,12 @@ export const Client360 = () => {
     (async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`${API_URL}/api/client-360/${clientId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setData(res.data);
+        const [main, sug] = await Promise.all([
+          axios.get(`${API_URL}/api/client-360/${clientId}`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_URL}/api/smart-suggestions/client/${clientId}`, { headers: { Authorization: `Bearer ${token}` } }).catch(() => ({ data: { suggestions: [] } })),
+        ]);
+        setData(main.data);
+        setSuggestions(sug.data.suggestions || []);
       } catch (e) {
         setError(e.response?.data?.detail || 'Failed to load client');
       } finally {
@@ -162,6 +165,50 @@ export const Client360 = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Smart Suggestions panel */}
+        {suggestions.length > 0 && suggestions[0]?.kind !== 'all_good' && (
+          <Card className="bg-navy-900/60 border-amber-500/30" data-testid="suggestions-panel">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-white flex items-center gap-2 text-base">
+                <Sparkles className="h-5 w-5 text-amber-400" /> Suggested next actions
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {suggestions.map((s, i) => (
+                  <div
+                    key={i}
+                    data-testid={`suggestion-${i}`}
+                    className={`flex items-start gap-3 p-3 rounded-md border ${
+                      s.priority === 'high'
+                        ? 'bg-red-500/10 border-red-500/30'
+                        : s.priority === 'medium'
+                        ? 'bg-amber-500/10 border-amber-500/30'
+                        : 'bg-slate-700/30 border-slate-600/30'
+                    }`}
+                  >
+                    <Badge
+                      className={
+                        s.priority === 'high'
+                          ? 'bg-red-500/20 text-red-300 border-red-500/30'
+                          : s.priority === 'medium'
+                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                          : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
+                      }
+                    >
+                      {s.priority.toUpperCase()}
+                    </Badge>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-white">{s.label}</div>
+                      {s.detail && <div className="text-xs text-slate-400 mt-0.5">{s.detail}</div>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Stats row */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3" data-testid="client-360-stats">
