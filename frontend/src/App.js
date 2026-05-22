@@ -39,6 +39,7 @@ import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
 import TFSACalculator from "@/pages/TFSACalculator";
 import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
 import MarketInsights from "@/pages/MarketInsights";
+import ReportBuilder from "@/pages/ReportBuilder";
 import { RequestPasswordResetPage } from "@/pages/RequestPasswordResetPage";
 import { ResetPasswordPage } from "@/pages/ResetPasswordPage";
 import { TermsOfServicePage } from "@/pages/TermsOfServicePage";
@@ -156,6 +157,7 @@ function App() {
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
                   <Route path="/market-insights" element={<ProtectedRoute><MarketInsights /></ProtectedRoute>} />
+                  <Route path="/report-builder" element={<ProtectedRoute><GatedCalculator path="/report-builder"><ReportBuilder /></GatedCalculator></ProtectedRoute>} />
                   
                   {/* Legal Pages - Public */}
                   <Route path="/terms" element={<TermsOfServicePage />} />

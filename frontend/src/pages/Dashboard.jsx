@@ -175,6 +175,17 @@ const retirementCalculators = [
 
 const personalFinanceTools = [
   {
+    id: 'report-builder',
+    title: 'AI Client Report Builder',
+    description: 'Generate branded client-ready PDF reports in seconds with GPT-4o',
+    icon: Sparkles,
+    path: '/report-builder',
+    features: ['Branded PDFs', 'GPT-4o Powered', 'Save Hours'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
+  {
     id: 'tax-planning',
     title: 'Tax Planning Hub',
     description: 'Complete tax suite: Income tax, CGT, medical credits & more',
