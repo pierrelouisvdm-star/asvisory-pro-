@@ -288,6 +288,17 @@ const advisorTools = [
     isNew: true,
     isFeatured: true,
   },
+  {
+    id: 'compliance-notes',
+    title: 'AI Compliance & Advisor Notes',
+    description: 'FAIS-aligned Records of Advice, meeting notes, risk profiles & product comparisons',
+    icon: ShieldAlert,
+    path: '/compliance-notes',
+    features: ['FAIS-Aligned', 'GPT-4o', 'Audit-Ready'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
 ];
 
 const features = [
