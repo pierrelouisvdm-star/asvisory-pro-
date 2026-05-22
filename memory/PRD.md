@@ -112,9 +112,10 @@
 ## Future Roadmap
 
 ### Recently Completed (Feb 2026)
-- [x] **Client 360** — `/clients/:id/360` advisor-only hub with 5 stat tiles + Smart Actions + 6 tabs. New backend `GET /api/client-360/{id}` aggregates docs/reports/emails/compliance/portfolio_reviews. EmailGenerator, ComplianceNotes, PortfolioReview, ReportBuilder updated to read `?client_id=` from URL. ClientsPage gets green "360 View" button. Verified 6/6 backend + frontend. Side-fixes: registered missing `/clients` and `/clients/:id` routes, added Tailwind safelist.
-- [x] **Multi-Document Portfolio Review** — `/portfolio-review`. Aggregates docs into one view with fee audit + diversification.
-- [x] **AI Compliance & Advisor Notes** — `/compliance-notes`. 6 FAIS-aligned record types.
+- [x] **My Money (Individual dashboard)** — `/my-money` (Individual-only). Personal financial profile + computed dashboard: retirement readiness hero, top metrics, TFSA/RA progress bars (SA 2026/27 limits: R36k/R500k TFSA, 27.5%/R350k RA), net worth allocation pie chart, assets/liabilities CRUD, sticky save. Backend `/api/me/financial/{profile,dashboard}` with user isolation. Dashboard adds "Your Money" section for individuals. Verified 8/8 backend + frontend.
+- [x] **Client 360** — `/clients/:id/360` advisor hub with stats + Smart Actions + 6 tabs. Side-fixes registered `/clients` route, added Tailwind safelist.
+- [x] **Multi-Document Portfolio Review** — `/portfolio-review`.
+- [x] **AI Compliance & Advisor Notes** — `/compliance-notes`.
 - [x] **Pricing redesigned** — 3-tier side-by-side comparison.
 - [x] **AI Email & Communication Generator** (Feature #3) — `/email-generator`. 8 templates × 4 tones.
 - [x] **Individual vs Financial Advisor workspace split** — role chosen at signup (locked in), dashboard renders advisor-only sections.

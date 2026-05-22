@@ -125,7 +125,7 @@ async def my_money_dashboard(current_user: dict = Depends(get_current_user)):
         expected_now = target_nw * progress_ratio
         if expected_now > 0:
             ratio = net_worth / expected_now
-            readiness_pct = round(min(ratio * 100, 999), 0)
+            readiness_pct = round(min(max(ratio * 100, 0), 999), 0)
             if ratio >= 1.0:
                 readiness_label = "On Track"
             elif ratio >= 0.7:
