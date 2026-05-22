@@ -4,7 +4,7 @@ Pulls from clients, document_analyses, client_reports, advisor_emails,
 compliance_records, and portfolio_reviews collections in a single call.
 """
 from fastapi import APIRouter, HTTPException, Depends
-from utils.auth import get_current_user
+from utils.auth import require_advisor as get_current_user
 from server import db
 
 router = APIRouter(prefix="/client-360", tags=["Client360"])

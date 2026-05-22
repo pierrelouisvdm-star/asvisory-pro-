@@ -1,0 +1,29 @@
+{
+  "summary": "Server-side advisor-only enforcement verified end-to-end. 31/31 pytest cases PASS in new /app/backend/tests/test_role_enforcement.py. Covered all 7 advisor GET endpoints (clients, reports, emails, compliance, portfolio-review, smart-suggestions/all, client-360/{id}), all 5 advisor POST endpoints (POST /clients, /reports/generate, /emails/generate, /compliance/generate, /portfolio-review/generate), 4 shared endpoints (documents/analyses, me/financial/profile|dashboard|history), unauthenticated requests, and a freshly-registered no-role user. Individual → 403 with exact detail 'This endpoint is for financial advisors only.'; Advisor → 200; missing token → 401/403 (and detail is NEVER the advisor-only one, proving the dependency ordering is right — auth check fires before role check). Shared endpoints continue to return 200 for individuals — no regression.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_role_enforcement.py",
+    "/app/test_reports/pytest/pytest_role_enforcement.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "require_advisor in /app/backend/utils/auth.py:106-118 — clean implementation: admin bypass first, then role=='advisor', else 403 with the exact spec'd detail message. Good.",
+    "Import alias trick `from utils.auth import require_advisor as get_current_user` in all 7 advisor route files is elegant — zero per-endpoint changes required. Verified all 7 files have the import (client_360, clients, compliance, emails, portfolio_review, reports, smart_suggestions).",
+    "However, this aliasing means the local variable bound to the dependency result is now the FULL user dict from get_current_user (returned by require_advisor) rather than the previously-imported get_current_user. Spot-checked behaviour is unchanged because the inner get_current_user already returns the full user dict, so existing code paths inside the routes that use current_user['id'] / current_user.get('advisor_id') keep working — consistent with the green test suite.",
+    "401 vs 403 ordering is correct: missing/invalid token raises HTTPBearer/decode_token 401 BEFORE require_advisor runs, so unauth requests do NOT receive the advisor-only detail message (asserted explicitly in test_unauthenticated_gets_401_or_403).",
+    "Shared routes (documents.py, my_money.py) correctly were NOT touched — they still expose get_current_user from utils.auth without the advisor guard, confirmed by individual-user 200s on /api/documents/analyses, /api/me/financial/profile|dashboard|history.",
+    "No-role user (newly registered, no role set in payload) gets 403 — the default role-less account is treated as non-advisor as expected. Server's auth/register defaults role correctly.",
+    "Minor suggestion (non-blocking): the import alias couples two distinct concerns at the import site. A clearer long-term pattern would be an explicit router-level `dependencies=[Depends(require_advisor)]` on the APIRouter — but the current alias trick is contained and works."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_role_enforcement.py (new — 31 parametrised tests)"
+  ],
+  "success_rate": {"backend": "100% (31/31)", "frontend": "N/A (backend-only scope)"},
+  "test_credentials": "Individual: ind_test_1779457267@example.com / Passw0rd! (role=individual). Advisor/Admin: pierrelouisvdm@gmail.com / Scorpio@57!! (role=advisor, is_admin=true). No-role user is registered fresh per test run (norole_test_<ts>@example.com / Passw0rd!).",
+  "seed_data_creation": "One fresh no-role user registered per pytest run via /api/auth/register; not cleaned up (negligible). No mongo writes from the test suite.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Server-side role enforcement is now in place. Any future advisor-only endpoint MUST either (a) use the same import alias `from utils.auth import require_advisor as get_current_user` at the top of the router file, OR (b) declare it explicitly via `Depends(require_advisor)`. Shared endpoints in documents.py and my_money.py remain on the original get_current_user import — leave them alone. The 403 detail string 'This endpoint is for financial advisors only.' is asserted by tests; do not change wording without updating tests.",
+  "rca of the issue": "N/A — feature verification passed cleanly on first run, no defects observed."
+}

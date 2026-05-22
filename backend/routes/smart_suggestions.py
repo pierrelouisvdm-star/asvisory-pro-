@@ -9,7 +9,7 @@ from datetime import datetime, timezone, timedelta
 from typing import List, Optional
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from utils.auth import get_current_user
+from utils.auth import require_advisor as get_current_user
 from server import db
 
 router = APIRouter(prefix="/smart-suggestions", tags=["SmartSuggestions"])

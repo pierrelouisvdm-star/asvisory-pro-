@@ -100,3 +100,19 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         raise credentials_exception
     
     return user
+
+
+
+async def require_advisor(current_user: dict = Depends(get_current_user)) -> dict:
+    """
+    Allow only advisors (role='advisor') or admins through.
+    Use as a FastAPI dependency on advisor-only endpoints.
+    """
+    if current_user.get("is_admin"):
+        return current_user
+    if current_user.get("role") == "advisor":
+        return current_user
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="This endpoint is for financial advisors only.",
+    )

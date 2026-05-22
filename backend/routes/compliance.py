@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage
-from utils.auth import get_current_user
+from utils.auth import require_advisor as get_current_user
 from server import db
 
 router = APIRouter(prefix="/compliance", tags=["Compliance"])

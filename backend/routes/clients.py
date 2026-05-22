@@ -4,7 +4,7 @@ from typing import List
 from datetime import datetime, timezone
 from models.client import Client, ClientCreate, ClientUpdate, FinancialData
 from models.financial_plan import FinancialPlanAnalysis, FinancialDataUpdate
-from utils.auth import get_current_user_id, get_current_user
+from utils.auth import require_advisor as get_current_user
 from utils.financial_analyzer import analyze_financial_plan
 from utils.security import AuditAction, get_client_ip
 import os
