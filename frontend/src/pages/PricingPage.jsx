@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
@@ -49,21 +49,6 @@ export const PricingPage = () => {
   
   // Billing period toggle
   const [billingPeriod, setBillingPeriod] = useState('annual'); // 'monthly' or 'annual'
-
-  // Role toggle - auto-picked from logged-in user, otherwise defaults to individual
-  const [pricingRole, setPricingRole] = useState(user?.role === 'advisor' ? 'advisor' : 'individual');
-
-  // Sync with user role once it loads (AuthContext hydrates asynchronously)
-  useEffect(() => {
-    if (user?.role === 'advisor' || user?.role === 'individual') {
-      setPricingRole(user.role);
-    }
-  }, [user?.role]);
-
-  // Derive prices based on selected role
-  const monthlyPrice = pricingRole === 'advisor' ? ADVISOR_MONTHLY : INDIVIDUAL_MONTHLY;
-  const annualPrice = pricingRole === 'advisor' ? ADVISOR_ANNUAL : INDIVIDUAL_ANNUAL;
-  const annualSavings = (monthlyPrice * 12) - annualPrice;
   
   // Coupon state
   const [couponCode, setCouponCode] = useState('');
@@ -106,7 +91,7 @@ export const PricingPage = () => {
     setPaymentLoading(true);
     
     const isAnnual = billingPeriod === 'annual';
-    const effectiveRole = tierRole || user?.role || pricingRole;
+    const effectiveRole = tierRole || user?.role || 'individual';
     const paymentAmount = effectiveRole === 'advisor'
       ? (isAnnual ? ADVISOR_ANNUAL : ADVISOR_MONTHLY)
       : (isAnnual ? INDIVIDUAL_ANNUAL : INDIVIDUAL_MONTHLY);
