@@ -1,0 +1,42 @@
+{
+  "summary": "IRP5 Vault feature fully verified end-to-end (backend 19/19 pytest PASS, frontend full upload→parse→list→delete flow PASS). All endpoints behave per spec: POST /api/me/irp5/upload returns {success, document:{...parsed:{...}}} with real AI-extracted source codes (3601=540000, 4001=35000, 4006=25000, 4102=96000, 4141=1789) on a fitz-generated test PDF. GET /list returns the user's docs newest-first and excludes soft-deleted. GET /{id} 404s for other users. GET /{id}/download supports both Authorization header AND ?auth= query token, returns correct application/pdf + Content-Disposition with original filename, body is byte-identical PDF round-tripped from Emergent Object Storage. Unauthenticated download returns 401. DELETE soft-deletes (404 on second call, list excludes). Validation: .docx→400, empty→400, >15MB→400. No role gate — advisor account uploads/lists successfully. Frontend /irp5-vault renders all required data-testids (irp5-vault-page, irp5-empty, irp5-upload-btn, irp5-file-input, irp5-list, irp5-row-*, irp5-detail, irp5-delete-*, irp5-download-*). Regression: digest preview still reachable; /api/reports still 403 for individuals.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_irp5_vault.py",
+    "/app/test_reports/pytest/pytest_irp5_vault.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "routes/irp5.py:27 — `from server import db` creates a circular-import risk if server.py ever imports irp5 at the top (it currently imports the router lazily). Working today but fragile; consider injecting db via FastAPI Depends or a shared db module.",
+    "routes/irp5.py:138-141 — storage_path is constructed BEFORE the AI parse. If put_object succeeds but the AI parse hits an unhandled exception (not the json.JSONDecodeError it catches), the file is orphaned in object storage with no DB record. Today _ai_parse_irp5 catches broad Exception so this is safe, but the order means a future refactor could leak storage. Consider moving the DB insert into a try/except that records storage_path even when parse errors out so soft-delete still hides it (the current code already does insert regardless of parse outcome — good).",
+    "routes/irp5.py:113 — `raw[:500] if isinstance(raw, str) else ''` references `raw` from the try block. If the send_message call itself raises before assigning raw, this except branch (json.JSONDecodeError) cannot fire, so OK — but the Exception branch (115-116) loses the raw payload entirely. Minor observability nit.",
+    "utils/object_storage.py:17 — module-level `_storage_key` is mutated via `global`; works in a single-process uvicorn worker but would re-init per worker under gunicorn multi-worker (each calls init_storage separately). Not broken but document this if you scale out.",
+    "utils/object_storage.py:58, 79 — On a 403 stale-key path, you set `_storage_key=None` then call _key() which calls init_storage(); if init fails the second call raises RuntimeError from _key() and propagates as 5xx. Consider a more specific error so the route returns 502 'storage refresh failed' instead of a generic 500.",
+    "IRP5Vault.jsx:13-15 — Same `window.location.origin` vs `REACT_APP_BACKEND_URL` fallback pattern as MyMoney.jsx; flagged previously. Working in this deployment; unify if you ever split SPA/API hosts.",
+    "IRP5Vault.jsx:84-86 — Token is placed in URL query for download (`?auth=<token>`). This is required because <a> downloads can't set headers, but it does mean the JWT can land in browser history / proxy access logs. Acceptable trade-off; consider issuing a short-lived signed download URL in future.",
+    "routes/irp5.py:78-85 — _pdf_to_images is synchronous and called from an async handler; for very large PDFs (close to 15MB) this can block the event loop. Capped at 2 pages so practical impact is small but worth wrapping in run_in_executor if perf matters.",
+    "App.js:178 vs 179 — /my-money is gated to RoleGate role='individual' but /irp5-vault is intentionally NOT gated. The IRP5Vault.jsx page has a 'Back to My Money' link (line 95-97) which will land an advisor user on a 403 page. Cosmetic — consider hiding that link for advisor role or routing it to /dashboard.",
+    "routes/irp5.py — No pagination on /list (length=200 cap). Fine today but document the cap."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_irp5_vault.py (new — 19 tests covering upload+AI parse, validation 400s, list/get/download with both auth modes, cross-user 404, soft-delete idempotency, advisor no-role-gate, digest+role-gating regression)"
+  ],
+  "success_rate": {
+    "backend": "100% (19/19 passed in 10.78s)",
+    "frontend": "100% (page renders, empty state shown, file upload triggers AI parse, list+detail render with real parsed numbers, delete returns to empty state)"
+  },
+  "test_credentials": "Admin/Advisor: pierrelouisvdm@gmail.com / Scorpio@57!!. Fresh individual users registered per test run as ind_irp5_<ts>@example.com / Passw0rd!.",
+  "seed_data_creation": "Tests register 2 fresh individual users per run and one advisor session. Each run uploads 2 PDFs to Emergent Object Storage (one individual, one advisor) and soft-deletes them. PDFs are generated in-test via PyMuPDF (no fixture files committed). Storage volume per run < 5KB.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "IRP5 Vault feature is stable. Backend tests at /app/backend/tests/test_irp5_vault.py — run with `pytest backend/tests/test_irp5_vault.py -v`. They depend on Emergent Object Storage being initialised at server startup (server.py startup hook calls init_storage) and EMERGENT_LLM_KEY being set in backend/.env. Frontend data-testids for Playwright: irp5-vault-page, irp5-empty, irp5-upload-btn, irp5-file-input, irp5-list, irp5-row-<id>, irp5-detail, irp5-download-<id>, irp5-delete-<id>. Auth localStorage keys are advisorypro_token and advisorypro_user. Module-scope state across the test classes in test_irp5_vault.py shares doc_id via a small _State container — keep test execution order intact if you split files.",
+  "rca of the issue": "N/A — no defects observed. Feature works as specified in the review request including the documented agent-to-agent context (3601=540000, 4001=35000, 4006=25000, 4102=96000, 4141=1789 — these exact figures reproduced live during this verification pass via real GPT-4o)."
+}

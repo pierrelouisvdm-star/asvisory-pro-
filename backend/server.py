@@ -49,6 +49,7 @@ from routes.client_360 import router as client_360_router
 from routes.my_money import router as my_money_router
 from routes.smart_suggestions import router as smart_suggestions_router
 from routes.money_digest import router as money_digest_router
+from routes.irp5 import router as irp5_router
 
 # Include route modules
 api_router.include_router(auth_router)
@@ -75,6 +76,7 @@ api_router.include_router(client_360_router)
 api_router.include_router(my_money_router)
 api_router.include_router(smart_suggestions_router)
 api_router.include_router(money_digest_router)
+api_router.include_router(irp5_router)
 
 # Health check endpoint
 @api_router.get("/health")
@@ -219,6 +221,20 @@ async def startup_db_client():
             await db.coupons.insert_one(coupon)
             logger.info(f"Seeded coupon: {coupon['code']}")
     
+    # IRP5 documents indexes
+    await db.irp5_documents.create_index("id", unique=True)
+    await db.irp5_documents.create_index([("user_id", 1), ("created_at", -1)])
+
+    # Initialise Emergent Object Storage (used by IRP5 vault)
+    try:
+        from utils.object_storage import init_storage
+        if init_storage():
+            logger.info("Object storage initialised")
+        else:
+            logger.warning("Object storage init returned no key")
+    except Exception as e:
+        logger.error(f"Object storage init failed: {e}")
+
     logger.info("Database indexes created")
 
 @app.on_event("shutdown")

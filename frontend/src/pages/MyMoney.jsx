@@ -499,7 +499,7 @@ export const MyMoney = () => {
             <QuickLink to="/tfsa-calculator" label="TFSA Growth" />
             <QuickLink to="/tax-planning" label="Tax Planning Hub" />
             <QuickLink to="/living-annuity-calculator" label="Retirement Income" />
-            <QuickLink to="/document-reader" label="AI Document Reader" />
+            <QuickLink to="/irp5-vault" label="IRP5 Vault" />
           </CardContent>
         </Card>
       </div>

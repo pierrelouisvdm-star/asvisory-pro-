@@ -45,6 +45,7 @@ import ComplianceNotes from "@/pages/ComplianceNotes";
 import PortfolioReview from "@/pages/PortfolioReview";
 import Client360 from "@/pages/Client360";
 import MyMoney from "@/pages/MyMoney";
+import IRP5Vault from "@/pages/IRP5Vault";
 import { ClientsPage } from "@/pages/ClientsPage";
 import { ClientProfilePage } from "@/pages/ClientProfilePage";
 import RoleSelectionModal from "@/components/RoleSelectionModal";
@@ -175,6 +176,7 @@ function App() {
                   <Route path="/clients/:clientId" element={<ProtectedRoute><RoleGate role="advisor"><ClientProfilePage /></RoleGate></ProtectedRoute>} />
                   <Route path="/clients/:clientId/360" element={<ProtectedRoute><RoleGate role="advisor"><Client360 /></RoleGate></ProtectedRoute>} />
                   <Route path="/my-money" element={<ProtectedRoute><RoleGate role="individual"><MyMoney /></RoleGate></ProtectedRoute>} />
+                  <Route path="/irp5-vault" element={<ProtectedRoute><IRP5Vault /></ProtectedRoute>} />
                   
                   {/* Legal Pages - Public */}
                   <Route path="/terms" element={<TermsOfServicePage />} />
