@@ -112,11 +112,12 @@
 ## Future Roadmap
 
 ### Recently Completed (Feb 2026)
-- [x] **AI Compliance & Advisor Notes** (Feature #4) — `/compliance-notes` (advisor-only). 6 record types (Meeting Notes, Record of Advice, Risk Profile Summary, Product Comparison, Advice Rationale, Action Items). FAIS-aligned schemas (needs analysis, advice given, alternatives considered, fees disclosed, compliance notes). GPT-4o powered. Verified 12/12 backend pytest + frontend E2E.
-- [x] **Pricing redesigned** — 3-tier side-by-side comparison (Free / Individual R299/R1499 / Financial Advisor R999/R6999 with "BEST FOR PROS" badge). Role-aware: logged-in users see "YOUR PLAN" tag and other tier dimmed.
-- [x] **AI Email & Communication Generator** (Feature #3) — `/email-generator` (advisor-only). 8 templates × 4 tones. GPT-4o-powered. WhatsApp deep-link, mailto, copy actions.
-- [x] **Individual vs Financial Advisor workspace split** — role chosen at signup (locked in), existing users see RoleSelectionModal, dashboard renders advisor-only "Advisor Workflow" section.
-- [x] **AI Client Report Builder** (Feature #1) — `/report-builder`. GPT-4o branded PDF reports.
+- [x] **Multi-Document Portfolio Review** (closes "AI Portfolio Review Generator" from original spec) — `/portfolio-review`. Aggregates multiple client docs into one consolidated view: total AUM, weighted EAC, asset allocation, fee audit (annual fee drag + 10yr cost), diversification score, outdated product warnings, retirement readiness, prioritised recommendations, plain-language client summary. Recharts pie + bar visualisations. Verified 10/10 backend + 100% frontend.
+- [x] **AI Compliance & Advisor Notes** (Feature #4) — `/compliance-notes`. 6 FAIS-aligned record types. Verified 12/12 backend + full frontend.
+- [x] **Pricing redesigned** — 3-tier side-by-side comparison.
+- [x] **AI Email & Communication Generator** (Feature #3) — `/email-generator`. 8 templates × 4 tones.
+- [x] **Individual vs Financial Advisor workspace split** — role chosen at signup (locked in), dashboard renders advisor-only sections.
+- [x] **AI Client Report Builder** (Feature #1) — `/report-builder`. Branded PDF reports.
 - [x] **AI Document Reader fix** — client_id optional, formatted Summary/Details tabs.
 
 ### P1 - High Priority
