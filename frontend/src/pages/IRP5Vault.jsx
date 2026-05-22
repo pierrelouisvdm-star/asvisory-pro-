@@ -17,7 +17,7 @@ const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'l
 const fmtR = (v) => (v == null || v === '' ? '—' : `R ${Number(v).toLocaleString('en-ZA', { maximumFractionDigits: 0 })}`);
 
 export const IRP5Vault = () => {
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const fileRef = useRef(null);
   const [docs, setDocs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +25,8 @@ export const IRP5Vault = () => {
   const [openId, setOpenId] = useState(null);
 
   const headers = { headers: { Authorization: `Bearer ${token}` } };
+  const backHref = user?.role === 'advisor' ? '/dashboard' : '/my-money';
+  const backLabel = user?.role === 'advisor' ? 'Back to Dashboard' : 'Back to My Money';
 
   const load = async () => {
     setLoading(true);
@@ -92,8 +94,8 @@ export const IRP5Vault = () => {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
-            <Link to="/my-money" className="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1 mb-2">
-              <ArrowLeft className="h-3 w-3" /> Back to My Money
+            <Link to={backHref} className="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1 mb-2">
+              <ArrowLeft className="h-3 w-3" /> {backLabel}
             </Link>
             <h1 className="text-3xl font-bold text-white flex items-center gap-2">
               <ShieldCheck className="h-7 w-7 text-emerald-400" />

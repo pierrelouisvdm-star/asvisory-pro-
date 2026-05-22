@@ -111,6 +111,10 @@
 
 ## Future Roadmap
 
+### Recently Completed (May 2026)
+- [x] **Monthly Money Email Digest** — `/api/me/digest/preview` + `/api/me/digest/send`. AI-tailored monthly summary emailed via Resend. Frontend on My Money. 13/13 pytest pass (iteration_31).
+- [x] **IRP5 Vault** — `/irp5-vault` page + `/api/me/irp5/*` endpoints. Upload PDF/PNG/JPG IRP5 certificates → stored in Emergent Object Storage → AI parses SARS source codes (3601, 4001, 4006, 4102, 4141, etc) → list/download/soft-delete. New `utils/object_storage.py` wrapper. 19/19 pytest pass (iteration_32).
+
 ### Recently Completed (Feb 2026)
 - [x] **Server-side advisor-only enforcement** — new `require_advisor` dependency in `utils/auth.py`. Applied via import-alias trick (`from utils.auth import require_advisor as get_current_user`) to 7 advisor route files: reports, emails, compliance, portfolio_review, client_360, smart_suggestions, clients. Individuals now get 403 with `{detail: 'This endpoint is for financial advisors only.'}`. Admins bypass. Shared endpoints (documents, my_money) untouched. Verified 31/31 pytest cases.
 - [x] **Net Worth History** — monthly snapshots + Wealth Growth LineChart.
@@ -127,7 +131,8 @@
 - [x] **AI Document Reader fix** — client_id optional, formatted Summary/Details tabs.
 
 ### P1 - High Priority
-- [ ] IRP5 File Storage implementation
+- [x] IRP5 File Storage implementation (May 2026)
+- [ ] Paystack Integration (BLOCKED — needs user API keys)
 - [ ] Portfolio Builder & Xray Tool
 - [ ] Connect Market Insights to real data API
 
@@ -142,4 +147,4 @@
 
 ---
 
-*Last Updated: April 8, 2026*
+*Last Updated: May 22, 2026*
