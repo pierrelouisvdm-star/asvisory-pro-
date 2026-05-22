@@ -112,12 +112,12 @@
 ## Future Roadmap
 
 ### Recently Completed (Feb 2026)
-- [x] **Net Worth History** — backend snapshots monthly (period=YYYY-MM, same-month upsert keeps 1 row), new `GET /api/me/financial/history`. Frontend My Money adds Recharts LineChart "Wealth Growth" card (net worth + assets + liabilities over time, visible from 2 snapshots).
-- [x] **Actionable Smart Suggestions** — every badge on /clients and every row on Client 360 is now a clickable Link that deep-links to the right tool with ?client_id= prefilled (no_compliance → /compliance-notes, no_touchpoint → /email-generator, etc.). Closes the loop from insight → action in one click. Verified 6/6 backend + 4/4 frontend.
+- [x] **Server-side advisor-only enforcement** — new `require_advisor` dependency in `utils/auth.py`. Applied via import-alias trick (`from utils.auth import require_advisor as get_current_user`) to 7 advisor route files: reports, emails, compliance, portfolio_review, client_360, smart_suggestions, clients. Individuals now get 403 with `{detail: 'This endpoint is for financial advisors only.'}`. Admins bypass. Shared endpoints (documents, my_money) untouched. Verified 31/31 pytest cases.
+- [x] **Net Worth History** — monthly snapshots + Wealth Growth LineChart.
+- [x] **Actionable Smart Suggestions** — each badge deep-links to the right tool with ?client_id= prefilled.
 - [x] **Smart Suggestions** — deterministic rule-based "next best action" badges per client.
 - [x] **Enterprise/Firms contact panel** on Pricing page.
 - [x] **My Money (Individual dashboard)** — `/my-money`.
-- [x] **Client 360** — `/clients/:id/360`.
 - [x] **Multi-Document Portfolio Review** — `/portfolio-review`.
 - [x] **AI Compliance & Advisor Notes** — `/compliance-notes`.
 - [x] **Pricing redesigned** — 3-tier side-by-side comparison.
