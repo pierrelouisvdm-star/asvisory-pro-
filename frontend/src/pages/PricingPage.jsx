@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
@@ -52,6 +52,13 @@ export const PricingPage = () => {
 
   // Role toggle - auto-picked from logged-in user, otherwise defaults to individual
   const [pricingRole, setPricingRole] = useState(user?.role === 'advisor' ? 'advisor' : 'individual');
+
+  // Sync with user role once it loads (AuthContext hydrates asynchronously)
+  useEffect(() => {
+    if (user?.role === 'advisor' || user?.role === 'individual') {
+      setPricingRole(user.role);
+    }
+  }, [user?.role]);
 
   // Derive prices based on selected role
   const monthlyPrice = pricingRole === 'advisor' ? ADVISOR_MONTHLY : INDIVIDUAL_MONTHLY;
