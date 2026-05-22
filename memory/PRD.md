@@ -112,6 +112,7 @@
 ## Future Roadmap
 
 ### Recently Completed (Feb 2026)
+- [x] **AI Client Report Builder** (Feature #1 from original vision) — `/report-builder`. Generates GPT-4o powered branded PDF reports with executive summary, portfolio breakdown, fee/risk/retirement analysis, recommendations, plain-language explanations. Editable branding (firm name, advisor, logo URL, primary colour, FSP number, disclaimer). 3 tabs: Build / Branding / History. Client-side PDF via jspdf + html2canvas. Verified 9/9 backend + full frontend.
 - [x] AI Document Reader fixed — client_id now optional, formatted Summary/Details tabs instead of raw JSON, custom prompt flow with 6 presets. Verified end-to-end (backend 8/8 pytest, frontend 10/10 Playwright).
 
 ### P1 - High Priority
