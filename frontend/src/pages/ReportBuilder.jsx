@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -347,6 +348,8 @@ ReportPreview.displayName = 'ReportPreview';
 export const ReportBuilder = () => {
   const { token } = useAuth();
   const previewRef = useRef(null);
+  const [searchParams] = useSearchParams();
+  const prefilledClientId = searchParams.get('client_id');
 
   const [branding, setBranding] = useState({});
   const [savingBranding, setSavingBranding] = useState(false);
@@ -355,7 +358,7 @@ export const ReportBuilder = () => {
   const [analyses, setAnalyses] = useState([]);
   const [reports, setReports] = useState([]);
 
-  const [selectedClient, setSelectedClient] = useState('none');
+  const [selectedClient, setSelectedClient] = useState(prefilledClientId || 'none');
   const [selectedDocIds, setSelectedDocIds] = useState([]);
   const [reportType, setReportType] = useState('portfolio_review');
   const [tone, setTone] = useState('professional');

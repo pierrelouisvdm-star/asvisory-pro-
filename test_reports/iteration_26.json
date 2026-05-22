@@ -1,0 +1,37 @@
+{
+  "summary": "Tested Client 360 backend + frontend. Backend pytest 6/6 PASSED (100%): requires_auth (401/403), bogus id (404), cross-advisor isolation (404 for other advisor's client), full shape with all 8 keys + counts dict + 5 arrays + timeline, empty-client zero counts, and aggregation (seeded email+compliance+report via /api/advisor-emails/generate, /api/compliance/generate, /api/reports/generate → counts incremented by 3, timeline sorted DESC by created_at). Frontend: Client 360 page renders correctly when accessed directly at /clients/:id/360 — client-360-page testid present, client-name 'Test Client', all 5 stat tiles (stat-document/report/email/compliance/portfolio_review), 4 Smart Actions, 6 tabs, 'Nothing recorded yet' empty state. Smart Action 'Generate Portfolio Review' is properly disabled (opacity-50, cursor-not-allowed) when counts.documents===0 and clicking it shows 'Upload documents first' info toast without navigation. Other 3 Smart Actions (Draft Email, New Compliance Record, Build Client Report) navigate correctly to /email-generator, /compliance-notes, /report-builder respectively with ?client_id={id}, and the destination page's [data-testid='select-client'] is preselected to 'Test Client' (text content verified). RoleGate negative test PASSED — individual user (TEST_ind_1779453426@example.com) sees role-gate-blocker with 'Financial Advisors only' message and the client-360-page is NOT rendered. CRITICAL BUG FOUND: /clients route is NOT registered in /app/frontend/src/App.js — only /clients/:clientId/360 exists. Visiting /clients (which ClientsPage.jsx is built for and which Client360's breadcrumb links to via Link to='/clients') results in a blank body (nav + footer only, no clients-page testid, no 'Manage your client profiles' header). This blocks the review-request item 'each client card has a green 360 View button' from being reached via the UI, although clicking the cards in ClientsPage.jsx code would correctly call <Link to=`/clients/${id}/360`> when the route IS registered.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "App.js router", "issue": "Missing <Route path=\"/clients\" element={<ClientsPage/>}/> registration. /clients page is unreachable via URL — body renders empty (only top-nav + footer chrome). Breadcrumb 'Clients' link inside Client360 and the redirect targets in ClientProfilePage / SubscriptionSuccessPage all lead to a blank page.", "selector": "[data-testid='clients-page']", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_client_360.py",
+    "/app/test_reports/pytest/pytest_client_360.xml"
+  ],
+  "action_items": [
+    "Register the /clients route in /app/frontend/src/App.js (e.g. <Route path=\"/clients\" element={<ProtectedRoute><RoleGate role=\"advisor\"><ClientsPage/></RoleGate></ProtectedRoute>}/>). Import ClientsPage at top of file. This will unblock the green '360 View' button verification end-to-end as well as the breadcrumb navigation from Client360 back to the list."
+  ],
+  "critical_code_review_comments": [
+    "/app/backend/routes/client_360.py: clean implementation — advisor_id scoping on every query, _id excluded via projection, parallel-ish awaits acceptable, timeline correctly sorted DESC, 50-item cap on timeline; per-collection 20-item cap. No N+1 issues.",
+    "Client360.jsx: tailwind dynamic class strings like `text-${meta.color}-400`, `bg-${a.color}-500/5` rely on JIT compiling these utilities — risk of purge dropping these in prod build if they aren't safelisted in tailwind.config. Verify all 5 color tokens (sky, emerald, amber, rose, indigo) are in safelist; otherwise stat icon colors / smart action card borders won't render in production.",
+    "Client360.jsx: countKey mapping is hardcoded ternary chain (line 170) — readable but fragile if KIND_META keys change. Consider deriving from a single source of truth.",
+    "App.js: /clients route missing (CRITICAL). Also note /clients/:clientId/360 is wrapped by RoleGate but NOT GatedCalculator (intentional per request — 360 is a hub, not a premium calculator). However the 4 destination tools ARE all GatedCalculator-gated, so a free-tier advisor clicking a Smart Action will hit a paywall on the destination tool — this is acceptable but may want a 'Premium required' hint on the Smart Actions card to set expectation."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_client_360.py (new)"
+  ],
+  "success_rate": {"backend": "100% (6/6)", "frontend": "92% (12/13 review items verified, /clients page rendering blocked by missing route)"},
+  "test_credentials": "Admin: pierrelouisvdm@gmail.com / Scorpio@57!! (role=advisor, has 1 client id=3474c87b-7435-4885-9658-d1b94acd28d5 'Test Client'). Individual: TEST_ind_1779453426@example.com / Passw0rd! (registered during this run).",
+  "seed_data_creation": "Aggregation test seeded 1 email + 1 compliance record + 1 client report against Test Client during pytest. These remain in DB (small footprint, advisor-scoped). No cleanup since they validate downstream timeline behaviour for any future re-run.",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Only one bug to fix: register /clients route in App.js. After fix, retest 'green 360 View button on each client card navigates to /clients/{id}/360' end-to-end. Selector pattern: [data-testid='client-360-{clientId}']. Backend regression file at /app/backend/tests/test_client_360.py — reuse it. Test admin client id: 3474c87b-7435-4885-9658-d1b94acd28d5. All Smart Action prefill works via useSearchParams + setClientId/setSelectedClient — verified in EmailGenerator, ComplianceNotes, PortfolioReview (via select-client text content), ReportBuilder. Smart Action data-testids: smart-action-generate-portfolio-review (disabled when 0 docs), smart-action-draft-email, smart-action-new-compliance-record, smart-action-build-client-report.",
+  "rca of the issue": "Root cause for /clients blank: App.js has <Route path=\"/clients/:clientId/360\" .../> but no <Route path=\"/clients\" .../>. React Router falls through to no matching route, rendering only the top-level layout. Fix: add the route registration with ProtectedRoute + RoleGate(advisor) wrappers and import ClientsPage. Single-line change."
+}

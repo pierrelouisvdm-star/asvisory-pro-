@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -26,12 +27,14 @@ const ASSET_COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6', '#ef4444', '#0
 
 export const PortfolioReview = () => {
   const { token } = useAuth();
+  const [searchParams] = useSearchParams();
+  const prefilledClientId = searchParams.get('client_id');
 
   const [clients, setClients] = useState([]);
   const [analyses, setAnalyses] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  const [clientId, setClientId] = useState('none');
+  const [clientId, setClientId] = useState(prefilledClientId || 'none');
   const [selectedDocIds, setSelectedDocIds] = useState([]);
   const [advisorNotes, setAdvisorNotes] = useState('');
   const [generating, setGenerating] = useState(false);

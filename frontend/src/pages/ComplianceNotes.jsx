@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,12 +30,14 @@ const RECORD_TYPE_LABELS = {
 
 export const ComplianceNotes = () => {
   const { token } = useAuth();
+  const [searchParams] = useSearchParams();
+  const prefilledClientId = searchParams.get('client_id');
 
   const [clients, setClients] = useState([]);
   const [records, setRecords] = useState([]);
 
   const [recordType, setRecordType] = useState('record_of_advice');
-  const [clientId, setClientId] = useState('none');
+  const [clientId, setClientId] = useState(prefilledClientId || 'none');
   const [meetingDate, setMeetingDate] = useState('');
   const [attendees, setAttendees] = useState(['']);
   const [topics, setTopics] = useState('');

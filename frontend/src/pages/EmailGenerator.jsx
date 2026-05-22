@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -38,13 +39,15 @@ const TONE_LABELS = {
 
 export const EmailGenerator = () => {
   const { token } = useAuth();
+  const [searchParams] = useSearchParams();
+  const prefilledClientId = searchParams.get('client_id');
 
   const [clients, setClients] = useState([]);
   const [emails, setEmails] = useState([]);
 
   const [templateType, setTemplateType] = useState('review_email');
   const [tone, setTone] = useState('professional');
-  const [clientId, setClientId] = useState('none');
+  const [clientId, setClientId] = useState(prefilledClientId || 'none');
   const [recipientName, setRecipientName] = useState('');
   const [notes, setNotes] = useState('');
   const [bullets, setBullets] = useState(['']);

@@ -29,7 +29,8 @@ import {
   Calendar,
   AlertTriangle,
   CheckCircle2,
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -348,9 +349,15 @@ export const ClientsPage = () => {
                     </div>
 
                     <div className="flex items-center gap-2">
+                      <Link to={`/clients/${client.id}/360`}>
+                        <Button size="sm" data-testid={`client-360-${client.id}`} className="bg-emerald-500 hover:bg-emerald-400 text-navy-950">
+                          <Sparkles className="h-4 w-4 mr-1" />
+                          360 View
+                        </Button>
+                      </Link>
                       <Link to={`/clients/${client.id}`}>
                         <Button variant="outline" size="sm" data-testid={`view-client-${client.id}`}>
-                          View Profile
+                          Profile
                           <ArrowRight className="h-4 w-4 ml-1" />
                         </Button>
                       </Link>
