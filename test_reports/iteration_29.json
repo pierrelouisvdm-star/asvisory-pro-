@@ -1,0 +1,31 @@
+{
+  "summary": "Net Worth History (snapshot upsert + GET /history) + Smart Suggestions deep-links tested end-to-end. Backend pytest 6/6 PASS in new test_my_money_history.py: snapshot row written on PUT, same-month upsert keeps count=1, multi-month seeded periods returned oldest-first, ?months=N truncates, user A's history excludes user B's rows. Frontend Playwright PASS for all 4 flows: (1) /my-money wealth-history-card renders LineChart with title 'Wealth Growth (3 months)' once 3 snapshots exist; (2) /clients renders suggestion-link-{client_id}-{i} <Link> wrappers with hrefs '/document-reader' (no_docs, no client_id per spec), '/compliance-notes?client_id=...', '/email-generator?client_id=...'; (3) /clients/{id}/360 suggestions-panel rows are all <A> tags wrapping the WHOLE row with ArrowRight chevron; (4) clicking no_touchpoint row navigates to /email-generator?client_id=3474c87b... AND EmailGenerator's data-testid='select-client' pre-selects 'Test Client'. Code-confirmed all_good falls through to <span> (no linkMap entry).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_my_money_history.py",
+    "/app/test_reports/pytest/pytest_my_money_history.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "my_money.py snapshot upsert uses compound key (user_id, period) with period='YYYY-MM' — correct dedup.",
+    "Snapshot includes total_assets/total_liabilities/net_worth + tfsa/ra fields, captured_at ISO string — LineChart consumes these directly. Good.",
+    "GET /history projects out _id and user_id, sorts ascending by period, limits to max(months, 1) — clean, no ObjectId leakage.",
+    "MyMoney.jsx parallel fetch (dashboard + history) via Promise.all with .catch fallback — graceful degradation if history endpoint errors.",
+    "MyMoney wealth-history-card gated on history.length >= 2 — correct; verified hidden when single snapshot.",
+    "ClientsPage suggestion-link uses onClick={e.stopPropagation()} to prevent parent row click bubbling — correct UX.",
+    "Client360 suggestions-panel wraps the WHOLE row in <Link> using react-router Link with relative paths — uses ArrowRight chevron only when href exists — matches spec.",
+    "no_docs deep-link is /document-reader WITHOUT client_id (per problem spec — DocumentReader doesn't have a per-client filter); other actionable kinds correctly carry client_id query param.",
+    "all_good is not in linkMap on either page → falls through to <span> on /clients and is filtered out via suggestions[0]?.kind !== 'all_good' guard on Client360 — clean."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_my_money_history.py (new — 6 tests)"
+  ],
+  "success_rate": {"backend": "100% (6/6)", "frontend": "100% (4/4 flows)"},
+  "test_credentials": "Individual: my_money_test_1779454043@example.com / Passw0rd! (user_id 68ef77a2-2a9d-4c12-acbe-c2476307607d, has 3 net_worth_snapshots seeded: 2025-01, 2025-06, current month). Admin: pierrelouisvdm@gmail.com / Scorpio@57!! (has client 3474c87b-7435-4885-9658-d1b94acd28d5 with 3 actionable suggestions: no_docs, no_compliance, no_touchpoint).",
+  "seed_data_creation": "Test users hist_a_*/hist_b_* created per pytest run; cleaned up via delete_many on net_worth_snapshots + user_financial_profiles. For frontend chart visibility, seeded 2 older snapshots directly in MongoDB (net_worth_snapshots collection) for the my_money_test user — periods 2025-01 and 2025-06.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend test file: /app/backend/tests/test_my_money_history.py — uses pymongo + dotenv to read MONGO_URL/DB_NAME from /app/backend/.env for direct seeding/cleanup. Existing my_money_test_1779454043 user already has multi-month history seeded for /my-money chart testing. Client360 lives at /clients/{id}/360 (NOT /clients/{id} which is the legacy ClientDetail page). EmailGenerator pre-selects via ?client_id= query param and exposes data-testid='select-client'.",
+  "rca of the issue": "N/A — no failures encountered. One self-correction during testing: my initial Playwright test for /clients incorrectly asserted ALL hrefs must contain client_id, but the spec defines no_docs→/document-reader (without client_id) — this is by design since DocumentReader is not client-scoped. All 3 wrappers were verified with correct spec-defined hrefs."
+}

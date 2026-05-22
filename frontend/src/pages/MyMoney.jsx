@@ -15,6 +15,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 import {
   PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Legend,
 } from 'recharts';
 
 const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
@@ -46,19 +47,24 @@ export const MyMoney = () => {
   const [saving, setSaving] = useState(false);
   const [dash, setDash] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const authHeaders = { headers: { Authorization: `Bearer ${token}` } };
 
   const load = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_URL}/api/me/financial/dashboard`, authHeaders);
-      setDash(res.data);
+      const [dashRes, histRes] = await Promise.all([
+        axios.get(`${API_URL}/api/me/financial/dashboard`, authHeaders),
+        axios.get(`${API_URL}/api/me/financial/history`, authHeaders).catch(() => ({ data: { history: [] } })),
+      ]);
+      setDash(dashRes.data);
       setProfile({
-        ...res.data.profile,
-        assets: res.data.profile.assets || [],
-        liabilities: res.data.profile.liabilities || [],
+        ...dashRes.data.profile,
+        assets: dashRes.data.profile.assets || [],
+        liabilities: dashRes.data.profile.liabilities || [],
       });
+      setHistory(histRes.data.history || []);
     } catch (e) {
       toast.error('Failed to load');
     } finally {
@@ -258,6 +264,39 @@ export const MyMoney = () => {
                   ))}
                 </div>
               </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Wealth Growth over Time */}
+        {history.length >= 2 && (
+          <Card className="bg-navy-900/60 border-navy-700" data-testid="wealth-history-card">
+            <CardHeader>
+              <CardTitle className="text-white text-base flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-emerald-400" /> Wealth Growth ({history.length} months)
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-72">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={history}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <XAxis dataKey="period" tick={{ fontSize: 11, fill: '#94a3b8' }} />
+                    <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} tickFormatter={(v) => `R${Math.round(v / 1000)}k`} />
+                    <Tooltip
+                      contentStyle={{ background: '#1e293b', border: '1px solid #334155' }}
+                      formatter={(val) => fmtR(val)}
+                    />
+                    <Legend wrapperStyle={{ fontSize: 11 }} />
+                    <Line type="monotone" dataKey="net_worth" stroke="#10b981" strokeWidth={2.5} name="Net Worth" dot={{ r: 3 }} />
+                    <Line type="monotone" dataKey="total_assets" stroke="#3b82f6" strokeWidth={1.5} strokeDasharray="3 3" name="Assets" dot={false} />
+                    <Line type="monotone" dataKey="total_liabilities" stroke="#ef4444" strokeWidth={1.5} strokeDasharray="3 3" name="Liabilities" dot={false} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <p className="text-xs text-slate-500 mt-2">
+                Snapshots are captured automatically each month when you save your profile.
+              </p>
             </CardContent>
           </Card>
         )}

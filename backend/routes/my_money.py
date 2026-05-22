@@ -64,7 +64,7 @@ async def update_profile(
     profile: FinancialProfile,
     current_user: dict = Depends(get_current_user),
 ):
-    """Upsert the current user's financial profile."""
+    """Upsert the current user's financial profile + write a monthly net-worth snapshot."""
     data = profile.model_dump()
     data["user_id"] = current_user["id"]
     data["updated_at"] = datetime.now(timezone.utc).isoformat()
@@ -73,8 +73,42 @@ async def update_profile(
         {"$set": data},
         upsert=True,
     )
+
+    # Snapshot net worth keyed by year-month (one row per month per user — upsert)
+    now = datetime.now(timezone.utc)
+    period = f"{now.year:04d}-{now.month:02d}"
+    total_assets = sum(a.value for a in profile.assets) if profile.assets else 0
+    total_liabilities = sum(lia.balance for lia in profile.liabilities) if profile.liabilities else 0
+    snapshot = {
+        "user_id": current_user["id"],
+        "period": period,
+        "captured_at": now.isoformat(),
+        "total_assets": total_assets,
+        "total_liabilities": total_liabilities,
+        "net_worth": total_assets - total_liabilities,
+        "tfsa_contributed_lifetime": profile.tfsa_contributed_lifetime,
+        "tfsa_contributed_this_year": profile.tfsa_contributed_this_year,
+        "ra_contributed_this_year": profile.ra_contributed_this_year,
+    }
+    await db.net_worth_snapshots.update_one(
+        {"user_id": current_user["id"], "period": period},
+        {"$set": snapshot},
+        upsert=True,
+    )
+
     data.pop("user_id", None)
     return {"success": True, "profile": data}
+
+
+@router.get("/history")
+async def net_worth_history(current_user: dict = Depends(get_current_user), months: int = 24):
+    """Return monthly net-worth snapshots for the current user (oldest first)."""
+    cursor = db.net_worth_snapshots.find(
+        {"user_id": current_user["id"]},
+        {"_id": 0, "user_id": 0},
+    ).sort("period", 1).limit(max(months, 1))
+    rows = await cursor.to_list(length=months)
+    return {"history": rows, "count": len(rows)}
 
 
 @router.get("/dashboard")

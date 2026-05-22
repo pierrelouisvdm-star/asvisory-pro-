@@ -176,35 +176,60 @@ export const Client360 = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {suggestions.map((s, i) => (
-                  <div
-                    key={i}
-                    data-testid={`suggestion-${i}`}
-                    className={`flex items-start gap-3 p-3 rounded-md border ${
-                      s.priority === 'high'
-                        ? 'bg-red-500/10 border-red-500/30'
-                        : s.priority === 'medium'
-                        ? 'bg-amber-500/10 border-amber-500/30'
-                        : 'bg-slate-700/30 border-slate-600/30'
-                    }`}
-                  >
-                    <Badge
-                      className={
-                        s.priority === 'high'
-                          ? 'bg-red-500/20 text-red-300 border-red-500/30'
-                          : s.priority === 'medium'
-                          ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-                          : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
-                      }
+                {suggestions.map((s, i) => {
+                  const linkMap = {
+                    no_docs: '/document-reader',
+                    no_portfolio_review: `/portfolio-review?client_id=${clientId}`,
+                    stale_review: `/portfolio-review?client_id=${clientId}`,
+                    review_due_soon: `/portfolio-review?client_id=${clientId}`,
+                    outdated_products: `/portfolio-review?client_id=${clientId}`,
+                    no_compliance: `/compliance-notes?client_id=${clientId}`,
+                    stale_compliance: `/compliance-notes?client_id=${clientId}`,
+                    no_touchpoint: `/email-generator?client_id=${clientId}`,
+                  };
+                  const href = linkMap[s.kind];
+                  const rowCls = `flex items-start gap-3 p-3 rounded-md border ${
+                    s.priority === 'high'
+                      ? 'bg-red-500/10 border-red-500/30'
+                      : s.priority === 'medium'
+                      ? 'bg-amber-500/10 border-amber-500/30'
+                      : 'bg-slate-700/30 border-slate-600/30'
+                  } ${href ? 'cursor-pointer hover:opacity-90 transition-opacity' : ''}`;
+                  const content = (
+                    <>
+                      <Badge
+                        className={
+                          s.priority === 'high'
+                            ? 'bg-red-500/20 text-red-300 border-red-500/30'
+                            : s.priority === 'medium'
+                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                            : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
+                        }
+                      >
+                        {s.priority.toUpperCase()}
+                      </Badge>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-white">{s.label}</div>
+                        {s.detail && <div className="text-xs text-slate-400 mt-0.5">{s.detail}</div>}
+                      </div>
+                      {href && <ArrowRight className="h-4 w-4 text-slate-400 self-center" />}
+                    </>
+                  );
+                  return href ? (
+                    <Link
+                      key={i}
+                      to={href}
+                      className={rowCls}
+                      data-testid={`suggestion-${i}`}
                     >
-                      {s.priority.toUpperCase()}
-                    </Badge>
-                    <div className="flex-1">
-                      <div className="text-sm font-medium text-white">{s.label}</div>
-                      {s.detail && <div className="text-xs text-slate-400 mt-0.5">{s.detail}</div>}
+                      {content}
+                    </Link>
+                  ) : (
+                    <div key={i} className={rowCls} data-testid={`suggestion-${i}`}>
+                      {content}
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </CardContent>
           </Card>

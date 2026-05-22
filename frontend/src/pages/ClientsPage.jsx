@@ -366,23 +366,43 @@ export const ClientsPage = () => {
                         {/* Smart Suggestions badges */}
                         {Array.isArray(suggestions[client.id]) && suggestions[client.id].length > 0 && (
                           <div className="flex flex-wrap gap-1.5 mt-2" data-testid={`suggestions-${client.id}`}>
-                            {suggestions[client.id].slice(0, 3).map((s, i) => (
-                              <Badge
-                                key={i}
-                                title={s.detail}
-                                className={
-                                  s.priority === 'high'
-                                    ? 'bg-red-500/15 text-red-300 border-red-500/30'
-                                    : s.priority === 'medium'
-                                    ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
-                                    : s.kind === 'all_good'
-                                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                                    : 'bg-slate-500/15 text-slate-300 border-slate-500/30'
-                                }
-                              >
-                                {s.kind === 'all_good' ? '✓ ' : '⚠ '}{s.label}
-                              </Badge>
-                            ))}
+                            {suggestions[client.id].slice(0, 3).map((s, i) => {
+                              const linkMap = {
+                                no_docs: '/document-reader',
+                                no_portfolio_review: `/portfolio-review?client_id=${client.id}`,
+                                stale_review: `/portfolio-review?client_id=${client.id}`,
+                                review_due_soon: `/portfolio-review?client_id=${client.id}`,
+                                outdated_products: `/portfolio-review?client_id=${client.id}`,
+                                no_compliance: `/compliance-notes?client_id=${client.id}`,
+                                stale_compliance: `/compliance-notes?client_id=${client.id}`,
+                                no_touchpoint: `/email-generator?client_id=${client.id}`,
+                              };
+                              const href = linkMap[s.kind];
+                              const cls = s.priority === 'high'
+                                ? 'bg-red-500/15 text-red-300 border-red-500/30'
+                                : s.priority === 'medium'
+                                ? 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+                                : s.kind === 'all_good'
+                                ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                                : 'bg-slate-500/15 text-slate-300 border-slate-500/30';
+                              const content = (
+                                <Badge title={s.detail} className={`${cls} ${href ? 'cursor-pointer hover:opacity-80' : ''}`}>
+                                  {s.kind === 'all_good' ? '✓ ' : '⚠ '}{s.label}
+                                </Badge>
+                              );
+                              return href ? (
+                                <Link
+                                  key={i}
+                                  to={href}
+                                  data-testid={`suggestion-link-${client.id}-${i}`}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  {content}
+                                </Link>
+                              ) : (
+                                <span key={i}>{content}</span>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
