@@ -5,11 +5,12 @@ Generates structured, AI-written client-ready report content
 that the frontend renders into a branded PDF.
 """
 import os
+import base64
 import uuid
 import json
 from datetime import datetime, timezone
 from typing import Optional, List
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File
 from pydantic import BaseModel
 from dotenv import load_dotenv
 
@@ -132,6 +133,63 @@ async def update_branding(
     # Return without _id / advisor_id
     data.pop("advisor_id", None)
     return {"success": True, "branding": data}
+
+
+# ---------- Logo upload ----------
+LOGO_MAX_BYTES = 500 * 1024  # 500 KB
+LOGO_MIME = {
+    "png": "image/png",
+    "jpg": "image/jpeg",
+    "jpeg": "image/jpeg",
+    "svg": "image/svg+xml",
+    "webp": "image/webp",
+}
+
+
+@router.post("/branding/logo")
+async def upload_branding_logo(
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user),
+):
+    """Upload an advisor logo. Stored as a base64 data URI on the branding doc so it
+    embeds directly into PDFs (html2canvas) without CORS / auth juggling."""
+    ext = (os.path.splitext(file.filename or "")[1].lower().lstrip(".")) or "png"
+    if ext not in LOGO_MIME:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Unsupported logo type. Use {', '.join(sorted(LOGO_MIME.keys()))}.",
+        )
+    content = await file.read()
+    if len(content) == 0:
+        raise HTTPException(status_code=400, detail="Empty file.")
+    if len(content) > LOGO_MAX_BYTES:
+        raise HTTPException(status_code=400, detail="Logo too large. Maximum is 500KB.")
+
+    data_uri = f"data:{LOGO_MIME[ext]};base64,{base64.b64encode(content).decode('utf-8')}"
+
+    await db.report_branding.update_one(
+        {"advisor_id": current_user["id"]},
+        {
+            "$set": {
+                "advisor_id": current_user["id"],
+                "logo_url": data_uri,
+                "logo_updated_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            }
+        },
+        upsert=True,
+    )
+    return {"success": True, "logo_url": data_uri, "size": len(content)}
+
+
+@router.delete("/branding/logo")
+async def delete_branding_logo(current_user: dict = Depends(get_current_user)):
+    """Remove the advisor's logo."""
+    await db.report_branding.update_one(
+        {"advisor_id": current_user["id"]},
+        {"$set": {"logo_url": "", "updated_at": datetime.now(timezone.utc).isoformat()}},
+    )
+    return {"success": True}
 
 
 @router.post("/generate")

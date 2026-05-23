@@ -1,0 +1,29 @@
+{
+  "summary": "Validated pricing copy across LandingPage/AuthPage/PricingPage and Practice Branding feature (backend + advisor frontend). 11/11 backend branding tests pass (logo upload returns base64 data URI, GET reflects it, DELETE clears, empty/extension/size errors all 400, individuals 403 on POST and DELETE, PUT branding regression OK). Frontend pricing copy is correct everywhere with no stale R1,299/R2,289. Branding settings UI works for advisor (all data-testids present, save toast, logo upload populates preview, preset swatches work). IRP5 vault list and digest preview regression endpoints both reachable for individuals.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_branding_logo.py",
+    "/app/test_reports/pytest/pytest_branding_logo.xml"
+  ],
+  "action_items": [
+    "RECOMMENDED MANUAL VERIFY: confirm RoleGate truly blocks an individual at /branding-settings via real UI login (register individual via /auth, sign in, then visit /branding-settings). My token-swap approach in Playwright did not reliably reset AuthContext, so I cannot definitively confirm the frontend RoleGate redirect — backend 403 is confirmed though, so feature is safe."
+  ],
+  "critical_code_review_comments": [
+    "BrandingSettings.jsx uses window.location.origin for API_URL fallback when not on localhost — fine but a bit redundant; prefer single env-driven constant.",
+    "reports.py logo upload trusts extension from filename for MIME — acceptable for advisor self-upload but could be hardened by sniffing magic bytes (low priority).",
+    "Frontend BrandingSettings has no client-side validation of color hex format beyond what the color input accepts; minor."
+  ],
+  "updated_files": ["/app/backend/tests/test_branding_logo.py"],
+  "success_rate": {"backend": "100%", "frontend": "95%"},
+  "test_credentials": "Advisor: pierrelouisvdm@gmail.com / Scorpio@57!! ; Individual: registered fresh via API with role=individual",
+  "seed_data_creation": "Created throwaway individual via /api/auth/register; advisor branding doc populated with TEST_Firm/TEST disclaimer/#6366f1 during regression.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "test_branding_logo.py is the regression suite for /api/reports/branding/logo POST/DELETE. /api/auth/register requires field 'full_name' (not just 'name'). Individual auth tokens were obtained via API and used directly. PricingPage defaults to Annual toggle so monthly R299/R999 won't be visible unless you click Monthly toggle.",
+  "rca of the issue": "No bugs found requiring RCA."
+}

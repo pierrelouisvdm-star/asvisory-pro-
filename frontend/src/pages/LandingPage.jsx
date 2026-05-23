@@ -14,7 +14,7 @@ import {
   PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail, Phone, MapPin,
-  Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle
+  Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Crown
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
@@ -689,54 +689,101 @@ export const LandingPage = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="relative py-20 bg-gradient-to-b from-muted/30 to-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative py-20 bg-gradient-to-b from-muted/30 to-background" data-testid="landing-pricing">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="mb-4 text-primary text-sm font-medium uppercase tracking-wide">
             Simple Pricing
           </p>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
-            One Plan. Everything Included.
+            Two plans. Pick the one that fits.
           </h2>
-          <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            No hidden fees, no feature restrictions. Get full access to every tool for one simple monthly price.
+          <p className="text-muted-foreground mb-10 max-w-xl mx-auto">
+            One price for individuals managing their own money. One price for advisors running a practice. No hidden fees, no feature gates inside your tier.
           </p>
-          
-          <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
-            <CardContent className="p-8">
-              <div className="mb-6">
-                <span className="text-5xl font-bold text-foreground">R299</span>
-                <span className="text-muted-foreground ml-2">/month</span>
-              </div>
-              
-              <ul className="space-y-3 text-left mb-8">
-                {[
-                  'All 20 Financial Calculators',
-                  'Tax Planning Hub (2026/27)',
-                  'Weekly Market Updates by Analysts',
-                  'Tips from Certified Financial Planners',
-                  'Income & Expense Tracker',
-                  'Professional PDF Reports',
-                  'AI Financial Assistant',
-                ].map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-foreground">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              
-              <Link to="/auth">
-                <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg h-14">
-                  Get Started Now
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              
-              <p className="mt-4 text-sm text-muted-foreground">
-                Cancel anytime • Have a coupon code? Enter it at signup
-              </p>
-            </CardContent>
-          </Card>
+
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
+            {/* Individual */}
+            <Card className="bg-gradient-to-br from-emerald-500/5 to-card border-2 border-emerald-500/40">
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-1">
+                  <Target className="h-5 w-5 text-emerald-400" />
+                  <span className="text-sm font-semibold text-emerald-400 uppercase tracking-wide">Individual</span>
+                </div>
+                <p className="text-muted-foreground text-sm mb-5">For people managing their own money</p>
+                <div className="mb-6 flex items-baseline gap-2">
+                  <span className="text-5xl font-bold text-foreground">R299</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <p className="text-xs text-emerald-400 -mt-4 mb-6">or R1,499/year — Save R2,089</p>
+                <ul className="space-y-2.5 mb-8">
+                  {[
+                    'My Money dashboard + Net Worth tracker',
+                    'IRP5 Vault with AI tax-code parsing',
+                    'TFSA & RA planners + Tax Hub (2026/27)',
+                    'Monthly Money Email Digest',
+                    'All 20 financial calculators',
+                    '7-day refund on annual plan',
+                  ].map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-foreground text-sm">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/auth">
+                  <Button size="lg" className="w-full bg-emerald-500 hover:bg-emerald-400 text-navy-950 font-semibold h-12" data-testid="landing-cta-individual">
+                    Start as an Individual
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Advisor */}
+            <Card className="bg-gradient-to-br from-indigo-500/10 to-card border-2 border-indigo-500/40 relative">
+              <Badge className="absolute -top-3 right-6 bg-indigo-500 text-white border-0">
+                <Sparkles className="h-3 w-3 mr-1" />
+                For Practices
+              </Badge>
+              <CardContent className="p-8">
+                <div className="flex items-center gap-3 mb-1">
+                  <Crown className="h-5 w-5 text-indigo-300" />
+                  <span className="text-sm font-semibold text-indigo-300 uppercase tracking-wide">Advisor</span>
+                </div>
+                <p className="text-muted-foreground text-sm mb-5">AI copilot for financial advisors</p>
+                <div className="mb-6 flex items-baseline gap-2">
+                  <span className="text-5xl font-bold text-foreground">R999</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+                <p className="text-xs text-indigo-300 -mt-4 mb-6">or R6,999/year — Save R4,989</p>
+                <ul className="space-y-2.5 mb-8">
+                  {[
+                    'Client 360 CRM + Smart Suggestions',
+                    'AI Client Report Builder (branded PDFs)',
+                    'AI Email & Comms Generator',
+                    'Compliance & FAIS-aligned RoA notes',
+                    'Multi-document Portfolio Review',
+                    'Everything in Individual',
+                  ].map((feature, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-foreground text-sm">
+                      <CheckCircle2 className="h-4 w-4 text-indigo-300 flex-shrink-0 mt-0.5" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/auth">
+                  <Button size="lg" className="w-full bg-indigo-500 hover:bg-indigo-400 text-white font-semibold h-12" data-testid="landing-cta-advisor">
+                    Start as an Advisor
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+
+          <p className="mt-6 text-sm text-muted-foreground">
+            Free tier always available · Cancel anytime · Have a coupon code? Enter it at signup
+          </p>
           
           <div className="mt-8 p-4 rounded-lg bg-muted/50 border border-border inline-block">
             <p className="text-muted-foreground text-sm">
@@ -934,24 +981,24 @@ export const LandingPage = () => {
               <div className="flex items-center justify-center md:justify-start gap-2 mb-2">
                 <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
                   <Sparkles className="h-3 w-3 mr-1" />
-                  Limited Time Offer
+                  Pay Yearly, Save Big
                 </Badge>
               </div>
               <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-1">
-                Annual Plan: <span className="text-emerald-400">R1,499</span>
+                Individual <span className="text-emerald-400">R1,499/yr</span> · Advisor <span className="text-indigo-300">R6,999/yr</span>
               </h3>
               <p className="text-muted-foreground">
-                That's only <span className="text-emerald-400 font-semibold">R125/month</span> — Save R2,089 vs monthly!
+                Save up to <span className="text-emerald-400 font-semibold">R4,989</span> vs paying monthly. 7-day refund on annual plans.
               </p>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <Link to="/auth">
+              <Link to="/pricing">
                 <Button size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 h-14 shadow-lg shadow-emerald-500/25">
-                  Get Annual Plan
+                  See Annual Plans
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <p className="text-xs text-muted-foreground">7-day refund policy • One-time payment</p>
+              <p className="text-xs text-muted-foreground">7-day refund policy · One-time payment</p>
             </div>
           </div>
         </div>
@@ -979,13 +1026,9 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            R299/month (cancel anytime) or{' '}
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-semibold">
-              <Sparkles className="h-3.5 w-3.5" />
-              R1,499/year — Save R2,089!
-            </span>
+            Individual <span className="text-emerald-400 font-semibold">R299/mo</span> · Advisor <span className="text-indigo-300 font-semibold">R999/mo</span> · Free tier available
           </p>
-          <p className="mt-2 text-sm text-muted-foreground">7-day refund policy on annual plan</p>
+          <p className="mt-2 text-sm text-muted-foreground">Annual plans save up to R4,989 · 7-day refund policy</p>
         </div>
       </section>
 

@@ -31,22 +31,34 @@ const tiers = [
     highlight: false,
   },
   {
-    name: 'Premium',
+    name: 'Individual',
     price: 'R299',
-    annualPrice: 'R1,299',
-    period: '/month',
-    annualPeriod: '/year',
-    annualSavings: 'Save R2,289',
-    description: 'Full professional suite',
+    period: '/mo',
+    annualNote: 'or R1,499/yr',
+    description: 'For people managing their own money',
     features: [
-      'All 20 Financial Calculators',
-      'Tax Planning Hub (2026/27)',
-      'Weekly Market Updates by Analysts',
-      'Tips from Certified Financial Planners',
-      'Income & Expense Tracker',
-      'PDF Reports & AI Assistant',
+      'My Money dashboard & Net Worth tracker',
+      'IRP5 Vault with AI tax-code parsing',
+      'TFSA & RA planners + Tax Hub (2026/27)',
+      'Monthly Money Email Digest',
+      'All 20 financial calculators',
     ],
     highlight: true,
+  },
+  {
+    name: 'Advisor',
+    price: 'R999',
+    period: '/mo',
+    annualNote: 'or R6,999/yr',
+    description: 'AI copilot for financial advisors',
+    features: [
+      'Client 360 CRM + Smart Suggestions',
+      'AI Client Report Builder (branded PDFs)',
+      'AI Email & Comms Generator',
+      'Compliance & FAIS-aligned RoA notes',
+      'Multi-document Portfolio Review',
+    ],
+    highlight: false,
   },
 ];
 
@@ -460,25 +472,26 @@ export const AuthPage = () => {
           {/* Right Side - Pricing Tiers */}
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
-              <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
+              <h2 className="text-xl font-display font-bold text-foreground mb-1">Pick a plan that fits you</h2>
               <p className="text-muted-foreground text-sm">
-                R299/month or <span className="text-emerald-500 font-medium">R1,499/year</span> (Save R2,089!)
+                <span className="text-emerald-500 font-medium">Individual R299/mo</span> · <span className="text-indigo-400 font-medium">Advisor R999/mo</span> · Annual plans save up to R2,089
               </p>
             </div>
 
             {tiers.map((tier) => (
-              <Card 
+              <Card
                 key={tier.name}
                 className={`border-border bg-card relative overflow-hidden ${
                   tier.highlight ? 'border-primary/50 ring-1 ring-primary/20' : ''
                 }`}
+                data-testid={`auth-tier-${tier.name.toLowerCase()}`}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-display font-bold text-foreground">{tier.name}</h3>
-                        {tier.name === 'Premium' && <Sparkles className="h-4 w-4 text-amber-500" />}
+                        {tier.highlight && <Sparkles className="h-4 w-4 text-amber-500" />}
                       </div>
                       <p className="text-muted-foreground text-xs mb-3">{tier.description}</p>
                       <ul className="space-y-1.5">
@@ -490,11 +503,14 @@ export const AuthPage = () => {
                         ))}
                       </ul>
                     </div>
-                    <div className="text-right ml-4">
-                      <div className="flex items-baseline">
+                    <div className="text-right ml-4 flex-shrink-0">
+                      <div className="flex items-baseline justify-end">
                         <span className="text-2xl font-bold text-foreground">{tier.price}</span>
                         <span className="text-muted-foreground text-sm">{tier.period}</span>
                       </div>
+                      {tier.annualNote && (
+                        <div className="text-[11px] text-emerald-500 mt-0.5 whitespace-nowrap">{tier.annualNote}</div>
+                      )}
                     </div>
                   </div>
                 </CardContent>

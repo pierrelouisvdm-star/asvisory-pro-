@@ -39,7 +39,8 @@ import {
   Newspaper,
   Zap,
   Camera,
-  RefreshCw
+  RefreshCw,
+  Palette
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -325,6 +326,17 @@ const advisorTools = [
     isFree: false,
     isNew: true,
     isFeatured: true,
+  },
+  {
+    id: 'branding-settings',
+    title: 'Practice Branding',
+    description: 'Upload your logo, set your firm name, FSP number & brand colour — flows into every report and email',
+    icon: Palette,
+    path: '/branding-settings',
+    features: ['Logo Upload', 'Brand Colour', 'FSP Footer'],
+    isFree: false,
+    isNew: true,
+    isFeatured: false,
   },
 ];
 
