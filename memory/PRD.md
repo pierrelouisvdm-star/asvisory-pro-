@@ -112,6 +112,8 @@
 ## Future Roadmap
 
 ### Recently Completed (May 2026)
+- [x] **Pricing copy clean-up** — LandingPage, AuthPage and PricingPage now consistently show Free / Individual R299·R1,499 / Advisor R999·R6,999. Old "R1,299 / Save R2,289" copy purged. Verified iteration_33.
+- [x] **Practice Branding (white-labeling)** — `/branding-settings` page for advisors. Logo upload (PNG/JPG/SVG/WEBP up to 500KB → base64 data URI, embeds in PDFs). Brand colour with preset swatches, FSP, firm/advisor details, footer disclaimer. New endpoints: POST/DELETE `/api/reports/branding/logo`. Existing PUT `/api/reports/branding` unchanged. Branding flows into Report Builder PDFs and email signatures. 11/11 pytest pass (iteration_33).
 - [x] **Monthly Money Email Digest** — `/api/me/digest/preview` + `/api/me/digest/send`. AI-tailored monthly summary emailed via Resend. Frontend on My Money. 13/13 pytest pass (iteration_31).
 - [x] **IRP5 Vault** — `/irp5-vault` page + `/api/me/irp5/*` endpoints. Upload PDF/PNG/JPG IRP5 certificates → stored in Emergent Object Storage → AI parses SARS source codes (3601, 4001, 4006, 4102, 4141, etc) → list/download/soft-delete. New `utils/object_storage.py` wrapper. 19/19 pytest pass (iteration_32).
 
@@ -137,6 +139,8 @@
 - [ ] Connect Market Insights to real data API
 
 ### P2 - Medium Priority
+- [x] White-labeling for advisor reports/emails (Practice Branding, May 2026)
+- [ ] Advisor Admin Dashboard (AI touchpoints, reports/clients counters)
 - [ ] Refactor TaxPlanningHub.jsx (1700+ lines - architectural debt)
 - [ ] Light theme audit and consistency
 - [ ] Email notifications for weekly updates
