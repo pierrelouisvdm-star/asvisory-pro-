@@ -47,6 +47,7 @@ import Client360 from "@/pages/Client360";
 import MyMoney from "@/pages/MyMoney";
 import IRP5Vault from "@/pages/IRP5Vault";
 import BrandingSettings from "@/pages/BrandingSettings";
+import NotFoundPage from "@/pages/NotFoundPage";
 import { ClientsPage } from "@/pages/ClientsPage";
 import { ClientProfilePage } from "@/pages/ClientProfilePage";
 import RoleSelectionModal from "@/components/RoleSelectionModal";
@@ -184,6 +185,9 @@ function App() {
                   <Route path="/terms" element={<TermsOfServicePage />} />
                   <Route path="/privacy" element={<PrivacyPolicyPage />} />
                   <Route path="/refund-policy" element={<RefundPolicyPage />} />
+
+                  {/* 404 — must be the last route */}
+                  <Route path="*" element={<NotFoundPage />} />
                 </Routes>
               </AppLayout>
             <Toaster position="top-right" />
