@@ -31,13 +31,13 @@ export const RoleSelectionModal = () => {
     <Dialog open={true}>
       <DialogContent
         data-testid="role-selection-modal"
-        className="max-w-2xl bg-navy-900 border-navy-700 [&>button]:hidden"
+        className="max-w-2xl w-[calc(100vw-1.5rem)] max-h-[90vh] overflow-y-auto bg-navy-900 border-navy-700 p-4 sm:p-6 [&>button]:hidden"
         onPointerDownOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
       >
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-white">Welcome — who are you?</DialogTitle>
-          <DialogDescription className="text-slate-400">
+          <DialogTitle className="text-xl sm:text-2xl font-bold text-white">Welcome — who are you?</DialogTitle>
+          <DialogDescription className="text-slate-400 text-sm">
             Pick the workspace that fits you. This sets up the right tools and pricing.
             <span className="block mt-1 text-xs text-amber-400">
               Note: this choice is locked in afterwards.
@@ -45,7 +45,7 @@ export const RoleSelectionModal = () => {
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid md:grid-cols-2 gap-4 mt-4">
+        <div className="grid sm:grid-cols-2 gap-3 sm:gap-4 mt-4">
           <RoleCard
             testid="role-card-individual"
             active={picked === 'individual'}
@@ -78,13 +78,13 @@ export const RoleSelectionModal = () => {
           />
         </div>
 
-        <div className="flex justify-end mt-6">
+        <div className="sticky bottom-0 -mx-4 sm:-mx-6 -mb-4 sm:-mb-6 mt-6 px-4 sm:px-6 py-3 bg-gradient-to-t from-navy-900 via-navy-900 to-navy-900/95 border-t border-navy-700 flex justify-end">
           <Button
             data-testid="role-confirm-btn"
             onClick={submit}
             disabled={!picked || saving}
             size="lg"
-            className="bg-emerald-500 hover:bg-emerald-400 text-navy-950"
+            className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-navy-950"
           >
             {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
             Continue {!saving && <ArrowRight className="h-4 w-4 ml-2" />}
@@ -100,24 +100,24 @@ const RoleCard = ({ testid, active, onClick, icon: Icon, title, subtitle, bullet
     type="button"
     data-testid={testid}
     onClick={onClick}
-    className={`text-left p-5 rounded-xl border-2 transition-all ${
+    className={`text-left p-4 sm:p-5 rounded-xl border-2 transition-all touch-manipulation ${
       active
         ? 'border-emerald-500 bg-emerald-500/10 shadow-lg shadow-emerald-500/10'
-        : 'border-navy-700 bg-navy-800/40 hover:border-emerald-500/50'
+        : 'border-navy-700 bg-navy-800/40 hover:border-emerald-500/50 active:border-emerald-500/70'
     }`}
   >
     <div className="flex items-center justify-between mb-3">
-      <div className={`flex h-11 w-11 items-center justify-center rounded-lg ${active ? 'bg-emerald-500 text-navy-950' : 'bg-navy-700 text-emerald-400'}`}>
-        <Icon className="h-6 w-6" />
+      <div className={`flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-lg ${active ? 'bg-emerald-500 text-navy-950' : 'bg-navy-700 text-emerald-400'}`}>
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
       </div>
       {active && <CheckCircle2 className="h-5 w-5 text-emerald-400" />}
     </div>
-    <div className="text-lg font-semibold text-white">{title}</div>
+    <div className="text-base sm:text-lg font-semibold text-white">{title}</div>
     <div className="text-xs text-slate-400 mb-3">{subtitle}</div>
-    <ul className="space-y-1 text-sm text-slate-300 mb-3">
+    <ul className="space-y-1 text-xs sm:text-sm text-slate-300 mb-3">
       {bullets.map((b, i) => (
         <li key={i} className="flex items-start gap-2">
-          <span className="text-emerald-400 mt-1">•</span>
+          <span className="text-emerald-400 mt-0.5">•</span>
           {b}
         </li>
       ))}
