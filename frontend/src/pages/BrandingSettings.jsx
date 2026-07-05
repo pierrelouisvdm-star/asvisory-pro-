@@ -351,7 +351,7 @@ export const BrandingSettings = () => {
           </div>
         </div>
 
-        <div className="sticky bottom-4 flex justify-end z-10">
+        <div className="sticky bottom-20 md:bottom-4 flex justify-end z-10">
           <Button
             onClick={save}
             disabled={saving}

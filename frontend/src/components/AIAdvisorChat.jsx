@@ -346,7 +346,7 @@ export const AIAdvisorButton = () => {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-4 right-4 z-40 h-14 w-14 rounded-full shadow-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700"
+          className="fixed bottom-20 md:bottom-4 right-4 z-40 h-14 w-14 rounded-full shadow-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700"
           data-testid="ai-advisor-button"
         >
           <Bot className="h-6 w-6" />

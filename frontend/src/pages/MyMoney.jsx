@@ -483,7 +483,7 @@ export const MyMoney = () => {
         </Card>
 
         {/* Save */}
-        <div className="flex justify-end sticky bottom-4 z-10">
+        <div className="flex justify-end sticky bottom-20 md:bottom-4 z-10">
           <Button onClick={save} disabled={saving} size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-navy-950 shadow-xl" data-testid="save-profile-btn">
             {saving ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Save className="h-4 w-4 mr-2" />}
             Save & Refresh
