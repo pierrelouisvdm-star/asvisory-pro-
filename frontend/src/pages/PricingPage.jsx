@@ -430,9 +430,9 @@ export const PricingPage = () => {
               <Mail className="h-4 w-4" />
               support@advisorypro.co.za
             </a>
-            <a href="tel:+27123456789" className="flex items-center gap-2 hover:text-emerald-400">
+            <a href="tel:+27794984148" className="flex items-center gap-2 hover:text-emerald-400">
               <Phone className="h-4 w-4" />
-              +27 12 345 6789
+              +27 79 498 4148
             </a>
           </div>
         </div>

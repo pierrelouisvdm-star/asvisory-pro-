@@ -162,6 +162,35 @@ async def preview_digest(current_user: dict = Depends(get_current_user)):
     return {"summary": summary, "recommendation": recommendation, "html": html}
 
 
+@router.get("/status")
+async def digest_status(current_user: dict = Depends(get_current_user)):
+    """Cheap status endpoint so the UI can show a 'new digest available' badge.
+
+    Returns whether the user has a snapshot for the current month AND hasn't
+    emailed the digest for that same month yet.
+    """
+    latest = await db.net_worth_snapshots.find_one(
+        {"user_id": current_user["id"]},
+        {"_id": 0, "period": 1},
+        sort=[("period", -1)],
+    )
+    current_period = latest["period"] if latest else None
+
+    sent = await db.digest_sends.find_one(
+        {"user_id": current_user["id"]},
+        {"_id": 0, "period": 1},
+        sort=[("period", -1)],
+    )
+    last_sent_period = sent["period"] if sent else None
+
+    available = bool(current_period) and current_period != last_sent_period
+    return {
+        "available": available,
+        "current_period": current_period,
+        "last_sent_period": last_sent_period,
+    }
+
+
 @router.post("/send")
 async def send_digest(current_user: dict = Depends(get_current_user)):
     """Send the digest to the current user's email."""
@@ -179,6 +208,19 @@ async def send_digest(current_user: dict = Depends(get_current_user)):
     try:
         result = await asyncio.to_thread(resend.Emails.send, params)
         logger.info(f"Money digest sent to {to_email}, id={result.get('id')}")
+        # Record the send so /status can clear the "new" badge for this period.
+        await db.digest_sends.update_one(
+            {"user_id": current_user["id"], "period": payload["summary"]["period"]},
+            {
+                "$set": {
+                    "user_id": current_user["id"],
+                    "period": payload["summary"]["period"],
+                    "sent_at": datetime.now(timezone.utc).isoformat(),
+                    "email_id": result.get("id"),
+                }
+            },
+            upsert=True,
+        )
         return {"success": True, "email_id": result.get("id"), "sent_to": to_email}
     except Exception as e:
         logger.error(f"Money digest send failed for {to_email}: {e}")

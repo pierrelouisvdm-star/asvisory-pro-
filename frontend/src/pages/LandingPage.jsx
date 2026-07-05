@@ -924,8 +924,8 @@ export const LandingPage = () => {
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Phone</p>
-                        <a href="tel:+27737599863" className="text-muted-foreground hover:text-primary transition-colors">
-                          073 759 9863
+                        <a href="tel:+27794984148" className="text-muted-foreground hover:text-primary transition-colors">
+                          079 498 4148
                         </a>
                       </div>
                     </div>
@@ -1097,8 +1097,8 @@ export const LandingPage = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="tel:+27737599863" className="hover:text-primary transition-colors">
-                    073 759 9863
+                  <a href="tel:+27794984148" className="hover:text-primary transition-colors">
+                    079 498 4148
                   </a>
                 </li>
                 <li>Cape Town, South Africa</li>

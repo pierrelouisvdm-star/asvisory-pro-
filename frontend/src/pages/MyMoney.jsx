@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -44,6 +44,7 @@ const fmtR = (v) => v == null ? '—' : `R ${Number(v).toLocaleString('en-ZA', {
 
 export const MyMoney = () => {
   const { token, user } = useAuth();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [dash, setDash] = useState(null);
@@ -51,15 +52,17 @@ export const MyMoney = () => {
   const [history, setHistory] = useState([]);
   const [digestPreview, setDigestPreview] = useState(null);
   const [digestBusy, setDigestBusy] = useState(false);
+  const [digestAvailable, setDigestAvailable] = useState(false);
 
   const authHeaders = { headers: { Authorization: `Bearer ${token}` } };
 
   const load = async () => {
     setLoading(true);
     try {
-      const [dashRes, histRes] = await Promise.all([
+      const [dashRes, histRes, statusRes] = await Promise.all([
         axios.get(`${API_URL}/api/me/financial/dashboard`, authHeaders),
         axios.get(`${API_URL}/api/me/financial/history`, authHeaders).catch(() => ({ data: { history: [] } })),
+        axios.get(`${API_URL}/api/me/digest/status`, authHeaders).catch(() => ({ data: { available: false } })),
       ]);
       setDash(dashRes.data);
       setProfile({
@@ -68,6 +71,7 @@ export const MyMoney = () => {
         liabilities: dashRes.data.profile.liabilities || [],
       });
       setHistory(histRes.data.history || []);
+      setDigestAvailable(!!statusRes.data?.available);
     } catch (e) {
       toast.error('Failed to load');
     } finally {
@@ -79,6 +83,17 @@ export const MyMoney = () => {
     if (token) load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
+
+  // Deep-link from bottom nav: /my-money?digest=1 → scroll to digest card.
+  useEffect(() => {
+    if (loading) return;
+    if (searchParams.get('digest') === '1') {
+      const el = document.querySelector('[data-testid="money-digest-card"]');
+      if (el) {
+        setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+      }
+    }
+  }, [loading, searchParams]);
 
   const save = async () => {
     setSaving(true);
@@ -122,6 +137,7 @@ export const MyMoney = () => {
     try {
       const res = await axios.post(`${API_URL}/api/me/digest/send`, {}, authHeaders);
       toast.success(`Sent to ${res.data.sent_to}`);
+      setDigestAvailable(false);
     } catch (e) {
       toast.error(e.response?.data?.detail || 'Could not send');
     } finally {
@@ -333,9 +349,20 @@ export const MyMoney = () => {
           <CardHeader>
             <CardTitle className="text-white text-base flex items-center gap-2">
               <Mail className="h-5 w-5 text-amber-400" /> Monthly Money Update
+              {digestAvailable && (
+                <Badge
+                  className="bg-red-500/20 text-red-300 border border-red-500/40 uppercase tracking-wide text-[10px] px-2 py-0"
+                  data-testid="digest-new-badge"
+                >
+                  <span className="mr-1 inline-block h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse" />
+                  New this month
+                </Badge>
+              )}
             </CardTitle>
             <p className="text-sm text-slate-400">
-              Get a personalised digest of this month vs last with one AI-recommended action.
+              {digestAvailable
+                ? 'Your latest snapshot is in — send yourself a personalised summary of the month.'
+                : 'Get a personalised digest of this month vs last with one AI-recommended action.'}
             </p>
           </CardHeader>
           <CardContent>

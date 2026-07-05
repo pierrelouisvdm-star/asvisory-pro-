@@ -225,6 +225,9 @@ async def startup_db_client():
     await db.irp5_documents.create_index("id", unique=True)
     await db.irp5_documents.create_index([("user_id", 1), ("created_at", -1)])
 
+    # Digest send-history (drives "new digest available" badge)
+    await db.digest_sends.create_index([("user_id", 1), ("period", 1)], unique=True)
+
     # Initialise Emergent Object Storage (used by IRP5 vault)
     try:
         from utils.object_storage import init_storage

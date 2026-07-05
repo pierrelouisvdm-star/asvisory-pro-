@@ -1,18 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
 import {
   Home, Wallet, ShieldCheck, Mail,
   Users, FileText, Palette,
 } from 'lucide-react';
 
+const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+  ? window.location.origin
+  : process.env.REACT_APP_BACKEND_URL;
+
 // Bottom tab bar shown only on mobile (< md) for authenticated users.
 // Item set is role-aware:
-//   individual  → Home · My Money · IRP5 · Digest
+//   individual  → Home · My Money · IRP5 · Digest (with "new" red dot)
 //   advisor     → Home · Clients · Reports · Branding
 export const MobileBottomNav = () => {
-  const { isAuthenticated, isAdvisor, isIndividual, user } = useAuth();
+  const { isAuthenticated, isAdvisor, isIndividual, user, token } = useAuth();
   const { pathname } = useLocation();
+  const [digestAvailable, setDigestAvailable] = useState(false);
+
+  // Ping digest status for individuals so we can show the badge.
+  useEffect(() => {
+    let cancelled = false;
+    if (!token || !isIndividual) {
+      setDigestAvailable(false);
+      return;
+    }
+    (async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/me/digest/status`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!cancelled) setDigestAvailable(!!res.data?.available);
+      } catch {
+        // Silent fail — badge is a nice-to-have.
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [token, isIndividual, pathname]);
 
   if (!isAuthenticated) return null;
   // Don't show while the role picker modal is up (user has no role yet).
@@ -30,7 +56,7 @@ export const MobileBottomNav = () => {
         { to: '/', label: 'Home', icon: Home },
         { to: '/my-money', label: 'My Money', icon: Wallet },
         { to: '/irp5-vault', label: 'IRP5', icon: ShieldCheck },
-        { to: '/my-money?digest=1', label: 'Digest', icon: Mail, match: '/my-money' },
+        { to: '/my-money?digest=1', label: 'Digest', icon: Mail, match: '/my-money', badge: digestAvailable },
       ]
     : [
         // Admins or role-less users get the neutral set
@@ -59,11 +85,20 @@ export const MobileBottomNav = () => {
               <Link
                 to={item.to}
                 data-testid={`mobile-nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`}
-                className={`flex flex-col items-center justify-center gap-0.5 py-2 px-1 min-h-[56px] touch-manipulation transition-colors ${
+                className={`relative flex flex-col items-center justify-center gap-0.5 py-2 px-1 min-h-[56px] touch-manipulation transition-colors ${
                   active ? 'text-emerald-400' : 'text-slate-400 hover:text-white active:text-white'
                 }`}
               >
-                <Icon className={`h-5 w-5 ${active ? 'text-emerald-400' : ''}`} />
+                <div className="relative">
+                  <Icon className={`h-5 w-5 ${active ? 'text-emerald-400' : ''}`} />
+                  {item.badge && (
+                    <span
+                      className="absolute -top-1 -right-1.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-navy-950 animate-pulse"
+                      data-testid={`mobile-nav-${item.label.toLowerCase()}-badge`}
+                      aria-label="New"
+                    />
+                  )}
+                </div>
                 <span className="text-[10px] font-medium leading-none">{item.label}</span>
                 {active && (
                   <span className="mt-0.5 h-0.5 w-6 rounded-full bg-emerald-400" aria-hidden="true" />
