@@ -19,6 +19,7 @@ export const MobileBottomNav = () => {
   const { isAuthenticated, isAdvisor, isIndividual, user, token } = useAuth();
   const { pathname } = useLocation();
   const [digestAvailable, setDigestAvailable] = useState(false);
+  const [staleClientsCount, setStaleClientsCount] = useState(0);
 
   // Ping digest status for individuals so we can show the badge.
   useEffect(() => {
@@ -40,6 +41,26 @@ export const MobileBottomNav = () => {
     return () => { cancelled = true; };
   }, [token, isIndividual, pathname]);
 
+  // Ping stale-client count for advisors so we can show the Clients badge.
+  useEffect(() => {
+    let cancelled = false;
+    if (!token || !isAdvisor) {
+      setStaleClientsCount(0);
+      return;
+    }
+    (async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/smart-suggestions/stale-count`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!cancelled) setStaleClientsCount(Number(res.data?.stale_count) || 0);
+      } catch {
+        // Silent fail — badge is a nice-to-have.
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [token, isAdvisor, pathname]);
+
   if (!isAuthenticated) return null;
   // Don't show while the role picker modal is up (user has no role yet).
   if (user && !user.role && !user.is_admin) return null;
@@ -47,7 +68,7 @@ export const MobileBottomNav = () => {
   const items = isAdvisor
     ? [
         { to: '/', label: 'Home', icon: Home },
-        { to: '/clients', label: 'Clients', icon: Users },
+        { to: '/clients', label: 'Clients', icon: Users, badge: staleClientsCount > 0, badgeCount: staleClientsCount },
         { to: '/report-builder', label: 'Reports', icon: FileText },
         { to: '/branding-settings', label: 'Brand', icon: Palette },
       ]
@@ -91,7 +112,16 @@ export const MobileBottomNav = () => {
               >
                 <div className="relative">
                   <Icon className={`h-5 w-5 ${active ? 'text-emerald-400' : ''}`} />
-                  {item.badge && (
+                  {item.badge && item.badgeCount > 0 && (
+                    <span
+                      className="absolute -top-1.5 -right-2 min-w-[16px] h-4 px-1 flex items-center justify-center rounded-full bg-red-500 text-white text-[9px] font-bold leading-none ring-2 ring-navy-950"
+                      data-testid={`mobile-nav-${item.label.toLowerCase()}-badge`}
+                      aria-label={`${item.badgeCount} needs attention`}
+                    >
+                      {item.badgeCount > 9 ? '9+' : item.badgeCount}
+                    </span>
+                  )}
+                  {item.badge && !item.badgeCount && (
                     <span
                       className="absolute -top-1 -right-1.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-navy-950 animate-pulse"
                       data-testid={`mobile-nav-${item.label.toLowerCase()}-badge`}

@@ -166,3 +166,46 @@ async def client_suggestions(client_id: str, current_user: dict = Depends(get_cu
         raise HTTPException(status_code=404, detail="Client not found")
     sugs = await _compute_for_client(current_user["id"], client)
     return {"client_id": client_id, "suggestions": [s.model_dump() for s in sugs]}
+
+
+@router.get("/stale-count")
+async def stale_clients_count(current_user: dict = Depends(get_current_user)):
+    """Cheap aggregate endpoint used by the mobile nav badge.
+
+    A client is 'stale' if the most recent touchpoint across reports, emails,
+    compliance records and portfolio reviews is more than 90 days old — or if
+    the client has NO touchpoint at all.
+    """
+    STALE_DAYS = 90
+    threshold = datetime.now(timezone.utc) - timedelta(days=STALE_DAYS)
+    threshold_iso = threshold.isoformat()
+
+    clients = await db.clients.find(
+        {"advisor_id": current_user["id"]}, {"_id": 0, "id": 1, "first_name": 1, "last_name": 1}
+    ).to_list(length=500)
+
+    stale_ids = []
+    for c in clients:
+        base = {"advisor_id": current_user["id"], "client_id": c["id"]}
+        # Any touchpoint newer than threshold across all four collections?
+        recent = False
+        for coll in ("client_reports", "advisor_emails", "compliance_records", "portfolio_reviews"):
+            found = await db[coll].find_one(
+                {**base, "created_at": {"$gt": threshold_iso}},
+                projection={"_id": 1},
+            )
+            if found:
+                recent = True
+                break
+        if not recent:
+            stale_ids.append({
+                "id": c["id"],
+                "name": f"{c.get('first_name', '')} {c.get('last_name', '')}".strip() or "Unnamed client",
+            })
+
+    return {
+        "stale_count": len(stale_ids),
+        "total_clients": len(clients),
+        "threshold_days": STALE_DAYS,
+        "stale_clients": stale_ids[:10],  # keep payload small
+    }

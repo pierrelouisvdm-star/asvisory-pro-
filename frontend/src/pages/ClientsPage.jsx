@@ -46,6 +46,7 @@ export const ClientsPage = () => {
   const navigate = useNavigate();
   const [clients, setClients] = useState([]);
   const [suggestions, setSuggestions] = useState({}); // { client_id: [...] }
+  const [staleInfo, setStaleInfo] = useState(null); // { stale_count, threshold_days, stale_clients: [{id, name}] }
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -76,10 +77,10 @@ export const ClientsPage = () => {
       setClients(data);
       // Fetch smart suggestions for all clients (non-blocking on failure)
       if (token) {
+        const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+          ? window.location.origin
+          : process.env.REACT_APP_BACKEND_URL;
         try {
-          const API_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
-            ? window.location.origin
-            : process.env.REACT_APP_BACKEND_URL;
           const res = await fetch(`${API_URL}/api/smart-suggestions/all`, {
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -89,6 +90,16 @@ export const ClientsPage = () => {
           }
         } catch (_) {
           // Silently ignore — suggestions are a nice-to-have
+        }
+        try {
+          const res2 = await fetch(`${API_URL}/api/smart-suggestions/stale-count`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res2.ok) {
+            setStaleInfo(await res2.json());
+          }
+        } catch (_) {
+          // ignore
         }
       }
     } catch (error) {
@@ -245,6 +256,50 @@ export const ClientsPage = () => {
             </DialogContent>
           </Dialog>
         </div>
+
+        {/* Stale-clients nudge banner */}
+        {staleInfo && staleInfo.stale_count > 0 && (
+          <Card
+            className="mb-6 bg-gradient-to-r from-red-950/40 to-navy-900 border-red-500/40"
+            data-testid="stale-clients-banner"
+          >
+            <CardContent className="p-4 sm:p-5 flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/20 flex-shrink-0">
+                  <AlertTriangle className="h-5 w-5 text-red-400" />
+                </div>
+                <div>
+                  <div className="text-white font-semibold">
+                    {staleInfo.stale_count} client{staleInfo.stale_count === 1 ? '' : 's'} not reviewed in the last {staleInfo.threshold_days} days
+                  </div>
+                  <p className="text-sm text-slate-400 mt-0.5">
+                    No report, email, compliance note or portfolio review in over {staleInfo.threshold_days} days.
+                    {staleInfo.stale_clients?.length > 0 && (
+                      <>
+                        {' '}Starts with{' '}
+                        <span className="text-red-300">
+                          {staleInfo.stale_clients.slice(0, 3).map(s => s.name).join(', ')}
+                          {staleInfo.stale_count > 3 && ` +${staleInfo.stale_count - 3} more`}
+                        </span>
+                        .
+                      </>
+                    )}
+                  </p>
+                </div>
+              </div>
+              {staleInfo.stale_clients?.[0] && (
+                <Button
+                  onClick={() => navigate(`/clients/${staleInfo.stale_clients[0].id}/360`)}
+                  size="sm"
+                  className="bg-red-500 hover:bg-red-400 text-white whitespace-nowrap"
+                  data-testid="stale-banner-review-btn"
+                >
+                  Review {staleInfo.stale_clients[0].name.split(' ')[0]}
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        )}
 
         {/* Search */}
         <div className="relative mb-6">
