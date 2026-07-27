@@ -45,30 +45,59 @@ router = APIRouter(prefix="/amplifi/v1", tags=["Amplifi"])
 AMPLIFI_API_KEY = os.environ.get("AMPLIFI_API_KEY")
 # Launch JWT verification. RS256 (Amplifi signs with their private key, we
 # verify with their public key) is the production algorithm. HS256 with a
-# shared secret is still supported for local dev / smoke tests.
+# shared secret is kept as a transitional fallback during the handover, so
+# Amplifi can integration-test with the shared secret while they finish
+# wiring up private-key signing. Remove the HS256 branch once RS256 is live.
 AMPLIFI_JWT_ALG = os.environ.get("AMPLIFI_JWT_ALGORITHM", "RS256").upper()
-AMPLIFI_JWT_SECRET = os.environ.get("AMPLIFI_JWT_SECRET")  # HS256 fallback only
+AMPLIFI_JWT_SECRET = os.environ.get("AMPLIFI_JWT_SECRET")
 AMPLIFI_PUBLIC_KEY_PATH = os.environ.get(
     "AMPLIFI_PUBLIC_KEY_PATH", "/app/backend/keys/amplifi_public.pem"
 )
 _AMPLIFI_PUBLIC_KEY: Optional[str] = None
 
 
-def _load_amplifi_verification_key() -> Optional[str]:
-    """Return the key/secret used to verify Amplifi launch JWTs.
-
-    - RS256: PEM public key loaded from disk (cached).
-    - HS256: shared secret from env.
-    Returns None if unavailable — callers must handle that.
-    """
+def _load_amplifi_public_key() -> Optional[str]:
+    """Load and cache the Amplifi RSA public key from disk."""
     global _AMPLIFI_PUBLIC_KEY
-    if AMPLIFI_JWT_ALG in ("RS256", "RS384", "RS512"):
-        if _AMPLIFI_PUBLIC_KEY is None and os.path.exists(AMPLIFI_PUBLIC_KEY_PATH):
-            with open(AMPLIFI_PUBLIC_KEY_PATH, "r", encoding="utf-8") as f:
-                _AMPLIFI_PUBLIC_KEY = f.read().strip()
-        return _AMPLIFI_PUBLIC_KEY
-    # HS256 / HS384 / HS512
-    return AMPLIFI_JWT_SECRET
+    if _AMPLIFI_PUBLIC_KEY is None and os.path.exists(AMPLIFI_PUBLIC_KEY_PATH):
+        with open(AMPLIFI_PUBLIC_KEY_PATH, "r", encoding="utf-8") as f:
+            _AMPLIFI_PUBLIC_KEY = f.read().strip()
+    return _AMPLIFI_PUBLIC_KEY
+
+
+def _verify_amplifi_token(token: str) -> dict:
+    """Try to verify a launch JWT.
+
+    Order of attempts:
+      1) RS256 with the Amplifi public key (preferred / production algorithm)
+      2) HS256 with the transitional shared secret (only if configured)
+
+    Raises JWTError if all configured methods fail. Raises RuntimeError if
+    NEITHER method is configured (server misconfig).
+    """
+    last_err: Optional[JWTError] = None
+    tried = 0
+
+    public_key = _load_amplifi_public_key()
+    if public_key:
+        tried += 1
+        try:
+            return jwt.decode(token, public_key, algorithms=["RS256"])
+        except JWTError as e:
+            last_err = e
+            logger.debug(f"[amplifi] RS256 verify failed: {e}")
+
+    if AMPLIFI_JWT_SECRET:
+        tried += 1
+        try:
+            return jwt.decode(token, AMPLIFI_JWT_SECRET, algorithms=["HS256"])
+        except JWTError as e:
+            last_err = e
+            logger.debug(f"[amplifi] HS256 verify failed: {e}")
+
+    if tried == 0:
+        raise RuntimeError("No Amplifi verification key configured")
+    raise last_err or JWTError("Token could not be verified")
 
 
 # ────────────────────────────────────────────────────────────────────────
@@ -190,14 +219,12 @@ def _redirect_to_launch(base: str, **params) -> RedirectResponse:
 
 @router.get("/auth/launch")
 async def amplifi_launch(request: Request, token: str = Query(...)):
-    verification_key = _load_amplifi_verification_key()
-    if not verification_key:
-        # Config bug — never in prod, but be explicit.
-        return _redirect_to_launch(_origin(request), error="not_configured")
-
-    # 1) Verify signature + expiry.
+    # 1) Verify signature + expiry (tries RS256 then HS256 fallback).
     try:
-        payload = jwt.decode(token, verification_key, algorithms=[AMPLIFI_JWT_ALG])
+        payload = _verify_amplifi_token(token)
+    except RuntimeError:
+        # No key/secret configured on this server.
+        return _redirect_to_launch(_origin(request), error="not_configured")
     except JWTError as e:
         logger.info(f"[amplifi] launch rejected: bad/expired token ({e})")
         return _redirect_to_launch(_origin(request), error="expired")
@@ -232,6 +259,9 @@ async def amplifi_launch(request: Request, token: str = Query(...)):
     return _redirect_to_launch(_origin(request), token=session_token)
 
 
+import hashlib
+import base64
+
 def _origin(request: Request) -> str:
     """Determine the site origin for the redirect target.
 
@@ -243,3 +273,32 @@ def _origin(request: Request) -> str:
     if forwarded_host:
         return f"{forwarded_proto}://{forwarded_host}"
     return os.environ.get("REACT_APP_BACKEND_URL", "").rstrip("/") or ""
+
+
+# ────────────────────────────────────────────────────────────────────────
+# Diagnostic health endpoint — S2S authed
+# ────────────────────────────────────────────────────────────────────────
+# Lets the Amplifi team (or ourselves during incident triage) confirm which
+# verification methods this server has configured and — critically — the
+# SHA-256 fingerprint of the public key we're using, so they can prove
+# their private key matches ours WITHOUT sending a real launch attempt.
+@router.get("/health", dependencies=[Depends(require_amplifi_key)])
+async def amplifi_health():
+    fingerprint: Optional[str] = None
+    pk = _load_amplifi_public_key()
+    if pk:
+        digest = hashlib.sha256(pk.encode("utf-8")).digest()
+        fingerprint = base64.b64encode(digest).decode("ascii")
+    return {
+        "ok": True,
+        "verification_methods": {
+            "rs256_public_key": bool(pk),
+            "hs256_shared_secret": bool(AMPLIFI_JWT_SECRET),
+        },
+        "public_key_sha256_b64": fingerprint,
+        "notes": (
+            "Prefer RS256 (sign with your private key; we verify with the "
+            "public key we hold). HS256 with a shared secret is accepted as "
+            "a fallback during initial rollout."
+        ),
+    }
