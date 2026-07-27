@@ -43,8 +43,32 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/amplifi/v1", tags=["Amplifi"])
 
 AMPLIFI_API_KEY = os.environ.get("AMPLIFI_API_KEY")
-AMPLIFI_JWT_SECRET = os.environ.get("AMPLIFI_JWT_SECRET")
-AMPLIFI_JWT_ALG = "HS256"
+# Launch JWT verification. RS256 (Amplifi signs with their private key, we
+# verify with their public key) is the production algorithm. HS256 with a
+# shared secret is still supported for local dev / smoke tests.
+AMPLIFI_JWT_ALG = os.environ.get("AMPLIFI_JWT_ALGORITHM", "RS256").upper()
+AMPLIFI_JWT_SECRET = os.environ.get("AMPLIFI_JWT_SECRET")  # HS256 fallback only
+AMPLIFI_PUBLIC_KEY_PATH = os.environ.get(
+    "AMPLIFI_PUBLIC_KEY_PATH", "/app/backend/keys/amplifi_public.pem"
+)
+_AMPLIFI_PUBLIC_KEY: Optional[str] = None
+
+
+def _load_amplifi_verification_key() -> Optional[str]:
+    """Return the key/secret used to verify Amplifi launch JWTs.
+
+    - RS256: PEM public key loaded from disk (cached).
+    - HS256: shared secret from env.
+    Returns None if unavailable — callers must handle that.
+    """
+    global _AMPLIFI_PUBLIC_KEY
+    if AMPLIFI_JWT_ALG in ("RS256", "RS384", "RS512"):
+        if _AMPLIFI_PUBLIC_KEY is None and os.path.exists(AMPLIFI_PUBLIC_KEY_PATH):
+            with open(AMPLIFI_PUBLIC_KEY_PATH, "r", encoding="utf-8") as f:
+                _AMPLIFI_PUBLIC_KEY = f.read().strip()
+        return _AMPLIFI_PUBLIC_KEY
+    # HS256 / HS384 / HS512
+    return AMPLIFI_JWT_SECRET
 
 
 # ────────────────────────────────────────────────────────────────────────
@@ -166,13 +190,14 @@ def _redirect_to_launch(base: str, **params) -> RedirectResponse:
 
 @router.get("/auth/launch")
 async def amplifi_launch(request: Request, token: str = Query(...)):
-    if not AMPLIFI_JWT_SECRET:
+    verification_key = _load_amplifi_verification_key()
+    if not verification_key:
         # Config bug — never in prod, but be explicit.
         return _redirect_to_launch(_origin(request), error="not_configured")
 
     # 1) Verify signature + expiry.
     try:
-        payload = jwt.decode(token, AMPLIFI_JWT_SECRET, algorithms=[AMPLIFI_JWT_ALG])
+        payload = jwt.decode(token, verification_key, algorithms=[AMPLIFI_JWT_ALG])
     except JWTError as e:
         logger.info(f"[amplifi] launch rejected: bad/expired token ({e})")
         return _redirect_to_launch(_origin(request), error="expired")
