@@ -149,3 +149,74 @@ async def reset_user_subscription(
         "message": f"Subscription reset for '{user.get('email')}'",
         "deleted_subscriptions": result.deleted_count
     }
+
+
+# ============================================================================
+# Owner-only: promote a signed-up user to advisor + admin
+# ----------------------------------------------------------------------------
+# Guarded by an OWNER_EMAILS allow-list so ONLY the platform owner can call it.
+# Meant to be used once to bootstrap co-founders / staff on production.
+# ============================================================================
+import os as _os
+import logging as _logging
+from datetime import datetime as _dt, timezone as _tz
+from pydantic import EmailStr
+
+_admin_log = _logging.getLogger(__name__)
+
+OWNER_EMAILS = {
+    e.strip().lower()
+    for e in _os.environ.get(
+        "OWNER_EMAILS",
+        "pierrelouisvdm@gmail.com,rynom@herefordgroup.co.za",
+    ).split(",")
+    if e.strip()
+}
+
+
+def require_owner(current_user: dict = Depends(get_current_user)):
+    if (current_user.get("email") or "").lower() not in OWNER_EMAILS:
+        raise HTTPException(status_code=403, detail="Owner privileges required.")
+    return current_user
+
+
+class PromoteRequest(BaseModel):
+    email: EmailStr
+    role: str = "advisor"          # "advisor" or "individual"
+    make_admin: bool = True
+    full_name: Optional[str] = None
+    company: Optional[str] = None
+
+
+@router.post("/promote")
+async def promote_user(
+    body: PromoteRequest,
+    owner: dict = Depends(require_owner),
+):
+    """Promote a signed-up user to admin (and set their role/company/name)."""
+    if body.role not in ("advisor", "individual"):
+        raise HTTPException(status_code=400, detail="role must be 'advisor' or 'individual'")
+
+    email_lc = body.email.lower()
+    user = await db.users.find_one({"email": {"$regex": f"^{email_lc}$", "$options": "i"}})
+    if not user:
+        raise HTTPException(
+            status_code=404,
+            detail="That email hasn't signed up yet. Ask them to register at /auth first, then re-run promote.",
+        )
+
+    updates = {
+        "role": body.role,
+        "is_admin": bool(body.make_admin),
+        "is_active": True,
+        "updated_at": _dt.now(_tz.utc).isoformat(),
+    }
+    if body.full_name:
+        updates["full_name"] = body.full_name
+    if body.company:
+        updates["company"] = body.company
+
+    await db.users.update_one({"id": user["id"]}, {"$set": updates})
+    updated = await db.users.find_one({"id": user["id"]}, {"_id": 0, "hashed_password": 0})
+    _admin_log.info(f"[admin.promote] {owner.get('email')} promoted {email_lc} → {updates}")
+    return {"success": True, "user": updated}

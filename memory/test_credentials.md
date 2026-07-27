@@ -1,8 +1,8 @@
 # Test Credentials for Financial Advisory Pro
 
-## Admin Account
-- **Email:** pierrelouisvdm@gmail.com
-- **Password:** Scorpio@57!!
+## Admin Accounts
+- **Owner** — pierrelouisvdm@gmail.com / Scorpio@57!!
+- **Co-founder (Ryno Meyer)** — rynom@herefordgroup.co.za / Ryno@EVqg_6pGeo0  *(temporary — should rotate on first login)*
 
 ## Test User (if needed)
 - Create new account via /auth page
@@ -14,6 +14,7 @@
 - Register: POST /api/auth/register
 - Password Reset Request: POST /api/auth/forgot-password
 - Password Reset: POST /api/auth/reset-password
+- Admin bootstrap: POST /api/admin/promote (owner-only, see routes/admin.py)
 
 ---
-*Last Updated: April 8, 2026*
+*Last Updated: July 5, 2026*
