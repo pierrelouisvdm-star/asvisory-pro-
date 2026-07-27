@@ -49,6 +49,7 @@ import MyMoney from "@/pages/MyMoney";
 import IRP5Vault from "@/pages/IRP5Vault";
 import BrandingSettings from "@/pages/BrandingSettings";
 import NotFoundPage from "@/pages/NotFoundPage";
+import AmplifiLaunch from "@/pages/AmplifiLaunch";
 import { ClientsPage } from "@/pages/ClientsPage";
 import { ClientProfilePage } from "@/pages/ClientProfilePage";
 import RoleSelectionModal from "@/components/RoleSelectionModal";
@@ -183,6 +184,9 @@ function App() {
                   <Route path="/irp5-vault" element={<ProtectedRoute><IRP5Vault /></ProtectedRoute>} />
                   <Route path="/branding-settings" element={<ProtectedRoute><RoleGate role="advisor"><BrandingSettings /></RoleGate></ProtectedRoute>} />
                   
+                  {/* Amplifi SSO handoff — public, but only useful with valid token/error */}
+                  <Route path="/amplifi-launch" element={<AmplifiLaunch />} />
+
                   {/* Legal Pages - Public */}
                   <Route path="/terms" element={<TermsOfServicePage />} />
                   <Route path="/privacy" element={<PrivacyPolicyPage />} />

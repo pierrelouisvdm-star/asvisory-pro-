@@ -50,6 +50,7 @@ from routes.my_money import router as my_money_router
 from routes.smart_suggestions import router as smart_suggestions_router
 from routes.money_digest import router as money_digest_router
 from routes.irp5 import router as irp5_router
+from routes.amplifi import router as amplifi_router
 
 # Include route modules
 api_router.include_router(auth_router)
@@ -77,6 +78,7 @@ api_router.include_router(my_money_router)
 api_router.include_router(smart_suggestions_router)
 api_router.include_router(money_digest_router)
 api_router.include_router(irp5_router)
+api_router.include_router(amplifi_router)
 
 # Health check endpoint
 @api_router.get("/health")
