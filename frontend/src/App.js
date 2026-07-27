@@ -50,6 +50,7 @@ import IRP5Vault from "@/pages/IRP5Vault";
 import BrandingSettings from "@/pages/BrandingSettings";
 import NotFoundPage from "@/pages/NotFoundPage";
 import AmplifiLaunch from "@/pages/AmplifiLaunch";
+import AmplifiRedirect from "@/pages/AmplifiRedirect";
 import { ClientsPage } from "@/pages/ClientsPage";
 import { ClientProfilePage } from "@/pages/ClientProfilePage";
 import RoleSelectionModal from "@/components/RoleSelectionModal";
@@ -186,6 +187,8 @@ function App() {
                   
                   {/* Amplifi SSO handoff — public, but only useful with valid token/error */}
                   <Route path="/amplifi-launch" element={<AmplifiLaunch />} />
+                  {/* Compatibility shim: forward /amplifi/v1/* → /api/amplifi/v1/* */}
+                  <Route path="/amplifi/*" element={<AmplifiRedirect />} />
 
                   {/* Legal Pages - Public */}
                   <Route path="/terms" element={<TermsOfServicePage />} />

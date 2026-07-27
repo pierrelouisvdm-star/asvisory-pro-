@@ -1,0 +1,21 @@
+{
+  "summary": "Verified Amplifi /amplifi/v1/* → /api/amplifi/v1/* client-side redirect shim. All 4 targeted checks pass: (1) the exact reported URL /amplifi/v1/auth/launch?token=<HS256-token> now lands on /amplifi-launch?error=expired with data-testid='amplifi-launch-error' — no more 404. (2) /amplifi/v1/advisors (POST-only) forwards through to /api/amplifi/v1/advisors and returns backend JSON {\"detail\":\"Method Not Allowed\"} (405), confirming the whole /amplifi/* subtree is properly shimmed and NOT rendering the frontend 404. (3) Regression: /not-a-real-page still shows data-testid='not-found-page'. (4) Regression: direct /amplifi-launch?error=expired still renders the friendly error page.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "AmplifiRedirect uses useEffect + window.location.replace which is correct for a hard redirect and preserves query/hash. Minimal fallback UI with data-testid='amplifi-redirect' present. Route ordering in App.js is correct (/amplifi/* declared before wildcard 404). No issues found."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100%"},
+  "seed_data_creation": "",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Amplifi compatibility shim fix verified end-to-end via Playwright. Reported user URL /amplifi/v1/auth/launch?token=<HS256-token> now correctly redirects to /amplifi-launch?error=expired (bug fixed). /amplifi/v1/advisors forwards to /api/amplifi/v1/advisors returning 405 (backend reached). 404 route and direct /amplifi-launch page unaffected. No code changes made this iteration.",
+  "rca of the issue": "Root cause: Kubernetes ingress reserves /api/* for backend; all other paths hit the React SPA. Amplifi's public spec uses /amplifi/v1/* (no /api prefix), so those URLs were falling through to React's wildcard NotFoundPage route. Fix: added AmplifiRedirect component mounted at Route path='/amplifi/*' (declared before the wildcard 404 route) that on mount does window.location.replace('/api' + pathname + search + hash), yielding a hard browser navigation to the actual backend handler at /api/amplifi/v1/*. Verified with browser (not curl, since redirect is client-side JS)."
+}
