@@ -57,9 +57,28 @@ _AMPLIFI_PUBLIC_KEY: Optional[str] = None
 
 
 def _load_amplifi_public_key() -> Optional[str]:
-    """Load and cache the Amplifi RSA public key from disk."""
+    """Load and cache the Amplifi RSA public key.
+
+    Two sources, in order of preference:
+      1) AMPLIFI_PUBLIC_KEY_INLINE_PEM env var — full PEM as a single value.
+         Newlines can be either real `\n` characters (multi-line env) OR
+         literal `\\n` sequences that we convert. This is the recommended
+         production path because it doesn't require a file to ship.
+      2) File at AMPLIFI_PUBLIC_KEY_PATH — good for local dev.
+    """
     global _AMPLIFI_PUBLIC_KEY
-    if _AMPLIFI_PUBLIC_KEY is None and os.path.exists(AMPLIFI_PUBLIC_KEY_PATH):
+    if _AMPLIFI_PUBLIC_KEY is not None:
+        return _AMPLIFI_PUBLIC_KEY
+
+    inline = os.environ.get("AMPLIFI_PUBLIC_KEY_INLINE_PEM")
+    if inline:
+        # Support both real newlines and \n-escaped one-liners.
+        pem = inline.replace("\\n", "\n").strip()
+        if "BEGIN PUBLIC KEY" in pem:
+            _AMPLIFI_PUBLIC_KEY = pem
+            return _AMPLIFI_PUBLIC_KEY
+
+    if os.path.exists(AMPLIFI_PUBLIC_KEY_PATH):
         with open(AMPLIFI_PUBLIC_KEY_PATH, "r", encoding="utf-8") as f:
             _AMPLIFI_PUBLIC_KEY = f.read().strip()
     return _AMPLIFI_PUBLIC_KEY
@@ -284,21 +303,26 @@ def _origin(request: Request) -> str:
 # their private key matches ours WITHOUT sending a real launch attempt.
 @router.get("/health", dependencies=[Depends(require_amplifi_key)])
 async def amplifi_health():
-    fingerprint: Optional[str] = None
+    rs256_fp: Optional[str] = None
     pk = _load_amplifi_public_key()
     if pk:
-        digest = hashlib.sha256(pk.encode("utf-8")).digest()
-        fingerprint = base64.b64encode(digest).decode("ascii")
+        rs256_fp = base64.b64encode(hashlib.sha256(pk.encode("utf-8")).digest()).decode("ascii")
+
+    hs256_fp: Optional[str] = None
+    if AMPLIFI_JWT_SECRET:
+        hs256_fp = base64.b64encode(hashlib.sha256(AMPLIFI_JWT_SECRET.encode("utf-8")).digest()).decode("ascii")
+
     return {
         "ok": True,
         "verification_methods": {
             "rs256_public_key": bool(pk),
             "hs256_shared_secret": bool(AMPLIFI_JWT_SECRET),
         },
-        "public_key_sha256_b64": fingerprint,
+        "public_key_sha256_b64": rs256_fp,
+        "shared_secret_sha256_b64": hs256_fp,
         "notes": (
-            "Prefer RS256 (sign with your private key; we verify with the "
-            "public key we hold). HS256 with a shared secret is accepted as "
-            "a fallback during initial rollout."
+            "Compare fingerprints to prove your key/secret matches ours "
+            "without re-sending raw values. HS256 accepted as a transitional "
+            "fallback; RS256 with your private key is preferred long-term."
         ),
     }
