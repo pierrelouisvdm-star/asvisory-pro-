@@ -57,8 +57,10 @@ export const AmplifiLaunch = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         localStorage.setItem('advisorypro_user', JSON.stringify(data));
-        // Hard nav so AuthContext re-reads localStorage cleanly.
-        window.location.assign('/dashboard');
+        // Hard nav so AuthContext re-reads localStorage cleanly. Root path
+        // (`/`) is where the Dashboard lives — an authenticated user visiting
+        // `/` gets the Dashboard component.
+        window.location.assign('/');
       } catch (e) {
         localStorage.removeItem('advisorypro_token');
         localStorage.removeItem('advisorypro_user');

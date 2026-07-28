@@ -265,12 +265,23 @@ async def amplifi_launch(request: Request, token: str = Query(...)):
         logger.info(f"[amplifi] launch rejected: user deactivated email={email}")
         return _redirect_to_launch(_origin(request), error="deactivated")
 
-    # 3) Mint an AdvisoryPro session JWT (same shape as native login).
-    session_token = create_access_token(data={"sub": user["id"]})
+    # 3) Ensure the user is set up as an advisor. Amplifi launches are ALWAYS
+    #    advisors by contract, so we self-heal the record here — this covers
+    #    edge cases where the user pre-existed with role=None (e.g. natively
+    #    registered before we integrated with Amplifi) and prevents the
+    #    role-selection modal from popping up after SSO.
     now_iso = datetime.now(timezone.utc).isoformat()
+    role_fix = {}
+    if user.get("role") != "advisor":
+        role_fix["role"] = "advisor"
+    if role_fix:
+        logger.info(f"[amplifi] promoting user {user['id']} → role=advisor via SSO")
+
+    # 4) Mint an AdvisoryPro session JWT (same shape as native login).
+    session_token = create_access_token(data={"sub": user["id"]})
     await db.users.update_one(
         {"id": user["id"]},
-        {"$set": {"last_login": now_iso, "updated_at": now_iso}},
+        {"$set": {**role_fix, "last_login": now_iso, "updated_at": now_iso}},
     )
     logger.info(
         f"[amplifi] launched user id={user['id']} email={email} alg={ADVISORYPRO_JWT_ALG}"
