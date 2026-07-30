@@ -44,4 +44,4 @@ services:
       - key: UPLOAD_DIR
         value: /opt/render/project/src/backend/uploads
       - key: CORS_ORIGINS
-        value: https://advisorypro.co.za,https://www.advisorypro.co.za
+        value: https://advisorypro.co.za,https://www.advisorypro.co.za,https://asvisory-pro-ff29.vercel.app
