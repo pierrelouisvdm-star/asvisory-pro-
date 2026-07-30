@@ -7,9 +7,9 @@ from bson import ObjectId
 
 load_dotenv()
 
-from emergentintegrations.payments.stripe.checkout import (
-    StripeCheckout, 
-    CheckoutSessionRequest, 
+from utils.emergent_compat import (
+    StripeCheckout,
+    CheckoutSessionRequest,
     CheckoutSessionResponse
 )
 

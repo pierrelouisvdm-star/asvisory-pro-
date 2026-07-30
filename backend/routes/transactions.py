@@ -5,11 +5,10 @@ from utils.auth import get_current_user
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime, timezone
-from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+from utils.emergent_compat import LlmChat, UserMessage, ImageContent
 import os
 import uuid
 import logging
-import requests
 import base64
 import json
 import re
@@ -24,11 +23,12 @@ db_name = os.environ['DB_NAME']
 client = AsyncIOMotorClient(mongo_url, serverSelectionTimeoutMS=10000, connectTimeoutMS=10000, socketTimeoutMS=30000)
 db = client[db_name]
 
-# Storage configuration
-STORAGE_URL = "https://integrations.emergentagent.com/objstore/api/v1/storage"
-EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
+# Storage configuration — receipts are stored on local disk under UPLOAD_DIR.
+# For multi-instance / production deployments, point this at a mounted
+# volume, or swap put_object/get_object below for an S3-compatible bucket
+# (e.g. Cloudflare R2, AWS S3) using boto3, which is already a dependency.
+UPLOAD_DIR = os.environ.get("UPLOAD_DIR", os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads"))
 APP_NAME = "financial-advisory-pro"
-storage_key = None
 
 # Allowed file types for receipts
 ALLOWED_CONTENT_TYPES = {
@@ -41,54 +41,23 @@ ALLOWED_CONTENT_TYPES = {
 MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
 
 
-def init_storage():
-    """Initialize storage connection. Call once at startup."""
-    global storage_key
-    if storage_key:
-        return storage_key
-    
-    if not EMERGENT_KEY:
-        logger.error("EMERGENT_LLM_KEY not configured")
-        raise Exception("Storage not configured")
-    
-    try:
-        resp = requests.post(
-            f"{STORAGE_URL}/init",
-            json={"emergent_key": EMERGENT_KEY},
-            timeout=30
-        )
-        resp.raise_for_status()
-        storage_key = resp.json()["storage_key"]
-        logger.info("Storage initialized successfully")
-        return storage_key
-    except Exception as e:
-        logger.error(f"Failed to initialize storage: {e}")
-        raise
-
-
 def put_object(path: str, data: bytes, content_type: str) -> dict:
-    """Upload file to object storage."""
-    key = init_storage()
-    resp = requests.put(
-        f"{STORAGE_URL}/objects/{path}",
-        headers={"X-Storage-Key": key, "Content-Type": content_type},
-        data=data,
-        timeout=120
-    )
-    resp.raise_for_status()
-    return resp.json()
+    """Save file to local disk storage under UPLOAD_DIR."""
+    full_path = os.path.join(UPLOAD_DIR, path)
+    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+    with open(full_path, "wb") as f:
+        f.write(data)
+    return {"path": path, "size": len(data)}
 
 
 def get_object(path: str) -> tuple:
-    """Download file from object storage."""
-    key = init_storage()
-    resp = requests.get(
-        f"{STORAGE_URL}/objects/{path}",
-        headers={"X-Storage-Key": key},
-        timeout=60
-    )
-    resp.raise_for_status()
-    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+    """Read file from local disk storage under UPLOAD_DIR."""
+    full_path = os.path.join(UPLOAD_DIR, path)
+    if not os.path.exists(full_path):
+        raise FileNotFoundError(f"No object at {path}")
+    with open(full_path, "rb") as f:
+        content = f.read()
+    return content, "application/octet-stream"
 
 
 async def analyze_receipt_with_ocr(image_content: bytes, content_type: str, voice_description: str = None) -> dict:
@@ -130,7 +99,7 @@ If you cannot determine a value, use null. Always try to extract the total/final
         
         # Initialize chat with vision model
         chat = LlmChat(
-            api_key=EMERGENT_KEY,
+            api_key=os.environ.get("OPENAI_API_KEY"),
             session_id=f"ocr-{uuid.uuid4()}",
             system_message=system_message
         ).with_model("openai", "gpt-4o")

@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage
+from utils.emergent_compat import LlmChat, UserMessage
 from utils.auth import get_current_user
 from server import db
 
@@ -137,7 +137,7 @@ async def chat_with_advisor(
     # Check subscription (in production, verify premium status)
     # For now, we'll allow access but log it
     
-    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         raise HTTPException(status_code=500, detail="AI service not configured")
     

@@ -17,7 +17,7 @@ load_dotenv()
 import fitz  # PyMuPDF for PDF handling
 from PIL import Image
 
-from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+from utils.emergent_compat import LlmChat, UserMessage, ImageContent
 from utils.auth import get_current_user
 from server import db
 
@@ -189,7 +189,7 @@ async def analyze_document(
     
     try:
         # Initialize LLM chat with vision capability
-        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        api_key = os.environ.get('OPENAI_API_KEY')
         if not api_key:
             raise HTTPException(status_code=500, detail="AI service not configured")
         

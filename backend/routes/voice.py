@@ -8,8 +8,8 @@ import base64
 import re
 import logging
 
-from emergentintegrations.llm.openai import OpenAISpeechToText
-from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+from utils.emergent_compat import OpenAISpeechToText
+from utils.emergent_compat import LlmChat, UserMessage, ImageContent
 
 router = APIRouter(prefix="/voice", tags=["voice"])
 logger = logging.getLogger(__name__)
@@ -65,7 +65,7 @@ async def parse_voice_transaction(
     Transcribe audio using Whisper, then parse with GPT-4o to extract transaction data.
     Returns: { transcription, type, amount, category, description, date }
     """
-    key = os.environ.get("EMERGENT_LLM_KEY")
+    key = os.environ.get("OPENAI_API_KEY")
     if not key:
         raise HTTPException(status_code=500, detail="LLM key not configured")
 
@@ -201,7 +201,7 @@ async def analyze_receipt_with_voice(
     Transcribes audio (if provided) then sends both image + text to GPT-4o Vision.
     Returns enhanced OCR data: { transcription, amount, date, merchant, category, description }
     """
-    key = os.environ.get("EMERGENT_LLM_KEY")
+    key = os.environ.get("OPENAI_API_KEY")
     if not key:
         raise HTTPException(status_code=500, detail="LLM key not configured")
 

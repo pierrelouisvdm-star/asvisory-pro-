@@ -76,7 +76,7 @@ async def health_check():
 
 # Stripe webhook endpoint
 from fastapi import Request
-from emergentintegrations.payments.stripe.checkout import StripeCheckout
+from utils.emergent_compat import StripeCheckout
 
 @api_router.post("/webhook/stripe")
 async def stripe_webhook(request: Request):
