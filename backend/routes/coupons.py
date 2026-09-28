@@ -30,16 +30,6 @@ COUPON_TO_SUBSCRIPTION = {
         "duration_days": 30,
         "description": "1 Month Premium Access"
     },
-    CouponType.STANDARD_ANNUAL.value: {
-        "tier": SubscriptionTier.STANDARD,
-        "duration_days": 365,
-        "description": "1 Year Standard Access"
-    },
-    CouponType.STANDARD_MONTHLY.value: {
-        "tier": SubscriptionTier.STANDARD,
-        "duration_days": 30,
-        "description": "1 Month Standard Access"
-    },
 }
 
 

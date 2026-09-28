@@ -9,8 +9,6 @@ class CouponType(str, Enum):
     PREMIUM_LIFETIME = "premium_lifetime"
     PREMIUM_ANNUAL = "premium_annual"
     PREMIUM_MONTHLY = "premium_monthly"
-    STANDARD_ANNUAL = "standard_annual"
-    STANDARD_MONTHLY = "standard_monthly"
 
 class CouponStatus(str, Enum):
     ACTIVE = "active"

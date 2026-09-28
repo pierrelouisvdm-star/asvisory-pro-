@@ -5,7 +5,6 @@ from enum import Enum
 
 class SubscriptionTier(str, Enum):
     FREE = "free"
-    STANDARD = "standard"
     PREMIUM = "premium"
 
 class BillingCycle(str, Enum):
@@ -13,19 +12,15 @@ class BillingCycle(str, Enum):
     ANNUAL = "annual"
     LIFETIME = "lifetime"
 
-# Pricing configuration (in ZAR)
+# Pricing configuration (in ZAR) — one flat price for everyone
 PRICING = {
     SubscriptionTier.FREE: {
         BillingCycle.MONTHLY: 0.0,
         BillingCycle.ANNUAL: 0.0,
     },
-    SubscriptionTier.STANDARD: {
-        BillingCycle.MONTHLY: 49.0,
-        BillingCycle.ANNUAL: 490.0,  # ~17% discount
-    },
     SubscriptionTier.PREMIUM: {
-        BillingCycle.MONTHLY: 149.0,
-        BillingCycle.ANNUAL: 1490.0,  # ~17% discount
+        BillingCycle.MONTHLY: 299.0,
+        BillingCycle.ANNUAL: 1999.0,  # ~R1,589 saved vs monthly
     },
 }
 
@@ -37,16 +32,6 @@ TIER_FEATURES = {
         "pdf_reports": False,
         "advanced_tools": False,
         "market_tracker": False,
-        "goal_planner": False,
-        "meeting_scheduler": False,
-        "portfolio_tracker": False,
-    },
-    SubscriptionTier.STANDARD: {
-        "calculators": "all",  # All 15 calculators
-        "max_clients": 5,
-        "pdf_reports": True,
-        "advanced_tools": False,
-        "market_tracker": True,
         "goal_planner": False,
         "meeting_scheduler": False,
         "portfolio_tracker": False,

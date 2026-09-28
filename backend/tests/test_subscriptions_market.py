@@ -16,17 +16,16 @@ class TestSubscriptionPricing:
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
         assert response.status_code == 200, f"Expected 200, got {response.status_code}"
     
-    def test_pricing_has_three_tiers(self):
-        """Pricing should return exactly 3 tiers: free, standard, premium"""
+    def test_pricing_has_two_tiers(self):
+        """Pricing should return exactly 2 tiers: free, premium"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
         data = response.json()
-        
+
         assert "tiers" in data, "Response should have 'tiers' key"
-        assert len(data["tiers"]) == 3, f"Expected 3 tiers, got {len(data['tiers'])}"
-        
+        assert len(data["tiers"]) == 2, f"Expected 2 tiers, got {len(data['tiers'])}"
+
         tier_names = [t["tier"] for t in data["tiers"]]
         assert "free" in tier_names, "Should have 'free' tier"
-        assert "standard" in tier_names, "Should have 'standard' tier"
         assert "premium" in tier_names, "Should have 'premium' tier"
     
     def test_free_tier_pricing(self):
@@ -40,26 +39,15 @@ class TestSubscriptionPricing:
         assert free_tier["annual_price"] == 0, "Free tier annual should be R0"
         assert free_tier["name"] == "Free", "Free tier name should be 'Free'"
     
-    def test_standard_tier_pricing(self):
-        """Standard tier should have R49/month and R490/year"""
-        response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
-        data = response.json()
-        
-        standard_tier = next((t for t in data["tiers"] if t["tier"] == "standard"), None)
-        assert standard_tier is not None, "Standard tier not found"
-        assert standard_tier["monthly_price"] == 49.0, f"Standard monthly should be R49, got {standard_tier['monthly_price']}"
-        assert standard_tier["annual_price"] == 490.0, f"Standard annual should be R490, got {standard_tier['annual_price']}"
-        assert standard_tier["name"] == "Standard", "Standard tier name should be 'Standard'"
-    
     def test_premium_tier_pricing(self):
-        """Premium tier should have R149/month and R1490/year"""
+        """Premium tier should have R299/month and R1999/year"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
         data = response.json()
-        
+
         premium_tier = next((t for t in data["tiers"] if t["tier"] == "premium"), None)
         assert premium_tier is not None, "Premium tier not found"
-        assert premium_tier["monthly_price"] == 149.0, f"Premium monthly should be R149, got {premium_tier['monthly_price']}"
-        assert premium_tier["annual_price"] == 1490.0, f"Premium annual should be R1490, got {premium_tier['annual_price']}"
+        assert premium_tier["monthly_price"] == 299.0, f"Premium monthly should be R299, got {premium_tier['monthly_price']}"
+        assert premium_tier["annual_price"] == 1999.0, f"Premium annual should be R1999, got {premium_tier['annual_price']}"
         assert premium_tier["name"] == "Premium", "Premium tier name should be 'Premium'"
     
     def test_free_tier_features(self):
@@ -77,19 +65,6 @@ class TestSubscriptionPricing:
         # Free tier should have no client management
         assert features["max_clients"] == 0, "Free tier should have 0 max_clients"
         assert features["pdf_reports"] == False, "Free tier should not have PDF reports"
-    
-    def test_standard_tier_features(self):
-        """Standard tier should have all calculators and 5 clients"""
-        response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
-        data = response.json()
-        
-        standard_tier = next((t for t in data["tiers"] if t["tier"] == "standard"), None)
-        features = standard_tier["features"]
-        
-        assert features["calculators"] == "all", "Standard tier should have all calculators"
-        assert features["max_clients"] == 5, f"Standard tier should have 5 max_clients, got {features['max_clients']}"
-        assert features["pdf_reports"] == True, "Standard tier should have PDF reports"
-        assert features["market_tracker"] == True, "Standard tier should have market tracker"
     
     def test_premium_tier_features(self):
         """Premium tier should have unlimited clients and all features"""

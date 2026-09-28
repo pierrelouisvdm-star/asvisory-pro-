@@ -97,14 +97,14 @@ class TestSubscriptionPricing:
         assert response.status_code == 200
         print("✓ Pricing endpoint returns 200")
     
-    def test_pricing_has_three_tiers(self):
-        """Test pricing returns exactly 3 tiers"""
+    def test_pricing_has_two_tiers(self):
+        """Test pricing returns exactly 2 tiers"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
         data = response.json()
         assert "tiers" in data
-        assert len(data["tiers"]) == 3
-        print("✓ Pricing has 3 tiers")
-    
+        assert len(data["tiers"]) == 2
+        print("✓ Pricing has 2 tiers")
+
     def test_free_tier_pricing(self):
         """Test Free tier is R0"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
@@ -115,26 +115,16 @@ class TestSubscriptionPricing:
         assert free_tier["annual_price"] == 0
         assert free_tier["name"] == "Free"
         print("✓ Free tier: R0/month")
-    
-    def test_standard_tier_pricing(self):
-        """Test Standard tier is R49/month"""
-        response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
-        data = response.json()
-        standard_tier = next((t for t in data["tiers"] if t["tier"] == "standard"), None)
-        assert standard_tier is not None
-        assert standard_tier["monthly_price"] == 49.0
-        assert standard_tier["name"] == "Standard"
-        print("✓ Standard tier: R49/month")
-    
+
     def test_premium_tier_pricing(self):
-        """Test Premium tier is R149/month"""
+        """Test Premium tier is R299/month"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
         data = response.json()
         premium_tier = next((t for t in data["tiers"] if t["tier"] == "premium"), None)
         assert premium_tier is not None
-        assert premium_tier["monthly_price"] == 149.0
+        assert premium_tier["monthly_price"] == 299.0
         assert premium_tier["name"] == "Premium"
-        print("✓ Premium tier: R149/month")
+        print("✓ Premium tier: R299/month")
     
     def test_trial_days_included(self):
         """Test trial days is included in pricing response"""

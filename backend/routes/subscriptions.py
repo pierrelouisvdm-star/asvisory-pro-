@@ -265,20 +265,12 @@ async def get_pricing():
                 "description": "Basic calculators to get started"
             },
             {
-                "tier": SubscriptionTier.STANDARD.value,
-                "name": "Standard",
-                "monthly_price": PRICING[SubscriptionTier.STANDARD][BillingCycle.MONTHLY],
-                "annual_price": PRICING[SubscriptionTier.STANDARD][BillingCycle.ANNUAL],
-                "features": TIER_FEATURES[SubscriptionTier.STANDARD],
-                "description": "Full calculator suite for growing practices"
-            },
-            {
                 "tier": SubscriptionTier.PREMIUM.value,
                 "name": "Premium",
                 "monthly_price": PRICING[SubscriptionTier.PREMIUM][BillingCycle.MONTHLY],
                 "annual_price": PRICING[SubscriptionTier.PREMIUM][BillingCycle.ANNUAL],
                 "features": TIER_FEATURES[SubscriptionTier.PREMIUM],
-                "description": "Complete toolkit for established advisors"
+                "description": "Everything you need for financial planning and tracking"
             }
         ],
         "trial_days": TRIAL_DAYS

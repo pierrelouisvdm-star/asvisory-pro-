@@ -133,24 +133,16 @@ class TestSubscriptionPricing:
         
         assert "tiers" in data, "Response should have 'tiers' key"
         assert isinstance(data["tiers"], list), "Tiers should be a list"
-        assert len(data["tiers"]) == 3, f"Should have 3 tiers, got {len(data['tiers'])}"
-    
+        assert len(data["tiers"]) == 2, f"Should have 2 tiers, got {len(data['tiers'])}"
+
     def test_pricing_has_free_tier(self):
         """Pricing should have free tier"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
         data = response.json()
-        
+
         tier_names = [t["tier"] for t in data["tiers"]]
         assert "free" in tier_names, f"Should have free tier, found: {tier_names}"
-    
-    def test_pricing_has_standard_tier(self):
-        """Pricing should have standard tier"""
-        response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
-        data = response.json()
-        
-        tier_names = [t["tier"] for t in data["tiers"]]
-        assert "standard" in tier_names, f"Should have standard tier, found: {tier_names}"
-    
+
     def test_pricing_has_premium_tier(self):
         """Pricing should have premium tier"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
