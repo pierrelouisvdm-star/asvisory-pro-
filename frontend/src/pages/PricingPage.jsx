@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
 import { useJurisdiction } from '@/context/JurisdictionContext';
-import { couponApi } from '@/services/api';
+import { couponApi, paymentsApi } from '@/services/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { 
-  Check, Crown, Gift, Loader2, CreditCard, Mail, Phone,
+  Check, Crown, Gift, Loader2, CreditCard, Mail,
   Calculator, Users, FileText, BarChart3, TrendingUp, Target, Calendar, PieChart,
   Receipt, Wallet, Bot, Award, Flame, DollarSign
 } from 'lucide-react';
@@ -37,14 +37,6 @@ const US_PREMIUM_FEATURES = [
   { icon: Bot, label: 'AI Financial Assistant' },
 ];
 
-// PayFast configuration
-const PAYFAST_CONFIG = {
-  merchantId: '10000100', // Sandbox - replace with real merchant ID in production
-  merchantKey: '46f0cd694581a', // Sandbox - replace with real key in production
-  passphrase: '', // Set your passphrase
-  sandboxMode: true, // Set to false in production
-};
-
 const PREMIUM_PRICE = 299;
 const ANNUAL_PRICE = 1999;
 const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1999 vs R3588 = R1589 savings
@@ -62,7 +54,7 @@ export const PricingPage = () => {
   const [couponCode, setCouponCode] = useState('');
   const [couponLoading, setCouponLoading] = useState(false);
   
-  // PayFast state
+  // Paystack state
   const [paymentLoading, setPaymentLoading] = useState(false);
 
   const handleRedeemCoupon = async (e) => {
@@ -89,7 +81,7 @@ export const PricingPage = () => {
     }
   };
 
-  const handlePayFastPayment = () => {
+  const handlePaystackPayment = async () => {
     if (!isAuthenticated) {
       toast.error('Please sign in to make a payment');
       navigate('/auth?redirect=/pricing');
@@ -97,50 +89,14 @@ export const PricingPage = () => {
     }
 
     setPaymentLoading(true);
-    
-    const isAnnual = billingPeriod === 'annual';
-    const paymentAmount = isAnnual ? ANNUAL_PRICE : PREMIUM_PRICE;
 
-    // Build PayFast payment form
-    const paymentData = {
-      merchant_id: PAYFAST_CONFIG.merchantId,
-      merchant_key: PAYFAST_CONFIG.merchantKey,
-      return_url: `${window.location.origin}/payment/success`,
-      cancel_url: `${window.location.origin}/pricing`,
-      notify_url: `${process.env.REACT_APP_BACKEND_URL}/api/payments/payfast-notify`,
-      email_address: user?.email || '',
-      m_payment_id: `AP-${Date.now()}`,
-      amount: paymentAmount.toFixed(2),
-      item_name: isAnnual ? 'Financial Advisory Pro Premium Annual' : 'Financial Advisory Pro Premium Monthly',
-      item_description: isAnnual ? 'Annual premium subscription' : 'Monthly premium subscription',
-      subscription_type: '1', // 1 = subscription
-      billing_date: new Date().getDate().toString(),
-      recurring_amount: paymentAmount.toFixed(2),
-      frequency: isAnnual ? '6' : '3', // 6 = Yearly, 3 = Monthly
-      cycles: '0', // 0 = indefinite
-      custom_str1: user?.id || '',
-      custom_str2: billingPeriod,
-    };
-
-    // Create and submit form
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = PAYFAST_CONFIG.sandboxMode 
-      ? 'https://sandbox.payfast.co.za/eng/process'
-      : 'https://www.payfast.co.za/eng/process';
-
-    Object.entries(paymentData).forEach(([key, value]) => {
-      if (value) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = String(value);
-        form.appendChild(input);
-      }
-    });
-
-    document.body.appendChild(form);
-    form.submit();
+    try {
+      const result = await paymentsApi.initializePaystack(billingPeriod);
+      window.location.href = result.authorization_url;
+    } catch (error) {
+      toast.error(error.message || 'Failed to start payment');
+      setPaymentLoading(false);
+    }
   };
 
   return (
@@ -348,23 +304,23 @@ export const PricingPage = () => {
                   {billingPeriod === 'annual' ? 'Get Annual Access, $99' : 'Get Monthly Access, $19/mo'}
                 </Button>
               ) : (
-                <Button 
+                <Button
                   className="w-full h-12 text-lg btn-premium"
-                  onClick={handlePayFastPayment}
+                  onClick={handlePaystackPayment}
                   disabled={paymentLoading}
-                  data-testid="payfast-payment-btn"
+                  data-testid="paystack-payment-btn"
                 >
                   {paymentLoading ? (
                     <Loader2 className="h-5 w-5 animate-spin mr-2" />
                   ) : (
                     <CreditCard className="h-5 w-5 mr-2" />
                   )}
-                  Subscribe with PayFast
+                  Subscribe with Paystack
                 </Button>
               )}
-              
+
               <p className="text-center text-xs text-slate-500 mt-3">
-                {isUS ? 'Secure checkout • Cancel or upgrade anytime' : 'Secure payment via PayFast • Cards, EFT, SnapScan & more'}
+                {isUS ? 'Secure checkout • Cancel or upgrade anytime' : 'Secure payment via Paystack • Cards, EFT & more'}
               </p>
             </CardContent>
           </Card>
@@ -430,10 +386,6 @@ export const PricingPage = () => {
             <a href="mailto:support@advisorypro.co.za" className="flex items-center gap-2 hover:text-emerald-400">
               <Mail className="h-4 w-4" />
               support@advisorypro.co.za
-            </a>
-            <a href="tel:+27123456789" className="flex items-center gap-2 hover:text-emerald-400">
-              <Phone className="h-4 w-4" />
-              +27 12 345 6789
             </a>
           </div>
         </div>

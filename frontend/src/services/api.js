@@ -339,6 +339,28 @@ export const subscriptionApi = {
   },
 };
 
+// Payments API (Paystack)
+export const paymentsApi = {
+  initializePaystack: async (billingCycle) => {
+    const response = await fetch(`${API_URL}/api/payments/paystack/initialize`, {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({
+        billing_cycle: billingCycle,
+        origin_url: window.location.origin,
+      }),
+    });
+    return handleResponse(response);
+  },
+
+  getPaystackStatus: async (reference) => {
+    const response = await fetch(`${API_URL}/api/payments/paystack-status/${reference}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+};
+
 // Coupon API
 export const couponApi = {
   redeem: async (code) => {

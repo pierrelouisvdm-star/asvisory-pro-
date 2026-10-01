@@ -81,7 +81,7 @@ The app should now be at `http://localhost:3000`, talking to the API at
 - `MONGO_URL` / `DB_NAME` — required for everything that touches the
   database (i.e. everything).
 
-Stripe, PayFast, and Resend keys are only needed once you wire up real
+Stripe, Paystack, and Resend keys are only needed once you wire up real
 payments/emails — the app runs fine without them for local development.
 
 ## Where to deploy cheaply

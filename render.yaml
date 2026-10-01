@@ -29,11 +29,7 @@ services:
         sync: false
       - key: STRIPE_WEBHOOK_SECRET
         sync: false
-      - key: PAYFAST_MERCHANT_ID
-        sync: false
-      - key: PAYFAST_MERCHANT_KEY
-        sync: false
-      - key: PAYFAST_PASSPHRASE
+      - key: PAYSTACK_SECRET_KEY
         sync: false
       - key: RESEND_API_KEY
         sync: false

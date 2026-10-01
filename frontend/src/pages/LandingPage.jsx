@@ -14,7 +14,7 @@ import {
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
   PiggyBank, Home, Car, GraduationCap, Heart,
   LineChart, Target, Clock, Zap, Award, Globe,
-  ChevronRight, Play, Receipt, Mail, Phone, MapPin,
+  ChevronRight, Play, Receipt, Mail,
   Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
@@ -972,30 +972,6 @@ export const LandingPage = () => {
                         </a>
                       </div>
                     </div>
-                    
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
-                        <Phone className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">Phone</p>
-                        <a href="tel:+27737599863" className="text-muted-foreground hover:text-primary transition-colors">
-                          073 759 9863
-                        </a>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-start gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
-                        <MapPin className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">Location</p>
-                        <p className="text-muted-foreground">
-                          Cape Town, South Africa
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -1104,12 +1080,6 @@ export const LandingPage = () => {
                     support@advisorypro.co.za
                   </a>
                 </li>
-                <li>
-                  <a href="tel:+27737599863" className="hover:text-primary transition-colors">
-                    073 759 9863
-                  </a>
-                </li>
-                <li>Cape Town, South Africa</li>
               </ul>
             </div>
           </div>
