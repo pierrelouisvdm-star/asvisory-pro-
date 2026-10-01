@@ -12,7 +12,7 @@ import { useJurisdiction } from '@/context/JurisdictionContext';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
-  PiggyBank, Home, Car, GraduationCap, Heart, Briefcase,
+  PiggyBank, Home, Car, GraduationCap, Heart,
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail, Phone, MapPin,
   Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag
@@ -505,60 +505,42 @@ export const LandingPage = () => {
             </h2>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* For Financial Advisors */}
-            <div className="bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border border-indigo-500/20 rounded-2xl p-8">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-indigo-500/20 rounded-xl flex items-center justify-center">
-                  <Briefcase className="h-7 w-7 text-indigo-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">For Financial Advisors</h3>
+          <div className="max-w-3xl mx-auto bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-2xl p-8">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center">
+                <Users className="h-7 w-7 text-emerald-400" />
               </div>
-              <p className="text-lg text-muted-foreground mb-6">
-                Save time on calculations and planning. Deliver clearer outputs. Focus on clients, not admin.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
-                  Professional PDF reports for clients
-                </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
-                  {isUS ? 'IRS & state-compliant tax calculations' : 'SARS-compliant tax calculations'}
-                </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle2 className="h-5 w-5 text-indigo-400 flex-shrink-0" />
-                  Fee comparison & scenario modeling
-                </li>
-              </ul>
+              <h3 className="text-2xl font-bold text-foreground">One Plan, Everything You Need</h3>
             </div>
-            
-            {/* For Individuals */}
-            <div className="bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-2xl p-8">
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center">
-                  <Users className="h-7 w-7 text-emerald-400" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground">For Individuals</h3>
-              </div>
-              <p className="text-lg text-muted-foreground mb-6">
-                Understand your financial position. Make better decisions. Build long-term wealth with structure.
-              </p>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                  Track net worth over time
-                </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                  Retirement & investment planning
-                </li>
-                <li className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                  AI-powered receipt scanning
-                </li>
-              </ul>
-            </div>
+            <p className="text-lg text-muted-foreground mb-6">
+              Whether you're managing your own finances or advising clients, every feature is included. Understand your financial position, deliver clearer outputs, and build long-term wealth with structure.
+            </p>
+            <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                Track net worth over time
+              </li>
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                Professional PDF reports for clients
+              </li>
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                {isUS ? 'IRS & state-compliant tax calculations' : 'SARS-compliant tax calculations'}
+              </li>
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                Retirement & investment planning
+              </li>
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                Fee comparison & scenario modeling
+              </li>
+              <li className="flex items-center gap-3 text-muted-foreground">
+                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+                AI-powered receipt scanning
+              </li>
+            </ul>
           </div>
         </div>
       </section>
