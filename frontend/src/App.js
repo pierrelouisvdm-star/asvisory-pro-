@@ -38,7 +38,6 @@ import DocumentReader from "@/pages/DocumentReader";
 import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
 import TFSACalculator from "@/pages/TFSACalculator";
 import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
-import MarketInsights from "@/pages/MarketInsights";
 import TaxCalculatorUS from "@/pages/calculators/TaxCalculatorUS";
 import Calculator401k from "@/pages/calculators/Calculator401k";
 import RothIRACalculator from "@/pages/calculators/RothIRACalculator";
@@ -185,8 +184,7 @@ function App() {
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
-                  <Route path="/market-insights" element={<ProtectedRoute><MarketInsights /></ProtectedRoute>} />
-                  
+
                   {/* US Calculators */}
                   <Route path="/us/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/us/tax-calculator"><TaxCalculatorUS /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/us/401k-calculator" element={<ProtectedRoute><GatedCalculator path="/us/401k-calculator"><Calculator401k /></GatedCalculator></ProtectedRoute>} />

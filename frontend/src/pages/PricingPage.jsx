@@ -10,8 +10,8 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { 
   Check, Crown, Gift, Loader2, CreditCard, Mail,
-  Calculator, Users, FileText, BarChart3, TrendingUp, Target, Calendar, PieChart,
-  Receipt, Wallet, Bot, Award, Flame, DollarSign
+  Calculator, Users, FileText, BarChart3, Target, Calendar, PieChart,
+  Receipt, Wallet, Bot, Flame, DollarSign
 } from 'lucide-react';
 import { toast } from 'sonner';
 import CountdownTimer from '@/components/CountdownTimer';
@@ -20,8 +20,6 @@ import SEOHead from '@/components/SEOHead';
 const PREMIUM_FEATURES = [
   { icon: Calculator, label: 'All 20 Financial Calculators' },
   { icon: Receipt, label: 'Tax Planning Hub (2026/27)' },
-  { icon: TrendingUp, label: 'Weekly Market Updates by Analysts' },
-  { icon: Award, label: 'Tips from Certified Financial Planners' },
   { icon: Wallet, label: 'Income & Expense Tracker' },
   { icon: FileText, label: 'PDF Report Generation' },
   { icon: Bot, label: 'AI Financial Assistant' },

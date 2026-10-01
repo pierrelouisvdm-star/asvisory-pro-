@@ -805,8 +805,6 @@ export const LandingPage = () => {
                 ] : [
                   'All 20+ Financial Calculators',
                   'Tax Planning Hub (2026/27)',
-                  'Weekly Market Updates by Analysts',
-                  'Tips from Certified Financial Planners',
                   'Income & Expense Tracker',
                   'Professional PDF Reports',
                   'AI Financial Assistant',
