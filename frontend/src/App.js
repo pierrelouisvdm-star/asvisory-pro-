@@ -78,6 +78,7 @@ import { JurisdictionProvider } from "@/context/JurisdictionContext";
 import { CalculatorGate } from "@/components/FeatureGate";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AIAdvisorButton } from "@/components/AIAdvisorChat";
+import { InstallPrompt } from "@/components/InstallPrompt";
 import { HelmetProvider } from "react-helmet-async";
 
 // Wrap a calculator with feature gate
@@ -120,6 +121,7 @@ const AppLayout = ({ children }) => {
       </main>
       {!hideLayout && <Footer />}
       {isAuthenticated && <AIAdvisorButton />}
+      <InstallPrompt />
     </>
   );
 };
