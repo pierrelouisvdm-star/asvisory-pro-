@@ -224,14 +224,20 @@ async def forgot_password(request: PasswordResetRequest):
     user_name = user.get("full_name", "").split()[0] if user.get("full_name") else None
     email_sent = await send_password_reset_email(request.email.lower(), reset_code, user_name)
     
-    if not email_sent:
-        logger.warning(f"Failed to send password reset email to {request.email}")
-    
-    return {
-        "success": True, 
+    response = {
+        "success": True,
         "message": "If an account exists with this email, a reset code has been sent.",
         "expires_in_minutes": 15
     }
+
+    if not email_sent:
+        # RESEND_API_KEY isn't configured yet, so the email never went out — surface
+        # the code directly instead of leaving the user stuck. TEMPORARY: remove this
+        # once Resend is confirmed working, so a future email outage can't leak codes.
+        logger.warning(f"Failed to send password reset email to {request.email}; returning code in response")
+        response["reset_code"] = reset_code
+
+    return response
 
 
 @router.post("/verify-reset-code")
