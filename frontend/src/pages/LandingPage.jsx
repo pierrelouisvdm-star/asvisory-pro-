@@ -15,10 +15,12 @@ import {
   PiggyBank, Home, Car, GraduationCap, Heart,
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail,
-  Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag
+  Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag,
+  FileCheck, Wallet
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
+import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
 import CountdownTimer from '@/components/CountdownTimer';
 import SEOHead from '@/components/SEOHead';
 
@@ -135,28 +137,28 @@ const SA_KEY_FEATURES = [
     highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
   },
   {
-    icon: GraduationCap,
-    title: 'Financial Literacy Assessment',
-    description: 'COFI-compliant quiz to assess your financial knowledge. 10 carefully crafted questions with scoring, explanations, and professional PDF reports.',
-    highlights: ['COFI Compliant', 'Instant Scoring', 'PDF Reports'],
-  },
-  {
     icon: LineChart,
     title: 'Net Worth Tracker',
     description: 'Visualize your financial journey. Track assets, liabilities, set goals, and celebrate milestones. Generate beautiful progress reports.',
     highlights: ['Historical Snapshots', 'Goal Tracking', 'Smart Insights'],
   },
   {
-    icon: Shield,
-    title: 'Enterprise Security',
-    description: 'Bank-level security with POPIA compliance, audit trails for all data access, and complete data isolation. Your financial data is always protected.',
-    highlights: ['POPIA Compliant', 'Audit Trails', 'Data Isolation'],
-  },
-  {
     icon: Bot,
     title: 'AI Financial Assistant',
     description: 'Get intelligent insights powered by advanced AI. Answer complex financial questions, generate explanations, and get guidance on your financial decisions.',
     highlights: ['GPT-Powered', 'SA Context Aware', 'Clear Explanations'],
+  },
+  {
+    icon: Shield,
+    title: 'Enterprise Security',
+    description: 'Your data is encrypted in transit and at rest, with full audit trails and strict data isolation between accounts.',
+    highlights: ['Encrypted', 'Audit Trails', 'Data Isolation'],
+  },
+  {
+    icon: GraduationCap,
+    title: 'Financial Literacy Assessment',
+    description: 'A quick quiz to gauge financial knowledge. 10 questions with scoring, explanations, and a professional PDF report.',
+    highlights: ['Instant Scoring', 'Explanations', 'PDF Reports'],
   },
 ];
 
@@ -194,7 +196,7 @@ const US_KEY_FEATURES = [
   {
     icon: Shield,
     title: 'Enterprise Security',
-    description: 'Bank-level encryption, audit trails for all data access, and complete data isolation. Your financial data is always protected.',
+    description: 'Encrypted in transit and at rest, with full audit trails and complete data isolation between accounts.',
     highlights: ['Encrypted', 'Audit Trails', 'Data Isolation'],
   },
   {
@@ -335,10 +337,10 @@ export const LandingPage = () => {
     priceAnnual: '$99 one-time',
     priceNote: 'or $99 one-time (limited offer, reg. $149)',
   } : {
-    tagline: 'Plan Better. Track Smarter. Grow Faster.',
+    tagline: 'Built for South African Financial Advisers',
     badge: '2026/2027 Tax Year Ready',
-    headline: 'The Complete Financial Planning Platform for South Africans',
-    sub: 'Plan, track and optimise your finances with powerful tools built for real-world decisions. 20+ professional calculators, Tax Planning Hub, Income Tracker, and instant PDF reports, all localized for SA regulations.',
+    headline: 'The Financial Planning Toolkit Built for South African Advisers',
+    sub: '20+ calculators, a complete 2026/27 Tax Hub, client-ready PDF reports, and an AI assistant, all in one platform. Powerful enough for sophisticated individual investors too.',
     stats: [
       { value: '20+', label: 'Financial Calculators' },
       { value: 'Tax Hub', label: 'Complete Tax Suite' },
@@ -347,7 +349,7 @@ export const LandingPage = () => {
     ],
     price: 'R299/month',
     priceAnnual: 'R1,999/year',
-    priceNote: 'or R1,999/year, save R590',
+    priceNote: 'or R1,999/year, save R1,589',
   };
 
   return (
@@ -405,7 +407,7 @@ export const LandingPage = () => {
               {isUS ? (
                 <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2025 IRS data.</>
               ) : (
-                <>Plan, track and optimise your finances with powerful tools built for real-world decisions. <span className="text-white font-medium">20+ professional calculators</span>, Tax Planning Hub, Income Tracker, and instant PDF reports, all localized for SA regulations.</>
+                <>Give every client a clear, professional plan. <span className="text-white font-medium">20+ calculators</span>, a complete Tax Hub, and <span className="text-white font-medium">client-ready PDF reports</span>, built for South African advisers, and just as capable in the hands of a sophisticated individual investor.</>
               )}
             </p>
 
@@ -441,165 +443,50 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      {/* Value Proposition Section */}
-      <section className="relative bg-muted/50 border-y border-border py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <p className="text-indigo-400 text-sm font-medium uppercase tracking-wide mb-3">
-              Why Choose Us
-            </p>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Not just a calculator. A structured way to take control of your finances.
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Plan with Confidence */}
-            <div className="bg-background/50 border border-border rounded-xl p-6 hover:border-indigo-500/50 transition-colors">
-              <div className="w-12 h-12 bg-indigo-500/10 rounded-lg flex items-center justify-center mb-4">
-                <Target className="h-6 w-6 text-indigo-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Plan with Confidence</h3>
-              <p className="text-muted-foreground">
-                Make informed decisions using over 20 financial calculators designed for real-life scenarios.
-              </p>
-            </div>
-            
-            {/* Optimise Your Tax */}
-            <div className="bg-background/50 border border-border rounded-xl p-6 hover:border-emerald-500/50 transition-colors">
-              <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-4">
-                <Receipt className="h-6 w-6 text-emerald-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Optimise Your Tax</h3>
-              <p className="text-muted-foreground">
-                {isUS
-                  ? 'Federal + State tax for all 50 states, QBI deductions, self-employment tax, built for American tax planning.'
-                  : 'Stay ahead with a fully integrated Tax Planning Hub built around South African tax rules.'
-                }
-              </p>
-            </div>
-            
-            {/* Track Your Progress */}
-            <div className="bg-background/50 border border-border rounded-xl p-6 hover:border-amber-500/50 transition-colors">
-              <div className="w-12 h-12 bg-amber-500/10 rounded-lg flex items-center justify-center mb-4">
-                <LineChart className="h-6 w-6 text-amber-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-3">Track Your Progress</h3>
-              <p className="text-muted-foreground">
-                Monitor your net worth, income, and expenses in one clear, structured view.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Product Tour — see the actual software, not just feature cards */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/30 via-background to-background" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
 
-      {/* Who It's For Section */}
-      <section className="py-16 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
             <p className="text-emerald-400 text-sm font-medium uppercase tracking-wide mb-3">
-              Built For You
+              See It In Action
             </p>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-foreground">
-              Who It's For
+              From calculation to client-ready report
             </h2>
           </div>
-          
-          <div className="max-w-3xl mx-auto bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 border border-emerald-500/20 rounded-2xl p-8">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center">
-                <Users className="h-7 w-7 text-emerald-400" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground">One Plan, Everything You Need</h3>
-            </div>
-            <p className="text-lg text-muted-foreground mb-6">
-              Whether you're managing your own finances or advising clients, every feature is included. Understand your financial position, deliver clearer outputs, and build long-term wealth with structure.
-            </p>
-            <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
-              <li className="flex items-center gap-3 text-muted-foreground">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                Track net worth over time
-              </li>
-              <li className="flex items-center gap-3 text-muted-foreground">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                Professional PDF reports for clients
-              </li>
-              <li className="flex items-center gap-3 text-muted-foreground">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                {isUS ? 'IRS & state-compliant tax calculations' : 'SARS-compliant tax calculations'}
-              </li>
-              <li className="flex items-center gap-3 text-muted-foreground">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                Retirement & investment planning
-              </li>
-              <li className="flex items-center gap-3 text-muted-foreground">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                Fee comparison & scenario modeling
-              </li>
-              <li className="flex items-center gap-3 text-muted-foreground">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
-                AI-powered receipt scanning
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
 
-      {/* Tax Hub Feature Highlight, SA only */}
-      {!isUS && (
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/50 via-background to-background" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-                <Receipt className="h-3 w-3 mr-1" />
-                Featured: Tax Planning Hub
-              </Badge>
-              <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
-                The Most Complete <span className="text-emerald-400">Tax Planning Suite</span> for South Africans
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                Everything you need to understand, plan, and optimize your taxes - updated for the 2026/2027 tax year with the latest SARS brackets, rebates, and thresholds.
-              </p>
-              
-              <div className="grid sm:grid-cols-2 gap-4 mb-8">
-                {[
-                  { title: 'Income Tax Calculator', desc: 'All 7 tax brackets with rebates' },
-                  { title: 'Capital Gains Tax', desc: 'CGT with R50,000 annual exclusion' },
-                  { title: 'Medical Aid Credits', desc: 'Calculate your tax credits' },
-                  { title: 'RA Tax Savings', desc: 'Maximize your 27.5% deduction' },
-                  { title: 'Provisional Tax', desc: 'Estimate your payments' },
-                  { title: 'Income & Expense Tracker', desc: 'NEW: Track your finances' },
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-emerald-500/5 border border-emerald-500/20">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium text-foreground text-sm">{item.title}</p>
-                      <p className="text-xs text-muted-foreground">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
+          <div className="space-y-20">
+            {/* 1. Tax Hub */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
+                  <Receipt className="h-3 w-3 mr-1" />
+                  {isUS ? 'US Tax Suite' : 'Tax Planning Hub'}
+                </Badge>
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                  {isUS
+                    ? <>The <span className="text-emerald-400">complete US tax suite</span>, all 50 states</>
+                    : <>The <span className="text-emerald-400">complete Tax Planning Suite</span> for 2026/27</>
+                  }
+                </h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  {isUS
+                    ? 'Federal + state income tax, capital gains, AMT, self-employment tax, built on 2025 IRS brackets.'
+                    : 'Income tax, CGT, medical aid credits, provisional tax, and RA deductibility, all with the latest SARS brackets and rebates.'
+                  }
+                </p>
+                <div className="flex flex-wrap gap-4">
+                  <Link to="/tax-planning">
+                    <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                      <Receipt className="mr-2 h-5 w-5" />
+                      Open Tax Hub
+                    </Button>
+                  </Link>
+                </div>
               </div>
-              
-              <div className="flex flex-wrap gap-4">
-                <Link to="/tax-planning">
-                  <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
-                    <Receipt className="mr-2 h-5 w-5" />
-                    Open Tax Hub
-                  </Button>
-                </Link>
-                <Link to="/pricing">
-                  <Button size="lg" variant="outline" className="border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10">
-                    View Pricing
-                  </Button>
-                </Link>
-              </div>
-            </div>
-            
-            <div className="relative">
               <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-emerald-500/20 p-6 shadow-2xl">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-3 h-3 rounded-full bg-red-500" />
@@ -607,7 +494,6 @@ export const LandingPage = () => {
                   <div className="w-3 h-3 rounded-full bg-green-500" />
                   <span className="ml-2 text-xs text-slate-500">Tax Planning Hub</span>
                 </div>
-                
                 <div className="space-y-4">
                   <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
                     <p className="text-xs text-emerald-400 mb-1">2026/2027 Tax Year</p>
@@ -623,7 +509,6 @@ export const LandingPage = () => {
                       </div>
                     </div>
                   </div>
-                  
                   <div className="grid grid-cols-3 gap-2">
                     <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20 text-center">
                       <p className="text-xs text-blue-400">CGT</p>
@@ -638,7 +523,6 @@ export const LandingPage = () => {
                       <p className="text-sm font-bold text-white">R46k</p>
                     </div>
                   </div>
-                  
                   <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-700">
                     <span>6 Tax Tools • PDF Export • 2026/27 Updated</span>
                     <Badge className="bg-emerald-500/20 text-emerald-400 text-xs">Premium</Badge>
@@ -646,10 +530,175 @@ export const LandingPage = () => {
                 </div>
               </div>
             </div>
+
+            {/* 2. Fee Comparison Calculator */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="lg:order-2">
+                <Badge className="mb-4 bg-blue-500/20 text-blue-400 border-blue-500/30">
+                  <Scale className="h-3 w-3 mr-1" />
+                  Fee Comparison
+                </Badge>
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                  Show clients exactly what <span className="text-blue-400">fees cost them</span>
+                </h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Compare up to three investment options side by side, EAC, TER, platform and advisor fees, and visualize the long-term impact in a single chart.
+                </p>
+              </div>
+              <div className="lg:order-1 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-blue-500/20 p-6 shadow-2xl">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <span className="ml-2 text-xs text-slate-500">Fee Comparison</span>
+                </div>
+                <div className="space-y-3">
+                  {[
+                    { label: 'Option A — 2.1% EAC', value: 62, color: 'bg-red-500' },
+                    { label: 'Option B — 1.3% EAC', value: 81, color: 'bg-amber-500' },
+                    { label: 'Option C — 0.6% EAC', value: 100, color: 'bg-emerald-500' },
+                  ].map((bar, idx) => (
+                    <div key={idx}>
+                      <div className="flex justify-between text-xs text-slate-400 mb-1">
+                        <span>{bar.label}</span>
+                      </div>
+                      <div className="h-3 rounded-full bg-slate-700/50 overflow-hidden">
+                        <div className={`h-full ${bar.color} rounded-full`} style={{ width: `${bar.value}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                  <div className="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-700">
+                    <span>Projected value after 20 years</span>
+                    <Badge className="bg-blue-500/20 text-blue-400 text-xs">Premium</Badge>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Generated PDF Report */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <Badge className="mb-4 bg-purple-500/20 text-purple-400 border-purple-500/30">
+                  <FileCheck className="h-3 w-3 mr-1" />
+                  Client Reports
+                </Badge>
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                  Turn any calculation into a <span className="text-purple-400">client-ready PDF</span>
+                </h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Every calculator exports a branded, professional report in one click, ready to send straight to a client's inbox.
+                </p>
+              </div>
+              <div className="bg-white rounded-2xl border border-purple-500/20 p-6 shadow-2xl">
+                <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-200">
+                  <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-lg bg-slate-900 flex items-center justify-center">
+                      <span className="text-white font-bold text-xs">A</span>
+                    </div>
+                    <span className="font-bold text-slate-900 text-sm">AdvisoryPro Report</span>
+                  </div>
+                  <FileText className="h-5 w-5 text-slate-400" />
+                </div>
+                <div className="space-y-3">
+                  <div className="h-3 w-3/4 rounded bg-slate-200" />
+                  <div className="h-3 w-1/2 rounded bg-slate-200" />
+                  <div className="grid grid-cols-3 gap-2 py-2">
+                    <div className="h-16 rounded bg-purple-100 flex items-end p-2">
+                      <div className="w-full h-8 rounded-sm bg-purple-400" />
+                    </div>
+                    <div className="h-16 rounded bg-purple-100 flex items-end p-2">
+                      <div className="w-full h-12 rounded-sm bg-purple-500" />
+                    </div>
+                    <div className="h-16 rounded bg-purple-100 flex items-end p-2">
+                      <div className="w-full h-4 rounded-sm bg-purple-300" />
+                    </div>
+                  </div>
+                  <div className="h-2 w-full rounded bg-slate-100" />
+                  <div className="h-2 w-5/6 rounded bg-slate-100" />
+                  <div className="h-2 w-2/3 rounded bg-slate-100" />
+                </div>
+              </div>
+            </div>
+
+            {/* 4. Net Worth Dashboard */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="lg:order-2">
+                <Badge className="mb-4 bg-amber-500/20 text-amber-400 border-amber-500/30">
+                  <Wallet className="h-3 w-3 mr-1" />
+                  Net Worth Tracker
+                </Badge>
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                  Track <span className="text-amber-400">assets, liabilities and progress</span> over time
+                </h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Historical snapshots, goal tracking, and a clear view of the whole financial picture, not just a single calculation.
+                </p>
+              </div>
+              <div className="lg:order-1 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-amber-500/20 p-6 shadow-2xl">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <span className="ml-2 text-xs text-slate-500">Net Worth Tracker</span>
+                </div>
+                <p className="text-xs text-slate-400 mb-1">Total Net Worth</p>
+                <p className="text-2xl font-bold text-white mb-3">R 3,247,500</p>
+                <div className="flex items-end gap-1.5 h-16 mb-3">
+                  {[40, 48, 45, 58, 62, 70, 85].map((h, idx) => (
+                    <div key={idx} className="flex-1 rounded-t-sm bg-gradient-to-t from-amber-600 to-amber-400" style={{ height: `${h}%` }} />
+                  ))}
+                </div>
+                <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-700">
+                  <span className="text-emerald-400">+12.4% this quarter</span>
+                  <Badge className="bg-amber-500/20 text-amber-400 text-xs">Premium</Badge>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. AI Assistant */}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <Badge className="mb-4 bg-indigo-500/20 text-indigo-400 border-indigo-500/30">
+                  <Bot className="h-3 w-3 mr-1" />
+                  AI Assistant
+                </Badge>
+                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                  An <span className="text-indigo-400">AI assistant</span> that understands {isUS ? 'US tax rules' : 'SA tax rules'}
+                </h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Ask complex planning questions and get clear, {isUS ? 'IRS-aware' : 'SARS-aware'} explanations in seconds, right inside the platform.
+                </p>
+              </div>
+              <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-indigo-500/20 p-6 shadow-2xl">
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <span className="ml-2 text-xs text-slate-500">AI Assistant</span>
+                </div>
+                <div className="space-y-3">
+                  <div className="ml-auto max-w-[75%] bg-indigo-600 rounded-2xl rounded-tr-sm px-4 py-2.5">
+                    <p className="text-sm text-white">{isUS ? 'How much can I contribute to my 401(k) this year?' : 'How much can I deduct for my RA this year?'}</p>
+                  </div>
+                  <div className="flex items-start gap-2 max-w-[85%]">
+                    <div className="h-7 w-7 rounded-full bg-indigo-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Bot className="h-4 w-4 text-indigo-400" />
+                    </div>
+                    <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                      <p className="text-sm text-slate-200">
+                        {isUS
+                          ? 'For 2025, the 401(k) employee contribution limit is $23,500, plus a $7,500 catch-up if you\'re 50+...'
+                          : 'You can deduct up to 27.5% of your taxable income, capped at R350,000 per tax year...'
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-      )}
 
       {/* Calculator Categories */}
       <section className="relative py-20">
@@ -762,7 +811,7 @@ export const LandingPage = () => {
             Simple Pricing
           </p>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
-            One Plan. Everything Included.
+            {isUS ? 'One Plan. Everything Included.' : <>Everything. <span className="text-emerald-500">R299/month.</span></>}
           </h2>
           <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
             No hidden fees, no feature restrictions. Get full access to every tool for one simple monthly price.
@@ -789,10 +838,10 @@ export const LandingPage = () => {
                 <div className="mb-6">
                   <span className="text-5xl font-bold text-foreground">R299</span>
                   <span className="text-muted-foreground ml-2">/month</span>
-                  <p className="text-emerald-500 text-sm mt-1">or R1,999/year, save R590</p>
+                  <p className="text-emerald-500 text-sm mt-1">or R1,999/year, save R1,589</p>
                 </div>
               )}
-              
+
               <ul className="space-y-3 text-left mb-8">
                 {(isUS ? [
                   'All 30+ US Financial Calculators',
@@ -803,11 +852,12 @@ export const LandingPage = () => {
                   'Professional PDF Reports',
                   'AI Financial Assistant',
                 ] : [
-                  'All 20+ Financial Calculators',
-                  'Tax Planning Hub (2026/27)',
-                  'Income & Expense Tracker',
-                  'Professional PDF Reports',
-                  'AI Financial Assistant',
+                  '20+ Calculators',
+                  '2026/27 Tax Hub',
+                  'Professional Reports',
+                  'Planning Tools',
+                  'AI Assistant',
+                  'No feature restrictions',
                 ]).map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground">
                     <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />
@@ -815,16 +865,16 @@ export const LandingPage = () => {
                   </li>
                 ))}
               </ul>
-              
+
               <Link to="/auth">
                 <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg h-14">
                   Get Started Now
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              
+
               <p className="mt-4 text-sm text-muted-foreground">
-                {isUS ? 'Secure checkout • Have a coupon code? Enter it at signup' : 'Cancel anytime • Have a coupon code? Enter it at signup'}
+                {isUS ? 'Secure checkout • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
               </p>
             </CardContent>
           </Card>
@@ -896,10 +946,10 @@ export const LandingPage = () => {
                   title: 'Accuracy First', 
                   desc: 'Every calculation is verified against current SA regulations and tax laws.' 
                 },
-                { 
-                  icon: Shield, 
-                  title: 'Security & Privacy', 
-                  desc: 'POPIA compliant with bank-level security for all your data.' 
+                {
+                  icon: Shield,
+                  title: 'Security & Privacy',
+                  desc: 'Your data is encrypted and access-controlled, handled with POPIA\'s principles in mind.'
                 },
                 { 
                   icon: Zap, 
@@ -1077,6 +1127,14 @@ export const LandingPage = () => {
                   <a href="mailto:support@advisorypro.co.za" className="hover:text-primary transition-colors">
                     support@advisorypro.co.za
                   </a>
+                </li>
+                <li className="sm:hidden">
+                  <button
+                    onClick={() => window.dispatchEvent(new Event(INSTALL_PROMPT_REQUEST_EVENT))}
+                    className="hover:text-primary transition-colors"
+                  >
+                    Install App
+                  </button>
                 </li>
               </ul>
             </div>

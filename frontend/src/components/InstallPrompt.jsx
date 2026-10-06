@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Download, X, Share, SquarePlus } from 'lucide-react';
 
 const DISMISS_KEY = 'advisorypro_install_prompt_dismissed_at';
 const DISMISS_DAYS = 14;
+const VISIT_COUNT_KEY = 'advisorypro_visit_count';
+export const INSTALL_PROMPT_REQUEST_EVENT = 'advisorypro:request-install-prompt';
 
 const isStandalone = () =>
   window.matchMedia('(display-mode: standalone)').matches ||
@@ -18,22 +21,30 @@ const wasRecentlyDismissed = () => {
   return daysSince < DISMISS_DAYS;
 };
 
+// Returning visitor = this isn't the first page load we've recorded for them.
+const isReturningVisitor = () => {
+  const count = Number(localStorage.getItem(VISIT_COUNT_KEY) || 0);
+  localStorage.setItem(VISIT_COUNT_KEY, String(count + 1));
+  return count >= 1;
+};
+
 export const InstallPrompt = () => {
+  const { isAuthenticated } = useAuth();
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [visible, setVisible] = useState(false);
   const [platform, setPlatform] = useState(null); // 'android' | 'ios'
+  const [eligible, setEligible] = useState(false);
 
+  // Capture the installability signal on every load, regardless of whether we're
+  // allowed to show the banner yet — an explicit "Install App" click needs it ready.
   useEffect(() => {
-    if (isStandalone() || wasRecentlyDismissed()) return;
-    if (window.innerWidth >= 768) return; // phones only
+    if (isStandalone()) return;
 
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
       setPlatform('android');
-      setTimeout(() => setVisible(true), 3000);
     };
-
     const handleAppInstalled = () => {
       setVisible(false);
       localStorage.removeItem(DISMISS_KEY);
@@ -41,21 +52,38 @@ export const InstallPrompt = () => {
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     window.addEventListener('appinstalled', handleAppInstalled);
-
-    // iOS never fires beforeinstallprompt — show manual instructions instead.
-    let iosTimer;
-    if (isIOS()) {
-      iosTimer = setTimeout(() => {
-        setPlatform('ios');
-        setVisible(true);
-      }, 3000);
-    }
+    if (isIOS()) setPlatform('ios');
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
-      if (iosTimer) clearTimeout(iosTimer);
     };
+  }, []);
+
+  // The homepage's job is to sell the product, not compete with it for attention.
+  // Only auto-show once someone's actually engaged: logged in, or back for a second visit.
+  useEffect(() => {
+    if (isStandalone() || wasRecentlyDismissed()) return;
+    if (window.innerWidth >= 768) return; // phones only
+
+    const returning = isReturningVisitor();
+    if (!isAuthenticated && !returning) return;
+
+    setEligible(true);
+    const timer = setTimeout(() => setVisible(true), 3000);
+    return () => clearTimeout(timer);
+  }, [isAuthenticated]);
+
+  // Explicit trigger (e.g. a footer "Install App" link) always works, regardless
+  // of the auto-show criteria above.
+  useEffect(() => {
+    const handleRequest = () => {
+      if (isStandalone() || window.innerWidth >= 768) return;
+      setEligible(true);
+      setVisible(true);
+    };
+    window.addEventListener(INSTALL_PROMPT_REQUEST_EVENT, handleRequest);
+    return () => window.removeEventListener(INSTALL_PROMPT_REQUEST_EVENT, handleRequest);
   }, []);
 
   const dismiss = () => {
@@ -74,7 +102,7 @@ export const InstallPrompt = () => {
     }
   };
 
-  if (!visible || !platform) return null;
+  if (!visible || !eligible || !platform) return null;
 
   return (
     <div

@@ -1,6 +1,9 @@
 import React from 'react';
-import { Calculator, Shield, Award, Clock, AlertTriangle } from 'lucide-react';
+import { Calculator, Shield, Award, Clock, AlertTriangle, Download } from 'lucide-react';
 import { FullDisclaimer } from '@/components/calculators/Disclaimer';
+import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
+
+const requestInstallPrompt = () => window.dispatchEvent(new Event(INSTALL_PROMPT_REQUEST_EVENT));
 
 export const Footer = () => {
   return (
@@ -14,7 +17,7 @@ export const Footer = () => {
             </div>
             <div>
               <p className="text-sm font-medium text-white">Secure</p>
-              <p className="text-xs text-slate-400">Bank-level security</p>
+              <p className="text-xs text-slate-400">Encrypted & access-controlled</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -68,6 +71,13 @@ export const Footer = () => {
             <span className="hover:text-emerald-400 cursor-pointer transition-colors">Privacy</span>
             <span className="hover:text-emerald-400 cursor-pointer transition-colors">Terms</span>
             <span className="hover:text-emerald-400 cursor-pointer transition-colors">Support</span>
+            <button
+              onClick={requestInstallPrompt}
+              className="flex items-center gap-1.5 hover:text-emerald-400 transition-colors sm:hidden"
+            >
+              <Download className="h-3.5 w-3.5" />
+              Install App
+            </button>
           </div>
         </div>
       </div>
