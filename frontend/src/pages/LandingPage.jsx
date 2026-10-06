@@ -688,7 +688,7 @@ export const LandingPage = () => {
                       <p className="text-sm text-slate-200">
                         {isUS
                           ? 'For 2025, the 401(k) employee contribution limit is $23,500, plus a $7,500 catch-up if you\'re 50+...'
-                          : 'You can deduct up to 27.5% of your taxable income, capped at R350,000 per tax year...'
+                          : 'You can deduct up to 27.5% of your taxable income, capped at R430,000 for the 2026/27 tax year...'
                         }
                       </p>
                     </div>
