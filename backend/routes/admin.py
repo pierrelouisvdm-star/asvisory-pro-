@@ -1,10 +1,29 @@
 from fastapi import APIRouter, HTTPException, Depends
 from typing import Optional
 from pydantic import BaseModel
+import os
 from utils.auth import get_current_user
 from server import db
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
+
+
+@router.post("/bootstrap-admin")
+async def bootstrap_admin():
+    """
+    TEMPORARY, no auth required. Promotes only the account matching the
+    server's own ADMIN_EMAIL env var — never attacker-controlled input,
+    so it can't be used to grant admin on an arbitrary account. Exists to
+    break the chicken-and-egg problem where every other admin route
+    requires an existing admin. Remove this route once used.
+    """
+    admin_email = os.environ.get("ADMIN_EMAIL", "").lower()
+    if not admin_email:
+        raise HTTPException(status_code=400, detail="ADMIN_EMAIL is not configured")
+    result = await db.users.update_one({"email": admin_email}, {"$set": {"is_admin": True}})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="No account found for ADMIN_EMAIL")
+    return {"success": True, "email": admin_email, "promoted": result.modified_count > 0}
 
 
 def require_admin(current_user: dict = Depends(get_current_user)):
