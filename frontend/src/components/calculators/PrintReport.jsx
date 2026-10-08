@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Printer, Download, FileText, Calculator, User } from 'lucide-react';
+import { Printer, Download, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCurrency } from '@/context/CurrencyContext';
 
