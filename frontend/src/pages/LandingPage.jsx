@@ -11,7 +11,7 @@ import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { useJurisdiction } from '@/context/JurisdictionContext';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
-  Bot, FileText, CheckCircle2, ArrowRight, Sparkles,
+  Bot, CheckCircle2, ArrowRight, Sparkles,
   PiggyBank, Home, Car, GraduationCap, Heart,
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail,
@@ -21,6 +21,9 @@ import {
 import logo from '../assets/logo_new.png';
 import heroFinanceBg from '../assets/hero-finance-bg.jpg';
 import landingPhotoBanner from '../assets/landing-photo-banner.jpg';
+import screenshotTaxHub from '../assets/screenshot-tax-hub.png';
+import screenshotFeeComparison from '../assets/screenshot-fee-comparison.png';
+import screenshotPdfReport from '../assets/screenshot-pdf-report.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
 import CountdownTimer from '@/components/CountdownTimer';
@@ -517,8 +520,8 @@ export const LandingPage = () => {
                 </h3>
                 <p className="text-lg text-muted-foreground mb-6">
                   {isUS
-                    ? 'Federal + state income tax, capital gains, AMT, self-employment tax, built on 2025 IRS brackets.'
-                    : 'Income tax, CGT, medical aid credits, provisional tax, and RA deductibility, all with the latest SARS brackets and rebates.'
+                    ? 'Federal + state tax, capital gains, AMT and self-employment tax, built on 2025 IRS brackets.'
+                    : 'Income tax, CGT, medical credits, provisional tax and RA deductibility, with the latest SARS brackets.'
                   }
                 </p>
                 <div className="flex flex-wrap gap-4">
@@ -530,48 +533,12 @@ export const LandingPage = () => {
                   </Link>
                 </div>
               </div>
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-emerald-500/20 p-6 shadow-2xl">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                  <span className="ml-2 text-xs text-slate-500">Tax Planning Hub</span>
-                </div>
-                <div className="space-y-4">
-                  <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
-                    <p className="text-xs text-emerald-400 mb-1">2026/2027 Tax Year</p>
-                    <p className="text-2xl font-bold text-white">Income Tax Calculator</p>
-                    <div className="mt-3 grid grid-cols-2 gap-3">
-                      <div className="bg-slate-700/50 rounded p-2">
-                        <p className="text-xs text-slate-400">Taxable Income</p>
-                        <p className="text-lg font-semibold text-white">R 650,000</p>
-                      </div>
-                      <div className="bg-slate-700/50 rounded p-2">
-                        <p className="text-xs text-slate-400">Tax Payable</p>
-                        <p className="text-lg font-semibold text-emerald-400">R 142,531</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20 text-center">
-                      <p className="text-xs text-blue-400">CGT</p>
-                      <p className="text-sm font-bold text-white">18%</p>
-                    </div>
-                    <div className="bg-purple-500/10 rounded-lg p-3 border border-purple-500/20 text-center">
-                      <p className="text-xs text-purple-400">RA Cap</p>
-                      <p className="text-sm font-bold text-white">R430k</p>
-                    </div>
-                    <div className="bg-amber-500/10 rounded-lg p-3 border border-amber-500/20 text-center">
-                      <p className="text-xs text-amber-400">TFSA</p>
-                      <p className="text-sm font-bold text-white">R46k</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-700">
-                    <span>6 Tax Tools • PDF Export • 2026/27 Updated</span>
-                    <Badge className="bg-emerald-500/20 text-emerald-400 text-xs">Premium</Badge>
-                  </div>
-                </div>
-              </div>
+              <img
+                src={screenshotTaxHub}
+                alt="AdvisoryPro Tax Planning Hub showing a 2026/2027 income tax calculation"
+                className="w-full h-auto rounded-2xl border border-emerald-500/20 shadow-2xl"
+                loading="lazy"
+              />
             </div>
 
             {/* 2. Fee Comparison Calculator */}
@@ -585,37 +552,15 @@ export const LandingPage = () => {
                   Show clients exactly what <span className="text-blue-400">fees cost them</span>
                 </h3>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Compare up to three investment options side by side, EAC, TER, platform and advisor fees, and visualize the long-term impact in a single chart.
+                  Compare fee structures side by side and visualize the long-term cost in a single chart.
                 </p>
               </div>
-              <div className="lg:order-1 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-blue-500/20 p-6 shadow-2xl">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                  <span className="ml-2 text-xs text-slate-500">Fee Comparison</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { label: 'Option A — 2.1% EAC', value: 62, color: 'bg-red-500' },
-                    { label: 'Option B — 1.3% EAC', value: 81, color: 'bg-amber-500' },
-                    { label: 'Option C — 0.6% EAC', value: 100, color: 'bg-emerald-500' },
-                  ].map((bar, idx) => (
-                    <div key={idx}>
-                      <div className="flex justify-between text-xs text-slate-400 mb-1">
-                        <span>{bar.label}</span>
-                      </div>
-                      <div className="h-3 rounded-full bg-slate-700/50 overflow-hidden">
-                        <div className={`h-full ${bar.color} rounded-full`} style={{ width: `${bar.value}%` }} />
-                      </div>
-                    </div>
-                  ))}
-                  <div className="flex items-center justify-between text-xs text-slate-500 pt-3 border-t border-slate-700">
-                    <span>Projected value after 20 years</span>
-                    <Badge className="bg-blue-500/20 text-blue-400 text-xs">Premium</Badge>
-                  </div>
-                </div>
-              </div>
+              <img
+                src={screenshotFeeComparison}
+                alt="AdvisoryPro Fee Comparison tool showing investment growth over 20 years"
+                className="lg:order-1 w-full h-auto rounded-2xl border border-blue-500/20 shadow-2xl"
+                loading="lazy"
+              />
             </div>
 
             {/* 3. Generated PDF Report */}
@@ -629,38 +574,15 @@ export const LandingPage = () => {
                   Turn any calculation into a <span className="text-purple-400">client-ready PDF</span>
                 </h3>
                 <p className="text-lg text-muted-foreground mb-6">
-                  Every calculator exports a branded, professional report in one click, ready to send straight to a client's inbox.
+                  Every calculator exports a branded report in one click, with the client's name and the basis of the calculation included.
                 </p>
               </div>
-              <div className="bg-white rounded-2xl border border-purple-500/20 p-6 shadow-2xl">
-                <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-200">
-                  <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-slate-900 flex items-center justify-center">
-                      <span className="text-white font-bold text-xs">A</span>
-                    </div>
-                    <span className="font-bold text-slate-900 text-sm">AdvisoryPro Report</span>
-                  </div>
-                  <FileText className="h-5 w-5 text-slate-400" />
-                </div>
-                <div className="space-y-3">
-                  <div className="h-3 w-3/4 rounded bg-slate-200" />
-                  <div className="h-3 w-1/2 rounded bg-slate-200" />
-                  <div className="grid grid-cols-3 gap-2 py-2">
-                    <div className="h-16 rounded bg-purple-100 flex items-end p-2">
-                      <div className="w-full h-8 rounded-sm bg-purple-400" />
-                    </div>
-                    <div className="h-16 rounded bg-purple-100 flex items-end p-2">
-                      <div className="w-full h-12 rounded-sm bg-purple-500" />
-                    </div>
-                    <div className="h-16 rounded bg-purple-100 flex items-end p-2">
-                      <div className="w-full h-4 rounded-sm bg-purple-300" />
-                    </div>
-                  </div>
-                  <div className="h-2 w-full rounded bg-slate-100" />
-                  <div className="h-2 w-5/6 rounded bg-slate-100" />
-                  <div className="h-2 w-2/3 rounded bg-slate-100" />
-                </div>
-              </div>
+              <img
+                src={screenshotPdfReport}
+                alt="A generated AdvisoryPro retirement planning PDF report, branded and ready to send to a client"
+                className="w-full h-auto max-h-[600px] object-cover object-top rounded-2xl border border-purple-500/20 shadow-2xl"
+                loading="lazy"
+              />
             </div>
 
             {/* 4. Net Worth Dashboard */}
