@@ -1,20 +1,25 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from '@/components/ui/dialog';
-import { Printer, Download, FileText, Calculator } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Printer, Download, FileText, Calculator, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCurrency } from '@/context/CurrencyContext';
 
-export const PrintReport = ({ 
-  title, 
+export const PrintReport = ({
+  title,
   calculatorType,
   inputs,
   results,
   chartData,
-  className 
+  className
 }) => {
   const printRef = useRef(null);
   const { currency, currentCurrency } = useCurrency();
+  const [clientName, setClientName] = useState('');
+  const [basisDescription, setBasisDescription] = useState('');
 
   const handlePrint = () => {
     const printContent = printRef.current;
@@ -68,6 +73,18 @@ export const PrintReport = ({
               margin-bottom: 8px; 
             }
             .subtitle { color: #94a3b8; margin-bottom: 30px; }
+            .prepared-for { color: #e2e8f0; font-size: 14px; margin-bottom: 4px; }
+            .prepared-for strong { color: #10b981; }
+            .basis-section {
+              background: #0f172a;
+              border: 1px solid #334155;
+              border-radius: 8px;
+              padding: 16px;
+              margin-bottom: 30px;
+              font-size: 13px;
+              color: #cbd5e1;
+              white-space: pre-wrap;
+            }
             .section { margin-bottom: 30px; }
             .section-title { 
               font-size: 14px; 
@@ -176,7 +193,37 @@ export const PrintReport = ({
             Review the report before printing or saving
           </DialogDescription>
         </DialogHeader>
-        
+
+        {/* Optional report details */}
+        <div className="grid sm:grid-cols-2 gap-4 pb-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="pr-client-name" className="text-xs text-muted-foreground">
+              Client name <span className="font-normal">(optional)</span>
+            </Label>
+            <Input
+              id="pr-client-name"
+              placeholder="e.g. John Smith"
+              value={clientName}
+              onChange={(e) => setClientName(e.target.value)}
+              data-testid="print-report-client-name"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="pr-basis" className="text-xs text-muted-foreground">
+              Basis of calculation <span className="font-normal">(optional)</span>
+            </Label>
+            <Textarea
+              id="pr-basis"
+              placeholder="e.g. Based on a conservative 6% annual return and current RA contribution limits"
+              value={basisDescription}
+              onChange={(e) => setBasisDescription(e.target.value)}
+              rows={1}
+              className="min-h-[38px]"
+              data-testid="print-report-basis"
+            />
+          </div>
+        </div>
+
         {/* Print Preview */}
         <div 
           ref={printRef}
@@ -199,9 +246,23 @@ export const PrintReport = ({
 
           {/* Title */}
           <h1 className="title font-display text-2xl font-semibold mb-2">{title}</h1>
+          {clientName.trim() && (
+            <p className="prepared-for text-sm mb-1">
+              Prepared for: <strong className="text-gold">{clientName.trim()}</strong>
+            </p>
+          )}
           <p className="subtitle text-muted-foreground mb-6">
             Professional calculation prepared using Financial Advisory Pro Suite
           </p>
+
+          {basisDescription.trim() && (
+            <div className="basis-section bg-muted/30 border border-border rounded-lg p-4 mb-6 text-sm text-muted-foreground whitespace-pre-wrap">
+              <p className="item-label text-xs text-muted-foreground uppercase tracking-wide mb-2">
+                Basis of Calculation
+              </p>
+              {basisDescription.trim()}
+            </div>
+          )}
 
           {/* Inputs Section */}
           <div className="section mb-6">
