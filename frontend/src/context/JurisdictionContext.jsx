@@ -12,13 +12,14 @@ export const jurisdictions = {
     available: true,
     taxYear: '2026/2027',
   },
-  US: { 
-    code: 'US', 
-    name: 'United States', 
-    flag: '🇺🇸', 
+  US: {
+    code: 'US',
+    name: 'United States',
+    flag: '🇺🇸',
     currency: 'USD',
     currencySymbol: '$',
-    available: true,
+    available: false,
+    unavailableLabel: 'Paused',
     taxYear: '2024/2025',
   },
   CA: { 
