@@ -24,6 +24,11 @@ import landingPhotoBanner from '../assets/landing-photo-banner.jpg';
 import screenshotTaxHub from '../assets/screenshot-tax-hub.png';
 import screenshotFeeComparison from '../assets/screenshot-fee-comparison.png';
 import screenshotPdfReport from '../assets/screenshot-pdf-report.png';
+import screenshotCalculators from '../assets/screenshot-calculators.png';
+import screenshotNetWorth from '../assets/screenshot-networth.png';
+import screenshotAiChat from '../assets/screenshot-ai-chat.png';
+import screenshotSecurity from '../assets/screenshot-security.png';
+import screenshotLiteracy from '../assets/screenshot-literacy.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
 import CountdownTimer from '@/components/CountdownTimer';
@@ -125,42 +130,49 @@ const US_CALCULATOR_CATEGORIES = [
 const SA_KEY_FEATURES = [
   {
     icon: Scale,
+    image: screenshotFeeComparison,
     title: 'Fee Comparison Tool',
     description: 'See how fees erode your returns over time. Compare up to 3 investment options with different EACs and visualize the long-term impact of TERs, platform fees, and advisor fees.',
     highlights: ['EAC Analysis', 'Visual Charts', 'PDF Reports'],
   },
   {
     icon: Receipt,
+    image: screenshotTaxHub,
     title: 'Tax Planning Hub',
     description: 'Complete tax planning suite with PDF exports. Income tax, CGT, medical credits, provisional tax, and RA deductibility calculators - all with helpful tooltips explaining SA tax concepts.',
     highlights: ['6 Tax Calculators', 'PDF Reports', 'Medical Credits'],
   },
   {
     icon: Calculator,
+    image: screenshotCalculators,
     title: '20+ Professional Calculators',
     description: 'From retirement planning to estate duty, every calculation you need. All localized for South African regulations, tax brackets, and the current Prime Rate.',
     highlights: ['SA Tax Brackets', 'Estate Duty', 'Living Annuity Limits'],
   },
   {
     icon: LineChart,
+    image: screenshotNetWorth,
     title: 'Net Worth Tracker',
     description: 'Visualize your financial journey. Track assets, liabilities, set goals, and celebrate milestones. Generate beautiful progress reports.',
     highlights: ['Historical Snapshots', 'Goal Tracking', 'Smart Insights'],
   },
   {
     icon: Bot,
+    image: screenshotAiChat,
     title: 'AI Financial Assistant',
     description: 'Get intelligent insights powered by advanced AI. Answer complex financial questions, generate explanations, and get guidance on your financial decisions.',
     highlights: ['GPT-Powered', 'SA Context Aware', 'Clear Explanations'],
   },
   {
     icon: Shield,
+    image: screenshotSecurity,
     title: 'Enterprise Security',
     description: 'Your data is encrypted in transit and at rest, with full audit trails and strict data isolation between accounts.',
     highlights: ['Encrypted', 'Audit Trails', 'Data Isolation'],
   },
   {
     icon: GraduationCap,
+    image: screenshotLiteracy,
     title: 'Financial Literacy Assessment',
     description: 'A quick quiz to gauge financial knowledge. 10 questions with scoring, explanations, and a professional PDF report.',
     highlights: ['Instant Scoring', 'Explanations', 'PDF Reports'],
@@ -779,9 +791,18 @@ export const LandingPage = () => {
                   </div>
                 </div>
                 <div className="flex-1 w-full">
-                  <div className="bg-muted/50 border border-border rounded-2xl p-8 h-48 flex items-center justify-center">
-                    <feature.icon className="h-24 w-24 text-muted-foreground/30" />
-                  </div>
+                  {feature.image ? (
+                    <img
+                      src={feature.image}
+                      alt={`AdvisoryPro ${feature.title} screenshot`}
+                      className="w-full h-auto max-h-80 object-cover object-top rounded-2xl border border-border shadow-xl"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="bg-muted/50 border border-border rounded-2xl p-8 h-48 flex items-center justify-center">
+                      <feature.icon className="h-24 w-24 text-muted-foreground/30" />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
