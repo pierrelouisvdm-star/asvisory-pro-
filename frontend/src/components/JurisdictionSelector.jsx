@@ -60,7 +60,7 @@ export const JurisdictionSelector = ({ className }) => {
               jurisdiction === j.code && <Check className="h-4 w-4 text-emerald-600" />
             ) : (
               <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-5 bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-slate-700">
-                Coming Soon
+                {j.unavailableLabel || 'Coming Soon'}
               </Badge>
             )}
           </DropdownMenuItem>

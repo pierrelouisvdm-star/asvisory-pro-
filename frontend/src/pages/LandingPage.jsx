@@ -404,7 +404,7 @@ export const LandingPage = () => {
                 {heroContent.tagline}
               </p>
 
-              <div className="mb-5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-indigo-200/80 text-xs">
+              <div className="mb-5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-emerald-200/80 text-xs">
                 <Sparkles className="h-3 w-3" />
                 {heroContent.badge}
               </div>
