@@ -19,6 +19,8 @@ import {
   FileCheck, Wallet
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
+import heroFinanceBg from '../assets/hero-finance-bg.jpg';
+import landingPhotoBanner from '../assets/landing-photo-banner.jpg';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
 import CountdownTimer from '@/components/CountdownTimer';
@@ -367,78 +369,119 @@ export const LandingPage = () => {
         }
       />
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[70vh] flex items-center">
-        {/* Background */}
-        <div className="absolute inset-0 bg-[#0a0a18]" />
-        {/* Spotlight effect */}
-        <div className={`absolute top-[10%] left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-b ${isUS ? 'from-blue-500/30 via-blue-600/20' : 'from-blue-500/30 via-blue-600/20'} to-transparent rounded-full blur-[100px]`} />
-        <div className="absolute top-[5%] left-1/2 -translate-x-1/2 w-[300px] h-[200px] bg-gradient-to-b from-sky-400/25 to-transparent rounded-full blur-[60px]" />
-        
-        <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-          <div className="flex flex-col items-center text-center">
-            {/* Region Selector */}
-            <div className="mb-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700/50">
-                <Globe className="h-4 w-4 text-slate-400" />
-                <span className="text-sm text-slate-400">Select your region:</span>
+      <section className="relative overflow-hidden bg-[#070a0f]">
+        {/* Background photo */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{ backgroundImage: `url(${heroFinanceBg})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#070a0f]/50 via-[#070a0f]/85 to-[#070a0f]" />
+        {/* Emerald glow */}
+        <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[700px] h-[480px] bg-emerald-500/20 rounded-full blur-[120px]" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-10 lg:pb-16">
+          {/* Slim top row: logo + region + sign in */}
+          <div className="flex items-center justify-between mb-14 lg:mb-20">
+            <AdvisoryProLogo size="small" className="text-white" />
+            <div className="flex items-center gap-3">
+              <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
+                <Globe className="h-3.5 w-3.5 text-slate-400" />
                 <JurisdictionSelector />
               </div>
-            </div>
-            
-            {/* Logo */}
-            <div className="mb-8 flex justify-center">
-              <AdvisoryProLogo size="hero" className="text-white" />
-            </div>
-            
-            <p className="text-sm sm:text-base tracking-[0.3em] text-slate-400 mt-3 uppercase mb-6">
-              {heroContent.tagline}
-            </p>
-            
-            <p className="mb-6 text-indigo-300 text-sm flex items-center justify-center gap-2">
-              <Sparkles className="h-3 w-3" />
-              {heroContent.badge}
-            </p>
-            
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-slate-300 mb-6">
-              {heroContent.headline}
-            </h2>
-            
-            <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
-              {isUS ? (
-                <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2025 IRS data.</>
-              ) : (
-                <>Give every client a clear, professional plan. <span className="text-white font-medium">20+ calculators</span>, a complete Tax Hub, and <span className="text-white font-medium">client-ready PDF reports</span>, built for South African advisers, and just as capable in the hands of a sophisticated individual investor.</>
-              )}
-            </p>
-
-            {/* Stats Row */}
-            <div className="flex flex-wrap justify-center gap-8 mb-10">
-              {heroContent.stats.map((stat, idx) => (
-                <div key={idx} className="text-center group">
-                  <p className="text-3xl font-bold text-indigo-400 group-hover:scale-110 transition-transform">{stat.value}</p>
-                  <p className="text-sm text-slate-400">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/auth">
-                <Button size="lg" className="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-lg px-8 shadow-lg shadow-indigo-500/25 h-14 group">
+                <Button size="sm" className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-[#06120a] font-semibold">
                   Get Started
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link to="/dashboard">
-                <Button size="lg" variant="outline" className="text-lg px-8 border-emerald-400/50 text-emerald-300 hover:bg-emerald-500/10 h-14 group">
-                  <Play className="mr-2 h-5 w-5" />
-                  Explore the Platform
                 </Button>
               </Link>
             </div>
-            
-            <p className="mt-4 text-sm text-slate-500">
-              {isUS ? '$19/month or $99 one-time (Limited offer!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
-            </p>
+          </div>
+
+          {/* Split hero content */}
+          <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
+            <div>
+              <p className="font-mono text-xs tracking-[0.18em] uppercase text-emerald-400/90 flex items-center gap-2 mb-5">
+                <span className="inline-block w-4 h-[2px] bg-emerald-500" />
+                {heroContent.tagline}
+              </p>
+
+              <div className="mb-5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-indigo-200/80 text-xs">
+                <Sparkles className="h-3 w-3" />
+                {heroContent.badge}
+              </div>
+
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-white leading-[1.08] mb-6">
+                {isUS ? (
+                  <>Every calculator.<br />One <span className="text-emerald-400">intelligent</span> platform.</>
+                ) : (
+                  <>The adviser toolkit<br />that just <span className="text-emerald-400">works.</span></>
+                )}
+              </h1>
+
+              <p className="text-lg text-slate-400 max-w-xl mb-8 leading-relaxed">
+                {isUS ? (
+                  <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2025 IRS data.</>
+                ) : (
+                  <>Give every client a clear, professional plan. <span className="text-white font-medium">20+ calculators</span>, a complete Tax Hub, and <span className="text-white font-medium">client-ready PDF reports</span>, built for South African advisers, and just as capable in the hands of a sophisticated individual investor.</>
+                )}
+              </p>
+
+              <div className="flex flex-wrap gap-4 mb-6">
+                <Link to="/auth">
+                  <Button size="lg" className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-[#06120a] font-semibold text-base px-8 h-14 shadow-lg shadow-emerald-500/20 group">
+                    Get Started
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button size="lg" variant="outline-gold" className="rounded-full text-base px-8 h-14 border-gold/40 group">
+                    <Play className="mr-2 h-5 w-5" />
+                    Explore the Platform
+                  </Button>
+                </Link>
+              </div>
+
+              <p className="text-sm text-slate-500">
+                {isUS ? '$19/month or $99 one-time (Limited offer!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
+              </p>
+            </div>
+
+            {/* Live readout panel */}
+            <div className="rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-sm p-6 shadow-2xl">
+              <div className="flex items-center justify-between mb-5">
+                <span className="font-mono text-[11px] uppercase tracking-wider text-emerald-400">Live Readout</span>
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                </span>
+              </div>
+              <p className="text-sm text-slate-400 mb-1">
+                {isUS ? 'Client: J. Carter · 401(k) review' : 'Client: J. Naidoo · RA review'}
+              </p>
+              <p className="font-display text-3xl font-bold text-white mb-5">
+                {isUS ? 'Ready 81/100' : 'Ready 72/100'}
+              </p>
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                {heroContent.stats.slice(0, 2).map((stat, idx) => (
+                  <div key={idx} className="rounded-xl bg-black/30 border border-white/10 p-3">
+                    <p className="font-mono text-[10px] uppercase tracking-wide text-slate-500">{stat.label}</p>
+                    <p className="font-display text-lg font-bold text-white mt-1">{stat.value}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center justify-between rounded-xl bg-black/30 border border-white/10 px-4 py-3">
+                <span className="text-xs text-slate-400">Report status</span>
+                <span className="font-display text-sm font-bold text-emerald-400">PDF ready</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Trust strip */}
+          <div className="mt-14 lg:mt-20 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-10 gap-y-2">
+            {heroContent.stats.map((stat, idx) => (
+              <span key={idx} className="font-mono text-[11px] uppercase tracking-wider text-slate-500">
+                <span className="text-slate-300 font-semibold">{stat.value}</span> {stat.label}
+              </span>
+            ))}
           </div>
         </div>
       </section>
@@ -695,6 +738,26 @@ export const LandingPage = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Photo Banner — real photography, Threshold-style dark overlay */}
+      <section className="relative py-20 bg-background">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div
+            className="relative rounded-3xl overflow-hidden min-h-[320px] flex items-end bg-cover bg-center p-8 sm:p-10"
+            style={{ backgroundImage: `url(${landingPhotoBanner})` }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/10" />
+            <div className="relative">
+              <p className="font-mono text-[11px] uppercase tracking-wider text-emerald-400 mb-2">
+                Built for the work advisers actually do
+              </p>
+              <p className="font-display text-xl sm:text-2xl font-bold text-white max-w-xl">
+                Every number explained, every report sent, before the client leaves the room.
+              </p>
             </div>
           </div>
         </div>
