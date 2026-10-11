@@ -143,6 +143,7 @@ export const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             <NavLink to="/" icon={Home}>Dashboard</NavLink>
+            <NavLink to="/clients" icon={Users}>Clients</NavLink>
             <NavLink to="/analytics" icon={BarChart3}>Analytics</NavLink>
             
             {/* Calculators Button */}
@@ -294,6 +295,14 @@ export const Header = () => {
               >
                 <Home className="h-5 w-5 text-primary" />
                 Dashboard
+              </Link>
+              <Link
+                to="/clients"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
+              >
+                <Users className="h-5 w-5 text-primary" />
+                Clients
               </Link>
               <Link
                 to="/analytics"
