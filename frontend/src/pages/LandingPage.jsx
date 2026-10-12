@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { JurisdictionGate } from '@/components/JurisdictionGate';
 import { useJurisdiction } from '@/context/JurisdictionContext';
+import { subscriptionApi } from '@/services/api';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
   Bot, CheckCircle2, ArrowRight, Sparkles,
@@ -336,6 +337,13 @@ const ContactForm = () => {
 
 export const LandingPage = () => {
   const { isUS } = useJurisdiction();
+
+  const [foundingStatus, setFoundingStatus] = useState(null);
+  useEffect(() => {
+    subscriptionApi.getFoundingStatus().then(setFoundingStatus).catch(() => {});
+  }, []);
+  const founding = foundingStatus?.[isUS ? 'usd' : 'zar'];
+  const isFoundingActive = founding?.remaining > 0;
 
   const calculatorCategories = isUS ? US_CALCULATOR_CATEGORIES : SA_CALCULATOR_CATEGORIES;
   const keyFeatures = isUS ? US_KEY_FEATURES : SA_KEY_FEATURES;
@@ -827,19 +835,36 @@ export const LandingPage = () => {
           
           <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
             <CardContent className="p-8">
+              {isFoundingActive && (
+                <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-500 mb-3">
+                  🔥 Founding Member Pricing • Locked in forever + priority support
+                </div>
+              )}
               {isUS ? (
                 <div className="mb-6">
                   <div className="flex items-baseline justify-center gap-2">
                     <span className="text-5xl font-bold text-foreground">$22</span>
                     <span className="text-muted-foreground">/month</span>
                   </div>
-                  <p className="text-emerald-500 text-sm mt-1">or $199/year, save $65</p>
+                  {isFoundingActive ? (
+                    <p className="text-emerald-500 text-sm mt-1">
+                      or <span className="line-through text-muted-foreground">$199</span> <span className="font-semibold">${founding.price}/year</span>
+                    </p>
+                  ) : (
+                    <p className="text-emerald-500 text-sm mt-1">or $199/year, save $65</p>
+                  )}
                 </div>
               ) : (
                 <div className="mb-6">
                   <span className="text-5xl font-bold text-foreground">R299</span>
                   <span className="text-muted-foreground ml-2">/month</span>
-                  <p className="text-emerald-500 text-sm mt-1">or R1,999/year, save R1,589</p>
+                  {isFoundingActive ? (
+                    <p className="text-emerald-500 text-sm mt-1">
+                      or <span className="line-through text-muted-foreground">R1,999</span> <span className="font-semibold">R{founding.price}/year</span>
+                    </p>
+                  ) : (
+                    <p className="text-emerald-500 text-sm mt-1">or R1,999/year, save R1,589</p>
+                  )}
                 </div>
               )}
 
