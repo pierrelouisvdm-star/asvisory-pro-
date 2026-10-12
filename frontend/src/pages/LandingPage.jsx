@@ -17,7 +17,7 @@ import {
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail,
   Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag,
-  FileCheck, Wallet, UserCircle
+  FileCheck, Wallet
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import heroFinanceBg from '../assets/hero-finance-bg.jpg';
@@ -30,6 +30,7 @@ import screenshotNetWorth from '../assets/screenshot-networth.png';
 import screenshotAiChat from '../assets/screenshot-ai-chat.png';
 import screenshotSecurity from '../assets/screenshot-security.png';
 import screenshotLiteracy from '../assets/screenshot-literacy.png';
+import founderPhoto from '../assets/founder-pierre.jpg';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
 import SEOHead from '@/components/SEOHead';
@@ -978,14 +979,14 @@ export const LandingPage = () => {
           {/* Founder */}
           <div className="max-w-3xl mx-auto mt-16 pt-16 border-t border-border">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              <div className="flex-shrink-0 w-32 h-32 rounded-full bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden">
-                <UserCircle className="h-16 w-16 text-muted-foreground" />
+              <div className="flex-shrink-0 w-32 h-32 rounded-full border-2 border-border overflow-hidden">
+                <img src={founderPhoto} alt="Pierre Van der Merwe" className="w-full h-full object-cover" />
               </div>
               <div className="text-center sm:text-left">
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   "After more than 11 years working as a financial advisor, combined with a keen interest in financial education and building software, I created AdvisoryPro to solve many of the challenges I experienced in the industry every day. Advisors are expected to deliver exceptional advice while navigating disconnected tools, complex calculations and time-consuming admin. I wanted to build something simpler, one modern platform that brings the tools advisors actually need into one place. AdvisoryPro combines my experience in financial advice, passion for financial education and love of building technology into a platform built by an advisor, for advisors, designed to save time, simplify the advice process and help us deliver a better experience for our clients."
                 </p>
-                <p className="font-semibold text-foreground">Founder, AdvisoryPro</p>
+                <p className="font-semibold text-foreground">Pierre Van der Merwe, Founder</p>
               </div>
             </div>
           </div>
