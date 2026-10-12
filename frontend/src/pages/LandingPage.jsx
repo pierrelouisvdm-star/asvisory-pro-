@@ -449,13 +449,6 @@ export const LandingPage = () => {
                 {heroContent.badge}
               </div>
 
-              {isFoundingActive && (
-                <div className="mb-5 inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-semibold">
-                  <Flame className="h-3.5 w-3.5" />
-                  Founding Member: {isUS ? `$${founding.price}/year` : `R${founding.price}/year`} locked in forever, first 150 only, then {isUS ? '$199/year' : 'R1,999/year'}
-                </div>
-              )}
-
               <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-white leading-[1.08] mb-6">
                 {isUS ? (
                   <>Every calculator.<br />One <span className="text-emerald-400">intelligent</span> platform.</>
@@ -537,6 +530,61 @@ export const LandingPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Founding Member Offer — big, bold, hard to miss */}
+      {isFoundingActive && (
+        <section className="relative py-16 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-background to-background" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[320px] bg-amber-500/20 rounded-full blur-[130px]" />
+          <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="rounded-3xl border-2 border-amber-500/40 bg-gradient-to-br from-amber-950/30 via-navy-900 to-navy-950 p-8 sm:p-12 shadow-2xl shadow-amber-500/10">
+              <div className="grid lg:grid-cols-[1.3fr_1fr] gap-10 items-center">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500 text-black text-xs font-bold uppercase tracking-wide mb-5">
+                    <Flame className="h-4 w-4" />
+                    Founding Member Offer
+                  </div>
+                  <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight">
+                    Join the first 150 {isUS ? 'Americans' : 'South Africans'} and lock in {isUS ? `$${founding.price}` : `R${founding.price}`}/year, forever.
+                  </h2>
+                  <p className="text-slate-300 text-lg mb-6 max-w-xl">
+                    Not a one-year discount, every future renewal stays at this price for life, plus priority support straight from the founder and team.
+                  </p>
+                  <ul className="space-y-2.5 mb-8">
+                    {[
+                      'Price locked in forever, every renewal',
+                      'Priority support from the founder & team',
+                      `First 150 members only, then ${isUS ? '$199' : 'R1,999'}/year`,
+                    ].map((item) => (
+                      <li key={item} className="flex items-center gap-3 text-slate-200">
+                        <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link to="/auth">
+                    <Button size="lg" className="rounded-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-base px-8 h-14 shadow-lg shadow-amber-500/30 group">
+                      Claim Founding Price
+                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </div>
+                <div className="text-center lg:border-l lg:border-amber-500/20 lg:pl-10">
+                  <p className="text-slate-400 text-sm uppercase tracking-wide mb-2">Founding Price</p>
+                  <span className="text-2xl text-slate-500 line-through">{isUS ? '$199' : 'R1,999'}</span>
+                  <div className="text-6xl font-extrabold text-amber-400 mb-1 mt-1">
+                    {isUS ? `$${founding.price}` : `R${founding.price}`}
+                  </div>
+                  <p className="text-slate-400 text-sm mb-4">/year, locked in forever</p>
+                  <div className="inline-block px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
+                    Reverts to {isUS ? '$199' : 'R1,999'}/year once the first 150 spots fill
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Product Tour — see the actual software, not just feature cards */}
       <section className="relative py-20 overflow-hidden">
