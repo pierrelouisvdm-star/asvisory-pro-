@@ -362,6 +362,111 @@ export const LandingPage = () => {
   const calculatorCategories = isUS ? US_CALCULATOR_CATEGORIES : SA_CALCULATOR_CATEGORIES;
   const keyFeatures = isUS ? US_KEY_FEATURES : SA_KEY_FEATURES;
 
+  const [activeTourTab, setActiveTourTab] = useState('tax');
+  const productTourTabs = [
+    {
+      id: 'tax',
+      icon: Receipt,
+      badgeClass: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+      label: isUS ? 'US Tax Suite' : 'Tax Planning Hub',
+      title: isUS
+        ? <>The <span className="text-emerald-400">complete US tax suite</span>, all 50 states</>
+        : <>The <span className="text-emerald-400">complete Tax Planning Suite</span> for 2026/27</>,
+      description: isUS
+        ? 'Federal + state tax, capital gains, AMT and self-employment tax, built on 2026 IRS brackets.'
+        : 'Income tax, CGT, medical credits, provisional tax and RA deductibility, with the latest SARS brackets.',
+      cta: { label: 'Open Tax Hub', to: '/tax-planning' },
+      image: isUS ? screenshotUSTax : screenshotTaxHub,
+      imageAlt: isUS ? 'AdvisoryPro US Tax Calculator showing a federal and state tax calculation' : 'AdvisoryPro Tax Planning Hub showing a 2026/2027 income tax calculation',
+    },
+    ...(!isUS ? [{
+      id: 'fees',
+      icon: Scale,
+      badgeClass: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+      label: 'Fee Comparison',
+      title: <>Show clients exactly what <span className="text-blue-400">fees cost them</span></>,
+      description: 'Compare fee structures side by side and visualize the long-term cost in a single chart.',
+      image: screenshotFeeComparison,
+      imageAlt: 'AdvisoryPro Fee Comparison tool showing investment growth over 20 years',
+    }] : []),
+    {
+      id: 'pdf',
+      icon: FileCheck,
+      badgeClass: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+      label: 'Client Reports',
+      title: <>Turn any calculation into a <span className="text-purple-400">client-ready PDF</span></>,
+      description: 'Every calculator exports a branded report in one click, with the client\'s name and the basis of the calculation included.',
+      image: isUS ? screenshotUSPdfReport : screenshotPdfReport,
+      imageAlt: isUS ? 'A generated AdvisoryPro net worth statement PDF report in US dollars, branded and ready to send to a client' : 'A generated AdvisoryPro retirement planning PDF report, branded and ready to send to a client',
+    },
+    {
+      id: 'networth',
+      icon: Wallet,
+      badgeClass: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+      label: 'Net Worth Tracker',
+      title: <>Track <span className="text-amber-400">assets, liabilities and progress</span> over time</>,
+      description: 'Historical snapshots, goal tracking, and a clear view of the whole financial picture, not just a single calculation.',
+      mock: (
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-amber-500/20 p-6 shadow-2xl">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-3 h-3 rounded-full bg-red-500" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500" />
+            <div className="w-3 h-3 rounded-full bg-green-500" />
+            <span className="ml-2 text-xs text-slate-500">Net Worth Tracker</span>
+          </div>
+          <p className="text-xs text-slate-400 mb-1">Total Net Worth</p>
+          <p className="text-2xl font-bold text-white mb-3">{isUS ? '$ 420,000' : 'R 3,247,500'}</p>
+          <div className="flex items-end gap-1.5 h-16 mb-3">
+            {[40, 48, 45, 58, 62, 70, 85].map((h, idx) => (
+              <div key={idx} className="flex-1 rounded-t-sm bg-gradient-to-t from-amber-600 to-amber-400" style={{ height: `${h}%` }} />
+            ))}
+          </div>
+          <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-700">
+            <span className="text-emerald-400">+12.4% this quarter</span>
+            <Badge className="bg-amber-500/20 text-amber-400 text-xs">Premium</Badge>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: 'ai',
+      icon: Bot,
+      badgeClass: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
+      label: 'AI Assistant',
+      title: <>An <span className="text-indigo-400">AI assistant</span> that understands {isUS ? 'US tax rules' : 'SA tax rules'}</>,
+      description: `Ask complex planning questions and get clear, ${isUS ? 'IRS-aware' : 'SARS-aware'} explanations in seconds, right inside the platform.`,
+      mock: (
+        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-indigo-500/20 p-6 shadow-2xl">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-3 h-3 rounded-full bg-red-500" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500" />
+            <div className="w-3 h-3 rounded-full bg-green-500" />
+            <span className="ml-2 text-xs text-slate-500">AI Assistant</span>
+          </div>
+          <div className="space-y-3">
+            <div className="ml-auto max-w-[75%] bg-indigo-600 rounded-2xl rounded-tr-sm px-4 py-2.5">
+              <p className="text-sm text-white">{isUS ? 'How much can I contribute to my 401(k) this year?' : 'How much can I deduct for my RA this year?'}</p>
+            </div>
+            <div className="flex items-start gap-2 max-w-[85%]">
+              <div className="h-7 w-7 rounded-full bg-indigo-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                <Bot className="h-4 w-4 text-indigo-400" />
+              </div>
+              <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm px-4 py-2.5">
+                <p className="text-sm text-slate-200">
+                  {isUS
+                    ? 'For 2026, the 401(k) employee contribution limit is $24,500, plus an $8,000 catch-up if you\'re 50+...'
+                    : 'You can deduct up to 27.5% of your taxable income, capped at R430,000 for the 2026/27 tax year...'
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+  ];
+  const activeTour = productTourTabs.find((t) => t.id === activeTourTab) || productTourTabs[0];
+
   const heroContent = isUS ? {
     tagline: 'Advisor-Level Tools. Without the Advisor.',
     badge: '2026 Tax Year · All 50 States',
@@ -406,6 +511,31 @@ export const LandingPage = () => {
           : "South African financial calculators, SA tax calculator, TFSA calculator, RA tax savings, CGT calculator South Africa"
         }
       />
+      {/* Sticky nav — logo, section jump links, region + sign in */}
+      <div className="sticky top-0 z-50 bg-[#070a0f]/90 backdrop-blur-md border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <AdvisoryProLogo size="small" className="text-white" />
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
+            <a href="#features" className="hover:text-white transition-colors">Features</a>
+            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+            {isFoundingActive && (
+              <a href="#community" className="hover:text-white transition-colors">Community</a>
+            )}
+            <a href="#about" className="hover:text-white transition-colors">About</a>
+          </nav>
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
+              <Globe className="h-3.5 w-3.5 text-slate-400" />
+              <JurisdictionSelector />
+            </div>
+            <Link to="/auth">
+              <Button size="sm" className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-[#06120a] font-semibold">
+                Get Started
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-[#070a0f]">
         {/* Background photo */}
@@ -417,23 +547,7 @@ export const LandingPage = () => {
         {/* Emerald glow */}
         <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[700px] h-[480px] bg-emerald-500/20 rounded-full blur-[120px]" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 lg:pt-10 lg:pb-16">
-          {/* Slim top row: logo + region + sign in */}
-          <div className="flex items-center justify-between mb-14 lg:mb-20">
-            <AdvisoryProLogo size="small" className="text-white" />
-            <div className="flex items-center gap-3">
-              <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                <Globe className="h-3.5 w-3.5 text-slate-400" />
-                <JurisdictionSelector />
-              </div>
-              <Link to="/auth">
-                <Button size="sm" className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-[#06120a] font-semibold">
-                  Get Started
-                </Button>
-              </Link>
-            </div>
-          </div>
-
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-14 lg:pt-14 lg:pb-16">
           {/* Split hero content */}
           <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
             <div>
@@ -481,8 +595,8 @@ export const LandingPage = () => {
               <p className="text-sm text-slate-500">
                 {isFoundingActive
                   ? (isUS
-                      ? `$22/month, or $${founding.price}/year as a founding member (reverts to $199/year once the first 150 spots fill) • Have a coupon? Apply at signup`
-                      : `R299/month, or R${founding.price}/year as a founding member (reverts to R1,999/year once the first 150 spots fill) • Have a coupon? Apply at signup`)
+                      ? `$22/month, or $${founding.price}/year as a founding member (reverts to $199/year once the first 300 spots fill) • Have a coupon? Apply at signup`
+                      : `R299/month, or R${founding.price}/year as a founding member (reverts to R1,999/year once the first 300 spots fill) • Have a coupon? Apply at signup`)
                   : (isUS ? '$22/month or $199/year (Save $65!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup')
                 }
               </p>
@@ -531,7 +645,7 @@ export const LandingPage = () => {
 
       {/* Founding Member Offer — big, bold, hard to miss */}
       {isFoundingActive && (
-        <section className="relative py-16 overflow-hidden">
+        <section id="community" className="relative py-16 overflow-hidden scroll-mt-16">
           <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-background to-background" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[320px] bg-amber-500/20 rounded-full blur-[130px]" />
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -543,7 +657,7 @@ export const LandingPage = () => {
                     Founding Member Offer
                   </div>
                   <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight">
-                    Join the first 150 {isUS ? 'Americans' : 'South Africans'} and lock in {isUS ? `$${founding.price}` : `R${founding.price}`}/year, forever.
+                    Join the first 300 {isUS ? 'Americans' : 'South Africans'} and lock in {isUS ? `$${founding.price}` : `R${founding.price}`}/year, forever.
                   </h2>
                   <p className="text-slate-300 text-lg mb-6 max-w-xl">
                     Not a one-year discount, every future renewal stays at this price for life, plus priority support straight from the founder and team.
@@ -553,7 +667,7 @@ export const LandingPage = () => {
                       'Price locked in forever, every renewal',
                       'Priority support from the founder & team',
                       'Private seat in the Founding Advisor Network',
-                      `First 150 members only, then ${isUS ? '$199' : 'R1,999'}/year`,
+                      `First 300 members only, then ${isUS ? '$199' : 'R1,999'}/year`,
                     ].map((item) => (
                       <li key={item} className="flex items-center gap-3 text-slate-200">
                         <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0" />
@@ -565,7 +679,7 @@ export const LandingPage = () => {
                     <Globe className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-slate-300">
                       <span className="font-semibold text-white">A global advisor network, built in.</span>{' '}
-                      Founding members get an in-app directory connecting all 150 {isUS ? 'US' : 'South African'} and {isUS ? 'South African' : 'US'} founders, a private circle of top financial advisors sharing ideas and building relationships across both countries.
+                      Founding members get an in-app directory connecting all 300 {isUS ? 'US' : 'South African'} and {isUS ? 'South African' : 'US'} founders, a private circle of top financial advisors sharing ideas and building relationships across both countries.
                     </p>
                   </div>
                   <Link to="/auth">
@@ -583,7 +697,7 @@ export const LandingPage = () => {
                   </div>
                   <p className="text-slate-400 text-sm mb-4">/year, locked in forever</p>
                   <div className="inline-block px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-                    Reverts to {isUS ? '$199' : 'R1,999'}/year once the first 150 spots fill
+                    Reverts to {isUS ? '$199' : 'R1,999'}/year once the first 300 spots fill
                   </div>
                 </div>
               </div>
@@ -593,12 +707,12 @@ export const LandingPage = () => {
       )}
 
       {/* Product Tour — see the actual software, not just feature cards */}
-      <section className="relative py-20 overflow-hidden">
+      <section id="features" className="relative py-20 overflow-hidden scroll-mt-16">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/30 via-background to-background" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <p className="text-emerald-400 text-sm font-medium uppercase tracking-wide mb-3">
               See It In Action
             </p>
@@ -607,165 +721,56 @@ export const LandingPage = () => {
             </h2>
           </div>
 
-          <div className="space-y-20">
-            {/* 1. Tax Hub */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <Badge className="mb-4 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
-                  <Receipt className="h-3 w-3 mr-1" />
-                  {isUS ? 'US Tax Suite' : 'Tax Planning Hub'}
-                </Badge>
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
-                  {isUS
-                    ? <>The <span className="text-emerald-400">complete US tax suite</span>, all 50 states</>
-                    : <>The <span className="text-emerald-400">complete Tax Planning Suite</span> for 2026/27</>
-                  }
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  {isUS
-                    ? 'Federal + state tax, capital gains, AMT and self-employment tax, built on 2026 IRS brackets.'
-                    : 'Income tax, CGT, medical credits, provisional tax and RA deductibility, with the latest SARS brackets.'
-                  }
-                </p>
+          {/* Tab selector */}
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {productTourTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTourTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                  activeTourTab === tab.id
+                    ? 'bg-foreground text-background border-foreground'
+                    : 'border-border text-muted-foreground hover:text-foreground hover:border-foreground/40'
+                }`}
+              >
+                <tab.icon className="h-4 w-4" />
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Active tab */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <Badge className={`mb-4 ${activeTour.badgeClass}`}>
+                <activeTour.icon className="h-3 w-3 mr-1" />
+                {activeTour.label}
+              </Badge>
+              <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                {activeTour.title}
+              </h3>
+              <p className="text-lg text-muted-foreground mb-6">
+                {activeTour.description}
+              </p>
+              {activeTour.cta && (
                 <div className="flex flex-wrap gap-4">
-                  <Link to="/tax-planning">
+                  <Link to={activeTour.cta.to}>
                     <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
                       <Receipt className="mr-2 h-5 w-5" />
-                      Open Tax Hub
+                      {activeTour.cta.label}
                     </Button>
                   </Link>
                 </div>
-              </div>
+              )}
+            </div>
+            {activeTour.image ? (
               <img
-                src={isUS ? screenshotUSTax : screenshotTaxHub}
-                alt={isUS ? "AdvisoryPro US Tax Calculator showing a federal and state tax calculation" : "AdvisoryPro Tax Planning Hub showing a 2026/2027 income tax calculation"}
-                className="w-full h-auto rounded-2xl border border-emerald-500/20 shadow-2xl"
+                src={activeTour.image}
+                alt={activeTour.imageAlt}
+                className="w-full h-auto max-h-[480px] object-cover object-top rounded-2xl border border-border shadow-2xl"
                 loading="lazy"
               />
-            </div>
-
-            {/* 2. Fee Comparison Calculator (SA only, no US equivalent) */}
-            {!isUS && (
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="lg:order-2">
-                  <Badge className="mb-4 bg-blue-500/20 text-blue-400 border-blue-500/30">
-                    <Scale className="h-3 w-3 mr-1" />
-                    Fee Comparison
-                  </Badge>
-                  <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
-                    Show clients exactly what <span className="text-blue-400">fees cost them</span>
-                  </h3>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    Compare fee structures side by side and visualize the long-term cost in a single chart.
-                  </p>
-                </div>
-                <img
-                  src={screenshotFeeComparison}
-                  alt="AdvisoryPro Fee Comparison tool showing investment growth over 20 years"
-                  className="lg:order-1 w-full h-auto rounded-2xl border border-blue-500/20 shadow-2xl"
-                  loading="lazy"
-                />
-              </div>
-            )}
-
-            {/* 3. Generated PDF Report */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <Badge className="mb-4 bg-purple-500/20 text-purple-400 border-purple-500/30">
-                  <FileCheck className="h-3 w-3 mr-1" />
-                  Client Reports
-                </Badge>
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
-                  Turn any calculation into a <span className="text-purple-400">client-ready PDF</span>
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Every calculator exports a branded report in one click, with the client's name and the basis of the calculation included.
-                </p>
-              </div>
-              <img
-                src={isUS ? screenshotUSPdfReport : screenshotPdfReport}
-                alt={isUS ? "A generated AdvisoryPro net worth statement PDF report in US dollars, branded and ready to send to a client" : "A generated AdvisoryPro retirement planning PDF report, branded and ready to send to a client"}
-                className="w-full h-auto max-h-[600px] object-cover object-top rounded-2xl border border-purple-500/20 shadow-2xl"
-                loading="lazy"
-              />
-            </div>
-
-            {/* 4. Net Worth Dashboard */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="lg:order-2">
-                <Badge className="mb-4 bg-amber-500/20 text-amber-400 border-amber-500/30">
-                  <Wallet className="h-3 w-3 mr-1" />
-                  Net Worth Tracker
-                </Badge>
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
-                  Track <span className="text-amber-400">assets, liabilities and progress</span> over time
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Historical snapshots, goal tracking, and a clear view of the whole financial picture, not just a single calculation.
-                </p>
-              </div>
-              <div className="lg:order-1 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-amber-500/20 p-6 shadow-2xl">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                  <span className="ml-2 text-xs text-slate-500">Net Worth Tracker</span>
-                </div>
-                <p className="text-xs text-slate-400 mb-1">Total Net Worth</p>
-                <p className="text-2xl font-bold text-white mb-3">{isUS ? '$ 420,000' : 'R 3,247,500'}</p>
-                <div className="flex items-end gap-1.5 h-16 mb-3">
-                  {[40, 48, 45, 58, 62, 70, 85].map((h, idx) => (
-                    <div key={idx} className="flex-1 rounded-t-sm bg-gradient-to-t from-amber-600 to-amber-400" style={{ height: `${h}%` }} />
-                  ))}
-                </div>
-                <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-700">
-                  <span className="text-emerald-400">+12.4% this quarter</span>
-                  <Badge className="bg-amber-500/20 text-amber-400 text-xs">Premium</Badge>
-                </div>
-              </div>
-            </div>
-
-            {/* 5. AI Assistant */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <Badge className="mb-4 bg-indigo-500/20 text-indigo-400 border-indigo-500/30">
-                  <Bot className="h-3 w-3 mr-1" />
-                  AI Assistant
-                </Badge>
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
-                  An <span className="text-indigo-400">AI assistant</span> that understands {isUS ? 'US tax rules' : 'SA tax rules'}
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Ask complex planning questions and get clear, {isUS ? 'IRS-aware' : 'SARS-aware'} explanations in seconds, right inside the platform.
-                </p>
-              </div>
-              <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl border border-indigo-500/20 p-6 shadow-2xl">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                  <span className="ml-2 text-xs text-slate-500">AI Assistant</span>
-                </div>
-                <div className="space-y-3">
-                  <div className="ml-auto max-w-[75%] bg-indigo-600 rounded-2xl rounded-tr-sm px-4 py-2.5">
-                    <p className="text-sm text-white">{isUS ? 'How much can I contribute to my 401(k) this year?' : 'How much can I deduct for my RA this year?'}</p>
-                  </div>
-                  <div className="flex items-start gap-2 max-w-[85%]">
-                    <div className="h-7 w-7 rounded-full bg-indigo-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Bot className="h-4 w-4 text-indigo-400" />
-                    </div>
-                    <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm px-4 py-2.5">
-                      <p className="text-sm text-slate-200">
-                        {isUS
-                          ? 'For 2026, the 401(k) employee contribution limit is $24,500, plus an $8,000 catch-up if you\'re 50+...'
-                          : 'You can deduct up to 27.5% of your taxable income, capped at R430,000 for the 2026/27 tax year...'
-                        }
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ) : activeTour.mock}
           </div>
         </div>
       </section>
@@ -861,50 +866,24 @@ export const LandingPage = () => {
             </p>
           </div>
 
-          <div className="space-y-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {keyFeatures.map((feature, index) => (
-              <div 
-                key={index}
-                className={`flex flex-col lg:flex-row gap-8 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
-              >
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      <feature.icon className="h-5 w-5" />
-                    </div>
-                    <h3 className="font-display text-xl font-bold text-foreground">{feature.title}</h3>
+              <Card key={index} className="bg-card border-border hover:border-primary/50 transition-all duration-300 group hover:-translate-y-1">
+                <CardContent className="p-5">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary mb-3 group-hover:bg-primary/20 transition-colors">
+                    <feature.icon className="h-5 w-5" />
                   </div>
-                  <p className="text-muted-foreground mb-4 leading-relaxed">{feature.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {feature.highlights.map((highlight, idx) => (
-                      <span key={idx} className="text-xs text-primary border-b border-primary/30 pb-0.5">
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex-1 w-full">
-                  {feature.image ? (
-                    <img
-                      src={feature.image}
-                      alt={`AdvisoryPro ${feature.title} screenshot`}
-                      className="w-full h-auto max-h-80 object-cover object-top rounded-2xl border border-border shadow-xl"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="bg-muted/50 border border-border rounded-2xl p-8 h-48 flex items-center justify-center">
-                      <feature.icon className="h-24 w-24 text-muted-foreground/30" />
-                    </div>
-                  )}
-                </div>
-              </div>
+                  <h3 className="font-semibold text-foreground mb-1.5">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="relative py-20 bg-gradient-to-b from-muted/30 to-background">
+      <section id="pricing" className="relative py-20 bg-gradient-to-b from-muted/30 to-background scroll-mt-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="mb-4 text-primary text-sm font-medium uppercase tracking-wide">
             Simple Pricing
@@ -924,7 +903,7 @@ export const LandingPage = () => {
                     🔥 Founding Member Pricing • Locked in forever + priority support
                   </div>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Limited to the first 150 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
+                    Limited to the first 300 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
                   </p>
                 </>
               )}
@@ -972,7 +951,9 @@ export const LandingPage = () => {
                   'Planning Tools',
                   'AI Assistant',
                   'No feature restrictions',
-                ]).concat(isFoundingActive ? ['Founding Advisor Network access'] : []).map((feature, idx) => (
+                ]).concat(['Advisor Community directory'])
+                  .concat(isFoundingActive ? ['Founding Advisor Network access'] : [])
+                  .map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground">
                     <CheckCircle2 className={`h-5 w-5 flex-shrink-0 ${feature === 'Founding Advisor Network access' ? 'text-amber-500' : 'text-emerald-600'}`} />
                     {feature}
@@ -1006,7 +987,7 @@ export const LandingPage = () => {
       </section>
 
       {/* About Us Section */}
-      <section id="about" className="relative py-20 bg-background">
+      <section id="about" className="relative py-20 bg-background scroll-mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="mb-4 text-emerald-500 text-sm font-medium uppercase tracking-wide flex items-center justify-center gap-2">
@@ -1029,14 +1010,8 @@ export const LandingPage = () => {
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Mission</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 {isUS
-                  ? 'To provide Americans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth.'
-                  : 'To provide South Africans with world-class financial planning tools that save time, reduce errors, and help build lasting wealth.'
-                }
-              </p>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
-                {isUS
-                  ? 'Every feature in Financial Advisory Pro is built with the American financial environment in mind, from IRS tax brackets to 401(k) rules. We would like to be a partner in achieving your financial freedom.'
-                  : 'Every feature in Financial Advisory Pro is built with the South African regulatory environment in mind - from SARS tax brackets to retirement fund rules. We would like to be a partner in achieving your financial freedom.'
+                  ? 'World-class financial planning tools that save time, reduce errors and help build lasting wealth, built around IRS brackets and 401(k) rules from day one.'
+                  : 'World-class financial planning tools that save time, reduce errors and help build lasting wealth, built around SARS brackets and SA retirement fund rules from day one.'
                 }
               </p>
               
@@ -1101,7 +1076,7 @@ export const LandingPage = () => {
               </div>
               <div className="text-center sm:text-left">
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  "After more than 11 years working as a financial advisor, combined with a keen interest in financial education and building software, I created AdvisoryPro to solve many of the challenges I experienced in the industry every day. Advisors are expected to deliver exceptional advice while navigating disconnected tools, complex calculations and time-consuming admin. I wanted to build something simpler, one modern platform that brings the tools advisors actually need into one place. AdvisoryPro combines my experience in financial advice, passion for financial education and love of building technology into a platform built by an advisor, for advisors, designed to save time, simplify the advice process and help us deliver a better experience for our clients."
+                  "After 11+ years as a financial advisor, I built AdvisoryPro to fix what I lived with every day: disconnected tools, complex calculations and time-consuming admin getting in the way of good advice. It's one modern platform, built by an advisor, for advisors, to save time and help us deliver a better experience for our clients."
                 </p>
                 <p className="font-semibold text-foreground">Pierre Van der Merwe, Founder</p>
               </div>
