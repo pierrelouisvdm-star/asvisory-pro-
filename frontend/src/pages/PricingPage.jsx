@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { 
   Check, Crown, Gift, Loader2, CreditCard, Mail,
   Calculator, Users, FileText, BarChart3, Target, Calendar, PieChart,
-  Receipt, Wallet, Bot, Flame, DollarSign
+  Receipt, Wallet, Bot, Flame, DollarSign, Globe
 } from 'lucide-react';
 import { toast } from 'sonner';
 import SEOHead from '@/components/SEOHead';
@@ -317,7 +317,7 @@ export const PricingPage = () => {
                 )}
                 {isFoundingActive && (
                   <p className="text-xs text-amber-400/90 mt-2">
-                    Locked in forever, every renewal, every future release • Priority support direct from the founder &amp; team
+                    Locked in forever, every renewal, every future release • Priority support direct from the founder &amp; team • A seat in the private Founding Advisor Network
                   </p>
                 )}
               </div>
@@ -326,12 +326,14 @@ export const PricingPage = () => {
             <CardContent className="pb-8">
               {/* Features Grid */}
               <div className="space-y-3 mb-8">
-                {(isUS ? US_PREMIUM_FEATURES : PREMIUM_FEATURES).map(({ icon: Icon, label }) => (
+                {(isUS ? US_PREMIUM_FEATURES : PREMIUM_FEATURES)
+                  .concat(isFoundingActive ? [{ icon: Globe, label: 'Founding Advisor Network access', founding: true }] : [])
+                  .map(({ icon: Icon, label, founding }) => (
                   <div key={label} className="flex items-center gap-3 p-2">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                      <Check className="h-3 w-3 text-emerald-500" />
+                    <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${founding ? 'bg-amber-500/20' : 'bg-emerald-500/20'}`}>
+                      <Check className={`h-3 w-3 ${founding ? 'text-amber-400' : 'text-emerald-500'}`} />
                     </div>
-                    <span className="text-sm text-slate-300">{label}</span>
+                    <span className={`text-sm ${founding ? 'text-amber-300 font-medium' : 'text-slate-300'}`}>{label}</span>
                   </div>
                 ))}
               </div>

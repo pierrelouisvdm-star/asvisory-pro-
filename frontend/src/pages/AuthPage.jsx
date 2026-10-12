@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Calculator, Mail, Lock, User, Building2, ArrowRight, AlertCircle,
-  Check, Crown, Ticket, Sparkles, Users, FileText, TrendingUp, Bot, Flame, DollarSign
+  Check, Crown, Ticket, Sparkles, Users, FileText, TrendingUp, Bot, Flame, DollarSign, Globe
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { couponApi, subscriptionApi } from '@/services/api';
@@ -462,10 +462,16 @@ export const AuthPage = () => {
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
               {isFoundingActive && (
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-semibold mb-2">
-                  <Flame className="h-3 w-3" />
-                  Founding Member: {isUS ? `$${founding.price}` : `R${founding.price}`}/year, locked in forever
-                </div>
+                <>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-semibold mb-2">
+                    <Flame className="h-3 w-3" />
+                    Founding Member: {isUS ? `$${founding.price}` : `R${founding.price}`}/year, locked in forever
+                  </div>
+                  <p className="text-xs text-amber-500/80 mb-2 flex items-center gap-1.5">
+                    <Globe className="h-3 w-3" />
+                    Plus a seat in the private Founding Advisor Network — top advisors from the US &amp; SA
+                  </p>
+                </>
               )}
               <p className="text-muted-foreground text-sm">
                 {isFoundingActive ? (
