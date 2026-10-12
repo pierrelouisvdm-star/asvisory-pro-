@@ -82,6 +82,7 @@ import { CalculatorGate } from "@/components/FeatureGate";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { AIAdvisorButton } from "@/components/AIAdvisorChat";
 import { InstallPrompt } from "@/components/InstallPrompt";
+import { JurisdictionGate } from "@/components/JurisdictionGate";
 import { HelmetProvider } from "react-helmet-async";
 
 // Wrap a calculator with feature gate
@@ -118,6 +119,7 @@ const AppLayout = ({ children }) => {
   
   return (
     <>
+      <JurisdictionGate />
       {!hideLayout && <Header />}
       <main className="flex-1">
         {children}
