@@ -27,7 +27,6 @@ const SA_TIERS = [
       'Bond/Mortgage Calculator',
       'Future Value Calculator',
       'Compound Interest Calculator',
-      'Net Worth Tracker',
       'Emergency Fund Calculator',
     ],
     highlight: false,

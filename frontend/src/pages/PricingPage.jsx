@@ -212,9 +212,8 @@ export const PricingPage = () => {
                   { label: 'Bond/Mortgage Calculator', included: true },
                   { label: 'Future Value Calculator', included: true },
                   { label: 'Compound Interest Calculator', included: true },
-                  { label: 'Net Worth Tracker', included: true },
                   { label: 'Emergency Fund Calculator', included: true },
-                  { label: '13+ Premium Calculators', included: false },
+                  { label: '14+ Premium Calculators', included: false },
                   { label: 'PDF Reports', included: false },
                   { label: 'AI Document Analysis', included: false },
                 ]).map(({ label, included }) => (
