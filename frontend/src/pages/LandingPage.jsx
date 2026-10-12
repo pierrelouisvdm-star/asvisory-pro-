@@ -31,7 +31,6 @@ import screenshotSecurity from '../assets/screenshot-security.png';
 import screenshotLiteracy from '../assets/screenshot-literacy.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
-import CountdownTimer from '@/components/CountdownTimer';
 import SEOHead from '@/components/SEOHead';
 
 // SA Calculator categories
@@ -341,18 +340,18 @@ export const LandingPage = () => {
 
   const heroContent = isUS ? {
     tagline: 'Advisor-Level Tools. Without the Advisor.',
-    badge: '2025 Tax Year · All 50 States',
+    badge: '2026 Tax Year · All 50 States',
     headline: 'Every Financial Calculator. One Intelligent Platform.',
-    sub: 'Make better financial decisions, faster. 30+ professional-grade tools for tax planning, FIRE, retirement, RSUs, real estate, and more, built on 2025 IRS data.',
+    sub: 'Make better financial decisions, faster. 30+ professional-grade tools for tax planning, FIRE, retirement, RSUs, real estate, and more, built on 2026 IRS data.',
     stats: [
       { value: '30+', label: 'Financial Tools' },
       { value: 'All 50', label: 'States Covered' },
       { value: 'FIRE', label: 'Retirement Planning' },
       { value: 'PDF', label: 'Instant Reports' },
     ],
-    price: '$19/month',
-    priceAnnual: '$99 one-time',
-    priceNote: 'or $99 one-time (limited offer, reg. $149)',
+    price: '$22/month',
+    priceAnnual: '$199/year',
+    priceNote: 'or $199/year (save $65)',
   } : {
     tagline: 'Built for South African Financial Advisers',
     badge: '2026/2027 Tax Year Ready',
@@ -434,7 +433,7 @@ export const LandingPage = () => {
 
               <p className="text-lg text-slate-400 max-w-xl mb-8 leading-relaxed">
                 {isUS ? (
-                  <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2025 IRS data.</>
+                  <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2026 IRS data.</>
                 ) : (
                   <>Give every client a clear, professional plan. <span className="text-white font-medium">20+ calculators</span>, a complete Tax Hub, and <span className="text-white font-medium">client-ready PDF reports</span>, built for South African advisers, and just as capable in the hands of a sophisticated individual investor.</>
                 )}
@@ -456,7 +455,7 @@ export const LandingPage = () => {
               </div>
 
               <p className="text-sm text-slate-500">
-                {isUS ? '$19/month or $99 one-time (Limited offer!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
+                {isUS ? '$22/month or $199/year (Save $65!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
               </p>
             </div>
 
@@ -827,18 +826,11 @@ export const LandingPage = () => {
             <CardContent className="p-8">
               {isUS ? (
                 <div className="mb-6">
-                  <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-500 mb-3">
-                    LIMITED TIME OFFER
-                  </div>
                   <div className="flex items-baseline justify-center gap-2">
-                    <span className="text-5xl font-bold text-foreground">$99</span>
-                    <span className="text-muted-foreground">one-time</span>
+                    <span className="text-5xl font-bold text-foreground">$22</span>
+                    <span className="text-muted-foreground">/month</span>
                   </div>
-                  <p className="text-emerald-500 text-sm mt-1">Full year access · Regular price $149</p>
-                  <p className="text-xs text-muted-foreground mt-1">or $19/month, cancel anytime</p>
-                  <div className="mt-3">
-                    <CountdownTimer label="Price goes up in" />
-                  </div>
+                  <p className="text-emerald-500 text-sm mt-1">or $199/year, save $65</p>
                 </div>
               ) : (
                 <div className="mb-6">
@@ -880,7 +872,7 @@ export const LandingPage = () => {
               </Link>
 
               <p className="mt-4 text-sm text-muted-foreground">
-                {isUS ? 'Secure checkout • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
+                {isUS ? '$22/month or $199/year. Cancel anytime • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
               </p>
             </CardContent>
           </Card>
@@ -1080,7 +1072,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            {isUS ? '$19/month or $99 one-time (limited offer) • Secure checkout' : 'R299/month or R1,999/year • Cancel anytime'}
+            {isUS ? '$22/month or $199/year • Cancel anytime' : 'R299/month or R1,999/year • Cancel anytime'}
           </p>
         </div>
       </section>

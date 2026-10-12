@@ -80,9 +80,10 @@ async def create_checkout_session(
     
     if tier == SubscriptionTier.FREE:
         raise HTTPException(status_code=400, detail="Cannot checkout for free tier")
-    
-    amount = PRICING[tier][billing_cycle]
-    
+
+    currency = "usd" if checkout_data.jurisdiction == "US" else "zar"
+    amount = PRICING[tier][billing_cycle][currency]
+
     # Initialize Stripe
     api_key = os.environ.get("STRIPE_API_KEY")
     if not api_key:
@@ -100,7 +101,7 @@ async def create_checkout_session(
     # Create checkout session
     checkout_request = CheckoutSessionRequest(
         amount=float(amount),
-        currency="zar",
+        currency=currency,
         success_url=success_url,
         cancel_url=cancel_url,
         metadata={
@@ -110,9 +111,9 @@ async def create_checkout_session(
             "billing_cycle": billing_cycle.value
         }
     )
-    
+
     session: CheckoutSessionResponse = await stripe_checkout.create_checkout_session(checkout_request)
-    
+
     # Create pending transaction record
     transaction = {
         "user_id": user_id,
@@ -121,7 +122,7 @@ async def create_checkout_session(
         "tier": tier.value,
         "billing_cycle": billing_cycle.value,
         "amount": amount,
-        "currency": "zar",
+        "currency": currency,
         "status": "pending",
         "payment_status": "initiated",
         "created_at": datetime.now(timezone.utc)
@@ -259,16 +260,20 @@ async def get_pricing():
             {
                 "tier": SubscriptionTier.FREE.value,
                 "name": "Free",
-                "monthly_price": 0,
-                "annual_price": 0,
+                "monthly_price_zar": 0,
+                "annual_price_zar": 0,
+                "monthly_price_usd": 0,
+                "annual_price_usd": 0,
                 "features": TIER_FEATURES[SubscriptionTier.FREE],
                 "description": "Basic calculators to get started"
             },
             {
                 "tier": SubscriptionTier.PREMIUM.value,
                 "name": "Premium",
-                "monthly_price": PRICING[SubscriptionTier.PREMIUM][BillingCycle.MONTHLY],
-                "annual_price": PRICING[SubscriptionTier.PREMIUM][BillingCycle.ANNUAL],
+                "monthly_price_zar": PRICING[SubscriptionTier.PREMIUM][BillingCycle.MONTHLY]["zar"],
+                "annual_price_zar": PRICING[SubscriptionTier.PREMIUM][BillingCycle.ANNUAL]["zar"],
+                "monthly_price_usd": PRICING[SubscriptionTier.PREMIUM][BillingCycle.MONTHLY]["usd"],
+                "annual_price_usd": PRICING[SubscriptionTier.PREMIUM][BillingCycle.ANNUAL]["usd"],
                 "features": TIER_FEATURES[SubscriptionTier.PREMIUM],
                 "description": "Everything you need for financial planning and tracking"
             }

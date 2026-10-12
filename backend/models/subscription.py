@@ -12,15 +12,15 @@ class BillingCycle(str, Enum):
     ANNUAL = "annual"
     LIFETIME = "lifetime"
 
-# Pricing configuration (in ZAR) — one flat price for everyone
+# Pricing configuration, per jurisdiction currency (ZAR for South Africa, USD for USA)
 PRICING = {
     SubscriptionTier.FREE: {
-        BillingCycle.MONTHLY: 0.0,
-        BillingCycle.ANNUAL: 0.0,
+        BillingCycle.MONTHLY: {"zar": 0.0, "usd": 0.0},
+        BillingCycle.ANNUAL: {"zar": 0.0, "usd": 0.0},
     },
     SubscriptionTier.PREMIUM: {
-        BillingCycle.MONTHLY: 299.0,
-        BillingCycle.ANNUAL: 1999.0,  # ~R1,589 saved vs monthly
+        BillingCycle.MONTHLY: {"zar": 299.0, "usd": 22.0},
+        BillingCycle.ANNUAL: {"zar": 1999.0, "usd": 199.0},  # ZAR: ~R1,589 saved vs monthly; USD: ~$65 saved vs monthly
     },
 }
 
@@ -86,6 +86,7 @@ class CheckoutRequest(BaseModel):
     tier: SubscriptionTier
     billing_cycle: BillingCycle
     origin_url: str
+    jurisdiction: str = "ZA"  # "ZA" or "US" — determines currency (zar/usd)
 
 class CheckoutResponse(BaseModel):
     checkout_url: str

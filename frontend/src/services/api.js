@@ -310,7 +310,7 @@ export const subscriptionApi = {
     return handleResponse(response);
   },
 
-  createCheckout: async (tier, billingCycle) => {
+  createCheckout: async (tier, billingCycle, jurisdiction = 'ZA') => {
     const response = await fetch(`${API_URL}/api/subscriptions/checkout`, {
       method: 'POST',
       headers: getHeaders(),
@@ -318,6 +318,7 @@ export const subscriptionApi = {
         tier,
         billing_cycle: billingCycle,
         origin_url: window.location.origin,
+        jurisdiction,
       }),
     });
     return handleResponse(response);

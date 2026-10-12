@@ -40,7 +40,7 @@ async def initialize_paystack_payment(
     if payload.billing_cycle not in PRICING[SubscriptionTier.PREMIUM]:
         raise HTTPException(status_code=400, detail="Invalid billing cycle")
 
-    amount_rand = PRICING[SubscriptionTier.PREMIUM][payload.billing_cycle]
+    amount_rand = PRICING[SubscriptionTier.PREMIUM][payload.billing_cycle]["zar"]
     amount_kobo = int(round(amount_rand * 100))
 
     origin = payload.origin_url.rstrip("/")

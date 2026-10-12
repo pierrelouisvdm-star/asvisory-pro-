@@ -18,9 +18,8 @@ export const jurisdictions = {
     flag: '🇺🇸',
     currency: 'USD',
     currencySymbol: '$',
-    available: false,
-    unavailableLabel: 'Paused',
-    taxYear: '2024/2025',
+    available: true,
+    taxYear: '2026',
   },
   CA: { 
     code: 'CA', 

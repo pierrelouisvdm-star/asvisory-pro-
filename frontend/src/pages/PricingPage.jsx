@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
 import { useJurisdiction } from '@/context/JurisdictionContext';
-import { couponApi, paymentsApi } from '@/services/api';
+import { couponApi, paymentsApi, subscriptionApi } from '@/services/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -14,7 +14,6 @@ import {
   Receipt, Wallet, Bot, Flame, DollarSign
 } from 'lucide-react';
 import { toast } from 'sonner';
-import CountdownTimer from '@/components/CountdownTimer';
 import SEOHead from '@/components/SEOHead';
 
 const PREMIUM_FEATURES = [
@@ -39,6 +38,10 @@ const PREMIUM_PRICE = 299;
 const ANNUAL_PRICE = 1999;
 const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1999 vs R3588 = R1589 savings
 
+const PREMIUM_PRICE_USD = 22;
+const ANNUAL_PRICE_USD = 199;
+const ANNUAL_SAVINGS_USD = (PREMIUM_PRICE_USD * 12) - ANNUAL_PRICE_USD; // $199 vs $264 = $65 savings
+
 export const PricingPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
@@ -52,7 +55,7 @@ export const PricingPage = () => {
   const [couponCode, setCouponCode] = useState('');
   const [couponLoading, setCouponLoading] = useState(false);
   
-  // Paystack state
+  // Paystack / Stripe state
   const [paymentLoading, setPaymentLoading] = useState(false);
 
   const handleRedeemCoupon = async (e) => {
@@ -97,11 +100,31 @@ export const PricingPage = () => {
     }
   };
 
+  const handleStripePayment = async () => {
+    if (!isAuthenticated) {
+      toast.error('Please sign in to make a payment');
+      navigate('/auth?redirect=/pricing');
+      return;
+    }
+
+    setPaymentLoading(true);
+
+    try {
+      const result = await subscriptionApi.createCheckout('premium', billingPeriod, 'US');
+      window.location.href = result.checkout_url;
+    } catch (error) {
+      toast.error(error.message || 'Failed to start payment');
+      setPaymentLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-navy-950" data-testid="pricing-page">
       <SEOHead
-        title="AdvisoryPro Pricing, $99 Annual (Limited Time) or $19/month"
-        description="Professional financial planning tools. $19/month or $99 one-time annual access (limited time, regularly $149). All 30+ US calculators. Advisor-level tools, without the advisor."
+        title={isUS ? "AdvisoryPro Pricing, $22/month or $199/year" : "AdvisoryPro Pricing"}
+        description={isUS
+          ? "Professional financial planning tools. $22/month or $199/year. All 30+ US calculators. Advisor-level tools, without the advisor."
+          : "Professional financial planning tools. R299/month or R1999/year. 20+ South African calculators. Advisor-level tools, without the advisor."}
         path="/pricing"
         keywords="financial calculator pricing, AdvisoryPro pricing, financial tools subscription, tax calculator subscription"
       />
@@ -120,14 +143,13 @@ export const PricingPage = () => {
           </p>
         </div>
 
-        {/* Billing Toggle, SA only */}
-        {!isUS && (
+        {/* Billing Toggle */}
         <div className="flex items-center justify-center gap-4 mb-8">
           <button
             onClick={() => setBillingPeriod('monthly')}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-              billingPeriod === 'monthly' 
-                ? 'bg-emerald-600 text-white' 
+              billingPeriod === 'monthly'
+                ? 'bg-emerald-600 text-white'
                 : 'bg-slate-800 text-slate-400 hover:text-white'
             }`}
           >
@@ -136,18 +158,17 @@ export const PricingPage = () => {
           <button
             onClick={() => setBillingPeriod('annual')}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors relative ${
-              billingPeriod === 'annual' 
-                ? 'bg-emerald-600 text-white' 
+              billingPeriod === 'annual'
+                ? 'bg-emerald-600 text-white'
                 : 'bg-slate-800 text-slate-400 hover:text-white'
             }`}
           >
             Annual
             <span className="absolute -top-2 -right-2 bg-amber-500 text-xs text-black px-1.5 py-0.5 rounded-full font-bold">
-              Save R{ANNUAL_SAVINGS}
+              {isUS ? `Save $${ANNUAL_SAVINGS_USD}` : `Save R${ANNUAL_SAVINGS}`}
             </span>
           </button>
         </div>
-        )}
 
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -220,41 +241,19 @@ export const PricingPage = () => {
                   <>
                     {billingPeriod === 'annual' ? (
                       <>
-                        <div className="inline-block bg-amber-500/20 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-400 mb-2">
-                          LIMITED TIME OFFER
-                        </div>
-                        <div>
-                          <span className="text-5xl font-bold text-white">$99</span>
-                          <span className="text-slate-400 ml-2">one-time</span>
-                        </div>
+                        <span className="text-5xl font-bold text-white">${ANNUAL_PRICE_USD}</span>
+                        <span className="text-slate-400 ml-2">/year</span>
                         <p className="text-emerald-400 text-sm mt-2">
-                          Full year access · Normally $149
+                          Only ${(ANNUAL_PRICE_USD / 12).toFixed(2)}/month • Save ${ANNUAL_SAVINGS_USD}
                         </p>
-                        <div className="mt-3">
-                          <CountdownTimer label="Price goes up in" />
-                        </div>
                       </>
                     ) : (
                       <>
-                        <span className="text-5xl font-bold text-white">$19</span>
+                        <span className="text-5xl font-bold text-white">${PREMIUM_PRICE_USD}</span>
                         <span className="text-slate-400 ml-2">/month</span>
                         <p className="text-emerald-400 text-sm mt-2">Cancel anytime</p>
                       </>
                     )}
-                    <div className="flex justify-center gap-2 mt-3">
-                      <button
-                        onClick={() => setBillingPeriod('monthly')}
-                        className={`px-3 py-1 rounded text-xs font-medium transition-colors ${billingPeriod === 'monthly' ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-400 hover:text-white'}`}
-                      >
-                        Monthly
-                      </button>
-                      <button
-                        onClick={() => setBillingPeriod('annual')}
-                        className={`px-3 py-1 rounded text-xs font-medium transition-colors relative ${billingPeriod === 'annual' ? 'bg-emerald-600 text-white' : 'bg-slate-700 text-slate-400 hover:text-white'}`}
-                      >
-                        Annual ($99) 🔥
-                      </button>
-                    </div>
                   </>
                 ) : (
                   <>
@@ -293,13 +292,18 @@ export const PricingPage = () => {
 
               {/* Payment Button */}
               {isUS ? (
-                <Button 
+                <Button
                   className="w-full h-12 text-lg btn-premium"
-                  onClick={() => navigate(isAuthenticated ? '/dashboard' : '/auth?redirect=/pricing')}
+                  onClick={handleStripePayment}
+                  disabled={paymentLoading}
                   data-testid="us-payment-btn"
                 >
-                  <CreditCard className="h-5 w-5 mr-2" />
-                  {billingPeriod === 'annual' ? 'Get Annual Access, $99' : 'Get Monthly Access, $19/mo'}
+                  {paymentLoading ? (
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                  ) : (
+                    <CreditCard className="h-5 w-5 mr-2" />
+                  )}
+                  {billingPeriod === 'annual' ? `Get Annual Access, $${ANNUAL_PRICE_USD}` : `Get Monthly Access, $${PREMIUM_PRICE_USD}/mo`}
                 </Button>
               ) : (
                 <Button
