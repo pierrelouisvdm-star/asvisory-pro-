@@ -39,6 +39,7 @@ import screenshotUSCalculators from '../assets/screenshot-us-calculators.png';
 import screenshotUSNetWorth from '../assets/screenshot-us-networth.png';
 import screenshotUSSecurity from '../assets/screenshot-us-security.png';
 import screenshotUSAiChat from '../assets/screenshot-us-aichat.png';
+import screenshotUSPdfReport from '../assets/screenshot-us-pdfreport.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
 import SEOHead from '@/components/SEOHead';
@@ -95,7 +96,7 @@ const US_CALCULATOR_CATEGORIES = [
     icon: DollarSign,
     color: 'emerald',
     calculators: [
-      { name: 'Federal + State Tax Calculator', desc: 'All 50 states, real 2024 brackets' },
+      { name: 'Federal + State Tax Calculator', desc: 'All 50 states, real 2026 brackets' },
       { name: 'Self-Employment Tax Estimator', desc: 'QBI, SE tax & all deductions' },
       { name: 'Capital Gains Calculator', desc: 'Short-term vs long-term rates' },
       { name: 'Budget Planner', desc: 'The 50/30/20 rule for Americans' },
@@ -398,12 +399,12 @@ export const LandingPage = () => {
       <SEOHead
         title={isUS ? "AdvisoryPro, Every Financial Calculator. One Intelligent Platform." : "AdvisoryPro, Professional Financial Planning for South Africans"}
         description={isUS
-          ? "Make better financial decisions, faster. 30+ professional financial calculators for Americans. 2025 IRS brackets, FIRE planning, RSU taxes, home affordability, Medicare IRMAA."
+          ? "Make better financial decisions, faster. 30+ professional financial calculators for Americans. 2026 IRS brackets, FIRE planning, RSU taxes, home affordability, Medicare IRMAA."
           : "20+ professional financial calculators for South Africans. SA Tax Hub, RA, TFSA, CGT, retirement planning, updated for 2026/2027 tax year."
         }
         path="/welcome"
         keywords={isUS
-          ? "financial calculators 2025, FIRE calculator, tax calculator 2025, RSU tax calculator, home affordability, financial independence"
+          ? "financial calculators 2026, FIRE calculator, tax calculator 2026, RSU tax calculator, home affordability, financial independence"
           : "South African financial calculators, SA tax calculator, TFSA calculator, RA tax savings, CGT calculator South Africa"
         }
       />
@@ -582,34 +583,36 @@ export const LandingPage = () => {
                 </div>
               </div>
               <img
-                src={screenshotTaxHub}
-                alt="AdvisoryPro Tax Planning Hub showing a 2026/2027 income tax calculation"
+                src={isUS ? screenshotUSTax : screenshotTaxHub}
+                alt={isUS ? "AdvisoryPro US Tax Calculator showing a federal and state tax calculation" : "AdvisoryPro Tax Planning Hub showing a 2026/2027 income tax calculation"}
                 className="w-full h-auto rounded-2xl border border-emerald-500/20 shadow-2xl"
                 loading="lazy"
               />
             </div>
 
-            {/* 2. Fee Comparison Calculator */}
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="lg:order-2">
-                <Badge className="mb-4 bg-blue-500/20 text-blue-400 border-blue-500/30">
-                  <Scale className="h-3 w-3 mr-1" />
-                  Fee Comparison
-                </Badge>
-                <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
-                  Show clients exactly what <span className="text-blue-400">fees cost them</span>
-                </h3>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Compare fee structures side by side and visualize the long-term cost in a single chart.
-                </p>
+            {/* 2. Fee Comparison Calculator (SA only, no US equivalent) */}
+            {!isUS && (
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="lg:order-2">
+                  <Badge className="mb-4 bg-blue-500/20 text-blue-400 border-blue-500/30">
+                    <Scale className="h-3 w-3 mr-1" />
+                    Fee Comparison
+                  </Badge>
+                  <h3 className="font-display text-2xl sm:text-3xl font-extrabold text-foreground mb-4">
+                    Show clients exactly what <span className="text-blue-400">fees cost them</span>
+                  </h3>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Compare fee structures side by side and visualize the long-term cost in a single chart.
+                  </p>
+                </div>
+                <img
+                  src={screenshotFeeComparison}
+                  alt="AdvisoryPro Fee Comparison tool showing investment growth over 20 years"
+                  className="lg:order-1 w-full h-auto rounded-2xl border border-blue-500/20 shadow-2xl"
+                  loading="lazy"
+                />
               </div>
-              <img
-                src={screenshotFeeComparison}
-                alt="AdvisoryPro Fee Comparison tool showing investment growth over 20 years"
-                className="lg:order-1 w-full h-auto rounded-2xl border border-blue-500/20 shadow-2xl"
-                loading="lazy"
-              />
-            </div>
+            )}
 
             {/* 3. Generated PDF Report */}
             <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -626,8 +629,8 @@ export const LandingPage = () => {
                 </p>
               </div>
               <img
-                src={screenshotPdfReport}
-                alt="A generated AdvisoryPro retirement planning PDF report, branded and ready to send to a client"
+                src={isUS ? screenshotUSPdfReport : screenshotPdfReport}
+                alt={isUS ? "A generated AdvisoryPro net worth statement PDF report in US dollars, branded and ready to send to a client" : "A generated AdvisoryPro retirement planning PDF report, branded and ready to send to a client"}
                 className="w-full h-auto max-h-[600px] object-cover object-top rounded-2xl border border-purple-500/20 shadow-2xl"
                 loading="lazy"
               />
@@ -655,7 +658,7 @@ export const LandingPage = () => {
                   <span className="ml-2 text-xs text-slate-500">Net Worth Tracker</span>
                 </div>
                 <p className="text-xs text-slate-400 mb-1">Total Net Worth</p>
-                <p className="text-2xl font-bold text-white mb-3">R 3,247,500</p>
+                <p className="text-2xl font-bold text-white mb-3">{isUS ? '$ 420,000' : 'R 3,247,500'}</p>
                 <div className="flex items-end gap-1.5 h-16 mb-3">
                   {[40, 48, 45, 58, 62, 70, 85].map((h, idx) => (
                     <div key={idx} className="flex-1 rounded-t-sm bg-gradient-to-t from-amber-600 to-amber-400" style={{ height: `${h}%` }} />
@@ -700,7 +703,7 @@ export const LandingPage = () => {
                     <div className="bg-slate-700/50 rounded-2xl rounded-tl-sm px-4 py-2.5">
                       <p className="text-sm text-slate-200">
                         {isUS
-                          ? 'For 2025, the 401(k) employee contribution limit is $23,500, plus a $7,500 catch-up if you\'re 50+...'
+                          ? 'For 2026, the 401(k) employee contribution limit is $24,500, plus an $8,000 catch-up if you\'re 50+...'
                           : 'You can deduct up to 27.5% of your taxable income, capped at R430,000 for the 2026/27 tax year...'
                         }
                       </p>
