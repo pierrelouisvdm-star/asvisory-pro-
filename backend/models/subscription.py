@@ -33,7 +33,7 @@ FOUNDING_PRICING = {"zar": 1499.0, "usd": 149.0}
 # Feature access configuration
 TIER_FEATURES = {
     SubscriptionTier.FREE: {
-        "calculators": ["future_value", "compound_interest", "bond", "car_finance", "net_worth", "emergency_fund", "fire_calculator", "paycheck"],
+        "calculators": ["future_value", "compound_interest", "bond", "car_finance", "emergency_fund", "fire_calculator", "paycheck"],
         "max_clients": 0,
         "pdf_reports": False,
         "advanced_tools": False,
