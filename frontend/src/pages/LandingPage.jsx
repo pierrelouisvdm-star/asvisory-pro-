@@ -548,10 +548,11 @@ export const LandingPage = () => {
                   <p className="text-slate-300 text-lg mb-6 max-w-xl">
                     Not a one-year discount, every future renewal stays at this price for life, plus priority support straight from the founder and team.
                   </p>
-                  <ul className="space-y-2.5 mb-8">
+                  <ul className="space-y-2.5 mb-6">
                     {[
                       'Price locked in forever, every renewal',
                       'Priority support from the founder & team',
+                      'Private seat in the Founding Advisor Network',
                       `First 150 members only, then ${isUS ? '$199' : 'R1,999'}/year`,
                     ].map((item) => (
                       <li key={item} className="flex items-center gap-3 text-slate-200">
@@ -560,6 +561,13 @@ export const LandingPage = () => {
                       </li>
                     ))}
                   </ul>
+                  <div className="flex items-start gap-3 mb-8 px-4 py-3 rounded-xl bg-navy-900/60 border border-amber-500/20">
+                    <Globe className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-slate-300">
+                      <span className="font-semibold text-white">A global advisor network, built in.</span>{' '}
+                      Founding members get an in-app directory connecting all 150 {isUS ? 'US' : 'South African'} and {isUS ? 'South African' : 'US'} founders, a private circle of top financial advisors sharing ideas and building relationships across both countries.
+                    </p>
+                  </div>
                   <Link to="/auth">
                     <Button size="lg" className="rounded-full bg-amber-500 hover:bg-amber-400 text-black font-bold text-base px-8 h-14 shadow-lg shadow-amber-500/30 group">
                       Claim Founding Price
@@ -964,9 +972,9 @@ export const LandingPage = () => {
                   'Planning Tools',
                   'AI Assistant',
                   'No feature restrictions',
-                ]).map((feature, idx) => (
+                ]).concat(isFoundingActive ? ['Founding Advisor Network access'] : []).map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0" />
+                    <CheckCircle2 className={`h-5 w-5 flex-shrink-0 ${feature === 'Founding Advisor Network access' ? 'text-amber-500' : 'text-emerald-600'}`} />
                     {feature}
                   </li>
                 ))}
