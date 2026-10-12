@@ -62,7 +62,9 @@ async def get_current_subscription(current_user: dict = Depends(get_current_user
         status=subscription.get("status", "active"),
         features=TIER_FEATURES.get(tier, TIER_FEATURES[SubscriptionTier.FREE]),
         trial_ends_at=subscription.get("trial_ends_at"),
-        current_period_end=subscription.get("current_period_end")
+        current_period_end=subscription.get("current_period_end"),
+        founding_member=subscription.get("founding_member", False),
+        priority_support=subscription.get("priority_support", False)
     )
 
 @router.post("/checkout", response_model=CheckoutResponse)
@@ -86,13 +88,18 @@ async def create_checkout_session(
     amount = PRICING[tier][billing_cycle][currency]
 
     if billing_cycle == BillingCycle.ANNUAL and currency in FOUNDING_PRICING:
-        founding_count = await db.payment_transactions.count_documents({
-            "payment_status": "paid",
-            "billing_cycle": billing_cycle.value,
-            "amount": FOUNDING_PRICING[currency],
-        })
-        if founding_count < FOUNDING_MEMBER_LIMIT:
-            amount = FOUNDING_PRICING[currency]
+        existing_sub = await db.subscriptions.find_one({"user_id": user_id})
+        if existing_sub and existing_sub.get("founding_member") and existing_sub.get("founding_currency") == currency:
+            # Founding members keep their locked-in annual price on every renewal
+            amount = existing_sub["founding_price"]
+        else:
+            founding_count = await db.payment_transactions.count_documents({
+                "payment_status": "paid",
+                "billing_cycle": billing_cycle.value,
+                "amount": FOUNDING_PRICING[currency],
+            })
+            if founding_count < FOUNDING_MEMBER_LIMIT:
+                amount = FOUNDING_PRICING[currency]
 
     # Initialize Stripe
     api_key = os.environ.get("STRIPE_API_KEY")
@@ -196,17 +203,28 @@ async def get_checkout_status(
             period_end = datetime.now(timezone.utc) + timedelta(days=365)
         
         # Upsert subscription
+        update_fields = {
+            "user_id": transaction["user_id"],
+            "tier": tier.value,
+            "billing_cycle": billing_cycle.value,
+            "status": "active",
+            "current_period_start": datetime.now(timezone.utc),
+            "current_period_end": period_end,
+            "updated_at": datetime.now(timezone.utc)
+        }
+        transaction_currency = transaction.get("currency")
+        if billing_cycle == BillingCycle.ANNUAL and transaction_currency in FOUNDING_PRICING \
+                and transaction.get("amount") == FOUNDING_PRICING[transaction_currency]:
+            update_fields.update({
+                "founding_member": True,
+                "founding_price": FOUNDING_PRICING[transaction_currency],
+                "founding_currency": transaction_currency,
+                "priority_support": True,
+            })
+
         await db.subscriptions.update_one(
             {"user_id": transaction["user_id"]},
-            {"$set": {
-                "user_id": transaction["user_id"],
-                "tier": tier.value,
-                "billing_cycle": billing_cycle.value,
-                "status": "active",
-                "current_period_start": datetime.now(timezone.utc),
-                "current_period_end": period_end,
-                "updated_at": datetime.now(timezone.utc)
-            }},
+            {"$set": update_fields},
             upsert=True
         )
         

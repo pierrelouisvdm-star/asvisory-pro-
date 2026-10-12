@@ -25,14 +25,15 @@ PRICING = {
 }
 
 # Founding-member promo: the first FOUNDING_MEMBER_LIMIT annual Premium
-# subscribers in each jurisdiction get a discounted annual price.
-FOUNDING_MEMBER_LIMIT = 100
-FOUNDING_PRICING = {"zar": 1699.0, "usd": 149.0}
+# subscribers in each jurisdiction get a discounted annual price, locked in
+# for every future renewal, plus priority support.
+FOUNDING_MEMBER_LIMIT = 150
+FOUNDING_PRICING = {"zar": 1499.0, "usd": 149.0}
 
 # Feature access configuration
 TIER_FEATURES = {
     SubscriptionTier.FREE: {
-        "calculators": ["future_value", "compound_interest", "bond", "car_finance"],
+        "calculators": ["future_value", "compound_interest", "bond", "car_finance", "net_worth", "emergency_fund", "fire_calculator", "paycheck"],
         "max_clients": 0,
         "pdf_reports": False,
         "advanced_tools": False,
@@ -104,3 +105,5 @@ class UserSubscriptionInfo(BaseModel):
     features: dict
     trial_ends_at: Optional[datetime] = None
     current_period_end: Optional[datetime] = None
+    founding_member: bool = False
+    priority_support: bool = False

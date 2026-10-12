@@ -699,6 +699,7 @@ export const Dashboard = () => {
   const { isAuthenticated } = useAuth();
   const { isUS, isZA, currentJurisdiction } = useJurisdiction();
   const { showWizard, closeWizard } = useUSOnboarding(isUS);
+  const { subscription } = useSubscription();
 
   // Filter calculators based on jurisdiction
   const filterForJurisdiction = (calcs) => {
@@ -733,18 +734,23 @@ export const Dashboard = () => {
             </h1>
             
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed animate-fade-in" style={{ animationDelay: '200ms' }}>
-              {isUS 
-                ? "Make better financial decisions, faster. Professional-grade tools built on 2025 IRS data, all 50 states."
+              {isUS
+                ? "Make better financial decisions, faster. Professional-grade tools built on 2026 IRS data, all 50 states."
                 : "A comprehensive suite of 20+ professional calculators for South Africans. Make informed financial decisions with precision tools."
               }
             </p>
-            
+
             {/* Region indicator */}
-            <div className="flex justify-center mb-6 animate-fade-in" style={{ animationDelay: '250ms' }}>
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-6 animate-fade-in" style={{ animationDelay: '250ms' }}>
               <Badge variant="outline" className="px-3 py-1 text-sm bg-background/50">
                 <span className="mr-2">{currentJurisdiction?.flag}</span>
                 {currentJurisdiction?.name} • {currentJurisdiction?.taxYear || '2024/2025'} Tax Year
               </Badge>
+              {subscription?.foundingMember && (
+                <Badge className="px-3 py-1 text-sm bg-amber-500/10 text-amber-500 border border-amber-500/30">
+                  🔥 Founding Member • Price locked in forever{subscription?.prioritySupport ? ' • Priority support' : ''}
+                </Badge>
+              )}
             </div>
             
             <div className="flex flex-wrap justify-center gap-3 animate-fade-in" style={{ animationDelay: '300ms' }}>

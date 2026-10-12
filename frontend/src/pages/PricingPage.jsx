@@ -202,7 +202,9 @@ export const PricingPage = () => {
                   { label: 'US Tax Calendar', included: true },
                   { label: 'Mortgage Calculator', included: true },
                   { label: 'Compound Interest Calculator', included: true },
-                  { label: '26+ Premium US Calculators', included: false },
+                  { label: 'FIRE Calculator', included: true },
+                  { label: 'Paycheck Calculator', included: true },
+                  { label: '24+ Premium US Calculators', included: false },
                   { label: 'PDF Reports', included: false },
                   { label: 'AI Financial Assistant', included: false },
                 ] : [
@@ -210,7 +212,9 @@ export const PricingPage = () => {
                   { label: 'Bond/Mortgage Calculator', included: true },
                   { label: 'Future Value Calculator', included: true },
                   { label: 'Compound Interest Calculator', included: true },
-                  { label: '15+ Premium Calculators', included: false },
+                  { label: 'Net Worth Tracker', included: true },
+                  { label: 'Emergency Fund Calculator', included: true },
+                  { label: '13+ Premium Calculators', included: false },
                   { label: 'PDF Reports', included: false },
                   { label: 'AI Document Analysis', included: false },
                 ]).map(({ label, included }) => (
@@ -247,7 +251,7 @@ export const PricingPage = () => {
               <div className="mt-4">
                 {isFoundingActive && (
                   <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-400 mb-2">
-                    🔥 Founding Member • {founding.remaining} of {foundingStatus.limit} spots left
+                    🔥 Founding Member • {founding.remaining} of {foundingStatus.limit} spots left • Price locked in forever + priority support
                   </div>
                 )}
                 {isUS ? (
@@ -306,6 +310,11 @@ export const PricingPage = () => {
                       </>
                     )}
                   </>
+                )}
+                {isFoundingActive && (
+                  <p className="text-xs text-amber-400/90 mt-2">
+                    Locked in forever, every renewal, every future release • Priority support direct from the founder &amp; team
+                  </p>
                 )}
               </div>
             </CardHeader>
