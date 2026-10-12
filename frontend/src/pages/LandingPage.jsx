@@ -17,7 +17,7 @@ import {
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail,
   Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag,
-  FileCheck, Wallet
+  FileCheck, Wallet, UserCircle
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import heroFinanceBg from '../assets/hero-finance-bg.jpg';
@@ -972,6 +972,21 @@ export const LandingPage = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Founder */}
+          <div className="max-w-3xl mx-auto mt-16 pt-16 border-t border-border">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              <div className="flex-shrink-0 w-32 h-32 rounded-full bg-muted border-2 border-dashed border-border flex items-center justify-center overflow-hidden">
+                <UserCircle className="h-16 w-16 text-muted-foreground" />
+              </div>
+              <div className="text-center sm:text-left">
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  "After more than 11 years working as a financial advisor, combined with a keen interest in financial education and building software, I created AdvisoryPro to solve many of the challenges I experienced in the industry every day. Advisors are expected to deliver exceptional advice while navigating disconnected tools, complex calculations and time-consuming admin. I wanted to build something simpler, one modern platform that brings the tools advisors actually need into one place. AdvisoryPro combines my experience in financial advice, passion for financial education and love of building technology into a platform built by an advisor, for advisors, designed to save time, simplify the advice process and help us deliver a better experience for our clients."
+                </p>
+                <p className="font-semibold text-foreground">Founder, AdvisoryPro</p>
+              </div>
             </div>
           </div>
 
