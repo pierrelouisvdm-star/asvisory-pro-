@@ -250,9 +250,14 @@ export const PricingPage = () => {
               <CardTitle className="text-2xl text-white">Premium Plan</CardTitle>
               <div className="mt-4">
                 {isFoundingActive && (
-                  <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-400 mb-2">
-                    🔥 Founding Member Pricing • Price locked in forever + priority support
-                  </div>
+                  <>
+                    <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-400 mb-2">
+                      🔥 Founding Member Pricing • Price locked in forever + priority support
+                    </div>
+                    <p className="text-xs text-slate-500 mb-2">
+                      Limited to the first 150 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
+                    </p>
+                  </>
                 )}
                 {isUS ? (
                   <>
