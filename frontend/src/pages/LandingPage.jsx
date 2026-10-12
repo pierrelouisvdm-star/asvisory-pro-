@@ -32,6 +32,13 @@ import screenshotAiChat from '../assets/screenshot-ai-chat.png';
 import screenshotSecurity from '../assets/screenshot-security.png';
 import screenshotLiteracy from '../assets/screenshot-literacy.png';
 import founderPhoto from '../assets/founder-pierre.jpg';
+import screenshotUSTax from '../assets/screenshot-us-tax.png';
+import screenshotUSFire from '../assets/screenshot-us-fire.png';
+import screenshotUSStudentLoan from '../assets/screenshot-us-studentloan.png';
+import screenshotUSCalculators from '../assets/screenshot-us-calculators.png';
+import screenshotUSNetWorth from '../assets/screenshot-us-networth.png';
+import screenshotUSSecurity from '../assets/screenshot-us-security.png';
+import screenshotUSAiChat from '../assets/screenshot-us-aichat.png';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
 import SEOHead from '@/components/SEOHead';
@@ -184,42 +191,49 @@ const SA_KEY_FEATURES = [
 const US_KEY_FEATURES = [
   {
     icon: DollarSign,
+    image: screenshotUSTax,
     title: 'US Tax Suite (All 50 States)',
-    description: 'Federal + State taxes for all 50 states, self-employment tax with QBI deductions, built on real 2024 IRS brackets.',
+    description: 'Federal + State taxes for all 50 states, self-employment tax with QBI deductions, built on real 2026 IRS brackets.',
     highlights: ['All 50 States', 'QBI Deduction', '1099 / SE Tax'],
   },
   {
     icon: Flame,
+    image: screenshotUSFire,
     title: 'FIRE & Retirement Planning',
     description: 'Find your Financial Independence number. Model Lean, Fat & Coast FIRE. Optimize 401(k), Roth IRA, HSA, and Social Security claiming age.',
     highlights: ['FIRE Calculator', '401(k) + Roth IRA', 'HSA Strategy'],
   },
   {
     icon: GraduationCap,
+    image: screenshotUSStudentLoan,
     title: 'Student Loan Payoff',
     description: 'Compare Standard, Extended, IBR/SAVE repayment. Model PSLF forgiveness. See exactly how much extra payments save over 10-25 years.',
     highlights: ['IBR/SAVE Plan', 'PSLF Calculator', 'Refinance Compare'],
   },
   {
     icon: Calculator,
+    image: screenshotUSCalculators,
     title: '30+ Professional Calculators',
     description: 'From mortgage amortization to net worth tracking, every financial calculation you need, built for American households and advisors.',
     highlights: ['Mortgage Calculator', 'Auto Loan', '529 College Savings'],
   },
   {
     icon: LineChart,
+    image: screenshotUSNetWorth,
     title: 'Net Worth & Budget Tracker',
     description: 'Track assets, liabilities, set financial milestones, and monitor your wealth growth over time, denominated in USD with US-specific categories.',
     highlights: ['Dollar-Denominated', 'Budget Tracking', 'Goal Milestones'],
   },
   {
     icon: Shield,
+    image: screenshotUSSecurity,
     title: 'Enterprise Security',
     description: 'Encrypted in transit and at rest, with full audit trails and complete data isolation between accounts.',
     highlights: ['Encrypted', 'Audit Trails', 'Data Isolation'],
   },
   {
     icon: Bot,
+    image: screenshotUSAiChat,
     title: 'AI Financial Assistant',
     description: 'Ask complex US tax and financial planning questions. Get instant answers about 401(k) limits, Roth conversions, FIRE numbers, and more.',
     highlights: ['GPT-Powered', 'US Tax Aware', 'Clear Explanations'],
@@ -429,10 +443,17 @@ export const LandingPage = () => {
                 {heroContent.tagline}
               </p>
 
-              <div className="mb-5 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-emerald-200/80 text-xs">
+              <div className="mb-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-emerald-200/80 text-xs">
                 <Sparkles className="h-3 w-3" />
                 {heroContent.badge}
               </div>
+
+              {isFoundingActive && (
+                <div className="mb-5 inline-flex flex-wrap items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-semibold">
+                  <Flame className="h-3.5 w-3.5" />
+                  Founding Member: {isUS ? `$${founding.price}/year` : `R${founding.price}/year`} locked in forever, first 150 only, then {isUS ? '$199/year' : 'R1,999/year'}
+                </div>
+              )}
 
               <h1 className="font-display text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-white leading-[1.08] mb-6">
                 {isUS ? (
@@ -466,7 +487,12 @@ export const LandingPage = () => {
               </div>
 
               <p className="text-sm text-slate-500">
-                {isUS ? '$22/month or $199/year (Save $65!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
+                {isFoundingActive
+                  ? (isUS
+                      ? `$22/month, or $${founding.price}/year as a founding member (reverts to $199/year once the first 150 spots fill) • Have a coupon? Apply at signup`
+                      : `R299/month, or R${founding.price}/year as a founding member (reverts to R1,999/year once the first 150 spots fill) • Have a coupon? Apply at signup`)
+                  : (isUS ? '$22/month or $199/year (Save $65!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup')
+                }
               </p>
             </div>
 
@@ -542,7 +568,7 @@ export const LandingPage = () => {
                 </h3>
                 <p className="text-lg text-muted-foreground mb-6">
                   {isUS
-                    ? 'Federal + state tax, capital gains, AMT and self-employment tax, built on 2025 IRS brackets.'
+                    ? 'Federal + state tax, capital gains, AMT and self-employment tax, built on 2026 IRS brackets.'
                     : 'Income tax, CGT, medical credits, provisional tax and RA deductibility, with the latest SARS brackets.'
                   }
                 </p>
@@ -722,7 +748,7 @@ export const LandingPage = () => {
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               {isUS
-                ? 'From FIRE planning to capital gains tax, every calculation built for American financial decisions, 2025 IRS brackets (Rev. Proc. 2024-40), all 50 states.'
+                ? 'From FIRE planning to capital gains tax, every calculation built for American financial decisions, 2026 IRS brackets (Rev. Proc. 2025-32), all 50 states.'
                 : 'From retirement planning to estate duty, all localized for South African regulations with the latest SARS tax brackets and Prime Rate.'
               }
             </p>
@@ -836,9 +862,14 @@ export const LandingPage = () => {
           <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
             <CardContent className="p-8">
               {isFoundingActive && (
-                <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-500 mb-3">
-                  🔥 Founding Member Pricing • Locked in forever + priority support
-                </div>
+                <>
+                  <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-500 mb-2">
+                    🔥 Founding Member Pricing • Locked in forever + priority support
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Limited to the first 150 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
+                  </p>
+                </>
               )}
               {isUS ? (
                 <div className="mb-6">
@@ -958,7 +989,7 @@ export const LandingPage = () => {
                   <p className="text-sm text-muted-foreground">Founded</p>
                 </div>
                 <div className="p-4 bg-muted/50 rounded-lg border border-border">
-                  <p className="text-3xl font-bold text-primary">20+</p>
+                  <p className="text-3xl font-bold text-primary">{isUS ? '30+' : '20+'}</p>
                   <p className="text-sm text-muted-foreground">Financial Calculators</p>
                 </div>
               </div>
@@ -967,25 +998,29 @@ export const LandingPage = () => {
             <div className="space-y-6">
               <h3 className="font-display text-2xl font-bold text-foreground mb-4">Our Values</h3>
               {[
-                { 
-                  icon: Target, 
-                  title: 'Accuracy First', 
-                  desc: 'Every calculation is verified against current SA regulations and tax laws.' 
+                {
+                  icon: Target,
+                  title: 'Accuracy First',
+                  desc: isUS
+                    ? 'Every calculation is verified against current IRS regulations and tax laws.'
+                    : 'Every calculation is verified against current SA regulations and tax laws.'
                 },
                 {
                   icon: Shield,
                   title: 'Security & Privacy',
-                  desc: 'Your data is encrypted and access-controlled, handled with POPIA\'s principles in mind.'
+                  desc: isUS
+                    ? 'Your data is encrypted and access-controlled, built on bank-level security standards.'
+                    : 'Your data is encrypted and access-controlled, handled with POPIA\'s principles in mind.'
                 },
-                { 
-                  icon: Zap, 
-                  title: 'Continuous Innovation', 
-                  desc: 'Regular updates to stay current with regulatory changes and new features.' 
+                {
+                  icon: Zap,
+                  title: 'Continuous Innovation',
+                  desc: 'Regular updates to stay current with regulatory changes and new features.'
                 },
-                { 
-                  icon: Users, 
-                  title: 'User-Focused', 
-                  desc: 'Built by users, for users. We listen to your feedback.' 
+                {
+                  icon: Users,
+                  title: 'User-Focused',
+                  desc: 'Built by users, for users. We listen to your feedback.'
                 },
               ].map((value, idx) => (
                 <div key={idx} className="flex items-start gap-4 p-4 bg-card rounded-lg border border-border hover:border-primary/30 transition-colors">

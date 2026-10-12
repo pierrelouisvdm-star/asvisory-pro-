@@ -9,12 +9,14 @@ import {
   Server, Database, UserCheck, History
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useJurisdiction } from '../context/JurisdictionContext';
 import axios from 'axios';
 
 const API = process.env.REACT_APP_BACKEND_URL;
 
 const SecurityPage = () => {
   const { user, token } = useAuth();
+  const { isUS } = useJurisdiction();
   const [securitySummary, setSecuritySummary] = useState(null);
   const [privacyReport, setPrivacyReport] = useState(null);
   const [auditLogs, setAuditLogs] = useState([]);
@@ -47,7 +49,7 @@ const SecurityPage = () => {
 
   const formatDate = (dateStr) => {
     if (!dateStr) return 'N/A';
-    return new Date(dateStr).toLocaleString('en-ZA');
+    return new Date(dateStr).toLocaleString(isUS ? 'en-US' : 'en-ZA');
   };
 
   const getActionIcon = (action) => {
@@ -74,7 +76,7 @@ const SecurityPage = () => {
             Security & Privacy
           </h1>
           <p className="text-slate-400 mt-1">
-            POPIA-compliant data protection for your practice
+            {isUS ? 'Enterprise-grade data protection for your practice' : 'POPIA-compliant data protection for your practice'}
           </p>
         </div>
         <Badge variant="outline" className="border-emerald-500/50 text-emerald-400">
@@ -162,7 +164,7 @@ const SecurityPage = () => {
           </TabsTrigger>
           <TabsTrigger value="privacy" className="data-[state=active]:bg-emerald-500/20">
             <Scale className="h-4 w-4 mr-2" />
-            POPIA Compliance
+            {isUS ? 'Privacy & Compliance' : 'POPIA Compliance'}
           </TabsTrigger>
         </TabsList>
 
@@ -320,7 +322,7 @@ const SecurityPage = () => {
                 Data Categories Collected
               </CardTitle>
               <CardDescription>
-                Types of personal information stored under POPIA
+                {isUS ? 'Types of personal information we store' : 'Types of personal information stored under POPIA'}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -350,7 +352,7 @@ const SecurityPage = () => {
             <CardHeader>
               <CardTitle className="text-lg text-white flex items-center gap-2">
                 <Scale className="h-5 w-5 text-emerald-400" />
-                Client Rights Under POPIA
+                {isUS ? 'Client Data Rights' : 'Client Rights Under POPIA'}
               </CardTitle>
               <CardDescription>
                 Rights that your clients have regarding their personal information
