@@ -97,7 +97,7 @@ export const Header = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const { isUS } = useJurisdiction();
   const { subscription } = useSubscription();
-  const isFoundingMember = !!subscription?.foundingMember;
+  const hasCommunityAccess = !!(subscription?.foundingMember || subscription?.communityMember);
 
   // Filter SA-only items from mega menu when in US mode
   const visibleCalculators = allCalculators
@@ -167,7 +167,7 @@ export const Header = () => {
             {/* Quick Tools */}
             <NavLink to="/document-reader" icon={FileText}>AI Docs</NavLink>
             {!isUS && <NavLink to="/tax-planning" icon={Receipt}>Tax Hub</NavLink>}
-            {isFoundingMember && (
+            {hasCommunityAccess && (
               <Link
                 to="/community"
                 className={cn(
@@ -348,7 +348,7 @@ export const Header = () => {
                 Tax Planning Hub
               </Link>
               )}
-              {isFoundingMember && (
+              {hasCommunityAccess && (
               <Link
                 to="/community"
                 onClick={() => setIsMenuOpen(false)}
