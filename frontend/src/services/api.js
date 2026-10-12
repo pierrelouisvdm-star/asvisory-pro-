@@ -420,3 +420,29 @@ export const analyticsApi = {
     return handleResponse(response);
   },
 };
+
+// Founding Member Community API
+export const communityApi = {
+  getMembers: async () => {
+    const response = await fetch(`${API_URL}/api/community/members`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  getMyProfile: async () => {
+    const response = await fetch(`${API_URL}/api/community/profile`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  updateMyProfile: async (profile) => {
+    const response = await fetch(`${API_URL}/api/community/profile`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(profile),
+    });
+    return handleResponse(response);
+  },
+};

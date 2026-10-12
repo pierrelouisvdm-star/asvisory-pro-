@@ -36,6 +36,7 @@ import { RetirementTaxCalculator } from "@/pages/RetirementTaxCalculator";
 import TaxDirectiveSimulator from "@/pages/TaxDirectiveSimulator";
 import FinancialLiteracyQuiz from "@/pages/FinancialLiteracyQuiz";
 import SecurityPage from "@/pages/SecurityPage";
+import CommunityPage from "@/pages/CommunityPage";
 import TaxPlanningHub from "@/pages/TaxPlanningHub";
 import DocumentReader from "@/pages/DocumentReader";
 import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
@@ -186,6 +187,7 @@ function App() {
                   <Route path="/risk-profile" element={<ProtectedRoute><GatedCalculator path="/risk-profile"><RiskProfileQuiz /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/financial-literacy" element={<ProtectedRoute><GatedCalculator path="/financial-literacy"><FinancialLiteracyQuiz /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/security" element={<ProtectedRoute><SecurityPage /></ProtectedRoute>} />
+                  <Route path="/community" element={<ProtectedRoute><CommunityPage /></ProtectedRoute>} />
                   <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
                   <Route path="/document-reader" element={<ProtectedRoute><GatedCalculator path="/document-reader"><DocumentReader /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
