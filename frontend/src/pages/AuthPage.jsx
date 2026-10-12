@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { 
-  Calculator, Mail, Lock, User, Building2, ArrowRight, AlertCircle, 
+import {
+  Calculator, Mail, Lock, User, Building2, ArrowRight, AlertCircle,
   Check, Crown, Ticket, Sparkles, Users, FileText, TrendingUp, Bot, Flame, DollarSign
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { couponApi } from '@/services/api';
+import { couponApi, subscriptionApi } from '@/services/api';
 import { AdvisoryProLogo } from '@/components/AdvisoryProLogo';
 
 const SA_TIERS = [
@@ -94,6 +94,13 @@ export const AuthPage = () => {
   const navigate = useNavigate();
 
   const tiers = isUS ? US_TIERS : SA_TIERS;
+
+  const [foundingStatus, setFoundingStatus] = useState(null);
+  useEffect(() => {
+    subscriptionApi.getFoundingStatus().then(setFoundingStatus).catch(() => {});
+  }, []);
+  const founding = foundingStatus?.[isUS ? 'usd' : 'zar'];
+  const isFoundingActive = founding?.remaining > 0;
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
@@ -454,8 +461,20 @@ export const AuthPage = () => {
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
               <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
+              {isFoundingActive && (
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-semibold mb-2">
+                  <Flame className="h-3 w-3" />
+                  Founding Member: {isUS ? `$${founding.price}` : `R${founding.price}`}/year, locked in forever
+                </div>
+              )}
               <p className="text-muted-foreground text-sm">
-                {isUS ? (
+                {isFoundingActive ? (
+                  isUS ? (
+                    <>$22/month, or <span className="line-through">$199</span> <span className="text-amber-500 font-medium">${founding.price}/year</span> as a founding member</>
+                  ) : (
+                    <>R299/month, or <span className="line-through">R1,999</span> <span className="text-amber-500 font-medium">R{founding.price}/year</span> as a founding member</>
+                  )
+                ) : isUS ? (
                   <>
                     $22/month or <span className="text-emerald-500 font-medium">$199/year</span> (Save $65!)
                   </>
@@ -495,9 +514,18 @@ export const AuthPage = () => {
                         <span className="text-muted-foreground text-sm">{tier.period}</span>
                       </div>
                       {tier.name === 'Premium' && tier.annualPrice && (
-                        <p className="text-xs text-emerald-500 mt-0.5">
-                          or {tier.annualPrice}{tier.annualPeriod}
-                        </p>
+                        isFoundingActive ? (
+                          <p className="text-xs mt-0.5">
+                            or <span className="line-through text-muted-foreground">{tier.annualPrice}</span>{' '}
+                            <span className="text-amber-500 font-semibold">
+                              {isUS ? `$${founding.price}` : `R${founding.price}`}{tier.annualPeriod}
+                            </span>
+                          </p>
+                        ) : (
+                          <p className="text-xs text-emerald-500 mt-0.5">
+                            or {tier.annualPrice}{tier.annualPeriod}
+                          </p>
+                        )
                       )}
                     </div>
                   </div>
