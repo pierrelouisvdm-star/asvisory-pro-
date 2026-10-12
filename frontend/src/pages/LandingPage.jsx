@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { JurisdictionSelector } from '@/components/JurisdictionSelector';
+import { JurisdictionGate } from '@/components/JurisdictionGate';
 import { useJurisdiction } from '@/context/JurisdictionContext';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
@@ -370,6 +371,7 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <JurisdictionGate />
       <SEOHead
         title={isUS ? "AdvisoryPro, Every Financial Calculator. One Intelligent Platform." : "AdvisoryPro, Professional Financial Planning for South Africans"}
         description={isUS
