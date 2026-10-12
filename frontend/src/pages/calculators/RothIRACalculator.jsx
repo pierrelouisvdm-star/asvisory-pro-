@@ -10,7 +10,7 @@ import {
   Shield, TrendingUp, DollarSign, Calendar, Target, 
   Info, ArrowRight, AlertTriangle, CheckCircle2
 } from 'lucide-react';
-import { US_RETIREMENT_LIMITS_2024 } from '@/data/usTaxData';
+import { US_RETIREMENT_LIMITS_2024, CURRENT_US_TAX_YEAR } from '@/data/usTaxData';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const RothIRACalculator = () => {
@@ -122,7 +122,7 @@ const RothIRACalculator = () => {
             after-tax dollars, but qualified withdrawals are completely tax-free.
           </p>
           <Badge className="mt-3 bg-purple-500/10 text-purple-500 border-purple-500/20">
-            2025 Limit: ${limits.annualLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
+            {CURRENT_US_TAX_YEAR} Limit: ${limits.annualLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
           </Badge>
         </div>
 

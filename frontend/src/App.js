@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LandingPage } from "@/pages/LandingPage";
+import { ClientsPage } from "@/pages/ClientsPage";
+import { ClientProfilePage } from "@/pages/ClientProfilePage";
+import { PortfolioTrackerPage } from "@/pages/PortfolioTrackerPage";
 import { Dashboard } from "@/pages/Dashboard";
 import { FutureValueCalculator } from "@/pages/FutureValueCalculator";
 import { CompoundInterestCalculator } from "@/pages/CompoundInterestCalculator";
@@ -186,6 +189,9 @@ function App() {
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
+                  <Route path="/clients" element={<ProtectedRoute><ClientsPage /></ProtectedRoute>} />
+                  <Route path="/clients/:clientId" element={<ProtectedRoute><ClientProfilePage /></ProtectedRoute>} />
+                  <Route path="/clients/:clientId/portfolio" element={<ProtectedRoute><PortfolioTrackerPage /></ProtectedRoute>} />
 
                   {/* US Calculators */}
                   <Route path="/us/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/us/tax-calculator"><TaxCalculatorUS /></GatedCalculator></ProtectedRoute>} />

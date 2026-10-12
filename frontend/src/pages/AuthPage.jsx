@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
 import { 
   Calculator, Mail, Lock, User, Building2, ArrowRight, AlertCircle, 
   Check, Crown, Ticket, Sparkles, Users, FileText, TrendingUp, Bot, Flame, DollarSign
@@ -28,6 +27,8 @@ const SA_TIERS = [
       'Bond/Mortgage Calculator',
       'Future Value Calculator',
       'Compound Interest Calculator',
+      'Net Worth Tracker',
+      'Emergency Fund Calculator',
     ],
     highlight: false,
   },
@@ -60,16 +61,18 @@ const US_TIERS = [
       'US Tax Calendar 2025-2026',
       'Mortgage Calculator',
       'Compound Interest Calculator',
+      'FIRE Calculator',
+      'Paycheck Calculator',
     ],
     highlight: false,
   },
   {
     name: 'Premium',
-    price: '$19',
-    annualPrice: '$99',
+    price: '$22',
+    annualPrice: '$199',
     period: '/month',
-    annualPeriod: ' one-time',
-    annualSavings: 'Limited offer',
+    annualPeriod: '/year',
+    annualSavings: 'Save $65',
     description: 'Advisor-level tools, without the advisor',
     features: [
       'All 30+ US Financial Calculators',
@@ -455,8 +458,7 @@ export const AuthPage = () => {
               <p className="text-muted-foreground text-sm">
                 {isUS ? (
                   <>
-                    <span className="inline-block bg-amber-500/10 text-amber-500 text-xs font-semibold px-2 py-0.5 rounded mr-2">LIMITED OFFER</span>
-                    $19/month or <span className="text-emerald-500 font-medium">$99 one-time</span> (reg. $149)
+                    $22/month or <span className="text-emerald-500 font-medium">$199/year</span> (Save $65!)
                   </>
                 ) : (
                   <>R299/month or <span className="text-emerald-500 font-medium">R1,999/year</span> (Save R1,589!)</>
@@ -477,9 +479,6 @@ export const AuthPage = () => {
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-display font-bold text-foreground">{tier.name}</h3>
                         {tier.name === 'Premium' && <Sparkles className="h-4 w-4 text-amber-500" />}
-                        {tier.name === 'Premium' && isUS && (
-                          <Badge className="text-[9px] bg-amber-500/10 text-amber-500 border-0 px-1.5">LIMITED OFFER</Badge>
-                        )}
                       </div>
                       <p className="text-muted-foreground text-xs mb-3">{tier.description}</p>
                       <ul className="space-y-1.5">

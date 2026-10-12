@@ -10,21 +10,19 @@ import {
 } from 'recharts';
 import { RefreshCw, TrendingUp, DollarSign, CheckCircle2, Clock, Info, PiggyBank } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import { US_FEDERAL_TAX_BRACKETS_2024, US_STANDARD_DEDUCTIONS_2024 } from '@/data/usTaxData';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 
-const BRACKETS_2024 = {
-  single: [
-    { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
-    { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
-  mfj: [
-    { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
-    { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
-};
+// This calculator uses single/mfj/hoh; the shared tax data keys brackets by
+// single/marriedJoint/headOfHousehold/marriedSeparate.
+const FILING_STATUS_MAP = { single: 'single', mfj: 'marriedJoint', hoh: 'headOfHousehold' };
 
-const STANDARD_DEDUCTIONS = { single: 15750, mfj: 31500, hoh: 23625 };
+const getBrackets = (filingStatus) =>
+  US_FEDERAL_TAX_BRACKETS_2024[FILING_STATUS_MAP[filingStatus]] || US_FEDERAL_TAX_BRACKETS_2024.single;
+
+const getStandardDeduction = (filingStatus) =>
+  US_STANDARD_DEDUCTIONS_2024[FILING_STATUS_MAP[filingStatus]] || US_STANDARD_DEDUCTIONS_2024.single;
 
 const calcTax = (taxableIncome, brackets) => {
   if (taxableIncome <= 0) return 0;
@@ -39,11 +37,11 @@ const calcTax = (taxableIncome, brackets) => {
 };
 
 const getMarginalRate = (taxableIncome, filingStatus) => {
-  const brackets = BRACKETS_2024[filingStatus] || BRACKETS_2024.single;
+  const brackets = getBrackets(filingStatus);
   for (const b of [...brackets].reverse()) {
-    if (taxableIncome > (b.min || 0)) return b.rate;
+    if (taxableIncome > b.min) return b.rate;
   }
-  return 0.12;
+  return brackets[0].rate;
 };
 
 export default function RothConversionCalculator() {
@@ -58,8 +56,8 @@ export default function RothConversionCalculator() {
   const [expectedRetirementRate, setExpectedRetirementRate] = useState(22);
 
   const yearsToRetirement = Math.max(0, retirementAge - currentAge);
-  const brackets = BRACKETS_2024[filingStatus] || BRACKETS_2024.single;
-  const stdDed = STANDARD_DEDUCTIONS[filingStatus] || STANDARD_DEDUCTIONS.single;
+  const brackets = getBrackets(filingStatus);
+  const stdDed = getStandardDeduction(filingStatus);
   const taxableNow = Math.max(0, otherIncome + conversionAmount - stdDed);
   const taxWithoutConversion = calcTax(Math.max(0, otherIncome - stdDed), brackets);
   const taxWithConversion = calcTax(taxableNow, brackets);

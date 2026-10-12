@@ -9,43 +9,26 @@ import {
 } from 'recharts';
 import { PiggyBank, AlertCircle, CheckCircle2, Clock, Info, DollarSign } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import { US_FEDERAL_TAX_BRACKETS_2024, US_RMD_UNIFORM_LIFETIME_TABLE, US_RMD_START_AGE } from '@/data/usTaxData';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 
-// IRS Uniform Lifetime Table (2022 SECURE 2.0 update)
-const UNIFORM_LIFETIME_TABLE = {
-  72: 27.4, 73: 26.5, 74: 25.5, 75: 24.6, 76: 23.7, 77: 22.9, 78: 22.0, 79: 21.1,
-  80: 20.2, 81: 19.4, 82: 18.5, 83: 17.7, 84: 16.8, 85: 16.0, 86: 15.2, 87: 14.4,
-  88: 13.7, 89: 12.9, 90: 12.2, 91: 11.5, 92: 10.8, 93: 10.1, 94: 9.5, 95: 8.9,
-  96: 8.4, 97: 7.8, 98: 7.3, 99: 6.8, 100: 6.4, 101: 6.0, 102: 5.6, 103: 5.2,
-  104: 4.9, 105: 4.6, 106: 4.3, 107: 4.1, 108: 3.9, 109: 3.7, 110: 3.5, 111: 3.4,
-  112: 3.3, 113: 3.1, 114: 2.9, 115: 2.8, 116: 2.7, 117: 2.5, 118: 2.3, 119: 2.0, 120: 2.0,
-};
-
 const getDistributionPeriod = (age) => {
-  if (age < 73) return null;
-  if (age >= 120) return UNIFORM_LIFETIME_TABLE[120];
-  return UNIFORM_LIFETIME_TABLE[age] || UNIFORM_LIFETIME_TABLE[120];
+  if (age < US_RMD_START_AGE) return null;
+  if (age >= 120) return US_RMD_UNIFORM_LIFETIME_TABLE[120];
+  return US_RMD_UNIFORM_LIFETIME_TABLE[age] || US_RMD_UNIFORM_LIFETIME_TABLE[120];
 };
 
-// 2025 Federal ordinary income brackets for RMD taxation
-const ORDINARY_BRACKETS = {
-  single: [
-    { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
-    { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
-  mfj: [
-    { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
-    { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
-};
+// This calculator uses single/mfj; the shared tax data keys brackets by
+// single/marriedJoint/headOfHousehold/marriedSeparate.
+const FILING_STATUS_MAP = { single: 'single', mfj: 'marriedJoint' };
 
 const getMarginalRate = (income, filingStatus) => {
-  const brackets = ORDINARY_BRACKETS[filingStatus] || ORDINARY_BRACKETS.single;
+  const brackets = US_FEDERAL_TAX_BRACKETS_2024[FILING_STATUS_MAP[filingStatus]] || US_FEDERAL_TAX_BRACKETS_2024.single;
   for (const b of [...brackets].reverse()) {
-    if (income > b.min || b.min === undefined) return b.rate;
+    if (income > b.min) return b.rate;
   }
-  return 0.12;
+  return brackets[0].rate;
 };
 
 export default function RMDCalculator() {

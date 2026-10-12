@@ -12,7 +12,7 @@ import logging
 import os
 import httpx
 
-from models.subscription import SubscriptionTier, BillingCycle, PRICING
+from models.subscription import SubscriptionTier, BillingCycle, PRICING, FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT
 from utils.auth import get_current_user
 from server import db
 
@@ -40,7 +40,20 @@ async def initialize_paystack_payment(
     if payload.billing_cycle not in PRICING[SubscriptionTier.PREMIUM]:
         raise HTTPException(status_code=400, detail="Invalid billing cycle")
 
-    amount_rand = PRICING[SubscriptionTier.PREMIUM][payload.billing_cycle]
+    amount_rand = PRICING[SubscriptionTier.PREMIUM][payload.billing_cycle]["zar"]
+    if payload.billing_cycle == BillingCycle.ANNUAL:
+        existing_sub = await db.subscriptions.find_one({"user_id": current_user["id"]})
+        if existing_sub and existing_sub.get("founding_member") and existing_sub.get("founding_currency") == "zar":
+            # Founding members keep their locked-in annual price on every renewal
+            amount_rand = existing_sub["founding_price"]
+        else:
+            founding_count = await db.paystack_transactions.count_documents({
+                "status": "success",
+                "billing_cycle": "annual",
+                "amount": FOUNDING_PRICING["zar"],
+            })
+            if founding_count < FOUNDING_MEMBER_LIMIT:
+                amount_rand = FOUNDING_PRICING["zar"]
     amount_kobo = int(round(amount_rand * 100))
 
     origin = payload.origin_url.rstrip("/")
@@ -179,21 +192,30 @@ async def activate_premium_subscription(user_id: str, email: str, reference: str
         if isinstance(current_end, datetime) and current_end > now:
             period_end = current_end + timedelta(days=duration_days)
 
+    update_fields = {
+        "user_id": user_id,
+        "tier": SubscriptionTier.PREMIUM.value,
+        "billing_cycle": billing_cycle,
+        "status": "active",
+        "payment_method": "paystack",
+        "current_period_start": now,
+        "current_period_end": period_end,
+        "last_payment_id": reference,
+        "last_payment_amount": amount,
+        "last_payment_date": now,
+        "updated_at": now,
+    }
+    if billing_cycle == "annual" and amount == FOUNDING_PRICING["zar"]:
+        update_fields.update({
+            "founding_member": True,
+            "founding_price": FOUNDING_PRICING["zar"],
+            "founding_currency": "zar",
+            "priority_support": True,
+        })
+
     await db.subscriptions.update_one(
         {"user_id": user_id},
-        {"$set": {
-            "user_id": user_id,
-            "tier": SubscriptionTier.PREMIUM.value,
-            "billing_cycle": billing_cycle,
-            "status": "active",
-            "payment_method": "paystack",
-            "current_period_start": now,
-            "current_period_end": period_end,
-            "last_payment_id": reference,
-            "last_payment_amount": amount,
-            "last_payment_date": now,
-            "updated_at": now,
-        }},
+        {"$set": update_fields},
         upsert=True,
     )
 

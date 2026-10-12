@@ -243,7 +243,7 @@ export default function PublicToolsPage() {
       {/* Premium Preview */}
       <section className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-10">
-          <Badge className="mb-3 bg-amber-500/10 text-amber-500 border-amber-500/20">Premium, $19/mo or $99 once-off</Badge>
+          <Badge className="mb-3 bg-amber-500/10 text-amber-500 border-amber-500/20">Premium, $22/mo or $199/year</Badge>
           <h2 className="font-display text-3xl font-extrabold text-foreground mb-2">Institutional Tools for Everyday Investors.</h2>
           <p className="text-muted-foreground">Professional-grade financial tools, simplified. From paycheck to RSUs to Medicare surcharges.</p>
         </div>

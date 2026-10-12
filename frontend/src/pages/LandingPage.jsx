@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { JurisdictionSelector } from '@/components/JurisdictionSelector';
+import { JurisdictionGate } from '@/components/JurisdictionGate';
 import { useJurisdiction } from '@/context/JurisdictionContext';
 import { 
   Calculator, TrendingUp, Users, Shield, BarChart3, 
@@ -29,9 +30,9 @@ import screenshotNetWorth from '../assets/screenshot-networth.png';
 import screenshotAiChat from '../assets/screenshot-ai-chat.png';
 import screenshotSecurity from '../assets/screenshot-security.png';
 import screenshotLiteracy from '../assets/screenshot-literacy.png';
+import founderPhoto from '../assets/founder-pierre.jpg';
 import { AdvisoryProLogo } from '../components/AdvisoryProLogo';
 import { INSTALL_PROMPT_REQUEST_EVENT } from '@/components/InstallPrompt';
-import CountdownTimer from '@/components/CountdownTimer';
 import SEOHead from '@/components/SEOHead';
 
 // SA Calculator categories
@@ -341,18 +342,18 @@ export const LandingPage = () => {
 
   const heroContent = isUS ? {
     tagline: 'Advisor-Level Tools. Without the Advisor.',
-    badge: '2025 Tax Year · All 50 States',
+    badge: '2026 Tax Year · All 50 States',
     headline: 'Every Financial Calculator. One Intelligent Platform.',
-    sub: 'Make better financial decisions, faster. 30+ professional-grade tools for tax planning, FIRE, retirement, RSUs, real estate, and more, built on 2025 IRS data.',
+    sub: 'Make better financial decisions, faster. 30+ professional-grade tools for tax planning, FIRE, retirement, RSUs, real estate, and more, built on 2026 IRS data.',
     stats: [
       { value: '30+', label: 'Financial Tools' },
       { value: 'All 50', label: 'States Covered' },
       { value: 'FIRE', label: 'Retirement Planning' },
       { value: 'PDF', label: 'Instant Reports' },
     ],
-    price: '$19/month',
-    priceAnnual: '$99 one-time',
-    priceNote: 'or $99 one-time (limited offer, reg. $149)',
+    price: '$22/month',
+    priceAnnual: '$199/year',
+    priceNote: 'or $199/year (save $65)',
   } : {
     tagline: 'Built for South African Financial Advisers',
     badge: '2026/2027 Tax Year Ready',
@@ -371,6 +372,7 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <JurisdictionGate />
       <SEOHead
         title={isUS ? "AdvisoryPro, Every Financial Calculator. One Intelligent Platform." : "AdvisoryPro, Professional Financial Planning for South Africans"}
         description={isUS
@@ -434,7 +436,7 @@ export const LandingPage = () => {
 
               <p className="text-lg text-slate-400 max-w-xl mb-8 leading-relaxed">
                 {isUS ? (
-                  <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2025 IRS data.</>
+                  <>Make <span className="text-white font-medium">better financial decisions</span>, faster. 30+ professional-grade tools for <span className="text-white font-medium">tax planning, FIRE, RSUs, real estate</span>, and more, built on 2026 IRS data.</>
                 ) : (
                   <>Give every client a clear, professional plan. <span className="text-white font-medium">20+ calculators</span>, a complete Tax Hub, and <span className="text-white font-medium">client-ready PDF reports</span>, built for South African advisers, and just as capable in the hands of a sophisticated individual investor.</>
                 )}
@@ -456,7 +458,7 @@ export const LandingPage = () => {
               </div>
 
               <p className="text-sm text-slate-500">
-                {isUS ? '$19/month or $99 one-time (Limited offer!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
+                {isUS ? '$22/month or $199/year (Save $65!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup'}
               </p>
             </div>
 
@@ -827,18 +829,11 @@ export const LandingPage = () => {
             <CardContent className="p-8">
               {isUS ? (
                 <div className="mb-6">
-                  <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-500 mb-3">
-                    LIMITED TIME OFFER
-                  </div>
                   <div className="flex items-baseline justify-center gap-2">
-                    <span className="text-5xl font-bold text-foreground">$99</span>
-                    <span className="text-muted-foreground">one-time</span>
+                    <span className="text-5xl font-bold text-foreground">$22</span>
+                    <span className="text-muted-foreground">/month</span>
                   </div>
-                  <p className="text-emerald-500 text-sm mt-1">Full year access · Regular price $149</p>
-                  <p className="text-xs text-muted-foreground mt-1">or $19/month, cancel anytime</p>
-                  <div className="mt-3">
-                    <CountdownTimer label="Price goes up in" />
-                  </div>
+                  <p className="text-emerald-500 text-sm mt-1">or $199/year, save $65</p>
                 </div>
               ) : (
                 <div className="mb-6">
@@ -880,7 +875,7 @@ export const LandingPage = () => {
               </Link>
 
               <p className="mt-4 text-sm text-muted-foreground">
-                {isUS ? 'Secure checkout • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
+                {isUS ? '$22/month or $199/year. Cancel anytime • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
               </p>
             </CardContent>
           </Card>
@@ -978,6 +973,21 @@ export const LandingPage = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Founder */}
+          <div className="max-w-3xl mx-auto mt-16 pt-16 border-t border-border">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              <div className="flex-shrink-0 w-32 h-32 rounded-full border-2 border-border overflow-hidden">
+                <img src={founderPhoto} alt="Pierre Van der Merwe" className="w-full h-full object-cover" />
+              </div>
+              <div className="text-center sm:text-left">
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  "After more than 11 years working as a financial advisor, combined with a keen interest in financial education and building software, I created AdvisoryPro to solve many of the challenges I experienced in the industry every day. Advisors are expected to deliver exceptional advice while navigating disconnected tools, complex calculations and time-consuming admin. I wanted to build something simpler, one modern platform that brings the tools advisors actually need into one place. AdvisoryPro combines my experience in financial advice, passion for financial education and love of building technology into a platform built by an advisor, for advisors, designed to save time, simplify the advice process and help us deliver a better experience for our clients."
+                </p>
+                <p className="font-semibold text-foreground">Pierre Van der Merwe, Founder</p>
+              </div>
             </div>
           </div>
 
@@ -1080,7 +1090,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            {isUS ? '$19/month or $99 one-time (limited offer) • Secure checkout' : 'R299/month or R1,999/year • Cancel anytime'}
+            {isUS ? '$22/month or $199/year • Cancel anytime' : 'R299/month or R1,999/year • Cancel anytime'}
           </p>
         </div>
       </section>

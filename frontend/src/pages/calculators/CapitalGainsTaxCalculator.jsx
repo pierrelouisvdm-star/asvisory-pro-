@@ -12,52 +12,21 @@ import {
 import { TrendingDown, DollarSign, Clock, AlertCircle, CheckCircle2, Plus, Trash2, Info } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 import SEOHead from '@/components/SEOHead';
-import { US_STATE_TAX_DATA, getStateList } from '@/data/usTaxData';
+import {
+  US_STATE_TAX_DATA, getStateList,
+  US_CAPITAL_GAINS_BRACKETS_2024, US_FEDERAL_TAX_BRACKETS_2024,
+  US_NIIT_THRESHOLDS, US_STANDARD_DEDUCTIONS_2024, CURRENT_US_TAX_YEAR,
+} from '@/data/usTaxData';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 const fmtPct = (r) => `${(r * 100).toFixed(2)}%`;
 
-// 2025 Long-Term Capital Gains Rates (Rev. Proc. 2024-40)
-const LTCG_BRACKETS = {
-  single: [
-    { max: 48350, rate: 0.00 },
-    { max: 533400, rate: 0.15 },
-    { max: Infinity, rate: 0.20 },
-  ],
-  mfj: [
-    { max: 96700, rate: 0.00 },
-    { max: 600050, rate: 0.15 },
-    { max: Infinity, rate: 0.20 },
-  ],
-  mfs: [
-    { max: 48350, rate: 0.00 },
-    { max: 300000, rate: 0.15 },
-    { max: Infinity, rate: 0.20 },
-  ],
-  hoh: [
-    { max: 64750, rate: 0.00 },
-    { max: 566700, rate: 0.15 },
-    { max: Infinity, rate: 0.20 },
-  ],
-};
-
-// 2025 Ordinary Income Brackets for short-term gains
-const STCG_BRACKETS = {
-  single: [
-    { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
-    { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
-  mfj: [
-    { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
-    { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
-};
-
-const NIIT_THRESHOLDS = { single: 200000, mfj: 250000, mfs: 125000, hoh: 200000 };
-const STANDARD_DEDUCTIONS_2024 = { single: 15750, mfj: 31500, mfs: 15750, hoh: 23625 };
+// This calculator uses single/mfj/mfs/hoh; the shared tax data keys
+// brackets by single/marriedJoint/marriedSeparate/headOfHousehold.
+const FILING_STATUS_MAP = { single: 'single', mfj: 'marriedJoint', mfs: 'marriedSeparate', hoh: 'headOfHousehold' };
 
 const getLTCGRate = (taxableIncome, filingStatus) => {
-  const brackets = LTCG_BRACKETS[filingStatus] || LTCG_BRACKETS.single;
+  const brackets = US_CAPITAL_GAINS_BRACKETS_2024[FILING_STATUS_MAP[filingStatus]] || US_CAPITAL_GAINS_BRACKETS_2024.single;
   for (const b of brackets) {
     if (taxableIncome <= b.max) return b.rate;
   }
@@ -65,7 +34,7 @@ const getLTCGRate = (taxableIncome, filingStatus) => {
 };
 
 const getSTCGRate = (taxableIncome, filingStatus) => {
-  const brackets = STCG_BRACKETS[filingStatus] || STCG_BRACKETS.single;
+  const brackets = US_FEDERAL_TAX_BRACKETS_2024[FILING_STATUS_MAP[filingStatus]] || US_FEDERAL_TAX_BRACKETS_2024.single;
   let tax = 0;
   let prev = 0;
   for (const b of brackets) {
@@ -116,7 +85,7 @@ export default function CapitalGainsTaxCalculator() {
   const removeTransaction = (id) => setTransactions(prev => prev.filter(t => t.id !== id));
 
   const results = useMemo(() => {
-    const stdDed = STANDARD_DEDUCTIONS_2024[filingStatus] || STANDARD_DEDUCTIONS_2024.single;
+    const stdDed = US_STANDARD_DEDUCTIONS_2024[FILING_STATUS_MAP[filingStatus]] || US_STANDARD_DEDUCTIONS_2024.single;
     const totalDeductions = stdDed + otherDeductions;
 
     let totalSTCG = 0, totalLTCG = 0;
@@ -137,9 +106,9 @@ export default function CapitalGainsTaxCalculator() {
 
     // NIIT: 3.8% on net investment income if AGI > threshold
     const agiForNIIT = ordinaryIncome + Math.max(0, totalLTCG) + Math.max(0, totalSTCG);
-    const niitThreshold = NIIT_THRESHOLDS[filingStatus] || NIIT_THRESHOLDS.single;
+    const niitThreshold = US_NIIT_THRESHOLDS[FILING_STATUS_MAP[filingStatus]] || US_NIIT_THRESHOLDS.single;
     const netInvestmentIncome = Math.max(0, totalLTCG) + Math.max(0, totalSTCG);
-    const niit = Math.max(0, Math.min(netInvestmentIncome, agiForNIIT - niitThreshold)) * 0.038;
+    const niit = Math.max(0, Math.min(netInvestmentIncome, agiForNIIT - niitThreshold)) * US_NIIT_THRESHOLDS.rate;
 
     // State tax on gains
     const stateRate = getEffectiveStateRate(state, agiForNIIT);
@@ -164,10 +133,10 @@ export default function CapitalGainsTaxCalculator() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <SEOHead
-        title="2025 Capital Gains Tax Calculator, Short vs Long-Term + NIIT"
-        description="Calculate your 2025 capital gains tax for stocks, crypto, real estate. Includes NIIT (3.8%), all 50 states, short vs long-term rates, and tax-loss harvesting tips."
+        title={`${CURRENT_US_TAX_YEAR} Capital Gains Tax Calculator, Short vs Long-Term + NIIT`}
+        description={`Calculate your ${CURRENT_US_TAX_YEAR} capital gains tax for stocks, crypto, real estate. Includes NIIT (3.8%), all 50 states, short vs long-term rates, and tax-loss harvesting tips.`}
         path="/us/capital-gains"
-        keywords="capital gains tax calculator 2025, long term capital gains 2025, NIIT calculator, stock tax calculator, crypto tax calculator 2025"
+        keywords={`capital gains tax calculator ${CURRENT_US_TAX_YEAR}, long term capital gains ${CURRENT_US_TAX_YEAR}, NIIT calculator, stock tax calculator, crypto tax calculator ${CURRENT_US_TAX_YEAR}`}
       />
       <div className="flex items-center gap-3 mb-2">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10">

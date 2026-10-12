@@ -9,7 +9,11 @@ import { Switch } from '@/components/ui/switch';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
 import { Briefcase, DollarSign, Receipt, CheckCircle2, TrendingUp, AlertCircle } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
-import { US_STATE_TAX_DATA, getStateList, calculateStateTax } from '@/data/usTaxData';
+import {
+  US_STATE_TAX_DATA, getStateList, calculateStateTax,
+  US_FEDERAL_TAX_BRACKETS_2024, US_STANDARD_DEDUCTIONS_2024, US_RETIREMENT_LIMITS_2024,
+  US_SOCIAL_SECURITY_2024, CURRENT_US_TAX_YEAR,
+} from '@/data/usTaxData';
 
 const formatCurrency = (amount) => new Intl.NumberFormat('en-US', {
   style: 'currency', currency: 'USD', maximumFractionDigits: 0,
@@ -29,29 +33,15 @@ const getEffectiveStateRate = (stateCode, income) => {
   return 0;
 };
 
-// 2025 Federal Tax Brackets (Single), Rev. Proc. 2024-40
-const BRACKETS_SINGLE = [
-  { min: 0, max: 11925, rate: 0.10 },
-  { min: 11925, max: 48475, rate: 0.12 },
-  { min: 48475, max: 103350, rate: 0.22 },
-  { min: 103350, max: 197300, rate: 0.24 },
-  { min: 197300, max: 250525, rate: 0.32 },
-  { min: 250525, max: 626350, rate: 0.35 },
-  { min: 626350, max: Infinity, rate: 0.37 },
-];
+const BRACKETS_SINGLE = US_FEDERAL_TAX_BRACKETS_2024.single;
+const BRACKETS_MFJ = US_FEDERAL_TAX_BRACKETS_2024.marriedJoint;
 
-const BRACKETS_MFJ = [
-  { min: 0, max: 23850, rate: 0.10 },
-  { min: 23850, max: 96950, rate: 0.12 },
-  { min: 96950, max: 206700, rate: 0.22 },
-  { min: 206700, max: 394600, rate: 0.24 },
-  { min: 394600, max: 501050, rate: 0.32 },
-  { min: 501050, max: 751600, rate: 0.35 },
-  { min: 751600, max: Infinity, rate: 0.37 },
-];
-
-const STANDARD_DEDUCTIONS = { single: 15750, mfj: 31500, hoh: 23625 };
-const SS_WAGE_BASE = 176100;
+const STANDARD_DEDUCTIONS = {
+  single: US_STANDARD_DEDUCTIONS_2024.single,
+  mfj: US_STANDARD_DEDUCTIONS_2024.marriedJoint,
+  hoh: US_STANDARD_DEDUCTIONS_2024.headOfHousehold,
+};
+const SS_WAGE_BASE = US_SOCIAL_SECURITY_2024.maxTaxableEarnings;
 
 const calcFederalTax = (taxableIncome, brackets) => {
   if (taxableIncome <= 0) return 0;
@@ -108,10 +98,10 @@ export default function SelfEmployedTaxCalculator() {
 
     // SEP-IRA or Solo 401k: up to 25% of net profit minus SE tax deduction
     const maxRetirement = (netProfit - seTaxDeduction) * 0.25;
-    const retirementDeduction = Math.min(retirementContrib, maxRetirement, 66000);
+    const retirementDeduction = Math.min(retirementContrib, maxRetirement, US_RETIREMENT_LIMITS_2024.sepIRA.maxContribution);
 
     // HSA deduction
-    const hsaDeduction = Math.min(hsaContrib, 4300); // 2025 self-only limit
+    const hsaDeduction = Math.min(hsaContrib, US_RETIREMENT_LIMITS_2024.hsa.individual);
 
     // QBI Deduction (20% of qualified business income)
     const qbiBasis = Math.max(0, netProfit - seTaxDeduction - retirementDeduction - healthDeduction);

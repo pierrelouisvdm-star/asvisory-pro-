@@ -1,148 +1,388 @@
-// US Federal Tax Data, 2025 Tax Year (Rev. Proc. 2024-40)
-// Returns filed in 2026 for income earned in 2025
-// All 50 State Tax Rates included
+// US Federal Tax Data, versioned by tax year.
+// 2025 figures: Rev. Proc. 2024-40 (returns filed in 2026 for income earned in 2025).
+// All 50 State Tax Rates included (state data is not year-versioned here; see US_STATE_TAX_DATA).
+//
+// To add a new tax year: add an entry to US_TAX_YEAR_DATA below and bump
+// CURRENT_US_TAX_YEAR. No calculator needs to change — existing calculators
+// either call getUSTaxYearConfig()/getUSTaxYearConfig(year) directly, or use
+// the flat US_* constants further down, which always point at the current year.
+//
+// 2026 figures: IRS Rev. Proc. 2025-32 (irs.gov/newsroom/irs-releases-tax-
+// inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-
+// big-beautiful-bill), IR-2025-111 (401k/IRA limits), Rev. Proc. 2025-19
+// (HSA/HDHP limits), and the SSA 2026 COLA fact sheet (ssa.gov/news/en/cola/
+// factsheets/2026.html). The One Big Beautiful Bill Act (OBBBA) made the
+// TCJA brackets permanent and raised the estate exemption to $15M; it also
+// adds new senior/tips/overtime deductions for 2025-2028 that are NOT yet
+// reflected here or in any calculator — only bracket/limit-style figures are
+// centralized in this file today, not new deduction types. See the PR that
+// introduced this comment for the follow-up to add those as real calculator
+// inputs rather than silently baking assumptions into the brackets.
 
-export const US_FEDERAL_TAX_BRACKETS_2024 = {
-  single: [
-    { min: 0, max: 11925, rate: 0.10 },
-    { min: 11925, max: 48475, rate: 0.12 },
-    { min: 48475, max: 103350, rate: 0.22 },
-    { min: 103350, max: 197300, rate: 0.24 },
-    { min: 197300, max: 250525, rate: 0.32 },
-    { min: 250525, max: 626350, rate: 0.35 },
-    { min: 626350, max: Infinity, rate: 0.37 },
-  ],
-  marriedJoint: [
-    { min: 0, max: 23850, rate: 0.10 },
-    { min: 23850, max: 96950, rate: 0.12 },
-    { min: 96950, max: 206700, rate: 0.22 },
-    { min: 206700, max: 394600, rate: 0.24 },
-    { min: 394600, max: 501050, rate: 0.32 },
-    { min: 501050, max: 751600, rate: 0.35 },
-    { min: 751600, max: Infinity, rate: 0.37 },
-  ],
-  marriedSeparate: [
-    { min: 0, max: 11925, rate: 0.10 },
-    { min: 11925, max: 48475, rate: 0.12 },
-    { min: 48475, max: 103350, rate: 0.22 },
-    { min: 103350, max: 197300, rate: 0.24 },
-    { min: 197300, max: 250525, rate: 0.32 },
-    { min: 250525, max: 375800, rate: 0.35 },
-    { min: 375800, max: Infinity, rate: 0.37 },
-  ],
-  headOfHousehold: [
-    { min: 0, max: 17000, rate: 0.10 },
-    { min: 17000, max: 64850, rate: 0.12 },
-    { min: 64850, max: 103350, rate: 0.22 },
-    { min: 103350, max: 197300, rate: 0.24 },
-    { min: 197300, max: 250500, rate: 0.32 },
-    { min: 250500, max: 626350, rate: 0.35 },
-    { min: 626350, max: Infinity, rate: 0.37 },
-  ],
-};
+export const CURRENT_US_TAX_YEAR = 2026;
 
-export const US_STANDARD_DEDUCTIONS_2024 = {
-  single: 15750,
-  marriedJoint: 31500,
-  marriedSeparate: 15750,
-  headOfHousehold: 23625,
-};
-
-// Long-term Capital Gains Tax Brackets 2025 (held >= 1 year)
-export const US_CAPITAL_GAINS_BRACKETS_2024 = {
-  single: [
-    { min: 0, max: 48350, rate: 0.00 },
-    { min: 48350, max: 533400, rate: 0.15 },
-    { min: 533400, max: Infinity, rate: 0.20 },
-  ],
-  marriedJoint: [
-    { min: 0, max: 96700, rate: 0.00 },
-    { min: 96700, max: 600050, rate: 0.15 },
-    { min: 600050, max: Infinity, rate: 0.20 },
-  ],
-  marriedSeparate: [
-    { min: 0, max: 48350, rate: 0.00 },
-    { min: 48350, max: 300000, rate: 0.15 },
-    { min: 300000, max: Infinity, rate: 0.20 },
-  ],
-  headOfHousehold: [
-    { min: 0, max: 64750, rate: 0.00 },
-    { min: 64750, max: 566700, rate: 0.15 },
-    { min: 566700, max: Infinity, rate: 0.20 },
-  ],
-};
-
-// Net Investment Income Tax (NIIT) thresholds
-export const US_NIIT_THRESHOLDS = {
-  single: 200000,
-  marriedJoint: 250000,
-  marriedSeparate: 125000,
-  headOfHousehold: 200000,
-  rate: 0.038, // 3.8%
-};
-
-// Retirement Account Limits 2025
-export const US_RETIREMENT_LIMITS_2024 = {
-  traditional401k: {
-    employeeLimit: 23500,
-    catchUp50Plus: 7500,
-    catchUp6063: 11250, // SECURE 2.0: special catch-up for ages 60-63
-    totalWithEmployer: 70000,
-  },
-  rothIRA: {
-    annualLimit: 7000,
-    catchUp50Plus: 1000,
-    incomePhaseOut: {
-      single: { start: 150000, end: 165000 },
-      marriedJoint: { start: 236000, end: 246000 },
+export const US_TAX_YEAR_DATA = {
+  2025: {
+    federalBrackets: {
+      single: [
+        { min: 0, max: 11925, rate: 0.10 },
+        { min: 11925, max: 48475, rate: 0.12 },
+        { min: 48475, max: 103350, rate: 0.22 },
+        { min: 103350, max: 197300, rate: 0.24 },
+        { min: 197300, max: 250525, rate: 0.32 },
+        { min: 250525, max: 626350, rate: 0.35 },
+        { min: 626350, max: Infinity, rate: 0.37 },
+      ],
+      marriedJoint: [
+        { min: 0, max: 23850, rate: 0.10 },
+        { min: 23850, max: 96950, rate: 0.12 },
+        { min: 96950, max: 206700, rate: 0.22 },
+        { min: 206700, max: 394600, rate: 0.24 },
+        { min: 394600, max: 501050, rate: 0.32 },
+        { min: 501050, max: 751600, rate: 0.35 },
+        { min: 751600, max: Infinity, rate: 0.37 },
+      ],
+      marriedSeparate: [
+        { min: 0, max: 11925, rate: 0.10 },
+        { min: 11925, max: 48475, rate: 0.12 },
+        { min: 48475, max: 103350, rate: 0.22 },
+        { min: 103350, max: 197300, rate: 0.24 },
+        { min: 197300, max: 250525, rate: 0.32 },
+        { min: 250525, max: 375800, rate: 0.35 },
+        { min: 375800, max: Infinity, rate: 0.37 },
+      ],
+      headOfHousehold: [
+        { min: 0, max: 17000, rate: 0.10 },
+        { min: 17000, max: 64850, rate: 0.12 },
+        { min: 64850, max: 103350, rate: 0.22 },
+        { min: 103350, max: 197300, rate: 0.24 },
+        { min: 197300, max: 250500, rate: 0.32 },
+        { min: 250500, max: 626350, rate: 0.35 },
+        { min: 626350, max: Infinity, rate: 0.37 },
+      ],
     },
+
+    standardDeductions: {
+      single: 15750,
+      marriedJoint: 31500,
+      marriedSeparate: 15750,
+      headOfHousehold: 23625,
+    },
+
+    // Long-term Capital Gains Tax Brackets (held >= 1 year)
+    capitalGainsBrackets: {
+      single: [
+        { min: 0, max: 48350, rate: 0.00 },
+        { min: 48350, max: 533400, rate: 0.15 },
+        { min: 533400, max: Infinity, rate: 0.20 },
+      ],
+      marriedJoint: [
+        { min: 0, max: 96700, rate: 0.00 },
+        { min: 96700, max: 600050, rate: 0.15 },
+        { min: 600050, max: Infinity, rate: 0.20 },
+      ],
+      marriedSeparate: [
+        { min: 0, max: 48350, rate: 0.00 },
+        { min: 48350, max: 300000, rate: 0.15 },
+        { min: 300000, max: Infinity, rate: 0.20 },
+      ],
+      headOfHousehold: [
+        { min: 0, max: 64750, rate: 0.00 },
+        { min: 64750, max: 566700, rate: 0.15 },
+        { min: 566700, max: Infinity, rate: 0.20 },
+      ],
+    },
+
+    // Net Investment Income Tax (NIIT) thresholds
+    niitThresholds: {
+      single: 200000,
+      marriedJoint: 250000,
+      marriedSeparate: 125000,
+      headOfHousehold: 200000,
+      rate: 0.038, // 3.8%
+    },
+
+    retirementLimits: {
+      traditional401k: {
+        employeeLimit: 23500,
+        catchUp50Plus: 7500,
+        catchUp6063: 11250, // SECURE 2.0: special catch-up for ages 60-63
+        totalWithEmployer: 70000,
+      },
+      rothIRA: {
+        annualLimit: 7000,
+        catchUp50Plus: 1000,
+        incomePhaseOut: {
+          single: { start: 150000, end: 165000 },
+          marriedJoint: { start: 236000, end: 246000 },
+        },
+      },
+      traditionalIRA: {
+        annualLimit: 7000,
+        catchUp50Plus: 1000,
+        // Deductibility phases out when the taxpayer (or spouse) is covered
+        // by a workplace retirement plan. IRS Rev. Proc. 2024-40.
+        deductionPhaseOut: {
+          single: { start: 79000, end: 89000 },
+          marriedJointCoveredSpouse: { start: 126000, end: 146000 },
+          marriedJointNonCoveredSpouse: { start: 236000, end: 246000 },
+          marriedSeparate: { start: 0, end: 10000 },
+        },
+      },
+      sepIRA: {
+        maxContribution: 70000,
+        percentOfCompensation: 0.25,
+      },
+      hsa: {
+        individual: 4300,
+        family: 8550,
+        catchUp55Plus: 1000,
+      },
+      plan529: {
+        giftTaxExclusion: 19000,
+        fiveYearFrontLoad: 95000,
+      },
+    },
+
+    socialSecurity: {
+      maxTaxableEarnings: 176100,
+      taxRate: 0.062, // 6.2% employee portion
+      cola: 0.025, // 2.5% cost of living adjustment for 2025
+      maxBenefitAtFRA: 4018, // per month (2025)
+      fullRetirementAge: {
+        1943: { years: 66, months: 0 },
+        1954: { years: 66, months: 0 },
+        1955: { years: 66, months: 2 },
+        1956: { years: 66, months: 4 },
+        1957: { years: 66, months: 6 },
+        1958: { years: 66, months: 8 },
+        1959: { years: 66, months: 10 },
+        1960: { years: 67, months: 0 },
+      },
+      earlyReductionPerYear: 0.0667, // ~6.67% per year before FRA
+      delayedCreditPerYear: 0.08, // 8% per year after FRA (up to 70)
+    },
+
+    estateTax: {
+      exemptionIndividual: 13990000,
+      exemptionMarried: 27980000,
+      topRate: 0.40,
+      giftAnnualExclusion: 19000,
+    },
+
+    amt: {
+      exemption: { single: 88100, marriedJoint: 137000, marriedSeparate: 68550 },
+      phaseOutStart: { single: 626350, marriedJoint: 1252700, marriedSeparate: 626350 },
+      rateLow: 0.26,
+      rateHigh: 0.28,
+      rateBreakpoint: 232600, // 26% up to here, 28% above
+    },
+
+    // IRS Uniform Lifetime Table for RMDs (2022 SECURE 2.0 update)
+    rmdUniformLifetimeTable: {
+      72: 27.4, 73: 26.5, 74: 25.5, 75: 24.6, 76: 23.7, 77: 22.9, 78: 22.0, 79: 21.1,
+      80: 20.2, 81: 19.4, 82: 18.5, 83: 17.7, 84: 16.8, 85: 16.0, 86: 15.2, 87: 14.4,
+      88: 13.7, 89: 12.9, 90: 12.2, 91: 11.5, 92: 10.8, 93: 10.1, 94: 9.5, 95: 8.9,
+      96: 8.4, 97: 7.8, 98: 7.3, 99: 6.8, 100: 6.4, 101: 6.0, 102: 5.6, 103: 5.2,
+      104: 4.9, 105: 4.6, 106: 4.3, 107: 4.1, 108: 3.9, 109: 3.7, 110: 3.5, 111: 3.4,
+      112: 3.3, 113: 3.1, 114: 2.9, 115: 2.8, 116: 2.7, 117: 2.5, 118: 2.3, 119: 2.0, 120: 2.0,
+    },
+    rmdStartAge: 73,
   },
-  traditionalIRA: {
-    annualLimit: 7000,
-    catchUp50Plus: 1000,
-  },
-  sepIRA: {
-    maxContribution: 70000,
-    percentOfCompensation: 0.25,
-  },
-  hsa: {
-    individual: 4300,
-    family: 8550,
-    catchUp55Plus: 1000,
-  },
-  plan529: {
-    giftTaxExclusion: 19000,
-    fiveYearFrontLoad: 95000,
+
+  2026: {
+    federalBrackets: {
+      single: [
+        { min: 0, max: 12400, rate: 0.10 },
+        { min: 12400, max: 50400, rate: 0.12 },
+        { min: 50400, max: 105700, rate: 0.22 },
+        { min: 105700, max: 201775, rate: 0.24 },
+        { min: 201775, max: 256225, rate: 0.32 },
+        { min: 256225, max: 640600, rate: 0.35 },
+        { min: 640600, max: Infinity, rate: 0.37 },
+      ],
+      marriedJoint: [
+        { min: 0, max: 24800, rate: 0.10 },
+        { min: 24800, max: 100800, rate: 0.12 },
+        { min: 100800, max: 211400, rate: 0.22 },
+        { min: 211400, max: 403550, rate: 0.24 },
+        { min: 403550, max: 512450, rate: 0.32 },
+        { min: 512450, max: 768700, rate: 0.35 },
+        { min: 768700, max: Infinity, rate: 0.37 },
+      ],
+      marriedSeparate: [
+        { min: 0, max: 12400, rate: 0.10 },
+        { min: 12400, max: 50400, rate: 0.12 },
+        { min: 50400, max: 105700, rate: 0.22 },
+        { min: 105700, max: 201775, rate: 0.24 },
+        { min: 201775, max: 256225, rate: 0.32 },
+        { min: 256225, max: 384350, rate: 0.35 },
+        { min: 384350, max: Infinity, rate: 0.37 },
+      ],
+      headOfHousehold: [
+        { min: 0, max: 17700, rate: 0.10 },
+        { min: 17700, max: 67450, rate: 0.12 },
+        { min: 67450, max: 105700, rate: 0.22 },
+        { min: 105700, max: 201750, rate: 0.24 },
+        { min: 201750, max: 256200, rate: 0.32 },
+        { min: 256200, max: 640600, rate: 0.35 },
+        { min: 640600, max: Infinity, rate: 0.37 },
+      ],
+    },
+
+    standardDeductions: {
+      single: 16100,
+      marriedJoint: 32200,
+      marriedSeparate: 16100,
+      headOfHousehold: 24150,
+    },
+
+    capitalGainsBrackets: {
+      single: [
+        { min: 0, max: 49450, rate: 0.00 },
+        { min: 49450, max: 545500, rate: 0.15 },
+        { min: 545500, max: Infinity, rate: 0.20 },
+      ],
+      marriedJoint: [
+        { min: 0, max: 98900, rate: 0.00 },
+        { min: 98900, max: 613700, rate: 0.15 },
+        { min: 613700, max: Infinity, rate: 0.20 },
+      ],
+      marriedSeparate: [
+        { min: 0, max: 49450, rate: 0.00 },
+        { min: 49450, max: 306850, rate: 0.15 },
+        { min: 306850, max: Infinity, rate: 0.20 },
+      ],
+      headOfHousehold: [
+        { min: 0, max: 66200, rate: 0.00 },
+        { min: 66200, max: 579600, rate: 0.15 },
+        { min: 579600, max: Infinity, rate: 0.20 },
+      ],
+    },
+
+    // NIIT thresholds are fixed by statute (not inflation-indexed) and are
+    // unchanged from 2025.
+    niitThresholds: {
+      single: 200000,
+      marriedJoint: 250000,
+      marriedSeparate: 125000,
+      headOfHousehold: 200000,
+      rate: 0.038,
+    },
+
+    retirementLimits: {
+      traditional401k: {
+        employeeLimit: 24500,
+        catchUp50Plus: 8000,
+        catchUp6063: 11250, // SECURE 2.0: special catch-up for ages 60-63
+        totalWithEmployer: 72000,
+      },
+      rothIRA: {
+        annualLimit: 7500,
+        catchUp50Plus: 1100,
+        incomePhaseOut: {
+          single: { start: 153000, end: 168000 },
+          marriedJoint: { start: 242000, end: 252000 },
+        },
+      },
+      traditionalIRA: {
+        annualLimit: 7500,
+        catchUp50Plus: 1100,
+        deductionPhaseOut: {
+          single: { start: 81000, end: 91000 },
+          marriedJointCoveredSpouse: { start: 129000, end: 149000 },
+          marriedJointNonCoveredSpouse: { start: 242000, end: 252000 },
+          marriedSeparate: { start: 0, end: 10000 },
+        },
+      },
+      sepIRA: {
+        maxContribution: 72000,
+        percentOfCompensation: 0.25,
+      },
+      hsa: {
+        individual: 4400,
+        family: 8750,
+        catchUp55Plus: 1000,
+      },
+      plan529: {
+        giftTaxExclusion: 19000, // unchanged from 2025
+        fiveYearFrontLoad: 95000, // unchanged from 2025
+      },
+    },
+
+    socialSecurity: {
+      maxTaxableEarnings: 184500,
+      taxRate: 0.062,
+      cola: 0.028, // 2.8% cost of living adjustment for 2026
+      maxBenefitAtFRA: 4152, // per month, for someone reaching FRA in 2026
+      fullRetirementAge: {
+        1943: { years: 66, months: 0 },
+        1954: { years: 66, months: 0 },
+        1955: { years: 66, months: 2 },
+        1956: { years: 66, months: 4 },
+        1957: { years: 66, months: 6 },
+        1958: { years: 66, months: 8 },
+        1959: { years: 66, months: 10 },
+        1960: { years: 67, months: 0 },
+      },
+      earlyReductionPerYear: 0.0667,
+      delayedCreditPerYear: 0.08,
+    },
+
+    // OBBBA raised the estate/gift basic exclusion to $15M per individual
+    // (from a scheduled TCJA-sunset drop to roughly $7M).
+    estateTax: {
+      exemptionIndividual: 15000000,
+      exemptionMarried: 30000000,
+      topRate: 0.40,
+      giftAnnualExclusion: 19000,
+    },
+
+    // marriedSeparate exemption/phase-out are derived (half of marriedJoint,
+    // same as single, respectively), matching the historical 2025 pattern —
+    // not individually confirmed against Rev. Proc. 2025-32.
+    amt: {
+      exemption: { single: 90100, marriedJoint: 140200, marriedSeparate: 70100 },
+      phaseOutStart: { single: 500000, marriedJoint: 1000000, marriedSeparate: 500000 },
+      rateLow: 0.26,
+      rateHigh: 0.28,
+      rateBreakpoint: 244500, // 26% up to here, 28% above ($122,250 for MFS)
+    },
+
+    // IRS Uniform Lifetime Table for RMDs — unchanged from 2025.
+    rmdUniformLifetimeTable: {
+      72: 27.4, 73: 26.5, 74: 25.5, 75: 24.6, 76: 23.7, 77: 22.9, 78: 22.0, 79: 21.1,
+      80: 20.2, 81: 19.4, 82: 18.5, 83: 17.7, 84: 16.8, 85: 16.0, 86: 15.2, 87: 14.4,
+      88: 13.7, 89: 12.9, 90: 12.2, 91: 11.5, 92: 10.8, 93: 10.1, 94: 9.5, 95: 8.9,
+      96: 8.4, 97: 7.8, 98: 7.3, 99: 6.8, 100: 6.4, 101: 6.0, 102: 5.6, 103: 5.2,
+      104: 4.9, 105: 4.6, 106: 4.3, 107: 4.1, 108: 3.9, 109: 3.7, 110: 3.5, 111: 3.4,
+      112: 3.3, 113: 3.1, 114: 2.9, 115: 2.8, 116: 2.7, 117: 2.5, 118: 2.3, 119: 2.0, 120: 2.0,
+    },
+    rmdStartAge: 73,
   },
 };
 
-// Social Security Data 2025
-export const US_SOCIAL_SECURITY_2024 = {
-  maxTaxableEarnings: 176100,
-  taxRate: 0.062, // 6.2% employee portion
-  cola: 0.025, // 2.5% cost of living adjustment for 2025
-  maxBenefitAtFRA: 4018, // per month (2025)
-  fullRetirementAge: {
-    1943: { years: 66, months: 0 },
-    1954: { years: 66, months: 0 },
-    1955: { years: 66, months: 2 },
-    1956: { years: 66, months: 4 },
-    1957: { years: 66, months: 6 },
-    1958: { years: 66, months: 8 },
-    1959: { years: 66, months: 10 },
-    1960: { years: 67, months: 0 },
-  },
-  earlyReductionPerYear: 0.0667, // ~6.67% per year before FRA
-  delayedCreditPerYear: 0.08, // 8% per year after FRA (up to 70)
+// Returns the full config bundle for a tax year, falling back to the current
+// year if the requested year isn't configured yet.
+export const getUSTaxYearConfig = (year = CURRENT_US_TAX_YEAR) => {
+  return US_TAX_YEAR_DATA[year] || US_TAX_YEAR_DATA[CURRENT_US_TAX_YEAR];
 };
 
-// Estate & Gift Tax 2025
-export const US_ESTATE_TAX_2024 = {
-  exemptionIndividual: 13990000,
-  exemptionMarried: 27980000,
-  topRate: 0.40,
-  giftAnnualExclusion: 19000,
-};
+// --- Flat exports for the current tax year -----------------------------
+// Kept for existing calculators that import these directly. They always
+// resolve against CURRENT_US_TAX_YEAR, so bumping that constant (once a new
+// year is added to US_TAX_YEAR_DATA above) updates every consumer at once.
+
+export const US_FEDERAL_TAX_BRACKETS_2024 = getUSTaxYearConfig().federalBrackets;
+export const US_STANDARD_DEDUCTIONS_2024 = getUSTaxYearConfig().standardDeductions;
+export const US_CAPITAL_GAINS_BRACKETS_2024 = getUSTaxYearConfig().capitalGainsBrackets;
+export const US_NIIT_THRESHOLDS = getUSTaxYearConfig().niitThresholds;
+export const US_RETIREMENT_LIMITS_2024 = getUSTaxYearConfig().retirementLimits;
+export const US_SOCIAL_SECURITY_2024 = getUSTaxYearConfig().socialSecurity;
+export const US_ESTATE_TAX_2024 = getUSTaxYearConfig().estateTax;
+export const US_RMD_UNIFORM_LIFETIME_TABLE = getUSTaxYearConfig().rmdUniformLifetimeTable;
+export const US_RMD_START_AGE = getUSTaxYearConfig().rmdStartAge;
+export const US_AMT_2024 = getUSTaxYearConfig().amt;
 
 // All 50 State Tax Data
 export const US_STATE_TAX_DATA = {

@@ -7,7 +7,7 @@ const SubscriptionContext = createContext(null);
 // Free tier has limited calculators
 const TIER_FEATURES = {
   free: {
-    calculators: ['tfsa-calculator', 'bond', 'future-value', 'compound-interest'],
+    calculators: ['tfsa-calculator', 'bond', 'future-value', 'compound-interest', 'net-worth', 'emergency-fund', 'us/fire-calculator', 'us/paycheck'],
     pdfReports: false,
     advancedTools: false,
     marketTracker: false,
@@ -25,7 +25,7 @@ const TIER_FEATURES = {
 };
 
 // Free calculators available without subscription
-const FREE_CALCULATORS = ['tfsa-calculator', 'bond', 'future-value', 'compound-interest'];
+const FREE_CALCULATORS = ['tfsa-calculator', 'bond', 'future-value', 'compound-interest', 'net-worth', 'emergency-fund', 'us/fire-calculator', 'us/paycheck'];
 
 export const SubscriptionProvider = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
@@ -62,6 +62,8 @@ export const SubscriptionProvider = ({ children }) => {
         billingCycle: result.billing_cycle,
         trialEndsAt: result.trial_ends_at,
         currentPeriodEnd: result.current_period_end,
+        foundingMember: result.founding_member || false,
+        prioritySupport: result.priority_support || false,
         loading: false,
       });
     } catch (error) {
