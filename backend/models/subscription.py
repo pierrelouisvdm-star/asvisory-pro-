@@ -25,8 +25,9 @@ PRICING = {
 }
 
 # Founding-member promo: the first FOUNDING_MEMBER_LIMIT annual Premium
-# subscribers in each jurisdiction get a discounted annual price, locked in
-# for every future renewal, plus priority support.
+# subscribers get a discounted annual price, locked in for every future
+# renewal, plus priority support. The 150 slots are shared globally across
+# SA and US subscribers combined, not 150 per jurisdiction.
 FOUNDING_MEMBER_LIMIT = 150
 FOUNDING_PRICING = {"zar": 1499.0, "usd": 149.0}
 
