@@ -11,7 +11,7 @@ import {
   PiggyBank, TrendingUp, DollarSign, Calendar, Target, 
   Info, ArrowRight, Percent, Building2
 } from 'lucide-react';
-import { US_RETIREMENT_LIMITS_2024, US_FEDERAL_TAX_BRACKETS_2024 } from '@/data/usTaxData';
+import { US_RETIREMENT_LIMITS_2024, US_FEDERAL_TAX_BRACKETS_2024, CURRENT_US_TAX_YEAR } from '@/data/usTaxData';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
 
 const Calculator401k = () => {
@@ -159,7 +159,7 @@ const Calculator401k = () => {
             compound growth projections.
           </p>
           <Badge className="mt-3 bg-emerald-500/10 text-emerald-500 border-emerald-500/20">
-            2025 Limits: ${limits.employeeLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
+            {CURRENT_US_TAX_YEAR} Limits: ${limits.employeeLimit.toLocaleString()} + ${limits.catchUp50Plus.toLocaleString()} catch-up
           </Badge>
         </div>
 

@@ -7,28 +7,23 @@ import { Badge } from '@/components/ui/badge';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Calculator, AlertCircle, CheckCircle2, Info, DollarSign } from 'lucide-react';
 import { Disclaimer } from '@/components/calculators/Disclaimer';
+import { US_AMT_2024, US_FEDERAL_TAX_BRACKETS_2024, US_STANDARD_DEDUCTIONS_2024 } from '@/data/usTaxData';
 
 const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n || 0);
 
-// 2025 AMT (Rev. Proc. 2024-40)
-const AMT_EXEMPTION = { single: 88100, mfj: 137000, mfs: 68550 };
-const AMT_PHASEOUT = { single: 626350, mfj: 1252700, mfs: 626350 };
-const AMT_RATE_LOW = 0.26;
-const AMT_RATE_HIGH = 0.28;
-const AMT_BRACKET = 232600; // 26% up to here, 28% above (2025)
+const AMT_EXEMPTION = { single: US_AMT_2024.exemption.single, mfj: US_AMT_2024.exemption.marriedJoint, mfs: US_AMT_2024.exemption.marriedSeparate };
+const AMT_PHASEOUT = { single: US_AMT_2024.phaseOutStart.single, mfj: US_AMT_2024.phaseOutStart.marriedJoint, mfs: US_AMT_2024.phaseOutStart.marriedSeparate };
+const AMT_RATE_LOW = US_AMT_2024.rateLow;
+const AMT_RATE_HIGH = US_AMT_2024.rateHigh;
+const AMT_BRACKET = US_AMT_2024.rateBreakpoint;
 
-// Regular tax brackets 2025
+// This calculator uses single/mfj/mfs; the shared tax data keys brackets by
+// single/marriedJoint/headOfHousehold/marriedSeparate.
 const REG_BRACKETS = {
-  single: [
-    { max: 11925, rate: 0.10 }, { max: 48475, rate: 0.12 }, { max: 103350, rate: 0.22 },
-    { max: 197300, rate: 0.24 }, { max: 250525, rate: 0.32 }, { max: 626350, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
-  mfj: [
-    { max: 23850, rate: 0.10 }, { max: 96950, rate: 0.12 }, { max: 206700, rate: 0.22 },
-    { max: 394600, rate: 0.24 }, { max: 501050, rate: 0.32 }, { max: 751600, rate: 0.35 }, { max: Infinity, rate: 0.37 },
-  ],
+  single: US_FEDERAL_TAX_BRACKETS_2024.single.map(({ max, rate }) => ({ max, rate })),
+  mfj: US_FEDERAL_TAX_BRACKETS_2024.marriedJoint.map(({ max, rate }) => ({ max, rate })),
 };
-const STD_DED = { single: 15750, mfj: 31500, mfs: 15750 };
+const STD_DED = { single: US_STANDARD_DEDUCTIONS_2024.single, mfj: US_STANDARD_DEDUCTIONS_2024.marriedJoint, mfs: US_STANDARD_DEDUCTIONS_2024.marriedSeparate };
 
 const calcRegTax = (taxableIncome, brackets) => {
   if (taxableIncome <= 0) return 0;
