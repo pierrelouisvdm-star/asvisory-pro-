@@ -20,6 +20,7 @@ from models.subscription import (
     SubscriptionResponse
 )
 from utils.auth import get_current_user
+from utils.founding import count_combined_founding_members
 from server import db
 
 router = APIRouter(prefix="/subscriptions", tags=["Subscriptions"])
@@ -93,11 +94,7 @@ async def create_checkout_session(
             # Founding members keep their locked-in annual price on every renewal
             amount = existing_sub["founding_price"]
         else:
-            founding_count = await db.payment_transactions.count_documents({
-                "payment_status": "paid",
-                "billing_cycle": billing_cycle.value,
-                "amount": FOUNDING_PRICING[currency],
-            })
+            founding_count = await count_combined_founding_members(db)
             if founding_count < FOUNDING_MEMBER_LIMIT:
                 amount = FOUNDING_PRICING[currency]
 
@@ -311,19 +308,12 @@ async def get_pricing():
 
 @router.get("/founding-status")
 async def get_founding_status():
-    """Remaining founding-member discount slots (first 100 annual subscribers) per jurisdiction currency"""
-    zar_used = await db.paystack_transactions.count_documents({
-        "status": "success",
-        "billing_cycle": "annual",
-        "amount": FOUNDING_PRICING["zar"],
-    })
-    usd_used = await db.payment_transactions.count_documents({
-        "payment_status": "paid",
-        "billing_cycle": "annual",
-        "amount": FOUNDING_PRICING["usd"],
-    })
+    """Remaining founding-member discount slots: first 150 annual subscribers, shared globally across SA and US"""
+    used = await count_combined_founding_members(db)
+    remaining = max(0, FOUNDING_MEMBER_LIMIT - used)
     return {
         "limit": FOUNDING_MEMBER_LIMIT,
-        "zar": {"price": FOUNDING_PRICING["zar"], "remaining": max(0, FOUNDING_MEMBER_LIMIT - zar_used)},
-        "usd": {"price": FOUNDING_PRICING["usd"], "remaining": max(0, FOUNDING_MEMBER_LIMIT - usd_used)},
+        "remaining": remaining,
+        "zar": {"price": FOUNDING_PRICING["zar"], "remaining": remaining},
+        "usd": {"price": FOUNDING_PRICING["usd"], "remaining": remaining},
     }

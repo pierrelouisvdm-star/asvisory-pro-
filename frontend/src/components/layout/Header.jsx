@@ -7,13 +7,15 @@ import {
   Umbrella, PiggyBank, Receipt, ScrollText, ShieldAlert, CreditCard, 
   GraduationCap, Wallet, Landmark, Users, LogIn, LogOut, User, 
   BarChart3, GitCompare, ArrowRightLeft, Crown, LineChart, Briefcase, 
-  Target, FileText, Home, Settings, Grid3X3, Scale, ChevronDown, ChevronRight
+  Target, FileText, Home, Settings, Grid3X3, Scale, ChevronDown, ChevronRight,
+  Globe2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CurrencySelector } from '@/components/CurrencySelector';
 import { JurisdictionSelector } from '@/components/JurisdictionSelector';
 import { useAuth } from '@/context/AuthContext';
 import { useJurisdiction } from '@/context/JurisdictionContext';
+import { useSubscription } from '@/context/SubscriptionContext';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { AdvisoryProLogoCompact } from '@/components/AdvisoryProLogo';
 
@@ -94,6 +96,8 @@ export const Header = () => {
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth();
   const { isUS } = useJurisdiction();
+  const { subscription } = useSubscription();
+  const isFoundingMember = !!subscription?.foundingMember;
 
   // Filter SA-only items from mega menu when in US mode
   const visibleCalculators = allCalculators
@@ -163,6 +167,20 @@ export const Header = () => {
             {/* Quick Tools */}
             <NavLink to="/document-reader" icon={FileText}>AI Docs</NavLink>
             {!isUS && <NavLink to="/tax-planning" icon={Receipt}>Tax Hub</NavLink>}
+            {isFoundingMember && (
+              <Link
+                to="/community"
+                className={cn(
+                  "flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                  isActive('/community')
+                    ? "bg-amber-500/20 text-amber-400"
+                    : "text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
+                )}
+              >
+                <Globe2 className="h-4 w-4" />
+                Community
+              </Link>
+            )}
           </nav>
 
           {/* Right Side */}
@@ -328,6 +346,16 @@ export const Header = () => {
               >
                 <Receipt className="h-5 w-5 text-primary" />
                 Tax Planning Hub
+              </Link>
+              )}
+              {isFoundingMember && (
+              <Link
+                to="/community"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-amber-400 rounded-lg hover:bg-amber-500/10"
+              >
+                <Globe2 className="h-5 w-5 text-amber-400" />
+                Founding Member Community
               </Link>
               )}
             </div>

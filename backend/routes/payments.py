@@ -14,6 +14,7 @@ import httpx
 
 from models.subscription import SubscriptionTier, BillingCycle, PRICING, FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT
 from utils.auth import get_current_user
+from utils.founding import count_combined_founding_members
 from server import db
 
 router = APIRouter(prefix="/payments", tags=["Payments"])
@@ -47,11 +48,7 @@ async def initialize_paystack_payment(
             # Founding members keep their locked-in annual price on every renewal
             amount_rand = existing_sub["founding_price"]
         else:
-            founding_count = await db.paystack_transactions.count_documents({
-                "status": "success",
-                "billing_cycle": "annual",
-                "amount": FOUNDING_PRICING["zar"],
-            })
+            founding_count = await count_combined_founding_members(db)
             if founding_count < FOUNDING_MEMBER_LIMIT:
                 amount_rand = FOUNDING_PRICING["zar"]
     amount_kobo = int(round(amount_rand * 100))
