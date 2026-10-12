@@ -58,7 +58,7 @@ export const PricingPage = () => {
   // Paystack / Stripe state
   const [paymentLoading, setPaymentLoading] = useState(false);
 
-  // Founding-member promo (first 100 annual subscribers per jurisdiction)
+  // Founding-member promo (first 150 annual subscribers per jurisdiction)
   const [foundingStatus, setFoundingStatus] = useState(null);
   useEffect(() => {
     subscriptionApi.getFoundingStatus().then(setFoundingStatus).catch(() => {});
@@ -251,7 +251,7 @@ export const PricingPage = () => {
               <div className="mt-4">
                 {isFoundingActive && (
                   <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-400 mb-2">
-                    🔥 Founding Member • {founding.remaining} of {foundingStatus.limit} spots left • Price locked in forever + priority support
+                    🔥 Founding Member Pricing • Price locked in forever + priority support
                   </div>
                 )}
                 {isUS ? (
