@@ -15,6 +15,7 @@ from utils.emergent_compat import (
 
 from models.subscription import (
     SubscriptionTier, BillingCycle, PRICING, TIER_FEATURES,
+    FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT,
     CheckoutRequest, CheckoutResponse, UserSubscriptionInfo,
     SubscriptionResponse
 )
@@ -84,6 +85,15 @@ async def create_checkout_session(
     currency = "usd" if checkout_data.jurisdiction == "US" else "zar"
     amount = PRICING[tier][billing_cycle][currency]
 
+    if billing_cycle == BillingCycle.ANNUAL and currency in FOUNDING_PRICING:
+        founding_count = await db.payment_transactions.count_documents({
+            "payment_status": "paid",
+            "billing_cycle": billing_cycle.value,
+            "amount": FOUNDING_PRICING[currency],
+        })
+        if founding_count < FOUNDING_MEMBER_LIMIT:
+            amount = FOUNDING_PRICING[currency]
+
     # Initialize Stripe
     api_key = os.environ.get("STRIPE_API_KEY")
     if not api_key:
@@ -127,7 +137,7 @@ async def create_checkout_session(
         "payment_status": "initiated",
         "created_at": datetime.now(timezone.utc)
     }
-    db.payment_transactions.insert_one(transaction)
+    await db.payment_transactions.insert_one(transaction)
     
     return CheckoutResponse(
         checkout_url=session.url,
@@ -152,7 +162,7 @@ async def get_checkout_status(
     status = await stripe_checkout.get_checkout_status(session_id)
     
     # Get transaction from DB
-    transaction = db.payment_transactions.find_one({"session_id": session_id})
+    transaction = await db.payment_transactions.find_one({"session_id": session_id})
     if not transaction:
         raise HTTPException(status_code=404, detail="Transaction not found")
     
@@ -165,7 +175,7 @@ async def get_checkout_status(
         }
     
     # Update transaction status
-    db.payment_transactions.update_one(
+    await db.payment_transactions.update_one(
         {"session_id": session_id},
         {"$set": {
             "status": status.status,
@@ -186,7 +196,7 @@ async def get_checkout_status(
             period_end = datetime.now(timezone.utc) + timedelta(days=365)
         
         # Upsert subscription
-        db.subscriptions.update_one(
+        await db.subscriptions.update_one(
             {"user_id": transaction["user_id"]},
             {"$set": {
                 "user_id": transaction["user_id"],
@@ -224,16 +234,16 @@ async def start_free_trial(
         raise HTTPException(status_code=400, detail="Cannot trial free tier")
     
     # Check if user already had a trial
-    existing = db.subscriptions.find_one({
+    existing = await db.subscriptions.find_one({
         "user_id": user_id,
         "had_trial": True
     })
     if existing:
         raise HTTPException(status_code=400, detail="Trial already used")
-    
+
     trial_end = datetime.now(timezone.utc) + timedelta(days=TRIAL_DAYS)
-    
-    db.subscriptions.update_one(
+
+    await db.subscriptions.update_one(
         {"user_id": user_id},
         {"$set": {
             "user_id": user_id,
@@ -279,4 +289,23 @@ async def get_pricing():
             }
         ],
         "trial_days": TRIAL_DAYS
+    }
+
+@router.get("/founding-status")
+async def get_founding_status():
+    """Remaining founding-member discount slots (first 100 annual subscribers) per jurisdiction currency"""
+    zar_used = await db.paystack_transactions.count_documents({
+        "status": "success",
+        "billing_cycle": "annual",
+        "amount": FOUNDING_PRICING["zar"],
+    })
+    usd_used = await db.payment_transactions.count_documents({
+        "payment_status": "paid",
+        "billing_cycle": "annual",
+        "amount": FOUNDING_PRICING["usd"],
+    })
+    return {
+        "limit": FOUNDING_MEMBER_LIMIT,
+        "zar": {"price": FOUNDING_PRICING["zar"], "remaining": max(0, FOUNDING_MEMBER_LIMIT - zar_used)},
+        "usd": {"price": FOUNDING_PRICING["usd"], "remaining": max(0, FOUNDING_MEMBER_LIMIT - usd_used)},
     }

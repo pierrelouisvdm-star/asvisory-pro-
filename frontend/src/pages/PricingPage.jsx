@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
@@ -57,6 +57,14 @@ export const PricingPage = () => {
   
   // Paystack / Stripe state
   const [paymentLoading, setPaymentLoading] = useState(false);
+
+  // Founding-member promo (first 100 annual subscribers per jurisdiction)
+  const [foundingStatus, setFoundingStatus] = useState(null);
+  useEffect(() => {
+    subscriptionApi.getFoundingStatus().then(setFoundingStatus).catch(() => {});
+  }, []);
+  const founding = foundingStatus?.[isUS ? 'usd' : 'zar'];
+  const isFoundingActive = billingPeriod === 'annual' && founding?.remaining > 0;
 
   const handleRedeemCoupon = async (e) => {
     e.preventDefault();
@@ -237,14 +245,29 @@ export const PricingPage = () => {
               </div>
               <CardTitle className="text-2xl text-white">Premium Plan</CardTitle>
               <div className="mt-4">
+                {isFoundingActive && (
+                  <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-400 mb-2">
+                    🔥 Founding Member • {founding.remaining} of {foundingStatus.limit} spots left
+                  </div>
+                )}
                 {isUS ? (
                   <>
                     {billingPeriod === 'annual' ? (
                       <>
-                        <span className="text-5xl font-bold text-white">${ANNUAL_PRICE_USD}</span>
-                        <span className="text-slate-400 ml-2">/year</span>
+                        {isFoundingActive ? (
+                          <>
+                            <span className="text-2xl text-slate-500 line-through mr-2">${ANNUAL_PRICE_USD}</span>
+                            <span className="text-5xl font-bold text-white">${founding.price}</span>
+                            <span className="text-slate-400 ml-2">/year</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-5xl font-bold text-white">${ANNUAL_PRICE_USD}</span>
+                            <span className="text-slate-400 ml-2">/year</span>
+                          </>
+                        )}
                         <p className="text-emerald-400 text-sm mt-2">
-                          Only ${(ANNUAL_PRICE_USD / 12).toFixed(2)}/month • Save ${ANNUAL_SAVINGS_USD}
+                          Only ${((isFoundingActive ? founding.price : ANNUAL_PRICE_USD) / 12).toFixed(2)}/month • Save ${isFoundingActive ? (PREMIUM_PRICE_USD * 12 - founding.price) : ANNUAL_SAVINGS_USD}
                         </p>
                       </>
                     ) : (
@@ -259,10 +282,20 @@ export const PricingPage = () => {
                   <>
                     {billingPeriod === 'annual' ? (
                       <>
-                        <span className="text-5xl font-bold text-white">R{ANNUAL_PRICE}</span>
-                        <span className="text-slate-400 ml-2">/year</span>
+                        {isFoundingActive ? (
+                          <>
+                            <span className="text-2xl text-slate-500 line-through mr-2">R{ANNUAL_PRICE}</span>
+                            <span className="text-5xl font-bold text-white">R{founding.price}</span>
+                            <span className="text-slate-400 ml-2">/year</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="text-5xl font-bold text-white">R{ANNUAL_PRICE}</span>
+                            <span className="text-slate-400 ml-2">/year</span>
+                          </>
+                        )}
                         <p className="text-emerald-400 text-sm mt-2">
-                          Only R{Math.round(ANNUAL_PRICE / 12)}/month • Save R{ANNUAL_SAVINGS}
+                          Only R{Math.round((isFoundingActive ? founding.price : ANNUAL_PRICE) / 12)}/month • Save R{isFoundingActive ? (PREMIUM_PRICE * 12 - founding.price) : ANNUAL_SAVINGS}
                         </p>
                       </>
                     ) : (
@@ -303,7 +336,7 @@ export const PricingPage = () => {
                   ) : (
                     <CreditCard className="h-5 w-5 mr-2" />
                   )}
-                  {billingPeriod === 'annual' ? `Get Annual Access, $${ANNUAL_PRICE_USD}` : `Get Monthly Access, $${PREMIUM_PRICE_USD}/mo`}
+                  {billingPeriod === 'annual' ? `Get Annual Access, $${isFoundingActive ? founding.price : ANNUAL_PRICE_USD}` : `Get Monthly Access, $${PREMIUM_PRICE_USD}/mo`}
                 </Button>
               ) : (
                 <Button

@@ -24,6 +24,11 @@ PRICING = {
     },
 }
 
+# Founding-member promo: the first FOUNDING_MEMBER_LIMIT annual Premium
+# subscribers in each jurisdiction get a discounted annual price.
+FOUNDING_MEMBER_LIMIT = 100
+FOUNDING_PRICING = {"zar": 1699.0, "usd": 149.0}
+
 # Feature access configuration
 TIER_FEATURES = {
     SubscriptionTier.FREE: {

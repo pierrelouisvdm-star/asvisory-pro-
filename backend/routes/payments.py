@@ -12,7 +12,7 @@ import logging
 import os
 import httpx
 
-from models.subscription import SubscriptionTier, BillingCycle, PRICING
+from models.subscription import SubscriptionTier, BillingCycle, PRICING, FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT
 from utils.auth import get_current_user
 from server import db
 
@@ -41,6 +41,14 @@ async def initialize_paystack_payment(
         raise HTTPException(status_code=400, detail="Invalid billing cycle")
 
     amount_rand = PRICING[SubscriptionTier.PREMIUM][payload.billing_cycle]["zar"]
+    if payload.billing_cycle == BillingCycle.ANNUAL:
+        founding_count = await db.paystack_transactions.count_documents({
+            "status": "success",
+            "billing_cycle": "annual",
+            "amount": FOUNDING_PRICING["zar"],
+        })
+        if founding_count < FOUNDING_MEMBER_LIMIT:
+            amount_rand = FOUNDING_PRICING["zar"]
     amount_kobo = int(round(amount_rand * 100))
 
     origin = payload.origin_url.rstrip("/")

@@ -303,6 +303,11 @@ export const subscriptionApi = {
     return handleResponse(response);
   },
 
+  getFoundingStatus: async () => {
+    const response = await fetch(`${API_URL}/api/subscriptions/founding-status`);
+    return handleResponse(response);
+  },
+
   getCurrentSubscription: async () => {
     const response = await fetch(`${API_URL}/api/subscriptions/current`, {
       headers: getHeaders(),
