@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
 import { useJurisdiction } from '@/context/JurisdictionContext';
@@ -94,6 +94,13 @@ export const AuthPage = () => {
   const { refreshSubscription } = useSubscription();
   const { isUS } = useJurisdiction();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // Only allow redirecting to a same-site path (never an absolute/external URL)
+  const redirectParam = searchParams.get('redirect');
+  const redirectTo = redirectParam && redirectParam.startsWith('/') && !redirectParam.startsWith('//')
+    ? redirectParam
+    : '/';
 
   const tiers = isUS ? US_TIERS : SA_TIERS;
 
@@ -127,7 +134,7 @@ export const AuthPage = () => {
     try {
       await login(loginEmail, loginPassword, rememberMe);
       toast.success('Welcome back!');
-      navigate('/');
+      navigate(redirectTo);
     } catch (err) {
       setError(err.message);
       toast.error(err.message);
@@ -173,7 +180,7 @@ export const AuthPage = () => {
         }
       }
       
-      navigate('/');
+      navigate(redirectTo);
     } catch (err) {
       setError(err.message);
       toast.error(err.message);
