@@ -884,19 +884,66 @@ export const LandingPage = () => {
 
       {/* Pricing Section */}
       <section id="pricing" className="relative py-20 bg-gradient-to-b from-muted/30 to-background scroll-mt-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="mb-4 text-primary text-sm font-medium uppercase tracking-wide">
             Simple Pricing
           </p>
           <h2 className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mb-4">
-            {isUS ? 'One Plan. Everything Included.' : <>Everything. <span className="text-emerald-500">R299/month.</span></>}
+            Choose Your Plan
           </h2>
           <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-            No hidden fees, no feature restrictions. Get full access to every tool for one simple monthly price.
+            Start free with the essential calculators, or go Premium for full access, no hidden fees, no feature restrictions.
           </p>
-          
-          <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 max-w-lg mx-auto">
+
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+          {/* Free Plan */}
+          <Card className="bg-card border-border text-left">
             <CardContent className="p-8">
+              <div className="text-center mb-6">
+                <span className="text-5xl font-bold text-foreground">{isUS ? '$0' : 'R0'}</span>
+                <span className="text-muted-foreground ml-2">/forever</span>
+                <p className="text-muted-foreground text-sm mt-2">Get started today</p>
+              </div>
+
+              <ul className="space-y-3 text-left mb-8">
+                {(isUS ? [
+                  { label: 'FI Score Quiz', included: true },
+                  { label: 'US Tax Calendar', included: true },
+                  { label: 'Mortgage Calculator', included: true },
+                  { label: 'Compound Interest Calculator', included: true },
+                  { label: 'FIRE Calculator', included: true },
+                  { label: 'Paycheck Calculator', included: true },
+                  { label: '24+ Premium US Calculators', included: false },
+                  { label: 'PDF Reports', included: false },
+                  { label: 'AI Financial Assistant', included: false },
+                ] : [
+                  { label: 'TFSA Calculator', included: true },
+                  { label: 'Bond/Mortgage Calculator', included: true },
+                  { label: 'Future Value Calculator', included: true },
+                  { label: 'Compound Interest Calculator', included: true },
+                  { label: 'Emergency Fund Calculator', included: true },
+                  { label: '14+ Premium Calculators', included: false },
+                  { label: 'PDF Reports', included: false },
+                  { label: 'AI Document Analysis', included: false },
+                ]).map(({ label, included }) => (
+                  <li key={label} className="flex items-center gap-3">
+                    <CheckCircle2 className={`h-5 w-5 flex-shrink-0 ${included ? 'text-emerald-600' : 'text-muted-foreground/30'}`} />
+                    <span className={included ? 'text-foreground' : 'text-muted-foreground'}>{label}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link to="/auth">
+                <Button size="lg" variant="outline" className="w-full h-14 text-lg font-semibold">
+                  Get Started Free
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-primary/5 to-card border-2 border-primary/50 text-left">
+            <CardContent className="p-8">
+              <div className="text-center">
               {isFoundingActive && (
                 <>
                   <div className="inline-block bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-1 text-xs font-semibold text-amber-500 mb-2">
@@ -934,6 +981,7 @@ export const LandingPage = () => {
                   )}
                 </div>
               )}
+              </div>
 
               <ul className="space-y-3 text-left mb-8">
                 {(isUS ? [
@@ -961,19 +1009,20 @@ export const LandingPage = () => {
                 ))}
               </ul>
 
-              <Link to="/auth">
+              <Link to="/auth?redirect=/pricing">
                 <Button size="lg" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg h-14">
-                  Get Started Now
+                  Get Started
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
 
-              <p className="mt-4 text-sm text-muted-foreground">
+              <p className="mt-4 text-sm text-center text-muted-foreground">
                 {isUS ? '$22/month or $199/year. Cancel anytime • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
               </p>
             </CardContent>
           </Card>
-          
+          </div>
+
           <div className="mt-8 p-4 rounded-lg bg-muted/50 border border-border inline-block">
             <p className="text-muted-foreground text-sm">
               <Users className="h-4 w-4 inline mr-2" />
