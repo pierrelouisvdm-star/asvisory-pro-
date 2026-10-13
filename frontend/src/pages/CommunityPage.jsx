@@ -38,12 +38,19 @@ const MemberCard = ({ member }) => {
                   <Badge variant="outline" className="border-slate-600 text-slate-300 text-xs">You</Badge>
                 )}
               </p>
-              {member.company && (
-                <p className="text-xs text-slate-400 flex items-center gap-1">
-                  <Building2 className="h-3 w-3" />
-                  {member.company}
-                </p>
-              )}
+              <div className="flex items-center gap-2 flex-wrap">
+                {member.company && (
+                  <p className="text-xs text-slate-400 flex items-center gap-1">
+                    <Building2 className="h-3 w-3" />
+                    {member.company}
+                  </p>
+                )}
+                {member.founder_number != null && (
+                  <p className="text-xs text-amber-400/80 font-mono">
+                    #{String(member.founder_number).padStart(4, '0')}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
           {member.linkedin_url && (
@@ -144,11 +151,11 @@ const CommunityPage = () => {
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/15 mx-auto">
           <Lock className="h-7 w-7 text-amber-400" />
         </div>
-        <h1 className="text-2xl font-bold text-white">Advisor Community</h1>
+        <h1 className="text-2xl font-bold text-white">Advisory Pro Founders Network</h1>
         <p className="text-slate-400">
-          This global network of financial advisors is open to our first 1,000 Premium members,
-          with a smaller private circle for our first 300 founding members, across South Africa
-          and the USA. Subscribe to Premium to claim your seat.
+          The first 1,000 paying Advisory Pro subscribers globally get a permanent Founding Member
+          number and a seat in this network, with a smaller private circle of founding-price members
+          across South Africa and the USA. Subscribe to Premium to claim your number.
         </p>
         <Link to="/pricing">
           <Button className="bg-amber-500 hover:bg-amber-600 text-black font-semibold">
@@ -166,17 +173,17 @@ const CommunityPage = () => {
         <div>
           <h1 className="text-2xl font-bold text-white flex items-center gap-3">
             <Globe2 className="h-7 w-7 text-amber-400" />
-            Advisor Community
+            Advisory Pro Founders Network
           </h1>
           <p className="text-slate-400 mt-1">
-            A global network of financial advisors from South Africa and the USA
+            The first 1,000 paying subscribers globally, from South Africa and the USA
           </p>
         </div>
-        <div className="flex items-center gap-2">
-          {isFoundingMember && (
+        <div className="flex items-center gap-2 flex-wrap">
+          {subscription.founderNumber != null && (
             <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
               <Crown className="h-3 w-3 mr-1" />
-              Founding Member
+              Founding Member #{String(subscription.founderNumber).padStart(4, '0')}
             </Badge>
           )}
           <Badge variant="outline" className="border-navy-600 text-slate-300">
@@ -242,8 +249,12 @@ const CommunityPage = () => {
         <Card className="bg-navy-900/60 border-navy-700">
           <CardContent className="p-4 flex items-center justify-between gap-4 flex-wrap">
             <p className="text-sm text-slate-400">
-              You're listed in the community directory. Founding members also get an editable profile
-              (specialty, bio, LinkedIn) and top billing in the directory.
+              {subscription.founderNumber != null ? (
+                <>You're <span className="text-amber-400 font-medium">Founding Member #{String(subscription.founderNumber).padStart(4, '0')}</span> of the Advisory Pro Founders Network, permanently. </>
+              ) : (
+                "You're listed in the Founders Network directory. "
+              )}
+              Founding-price members also get an editable profile (specialty, bio, LinkedIn) and top billing in the directory.
             </p>
             <Link to="/pricing">
               <Button variant="outline" size="sm" className="border-amber-500/40 text-amber-400 hover:bg-amber-500/10 flex-shrink-0">

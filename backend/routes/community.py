@@ -58,14 +58,15 @@ async def list_community_members(current_user: dict = Depends(get_current_user))
             "company": user.get("company"),
             "jurisdiction": _sub_jurisdiction(sub),
             "tier": "founding" if is_founding else "community",
+            "founder_number": sub.get("founder_number"),
             "specialty": profile.get("specialty"),
             "bio": profile.get("bio"),
             "linkedin_url": profile.get("linkedin_url"),
             "is_me": uid == current_user["id"],
         })
 
-    # Founding members first, then members with a filled-in profile, then alphabetical
-    members.sort(key=lambda m: (m["tier"] != "founding", not bool(m["bio"]), (m["full_name"] or "").lower()))
+    # Founding members first, then by Founders Network number (lower = earlier member)
+    members.sort(key=lambda m: (m["tier"] != "founding", m["founder_number"] if m["founder_number"] is not None else 10**9))
 
     founding_count = sum(1 for m in members if m["tier"] == "founding")
     return {"members": members, "total": len(members), "founding_count": founding_count}

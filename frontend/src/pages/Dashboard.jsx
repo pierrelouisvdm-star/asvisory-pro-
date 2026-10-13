@@ -746,9 +746,14 @@ export const Dashboard = () => {
                 <span className="mr-2">{currentJurisdiction?.flag}</span>
                 {currentJurisdiction?.name} • {currentJurisdiction?.taxYear || '2024/2025'} Tax Year
               </Badge>
+              {subscription?.founderNumber != null && (
+                <Badge className="px-3 py-1 text-sm bg-amber-500/10 text-amber-500 border border-amber-500/30">
+                  🌍 Founding Member #{String(subscription.founderNumber).padStart(4, '0')} • Advisory Pro Founders Network
+                </Badge>
+              )}
               {subscription?.foundingMember && (
                 <Badge className="px-3 py-1 text-sm bg-amber-500/10 text-amber-500 border border-amber-500/30">
-                  🔥 Founding Member • Price locked in forever{subscription?.prioritySupport ? ' • Priority support' : ''}
+                  🔥 Price locked in forever{subscription?.prioritySupport ? ' • Priority support' : ''}
                 </Badge>
               )}
             </div>
