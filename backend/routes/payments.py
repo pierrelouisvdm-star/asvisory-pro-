@@ -77,15 +77,24 @@ async def initialize_paystack_payment(
             logger.error(f"Paystack initialize request failed: {e}")
             raise HTTPException(status_code=502, detail="Payment provider unreachable")
 
-    data = resp.json()
+    try:
+        data = resp.json()
+    except ValueError:
+        logger.error(f"Paystack initialize returned non-JSON response (status {resp.status_code}): {resp.text[:500]}")
+        raise HTTPException(status_code=502, detail="Payment provider returned an unexpected response")
+
     if not data.get("status"):
-        logger.error(f"Paystack initialize failed: {data}")
+        logger.error(f"Paystack initialize failed (status {resp.status_code}): {data}")
         raise HTTPException(status_code=502, detail=data.get("message", "Failed to start payment"))
 
-    return {
-        "authorization_url": data["data"]["authorization_url"],
-        "reference": data["data"]["reference"],
-    }
+    try:
+        return {
+            "authorization_url": data["data"]["authorization_url"],
+            "reference": data["data"]["reference"],
+        }
+    except KeyError:
+        logger.error(f"Paystack initialize succeeded but response shape was unexpected: {data}")
+        raise HTTPException(status_code=502, detail="Payment provider returned an unexpected response")
 
 
 def verify_paystack_signature(raw_body: bytes, signature: str) -> bool:
@@ -244,7 +253,7 @@ async def get_paystack_status(reference: str, current_user: dict = Depends(get_c
                     timeout=30.0,
                 )
                 data = resp.json()
-            except httpx.HTTPError as e:
+            except (httpx.HTTPError, ValueError) as e:
                 logger.error(f"Paystack verify request failed: {e}")
                 data = {}
 
