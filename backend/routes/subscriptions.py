@@ -15,12 +15,12 @@ from utils.emergent_compat import (
 
 from models.subscription import (
     SubscriptionTier, BillingCycle, PRICING, TIER_FEATURES,
-    FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT,
+    FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT, COMMUNITY_MEMBER_LIMIT,
     CheckoutRequest, CheckoutResponse, UserSubscriptionInfo,
     SubscriptionResponse
 )
 from utils.auth import get_current_user
-from utils.founding import count_combined_founding_members
+from utils.founding import count_combined_founding_members, count_combined_community_members, compute_community_flag
 from server import db
 
 router = APIRouter(prefix="/subscriptions", tags=["Subscriptions"])
@@ -65,6 +65,7 @@ async def get_current_subscription(current_user: dict = Depends(get_current_user
         trial_ends_at=subscription.get("trial_ends_at"),
         current_period_end=subscription.get("current_period_end"),
         founding_member=subscription.get("founding_member", False),
+        community_member=subscription.get("community_member", False),
         priority_support=subscription.get("priority_support", False)
     )
 
@@ -205,19 +206,27 @@ async def get_checkout_status(
             "tier": tier.value,
             "billing_cycle": billing_cycle.value,
             "status": "active",
+            "payment_method": "stripe",
+            "currency": transaction.get("currency"),
             "current_period_start": datetime.now(timezone.utc),
             "current_period_end": period_end,
             "updated_at": datetime.now(timezone.utc)
         }
+        existing_sub = await db.subscriptions.find_one({"user_id": transaction["user_id"]})
         transaction_currency = transaction.get("currency")
-        if billing_cycle == BillingCycle.ANNUAL and transaction_currency in FOUNDING_PRICING \
-                and transaction.get("amount") == FOUNDING_PRICING[transaction_currency]:
+        is_founding_payment = (
+            billing_cycle == BillingCycle.ANNUAL
+            and transaction_currency in FOUNDING_PRICING
+            and transaction.get("amount") == FOUNDING_PRICING[transaction_currency]
+        )
+        if is_founding_payment:
             update_fields.update({
                 "founding_member": True,
                 "founding_price": FOUNDING_PRICING[transaction_currency],
                 "founding_currency": transaction_currency,
                 "priority_support": True,
             })
+        update_fields.update(await compute_community_flag(db, existing_sub, is_founding_payment))
 
         await db.subscriptions.update_one(
             {"user_id": transaction["user_id"]},
@@ -308,7 +317,7 @@ async def get_pricing():
 
 @router.get("/founding-status")
 async def get_founding_status():
-    """Remaining founding-member discount slots: first 150 annual subscribers, shared globally across SA and US"""
+    """Remaining founding-member discount slots, shared globally across SA and US"""
     used = await count_combined_founding_members(db)
     remaining = max(0, FOUNDING_MEMBER_LIMIT - used)
     return {
@@ -316,4 +325,16 @@ async def get_founding_status():
         "remaining": remaining,
         "zar": {"price": FOUNDING_PRICING["zar"], "remaining": remaining},
         "usd": {"price": FOUNDING_PRICING["usd"], "remaining": remaining},
+    }
+
+
+@router.get("/community-status")
+async def get_community_status():
+    """Remaining seats in the lighter 'first 1,000' community tier, shared globally across SA and US"""
+    used = await count_combined_community_members(db)
+    remaining = max(0, COMMUNITY_MEMBER_LIMIT - used)
+    return {
+        "limit": COMMUNITY_MEMBER_LIMIT,
+        "used": used,
+        "remaining": remaining,
     }

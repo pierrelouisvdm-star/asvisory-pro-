@@ -20,6 +20,7 @@ class CommunityMember(BaseModel):
     full_name: str
     company: Optional[str] = None
     jurisdiction: str  # "ZA" or "US"
+    tier: str = "community"  # "founding" or "community"
     specialty: Optional[str] = None
     bio: Optional[str] = None
     linkedin_url: Optional[str] = None

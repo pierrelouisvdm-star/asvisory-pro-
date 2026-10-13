@@ -63,6 +63,7 @@ export const SubscriptionProvider = ({ children }) => {
         trialEndsAt: result.trial_ends_at,
         currentPeriodEnd: result.current_period_end,
         foundingMember: result.founding_member || false,
+        communityMember: result.community_member || false,
         prioritySupport: result.priority_support || false,
         loading: false,
       });

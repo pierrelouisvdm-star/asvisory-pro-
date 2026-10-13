@@ -58,7 +58,7 @@ export const PricingPage = () => {
   // Paystack / Stripe state
   const [paymentLoading, setPaymentLoading] = useState(false);
 
-  // Founding-member promo (first 150 annual subscribers per jurisdiction)
+  // Founding-member promo (first 300 annual subscribers, shared across SA + US)
   const [foundingStatus, setFoundingStatus] = useState(null);
   useEffect(() => {
     subscriptionApi.getFoundingStatus().then(setFoundingStatus).catch(() => {});
@@ -254,7 +254,7 @@ export const PricingPage = () => {
                       🔥 Founding Member Pricing • Price locked in forever + priority support
                     </div>
                     <p className="text-xs text-slate-500 mb-2">
-                      Limited to the first 150 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
+                      Limited to the first 300 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
                     </p>
                   </>
                 )}
@@ -327,6 +327,7 @@ export const PricingPage = () => {
               {/* Features Grid */}
               <div className="space-y-3 mb-8">
                 {(isUS ? US_PREMIUM_FEATURES : PREMIUM_FEATURES)
+                  .concat([{ icon: Globe, label: 'Advisor Community directory' }])
                   .concat(isFoundingActive ? [{ icon: Globe, label: 'Founding Advisor Network access', founding: true }] : [])
                   .map(({ icon: Icon, label, founding }) => (
                   <div key={label} className="flex items-center gap-3 p-2">

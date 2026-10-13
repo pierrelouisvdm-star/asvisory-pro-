@@ -26,10 +26,17 @@ PRICING = {
 
 # Founding-member promo: the first FOUNDING_MEMBER_LIMIT annual Premium
 # subscribers get a discounted annual price, locked in for every future
-# renewal, plus priority support. The 150 slots are shared globally across
-# SA and US subscribers combined, not 150 per jurisdiction.
-FOUNDING_MEMBER_LIMIT = 150
+# renewal, plus priority support and a seat in the private Founding Advisor
+# Network. The slots are shared globally across SA and US subscribers
+# combined, not split per jurisdiction.
+FOUNDING_MEMBER_LIMIT = 300
 FOUNDING_PRICING = {"zar": 1499.0, "usd": 149.0}
+
+# Community directory promo: the first COMMUNITY_MEMBER_LIMIT Premium
+# subscribers (any billing cycle, any price) get a lighter listing in the
+# advisor directory. Founding members are always included in this pool too,
+# regardless of order. Shared globally across SA and US, same as founding.
+COMMUNITY_MEMBER_LIMIT = 1000
 
 # Feature access configuration
 TIER_FEATURES = {
@@ -107,4 +114,5 @@ class UserSubscriptionInfo(BaseModel):
     trial_ends_at: Optional[datetime] = None
     current_period_end: Optional[datetime] = None
     founding_member: bool = False
+    community_member: bool = False
     priority_support: bool = False
