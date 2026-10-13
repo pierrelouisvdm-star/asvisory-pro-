@@ -1078,7 +1078,18 @@ export const LandingPage = () => {
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   "After 11+ years as a financial advisor, I built AdvisoryPro to fix what I lived with every day: disconnected tools, complex calculations and time-consuming admin getting in the way of good advice. It's one modern platform, built by an advisor, for advisors, to save time and help us deliver a better experience for our clients."
                 </p>
-                <p className="font-semibold text-foreground">Pierre Van der Merwe, Founder</p>
+                <div className="flex items-center justify-center sm:justify-start gap-2">
+                  <p className="font-semibold text-foreground">Pierre Van der Merwe, Founder</p>
+                  <a
+                    href="https://www.linkedin.com/in/pierre-van-der-merwe-3a9a44b5"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Pierre Van der Merwe on LinkedIn"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="h-4 w-4" />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
