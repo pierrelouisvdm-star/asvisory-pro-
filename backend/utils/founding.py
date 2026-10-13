@@ -3,24 +3,24 @@ from pymongo import ReturnDocument
 from models.subscription import COMMUNITY_MEMBER_LIMIT
 
 
-async def count_combined_founding_members(db) -> int:
-    """Count subscribers who have ever been granted founding-member status.
+async def count_founding_members_by_currency(db, currency: str) -> int:
+    """Count founding members in a single jurisdiction (currency: "zar" for SA, "usd" for US).
 
     Counts the `founding_member` flag on `subscriptions` docs, not raw
     successful payments — a founding member's price stays the same on every
     renewal, so counting payments would re-count the same person every time
-    they renew. The flag is set once, at first activation, and never cleared,
-    so this reflects distinct members, shared globally across SA and US.
+    they renew. The flag is set once, at first activation, and never cleared.
+    The 200-slot limit is gated separately per jurisdiction, not combined.
     """
-    return await db.subscriptions.count_documents({"founding_member": True})
+    return await db.subscriptions.count_documents({"founding_member": True, "founding_currency": currency})
 
 
 async def count_combined_community_members(db) -> int:
     """Count subscribers who have ever been granted Founders Network access.
 
-    Same counting approach as `count_combined_founding_members`: the
-    `community_member` flag is set once per user and never cleared, so this
-    reflects distinct members of the shared 1,000-seat pool, not payments.
+    Counts the `community_member` flag on `subscriptions` docs, set once per
+    user and never cleared, so this reflects distinct members of the shared
+    1,000-seat pool (combined across SA and US), not raw payments.
     """
     return await db.subscriptions.count_documents({"community_member": True})
 

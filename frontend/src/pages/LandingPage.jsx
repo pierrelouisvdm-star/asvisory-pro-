@@ -595,8 +595,8 @@ export const LandingPage = () => {
               <p className="text-sm text-slate-500">
                 {isFoundingActive
                   ? (isUS
-                      ? `$22/month, or $${founding.price}/year as a founding member (reverts to $199/year once the first 300 spots fill) • Have a coupon? Apply at signup`
-                      : `R299/month, or R${founding.price}/year as a founding member (reverts to R1,999/year once the first 300 spots fill) • Have a coupon? Apply at signup`)
+                      ? `$22/month, or $${founding.price}/year as a founding member (reverts to $199/year once the first 200 spots fill) • Have a coupon? Apply at signup`
+                      : `R299/month, or R${founding.price}/year as a founding member (reverts to R1,999/year once the first 200 spots fill) • Have a coupon? Apply at signup`)
                   : (isUS ? '$22/month or $199/year (Save $65!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup')
                 }
               </p>
@@ -657,7 +657,7 @@ export const LandingPage = () => {
                     Founding Member Offer
                   </div>
                   <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white mb-4 leading-tight">
-                    Join the first 300 {isUS ? 'Americans' : 'South Africans'} and lock in {isUS ? `$${founding.price}` : `R${founding.price}`}/year, forever.
+                    Join the first 200 {isUS ? 'Americans' : 'South Africans'} and lock in {isUS ? `$${founding.price}` : `R${founding.price}`}/year, forever.
                   </h2>
                   <p className="text-slate-300 text-lg mb-6 max-w-xl">
                     Not a one-year discount, every future renewal stays at this price for life, plus priority support straight from the founder and team.
@@ -667,7 +667,7 @@ export const LandingPage = () => {
                       'Price locked in forever, every renewal',
                       'Priority support from the founder & team',
                       'Private seat in the Founding Advisor Network',
-                      `First 300 members only, then ${isUS ? '$199' : 'R1,999'}/year`,
+                      `First 200 members only, then ${isUS ? '$199' : 'R1,999'}/year`,
                     ].map((item) => (
                       <li key={item} className="flex items-center gap-3 text-slate-200">
                         <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0" />
@@ -679,7 +679,7 @@ export const LandingPage = () => {
                     <Globe className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-slate-300">
                       <span className="font-semibold text-white">Plus the Advisory Pro Founders Network.</span>{' '}
-                      Every one of our first 1,000 paying subscribers worldwide gets a permanent Founding Member number (e.g. "Founding Member #0047") and a seat in our in-app advisor directory. Founding-price members get the smaller, private inner circle on top, connecting all 300 {isUS ? 'US' : 'South African'} and {isUS ? 'South African' : 'US'} founders to share ideas and build relationships across both countries.
+                      Every one of our first 1,000 paying subscribers worldwide gets a permanent Founding Member number (e.g. "Founding Member #0047") and a seat in our in-app advisor directory. Founding-price members get the smaller, private inner circle on top, connecting the first 200 {isUS ? 'Americans' : 'South Africans'} with the first 200 {isUS ? 'South Africans' : 'Americans'} to share ideas and build relationships across both countries.
                     </p>
                   </div>
                   <Link to="/auth">
@@ -697,7 +697,7 @@ export const LandingPage = () => {
                   </div>
                   <p className="text-slate-400 text-sm mb-4">/year, locked in forever</p>
                   <div className="inline-block px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-                    Reverts to {isUS ? '$199' : 'R1,999'}/year once the first 300 spots fill
+                    Reverts to {isUS ? '$199' : 'R1,999'}/year once the first 200 spots fill
                   </div>
                 </div>
               </div>
@@ -903,7 +903,7 @@ export const LandingPage = () => {
                     🔥 Founding Member Pricing • Locked in forever + priority support
                   </div>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Limited to the first 300 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
+                    Limited to the first 200 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
                   </p>
                 </>
               )}

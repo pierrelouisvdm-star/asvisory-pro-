@@ -24,12 +24,14 @@ PRICING = {
     },
 }
 
-# Founding-member promo: the first FOUNDING_MEMBER_LIMIT annual Premium
-# subscribers get a discounted annual price, locked in for every future
+# Founding-member promo: the first FOUNDING_MEMBER_LIMIT_PER_JURISDICTION
+# annual Premium subscribers IN EACH JURISDICTION (SA and US counted
+# separately) get a discounted annual price, locked in for every future
 # renewal, plus priority support and a seat in the private Founding Advisor
-# Network. The slots are shared globally across SA and US subscribers
-# combined, not split per jurisdiction.
-FOUNDING_MEMBER_LIMIT = 300
+# Network. 200 SA + 200 US = 400 combined, shown as a single total in
+# marketing copy but gated per jurisdiction.
+FOUNDING_MEMBER_LIMIT_PER_JURISDICTION = 200
+FOUNDING_MEMBER_LIMIT = FOUNDING_MEMBER_LIMIT_PER_JURISDICTION * 2  # 400 — combined total, for display only
 FOUNDING_PRICING = {"zar": 1499.0, "usd": 149.0}
 
 # Advisory Pro Founders Network: the first COMMUNITY_MEMBER_LIMIT paying

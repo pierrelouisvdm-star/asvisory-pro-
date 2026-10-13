@@ -15,12 +15,12 @@ from utils.emergent_compat import (
 
 from models.subscription import (
     SubscriptionTier, BillingCycle, PRICING, TIER_FEATURES,
-    FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT, COMMUNITY_MEMBER_LIMIT,
+    FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT, FOUNDING_MEMBER_LIMIT_PER_JURISDICTION, COMMUNITY_MEMBER_LIMIT,
     CheckoutRequest, CheckoutResponse, UserSubscriptionInfo,
     SubscriptionResponse
 )
 from utils.auth import get_current_user
-from utils.founding import count_combined_founding_members, count_combined_community_members, compute_community_grant
+from utils.founding import count_founding_members_by_currency, count_combined_community_members, compute_community_grant
 from server import db
 
 router = APIRouter(prefix="/subscriptions", tags=["Subscriptions"])
@@ -96,8 +96,8 @@ async def create_checkout_session(
             # Founding members keep their locked-in annual price on every renewal
             amount = existing_sub["founding_price"]
         else:
-            founding_count = await count_combined_founding_members(db)
-            if founding_count < FOUNDING_MEMBER_LIMIT:
+            currency_founding_count = await count_founding_members_by_currency(db, currency)
+            if currency_founding_count < FOUNDING_MEMBER_LIMIT_PER_JURISDICTION:
                 amount = FOUNDING_PRICING[currency]
 
     # Initialize Stripe
@@ -318,14 +318,17 @@ async def get_pricing():
 
 @router.get("/founding-status")
 async def get_founding_status():
-    """Remaining founding-member discount slots, shared globally across SA and US"""
-    used = await count_combined_founding_members(db)
-    remaining = max(0, FOUNDING_MEMBER_LIMIT - used)
+    """Remaining founding-member discount slots, gated per jurisdiction (200 SA + 200 US)"""
+    zar_used = await count_founding_members_by_currency(db, "zar")
+    usd_used = await count_founding_members_by_currency(db, "usd")
+    zar_remaining = max(0, FOUNDING_MEMBER_LIMIT_PER_JURISDICTION - zar_used)
+    usd_remaining = max(0, FOUNDING_MEMBER_LIMIT_PER_JURISDICTION - usd_used)
     return {
         "limit": FOUNDING_MEMBER_LIMIT,
-        "remaining": remaining,
-        "zar": {"price": FOUNDING_PRICING["zar"], "remaining": remaining},
-        "usd": {"price": FOUNDING_PRICING["usd"], "remaining": remaining},
+        "limit_per_jurisdiction": FOUNDING_MEMBER_LIMIT_PER_JURISDICTION,
+        "remaining": zar_remaining + usd_remaining,
+        "zar": {"price": FOUNDING_PRICING["zar"], "remaining": zar_remaining},
+        "usd": {"price": FOUNDING_PRICING["usd"], "remaining": usd_remaining},
     }
 
 
