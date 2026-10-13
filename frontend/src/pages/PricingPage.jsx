@@ -327,7 +327,7 @@ export const PricingPage = () => {
               {/* Features Grid */}
               <div className="space-y-3 mb-8">
                 {(isUS ? US_PREMIUM_FEATURES : PREMIUM_FEATURES)
-                  .concat([{ icon: Globe, label: 'Advisor Community directory' }])
+                  .concat([{ icon: Globe, label: 'Founders Network + your permanent member number' }])
                   .concat(isFoundingActive ? [{ icon: Globe, label: 'Founding Advisor Network access', founding: true }] : [])
                   .map(({ icon: Icon, label, founding }) => (
                   <div key={label} className="flex items-center gap-3 p-2">

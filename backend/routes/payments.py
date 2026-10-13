@@ -14,7 +14,7 @@ import httpx
 
 from models.subscription import SubscriptionTier, BillingCycle, PRICING, FOUNDING_PRICING, FOUNDING_MEMBER_LIMIT
 from utils.auth import get_current_user
-from utils.founding import count_combined_founding_members, compute_community_flag
+from utils.founding import count_combined_founding_members, compute_community_grant
 from server import db
 
 router = APIRouter(prefix="/payments", tags=["Payments"])
@@ -210,7 +210,7 @@ async def activate_premium_subscription(user_id: str, email: str, reference: str
             "founding_currency": "zar",
             "priority_support": True,
         })
-    update_fields.update(await compute_community_flag(db, existing_sub, is_founding_payment))
+    update_fields.update(await compute_community_grant(db, existing_sub, is_founding_payment))
 
     await db.subscriptions.update_one(
         {"user_id": user_id},

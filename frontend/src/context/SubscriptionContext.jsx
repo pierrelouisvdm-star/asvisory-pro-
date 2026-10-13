@@ -64,6 +64,7 @@ export const SubscriptionProvider = ({ children }) => {
         currentPeriodEnd: result.current_period_end,
         foundingMember: result.founding_member || false,
         communityMember: result.community_member || false,
+        founderNumber: result.founder_number ?? null,
         prioritySupport: result.priority_support || false,
         loading: false,
       });

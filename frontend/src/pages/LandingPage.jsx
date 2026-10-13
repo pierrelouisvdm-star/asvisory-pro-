@@ -678,8 +678,8 @@ export const LandingPage = () => {
                   <div className="flex items-start gap-3 mb-8 px-4 py-3 rounded-xl bg-navy-900/60 border border-amber-500/20">
                     <Globe className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-slate-300">
-                      <span className="font-semibold text-white">A global advisor network, built in.</span>{' '}
-                      Founding members get an in-app directory connecting all 300 {isUS ? 'US' : 'South African'} and {isUS ? 'South African' : 'US'} founders, a private circle of top financial advisors sharing ideas and building relationships across both countries.
+                      <span className="font-semibold text-white">Plus the Advisory Pro Founders Network.</span>{' '}
+                      Every one of our first 1,000 paying subscribers worldwide gets a permanent Founding Member number (e.g. "Founding Member #0047") and a seat in our in-app advisor directory. Founding-price members get the smaller, private inner circle on top, connecting all 300 {isUS ? 'US' : 'South African'} and {isUS ? 'South African' : 'US'} founders to share ideas and build relationships across both countries.
                     </p>
                   </div>
                   <Link to="/auth">
@@ -951,7 +951,7 @@ export const LandingPage = () => {
                   'Planning Tools',
                   'AI Assistant',
                   'No feature restrictions',
-                ]).concat(['Advisor Community directory'])
+                ]).concat(['Founders Network + your permanent member number'])
                   .concat(isFoundingActive ? ['Founding Advisor Network access'] : [])
                   .map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-3 text-foreground">

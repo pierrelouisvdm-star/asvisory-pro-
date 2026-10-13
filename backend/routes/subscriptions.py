@@ -20,7 +20,7 @@ from models.subscription import (
     SubscriptionResponse
 )
 from utils.auth import get_current_user
-from utils.founding import count_combined_founding_members, count_combined_community_members, compute_community_flag
+from utils.founding import count_combined_founding_members, count_combined_community_members, compute_community_grant
 from server import db
 
 router = APIRouter(prefix="/subscriptions", tags=["Subscriptions"])
@@ -66,6 +66,7 @@ async def get_current_subscription(current_user: dict = Depends(get_current_user
         current_period_end=subscription.get("current_period_end"),
         founding_member=subscription.get("founding_member", False),
         community_member=subscription.get("community_member", False),
+        founder_number=subscription.get("founder_number"),
         priority_support=subscription.get("priority_support", False)
     )
 
@@ -226,7 +227,7 @@ async def get_checkout_status(
                 "founding_currency": transaction_currency,
                 "priority_support": True,
             })
-        update_fields.update(await compute_community_flag(db, existing_sub, is_founding_payment))
+        update_fields.update(await compute_community_grant(db, existing_sub, is_founding_payment))
 
         await db.subscriptions.update_one(
             {"user_id": transaction["user_id"]},

@@ -178,7 +178,7 @@ export const Header = () => {
                 )}
               >
                 <Globe2 className="h-4 w-4" />
-                Community
+                Founders Network
               </Link>
             )}
           </nav>
@@ -195,6 +195,15 @@ export const Header = () => {
                   <Badge className="bg-amber-500/20 text-amber-600 border-amber-500/30 hidden sm:flex">
                     <Crown className="h-3 w-3 mr-1" />
                     Admin
+                  </Badge>
+                )}
+                {subscription?.founderNumber != null && (
+                  <Badge
+                    className="bg-amber-500/20 text-amber-600 border-amber-500/30 hidden sm:flex"
+                    title="Advisory Pro Founders Network"
+                  >
+                    <Globe2 className="h-3 w-3 mr-1" />
+                    Founding Member #{String(subscription.founderNumber).padStart(4, '0')}
                   </Badge>
                 )}
                 <Button
@@ -355,7 +364,7 @@ export const Header = () => {
                 className="flex items-center gap-3 px-4 py-3 text-amber-400 rounded-lg hover:bg-amber-500/10"
               >
                 <Globe2 className="h-5 w-5 text-amber-400" />
-                Founding Member Community
+                Founders Network
               </Link>
               )}
             </div>
