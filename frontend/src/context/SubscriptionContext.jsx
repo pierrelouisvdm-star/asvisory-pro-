@@ -66,6 +66,10 @@ export const SubscriptionProvider = ({ children }) => {
         communityMember: result.community_member || false,
         founderNumber: result.founder_number ?? null,
         prioritySupport: result.priority_support || false,
+        currency: result.currency || null,
+        paymentMethod: result.payment_method || null,
+        lastPaymentAmount: result.last_payment_amount ?? null,
+        foundingPrice: result.founding_price ?? null,
         loading: false,
       });
     } catch (error) {

@@ -121,3 +121,7 @@ class UserSubscriptionInfo(BaseModel):
     community_member: bool = False
     founder_number: Optional[int] = None
     priority_support: bool = False
+    currency: Optional[str] = None
+    payment_method: Optional[str] = None
+    last_payment_amount: Optional[float] = None
+    founding_price: Optional[float] = None
