@@ -13,75 +13,78 @@ from server import db
 router = APIRouter(prefix="/funds", tags=["Fund Explorer"])
 
 CACHE_DURATION_MINUTES = 15
+# Bumped when the cached list shape changes (e.g. a new field added), so stale
+# cache rows from before the change are ignored instead of failing validation.
+FUND_LIST_CACHE_KEY = "fund_list_v2"
 
 # Curated list of JSE-listed ETFs and US ETFs, verified against yfinance before shipping.
 # True SA unit trusts are not available via yfinance and are out of scope here.
 CURATED_FUNDS = {
     # --- South Africa (JSE-listed ETFs, .JO tickers) ---
-    "STX40.JO": {"name": "Satrix Top 40", "category": "SA Equity", "market": "SA"},
-    "STXQUA.JO": {"name": "Satrix Quality", "category": "SA Equity", "market": "SA"},
-    "STXDIV.JO": {"name": "Satrix Divi Plus", "category": "SA Equity", "market": "SA"},
-    "STXRAF.JO": {"name": "Satrix RAFI 40", "category": "SA Equity", "market": "SA"},
-    "STXFIN.JO": {"name": "Satrix Financial", "category": "SA Equity Sector", "market": "SA"},
-    "STXIND.JO": {"name": "Satrix Industrial", "category": "SA Equity Sector", "market": "SA"},
-    "STXRES.JO": {"name": "Satrix Resources", "category": "SA Equity Sector", "market": "SA"},
-    "STXPRO.JO": {"name": "Satrix Property", "category": "SA Property", "market": "SA"},
-    "STXWDM.JO": {"name": "Satrix MSCI World", "category": "Global Equity", "market": "SA"},
-    "STXEMG.JO": {"name": "Satrix MSCI Emerging Markets", "category": "Global Equity", "market": "SA"},
-    "STX500.JO": {"name": "Satrix S&P 500", "category": "Global Equity", "market": "SA"},
-    "STXNDQ.JO": {"name": "Satrix Nasdaq 100", "category": "Global Equity", "market": "SA"},
-    "STXGOV.JO": {"name": "Satrix SA Bond", "category": "SA Bonds", "market": "SA"},
-    "STXILB.JO": {"name": "Satrix ILBI", "category": "SA Bonds", "market": "SA"},
-    "STXCHN.JO": {"name": "Satrix MSCI China", "category": "Global Equity", "market": "SA"},
-    "CTOP50.JO": {"name": "CoreShares Top 50", "category": "SA Equity", "market": "SA"},
-    "SYGP.JO": {"name": "CoreShares SA Property", "category": "SA Property", "market": "SA"},
-    "SYG4IR.JO": {"name": "Sygnia 4IR Global Equity", "category": "Global Equity", "market": "SA"},
-    "SYGWD.JO": {"name": "Sygnia Itrix MSCI World", "category": "Global Equity", "market": "SA"},
-    "SYG500.JO": {"name": "Sygnia Itrix S&P 500", "category": "Global Equity", "market": "SA"},
-    "SYGEU.JO": {"name": "Sygnia Itrix EuroStoxx 50", "category": "Global Equity", "market": "SA"},
-    "SYGJP.JO": {"name": "Sygnia Itrix FTSE JSE Top 40", "category": "SA Equity", "market": "SA"},
-    "SYGUK.JO": {"name": "Sygnia Itrix FTSE 100", "category": "Global Equity", "market": "SA"},
-    "ETFSWX.JO": {"name": "1nvest Swix Top 40", "category": "SA Equity", "market": "SA"},
-    "ETFGLD.JO": {"name": "1nvest Gold", "category": "Commodity", "market": "SA"},
-    "ETFPLD.JO": {"name": "1nvest Palladium", "category": "Commodity", "market": "SA"},
-    "ETFPLT.JO": {"name": "1nvest Platinum", "category": "Commodity", "market": "SA"},
-    "GLD.JO": {"name": "NewGold", "category": "Commodity", "market": "SA"},
-    "NGPLD.JO": {"name": "NewPlat", "category": "Commodity", "market": "SA"},
+    "STX40.JO": {"name": "Satrix Top 40", "category": "SA Equity", "market": "SA", "description": "Tracks South Africa's 40 largest JSE-listed companies by market cap."},
+    "STXQUA.JO": {"name": "Satrix Quality", "category": "SA Equity", "market": "SA", "description": "Tracks JSE companies with strong profitability, low debt, and earnings stability."},
+    "STXDIV.JO": {"name": "Satrix Divi Plus", "category": "SA Equity", "market": "SA", "description": "Tracks the 30 highest dividend-yielding shares on the JSE."},
+    "STXRAF.JO": {"name": "Satrix RAFI 40", "category": "SA Equity", "market": "SA", "description": "Weights the JSE's top 40 shares by fundamentals like sales and cash flow, not market cap."},
+    "STXFIN.JO": {"name": "Satrix Financial", "category": "SA Equity Sector", "market": "SA", "description": "Tracks JSE-listed banks, insurers, and other financial services companies."},
+    "STXIND.JO": {"name": "Satrix Industrial", "category": "SA Equity Sector", "market": "SA", "description": "Tracks JSE-listed industrial sector companies, from retailers to media."},
+    "STXRES.JO": {"name": "Satrix Resources", "category": "SA Equity Sector", "market": "SA", "description": "Tracks JSE-listed mining and resources companies."},
+    "STXPRO.JO": {"name": "Satrix Property", "category": "SA Property", "market": "SA", "description": "Tracks JSE-listed real estate investment trusts and property companies."},
+    "STXWDM.JO": {"name": "Satrix MSCI World", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to developed-market equities worldwide."},
+    "STXEMG.JO": {"name": "Satrix MSCI Emerging Markets", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to emerging-market equities worldwide."},
+    "STX500.JO": {"name": "Satrix S&P 500", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to the 500 largest US companies."},
+    "STXNDQ.JO": {"name": "Satrix Nasdaq 100", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to the 100 largest Nasdaq-listed companies."},
+    "STXGOV.JO": {"name": "Satrix SA Bond", "category": "SA Bonds", "market": "SA", "description": "Tracks a basket of South African government bonds."},
+    "STXILB.JO": {"name": "Satrix ILBI", "category": "SA Bonds", "market": "SA", "description": "Tracks South African inflation-linked government bonds."},
+    "STXCHN.JO": {"name": "Satrix MSCI China", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to Chinese equities."},
+    "CTOP50.JO": {"name": "CoreShares Top 50", "category": "SA Equity", "market": "SA", "description": "Tracks South Africa's 50 largest JSE-listed companies."},
+    "SYGP.JO": {"name": "CoreShares SA Property", "category": "SA Property", "market": "SA", "description": "Tracks JSE-listed real estate investment trusts and property companies."},
+    "SYG4IR.JO": {"name": "Sygnia 4IR Global Equity", "category": "Global Equity", "market": "SA", "description": "Tracks global companies driving the Fourth Industrial Revolution, like AI and robotics."},
+    "SYGWD.JO": {"name": "Sygnia Itrix MSCI World", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to developed-market equities worldwide."},
+    "SYG500.JO": {"name": "Sygnia Itrix S&P 500", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to the 500 largest US companies."},
+    "SYGEU.JO": {"name": "Sygnia Itrix EuroStoxx 50", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to the 50 largest Eurozone companies."},
+    "SYGJP.JO": {"name": "Sygnia Itrix FTSE JSE Top 40", "category": "SA Equity", "market": "SA", "description": "Tracks South Africa's 40 largest JSE-listed companies."},
+    "SYGUK.JO": {"name": "Sygnia Itrix FTSE 100", "category": "Global Equity", "market": "SA", "description": "Rand-denominated access to the UK's 100 largest listed companies."},
+    "ETFSWX.JO": {"name": "1nvest Swix Top 40", "category": "SA Equity", "market": "SA", "description": "Tracks the JSE Top 40, weighted by shares actually available to local investors."},
+    "ETFGLD.JO": {"name": "1nvest Gold", "category": "Commodity", "market": "SA", "description": "Tracks the rand price of physical gold."},
+    "ETFPLD.JO": {"name": "1nvest Palladium", "category": "Commodity", "market": "SA", "description": "Tracks the rand price of physical palladium."},
+    "ETFPLT.JO": {"name": "1nvest Platinum", "category": "Commodity", "market": "SA", "description": "Tracks the rand price of physical platinum."},
+    "GLD.JO": {"name": "NewGold", "category": "Commodity", "market": "SA", "description": "Backed by physical gold bullion, tracking the rand gold price."},
+    "NGPLD.JO": {"name": "NewPlat", "category": "Commodity", "market": "SA", "description": "Backed by physical platinum, tracking the rand platinum price."},
     # --- United States (ETFs) ---
-    "SPY": {"name": "SPDR S&P 500", "category": "US Equity", "market": "US"},
-    "VOO": {"name": "Vanguard S&P 500", "category": "US Equity", "market": "US"},
-    "VTI": {"name": "Vanguard Total Stock Market", "category": "US Equity", "market": "US"},
-    "QQQ": {"name": "Invesco Nasdaq 100", "category": "US Equity", "market": "US"},
-    "DIA": {"name": "SPDR Dow Jones Industrial Average", "category": "US Equity", "market": "US"},
-    "IWM": {"name": "iShares Russell 2000", "category": "US Equity", "market": "US"},
-    "VXUS": {"name": "Vanguard Total International Stock", "category": "Global Equity", "market": "US"},
-    "VEA": {"name": "Vanguard Developed Markets", "category": "Global Equity", "market": "US"},
-    "VWO": {"name": "Vanguard Emerging Markets", "category": "Global Equity", "market": "US"},
-    "EFA": {"name": "iShares MSCI EAFE", "category": "Global Equity", "market": "US"},
-    "ARKK": {"name": "ARK Innovation ETF", "category": "US Equity", "market": "US"},
-    "XLK": {"name": "Technology Select Sector SPDR", "category": "US Equity Sector", "market": "US"},
-    "XLF": {"name": "Financial Select Sector SPDR", "category": "US Equity Sector", "market": "US"},
-    "XLE": {"name": "Energy Select Sector SPDR", "category": "US Equity Sector", "market": "US"},
-    "XLV": {"name": "Health Care Select Sector SPDR", "category": "US Equity Sector", "market": "US"},
-    "AGG": {"name": "iShares Core US Aggregate Bond", "category": "US Bonds", "market": "US"},
-    "BND": {"name": "Vanguard Total Bond Market", "category": "US Bonds", "market": "US"},
-    "TLT": {"name": "iShares 20+ Year Treasury Bond", "category": "US Bonds", "market": "US"},
-    "SHY": {"name": "iShares 1-3 Year Treasury Bond", "category": "US Bonds", "market": "US"},
-    "LQD": {"name": "iShares iBoxx Investment Grade Corporate Bond", "category": "US Bonds", "market": "US"},
-    "HYG": {"name": "iShares iBoxx High Yield Corporate Bond", "category": "US Bonds", "market": "US"},
-    "VNQ": {"name": "Vanguard Real Estate", "category": "US Property", "market": "US"},
-    "GLD": {"name": "SPDR Gold Shares", "category": "Commodity", "market": "US"},
-    "SLV": {"name": "iShares Silver Trust", "category": "Commodity", "market": "US"},
-    "VYM": {"name": "Vanguard High Dividend Yield", "category": "US Equity", "market": "US"},
-    "SCHD": {"name": "Schwab US Dividend Equity", "category": "US Equity", "market": "US"},
-    "AOR": {"name": "iShares Core Growth Allocation", "category": "Multi-Asset", "market": "US"},
-    "AOA": {"name": "iShares Core Aggressive Allocation", "category": "Multi-Asset", "market": "US"},
-    "VGK": {"name": "Vanguard FTSE Europe", "category": "Global Equity", "market": "US"},
-    "EWJ": {"name": "iShares MSCI Japan", "category": "Global Equity", "market": "US"},
-    "INDA": {"name": "iShares MSCI India", "category": "Global Equity", "market": "US"},
-    "EWZ": {"name": "iShares MSCI Brazil", "category": "Global Equity", "market": "US"},
-    "FXI": {"name": "iShares China Large-Cap", "category": "Global Equity", "market": "US"},
-    "URTH": {"name": "iShares MSCI World", "category": "Global Equity", "market": "US"},
+    "SPY": {"name": "SPDR S&P 500", "category": "US Equity", "market": "US", "description": "Tracks the S&P 500, the 500 largest publicly traded US companies."},
+    "VOO": {"name": "Vanguard S&P 500", "category": "US Equity", "market": "US", "description": "Low-cost tracker of the S&P 500, the 500 largest US companies."},
+    "VTI": {"name": "Vanguard Total Stock Market", "category": "US Equity", "market": "US", "description": "Tracks nearly the entire US stock market, small caps to large caps."},
+    "QQQ": {"name": "Invesco Nasdaq 100", "category": "US Equity", "market": "US", "description": "Tracks the 100 largest non-financial companies on the Nasdaq."},
+    "DIA": {"name": "SPDR Dow Jones Industrial Average", "category": "US Equity", "market": "US", "description": "Tracks the 30 blue-chip companies of the Dow Jones Industrial Average."},
+    "IWM": {"name": "iShares Russell 2000", "category": "US Equity", "market": "US", "description": "Tracks 2,000 US small-cap companies."},
+    "VXUS": {"name": "Vanguard Total International Stock", "category": "Global Equity", "market": "US", "description": "Tracks stocks across developed and emerging markets outside the US."},
+    "VEA": {"name": "Vanguard Developed Markets", "category": "Global Equity", "market": "US", "description": "Tracks large- and mid-cap stocks in developed markets outside the US."},
+    "VWO": {"name": "Vanguard Emerging Markets", "category": "Global Equity", "market": "US", "description": "Tracks stocks in emerging markets like China, India, and Brazil."},
+    "EFA": {"name": "iShares MSCI EAFE", "category": "Global Equity", "market": "US", "description": "Tracks developed-market stocks in Europe, Australasia, and the Far East."},
+    "ARKK": {"name": "ARK Innovation ETF", "category": "US Equity", "market": "US", "description": "Actively managed fund targeting disruptive innovation companies."},
+    "XLK": {"name": "Technology Select Sector SPDR", "category": "US Equity Sector", "market": "US", "description": "Tracks S&P 500 technology companies like Apple and Microsoft."},
+    "XLF": {"name": "Financial Select Sector SPDR", "category": "US Equity Sector", "market": "US", "description": "Tracks S&P 500 banks, insurers, and financial services companies."},
+    "XLE": {"name": "Energy Select Sector SPDR", "category": "US Equity Sector", "market": "US", "description": "Tracks S&P 500 oil, gas, and energy companies."},
+    "XLV": {"name": "Health Care Select Sector SPDR", "category": "US Equity Sector", "market": "US", "description": "Tracks S&P 500 pharmaceutical, biotech, and healthcare companies."},
+    "AGG": {"name": "iShares Core US Aggregate Bond", "category": "US Bonds", "market": "US", "description": "Broad exposure to US investment-grade bonds, government and corporate."},
+    "BND": {"name": "Vanguard Total Bond Market", "category": "US Bonds", "market": "US", "description": "Broad exposure to the entire US investment-grade bond market."},
+    "TLT": {"name": "iShares 20+ Year Treasury Bond", "category": "US Bonds", "market": "US", "description": "Tracks long-dated US Treasury bonds, sensitive to interest rate moves."},
+    "SHY": {"name": "iShares 1-3 Year Treasury Bond", "category": "US Bonds", "market": "US", "description": "Tracks short-dated US Treasury bonds, with low interest rate sensitivity."},
+    "LQD": {"name": "iShares iBoxx Investment Grade Corporate Bond", "category": "US Bonds", "market": "US", "description": "Tracks US investment-grade corporate bonds."},
+    "HYG": {"name": "iShares iBoxx High Yield Corporate Bond", "category": "US Bonds", "market": "US", "description": "Tracks higher-yielding, lower-rated US corporate bonds."},
+    "VNQ": {"name": "Vanguard Real Estate", "category": "US Property", "market": "US", "description": "Tracks US real estate investment trusts (REITs)."},
+    "GLD": {"name": "SPDR Gold Shares", "category": "Commodity", "market": "US", "description": "Backed by physical gold bullion, tracking the dollar gold price."},
+    "SLV": {"name": "iShares Silver Trust", "category": "Commodity", "market": "US", "description": "Backed by physical silver bullion, tracking the dollar silver price."},
+    "VYM": {"name": "Vanguard High Dividend Yield", "category": "US Equity", "market": "US", "description": "Tracks US companies with above-average dividend yields."},
+    "SCHD": {"name": "Schwab US Dividend Equity", "category": "US Equity", "market": "US", "description": "Tracks US companies with a strong history of paying dividends."},
+    "AOR": {"name": "iShares Core Growth Allocation", "category": "Multi-Asset", "market": "US", "description": "A diversified portfolio of roughly 60% stocks and 40% bonds."},
+    "AOA": {"name": "iShares Core Aggressive Allocation", "category": "Multi-Asset", "market": "US", "description": "A diversified portfolio of roughly 80% stocks and 20% bonds."},
+    "VGK": {"name": "Vanguard FTSE Europe", "category": "Global Equity", "market": "US", "description": "Tracks large- and mid-cap stocks across developed Europe."},
+    "EWJ": {"name": "iShares MSCI Japan", "category": "Global Equity", "market": "US", "description": "Tracks large- and mid-cap Japanese stocks."},
+    "INDA": {"name": "iShares MSCI India", "category": "Global Equity", "market": "US", "description": "Tracks large- and mid-cap Indian stocks."},
+    "EWZ": {"name": "iShares MSCI Brazil", "category": "Global Equity", "market": "US", "description": "Tracks large- and mid-cap Brazilian stocks."},
+    "FXI": {"name": "iShares China Large-Cap", "category": "Global Equity", "market": "US", "description": "Tracks the largest Chinese companies listed in Hong Kong."},
+    "URTH": {"name": "iShares MSCI World", "category": "Global Equity", "market": "US", "description": "Tracks large- and mid-cap stocks across developed markets worldwide."},
 }
 
 executor = ThreadPoolExecutor(max_workers=8)
@@ -181,7 +184,7 @@ async def save_cached(cache_key: str, data: dict) -> dict:
 
 
 async def get_fund_list_data() -> dict:
-    cached = await get_cached("fund_list")
+    cached = await get_cached(FUND_LIST_CACHE_KEY)
     if cached:
         return cached["data"]
 
@@ -201,10 +204,11 @@ async def get_fund_list_data() -> dict:
             "name": meta["name"],
             "category": meta["category"],
             "market": meta["market"],
+            "description": meta["description"],
             **quote,
         })
 
-    await save_cached("fund_list", funds)
+    await save_cached(FUND_LIST_CACHE_KEY, funds)
     return funds
 
 
@@ -226,7 +230,7 @@ async def list_funds(
         q_lower = q.lower()
         funds = [f for f in funds if q_lower in f["ticker"].lower() or q_lower in f["name"].lower()]
 
-    cache = await db.fund_cache.find_one({"key": "fund_list"}, {"_id": 0})
+    cache = await db.fund_cache.find_one({"key": FUND_LIST_CACHE_KEY}, {"_id": 0})
     last_updated = cache["last_updated"] if cache else datetime.now(timezone.utc)
 
     return FundListResponse(
@@ -260,6 +264,7 @@ async def get_fund_detail(ticker: str, user_id: str = Depends(get_current_user_i
         name=meta["name"],
         category=meta["category"],
         market=meta["market"],
+        description=meta["description"],
         price=data["price"],
         change=data["change"],
         change_percent=data["change_percent"],

@@ -132,6 +132,7 @@ const FundExplorer = () => {
                   <Badge>{detail.market}</Badge>
                 </div>
                 <p className="text-slate-500 mt-1">{detail.category}</p>
+                <p className="text-sm text-slate-500 mt-1 max-w-md">{detail.description}</p>
               </div>
               <div className="text-right">
                 <div className="text-3xl font-bold" data-testid="fund-detail-price">{detail.price.toLocaleString()}</div>
@@ -268,6 +269,7 @@ const FundExplorer = () => {
                     <Badge variant="outline" className="shrink-0">{fund.ticker}</Badge>
                   </div>
                   <div className="text-sm text-slate-500">{fund.category} · {fund.market}</div>
+                  <p className="text-sm text-slate-500 mt-1 line-clamp-1">{fund.description}</p>
                 </div>
                 <div className="text-right shrink-0">
                   <div className="font-semibold">{fund.price.toLocaleString()}</div>

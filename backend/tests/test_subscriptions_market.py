@@ -40,14 +40,14 @@ class TestSubscriptionPricing:
         assert free_tier["name"] == "Free", "Free tier name should be 'Free'"
     
     def test_premium_tier_pricing(self):
-        """Premium tier should have R299/month and R1999/year"""
+        """Premium tier should have R299/month and R2499/year"""
         response = requests.get(f"{BASE_URL}/api/subscriptions/pricing")
         data = response.json()
 
         premium_tier = next((t for t in data["tiers"] if t["tier"] == "premium"), None)
         assert premium_tier is not None, "Premium tier not found"
         assert premium_tier["monthly_price"] == 299.0, f"Premium monthly should be R299, got {premium_tier['monthly_price']}"
-        assert premium_tier["annual_price"] == 1999.0, f"Premium annual should be R1999, got {premium_tier['annual_price']}"
+        assert premium_tier["annual_price"] == 2499.0, f"Premium annual should be R2499, got {premium_tier['annual_price']}"
         assert premium_tier["name"] == "Premium", "Premium tier name should be 'Premium'"
     
     def test_free_tier_features(self):
