@@ -39,7 +39,6 @@ import SecurityPage from "@/pages/SecurityPage";
 import CommunityPage from "@/pages/CommunityPage";
 import AccountPage from "@/pages/AccountPage";
 import TaxPlanningHub from "@/pages/TaxPlanningHub";
-import DocumentReader from "@/pages/DocumentReader";
 import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
 import FundExplorer from "@/pages/FundExplorer";
 import TFSACalculator from "@/pages/TFSACalculator";
@@ -192,7 +191,6 @@ function App() {
                   <Route path="/community" element={<ProtectedRoute><CommunityPage /></ProtectedRoute>} />
                   <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
                   <Route path="/analytics" element={<AdminRoute><AnalyticsDashboard /></AdminRoute>} />
-                  <Route path="/document-reader" element={<ProtectedRoute><GatedCalculator path="/document-reader"><DocumentReader /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/funds" element={<ProtectedRoute><GatedCalculator path="/funds"><FundExplorer /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
