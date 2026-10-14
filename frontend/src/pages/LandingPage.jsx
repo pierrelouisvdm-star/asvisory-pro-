@@ -54,6 +54,7 @@ const SA_CALCULATOR_CATEGORIES = [
       { name: 'Fee Comparison (EAC)', desc: 'See how fees impact your returns' },
       { name: 'Compound Interest', desc: 'See the power of compounding' },
       { name: 'TFSA Calculator', desc: 'Maximize tax-free growth' },
+      { name: 'Fund Explorer', desc: 'Compare JSE & US ETF performance' },
     ]
   },
   {
@@ -131,6 +132,7 @@ const US_CALCULATOR_CATEGORIES = [
       { name: 'Net Worth Tracker', desc: 'Assets, liabilities & wealth score' },
       { name: 'Mortgage Calculator', desc: 'Payments, amortization & equity' },
       { name: '529 College Savings', desc: 'Education funding with tax benefits' },
+      { name: 'Fund Explorer', desc: 'Compare JSE & US ETF performance' },
     ]
   },
 ];
@@ -990,11 +992,13 @@ export const LandingPage = () => {
                   'FIRE Calculator, Lean, Fat & Coast FIRE',
                   'RSU, AMT, Paycheck & Capital Gains Tax',
                   'Home Affordability & Rent vs Buy',
+                  'Fund Explorer, JSE & US ETFs',
                   'Professional PDF Reports',
                   'AI Financial Assistant',
                 ] : [
                   '20+ Calculators',
                   '2026/27 Tax Hub',
+                  'Fund Explorer, JSE & US ETFs',
                   'Professional Reports',
                   'Planning Tools',
                   'AI Assistant',
