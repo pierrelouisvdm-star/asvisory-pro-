@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
+import { useJurisdiction } from '@/context/JurisdictionContext';
 
 export const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -39,6 +40,21 @@ export const AdminRoute = ({ children }) => {
   }
 
   if (!user?.is_admin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
+// Guards a page whose content is hardcoded for one jurisdiction's tax law
+// (e.g. SARS rules or IRS rules) against being viewed under the other —
+// switching the jurisdiction toggle, or a stale link, now bounces away
+// instead of leaving mismatched content on screen.
+export const JurisdictionRoute = ({ require, children }) => {
+  const { isUS, isZA } = useJurisdiction();
+  const matches = require === 'US' ? isUS : isZA;
+
+  if (!matches) {
     return <Navigate to="/" replace />;
   }
 
