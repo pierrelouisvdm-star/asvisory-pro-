@@ -148,7 +148,7 @@ export const Header = () => {
           <nav className="hidden lg:flex items-center gap-1">
             <NavLink to="/" icon={Home}>Dashboard</NavLink>
             <NavLink to="/clients" icon={Users}>Clients</NavLink>
-            <NavLink to="/analytics" icon={BarChart3}>Analytics</NavLink>
+            {user?.is_admin && <NavLink to="/analytics" icon={BarChart3}>Analytics</NavLink>}
             
             {/* Calculators Button */}
             <button
@@ -342,6 +342,7 @@ export const Header = () => {
                 <Users className="h-5 w-5 text-primary" />
                 Clients
               </Link>
+              {user?.is_admin && (
               <Link
                 to="/analytics"
                 onClick={() => setIsMenuOpen(false)}
@@ -350,6 +351,7 @@ export const Header = () => {
                 <BarChart3 className="h-5 w-5 text-primary" />
                 Analytics
               </Link>
+              )}
               <Link
                 to="/document-reader"
                 onClick={() => setIsMenuOpen(false)}
