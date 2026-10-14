@@ -260,6 +260,7 @@ export const PricingPage = () => {
                         <p className="text-emerald-400 text-sm mt-2">
                           Only ${((isFoundingActive ? founding.price : ANNUAL_PRICE_USD) / 12).toFixed(2)}/month • Save ${isFoundingActive ? (PREMIUM_PRICE_USD * 12 - founding.price) : ANNUAL_SAVINGS_USD}
                         </p>
+                        <p className="text-slate-500 text-xs mt-1">7-day money-back guarantee</p>
                       </>
                     ) : (
                       <>
@@ -288,6 +289,7 @@ export const PricingPage = () => {
                         <p className="text-emerald-400 text-sm mt-2">
                           Only R{Math.round((isFoundingActive ? founding.price : ANNUAL_PRICE) / 12)}/month • Save R{isFoundingActive ? (PREMIUM_PRICE * 12 - founding.price) : ANNUAL_SAVINGS}
                         </p>
+                        <p className="text-slate-500 text-xs mt-1">7-day money-back guarantee</p>
                       </>
                     ) : (
                       <>

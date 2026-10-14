@@ -125,3 +125,5 @@ class UserSubscriptionInfo(BaseModel):
     payment_method: Optional[str] = None
     last_payment_amount: Optional[float] = None
     founding_price: Optional[float] = None
+    refund_eligible: bool = False
+    refund_deadline: Optional[datetime] = None

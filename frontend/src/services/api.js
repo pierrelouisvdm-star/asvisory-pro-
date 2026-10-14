@@ -371,6 +371,14 @@ export const paymentsApi = {
     });
     return handleResponse(response);
   },
+
+  requestRefund: async () => {
+    const response = await fetch(`${API_URL}/api/payments/paystack/refund`, {
+      method: 'POST',
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
 };
 
 // Coupon API
