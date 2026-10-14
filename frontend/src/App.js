@@ -81,7 +81,7 @@ import { SubscriptionProvider } from "@/context/SubscriptionContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { JurisdictionProvider } from "@/context/JurisdictionContext";
 import { CalculatorGate } from "@/components/FeatureGate";
-import { ProtectedRoute, AdminRoute } from "@/components/ProtectedRoute";
+import { ProtectedRoute, AdminRoute, JurisdictionRoute } from "@/components/ProtectedRoute";
 import { AIAdvisorButton } from "@/components/AIAdvisorChat";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { JurisdictionGate } from "@/components/JurisdictionGate";
@@ -167,19 +167,19 @@ function App() {
                   {/* FREE Calculators (require auth but available to all tiers) */}
                   <Route path="/future-value" element={<ProtectedRoute><FutureValueCalculator /></ProtectedRoute>} />
                   <Route path="/compound-interest" element={<ProtectedRoute><CompoundInterestCalculator /></ProtectedRoute>} />
-                  <Route path="/bond" element={<ProtectedRoute><BondCalculator /></ProtectedRoute>} />
-                  <Route path="/car-finance" element={<ProtectedRoute><CarFinanceCalculator /></ProtectedRoute>} />
+                  <Route path="/bond" element={<ProtectedRoute><JurisdictionRoute require="SA"><BondCalculator /></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/car-finance" element={<ProtectedRoute><JurisdictionRoute require="SA"><CarFinanceCalculator /></JurisdictionRoute></ProtectedRoute>} />
                   
                   {/* PAID Calculators (Standard+) */}
                   <Route path="/life-insurance" element={<ProtectedRoute><GatedCalculator path="/life-insurance"><LifeInsuranceCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-disability" element={<ProtectedRoute><GatedCalculator path="/income-disability"><IncomeDisabilityCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/retirement" element={<ProtectedRoute><GatedCalculator path="/retirement"><RetirementCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/living-annuity" element={<ProtectedRoute><GatedCalculator path="/living-annuity"><LivingAnnuityCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/retirement-tax" element={<ProtectedRoute><GatedCalculator path="/retirement-tax"><RetirementTaxCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/tax-directive" element={<ProtectedRoute><GatedCalculator path="/tax-directive"><TaxDirectiveSimulator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/tax-planning" element={<ProtectedRoute><GatedCalculator path="/tax-planning"><TaxPlanningHub /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/tax-calculator"><TaxCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/estate-planning" element={<ProtectedRoute><GatedCalculator path="/estate-planning"><EstatePlanningCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/living-annuity" element={<ProtectedRoute><JurisdictionRoute require="SA"><GatedCalculator path="/living-annuity"><LivingAnnuityCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/retirement-tax" element={<ProtectedRoute><JurisdictionRoute require="SA"><GatedCalculator path="/retirement-tax"><RetirementTaxCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/tax-directive" element={<ProtectedRoute><JurisdictionRoute require="SA"><GatedCalculator path="/tax-directive"><TaxDirectiveSimulator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/tax-planning" element={<ProtectedRoute><JurisdictionRoute require="SA"><GatedCalculator path="/tax-planning"><TaxPlanningHub /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/tax-calculator" element={<ProtectedRoute><JurisdictionRoute require="SA"><GatedCalculator path="/tax-calculator"><TaxCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/estate-planning" element={<ProtectedRoute><JurisdictionRoute require="SA"><GatedCalculator path="/estate-planning"><EstatePlanningCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
                   <Route path="/emergency-fund" element={<ProtectedRoute><GatedCalculator path="/emergency-fund"><EmergencyFundCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/debt-payoff" element={<ProtectedRoute><GatedCalculator path="/debt-payoff"><DebtPayoffCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/education-savings" element={<ProtectedRoute><GatedCalculator path="/education-savings"><EducationSavingsCalculator /></GatedCalculator></ProtectedRoute>} />
@@ -193,48 +193,48 @@ function App() {
                   <Route path="/analytics" element={<AdminRoute><AnalyticsDashboard /></AdminRoute>} />
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/funds" element={<ProtectedRoute><GatedCalculator path="/funds"><FundExplorer /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/tfsa-calculator" element={<ProtectedRoute><JurisdictionRoute require="SA"><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
                   <Route path="/clients" element={<ProtectedRoute><ClientsPage /></ProtectedRoute>} />
                   <Route path="/clients/:clientId" element={<ProtectedRoute><ClientProfilePage /></ProtectedRoute>} />
                   <Route path="/clients/:clientId/portfolio" element={<ProtectedRoute><PortfolioTrackerPage /></ProtectedRoute>} />
 
                   {/* US Calculators */}
-                  <Route path="/us/tax-calculator" element={<ProtectedRoute><GatedCalculator path="/us/tax-calculator"><TaxCalculatorUS /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/401k-calculator" element={<ProtectedRoute><GatedCalculator path="/us/401k-calculator"><Calculator401k /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/roth-ira" element={<ProtectedRoute><GatedCalculator path="/us/roth-ira"><RothIRACalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/social-security" element={<ProtectedRoute><GatedCalculator path="/us/social-security"><SocialSecurityCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/hsa" element={<ProtectedRoute><GatedCalculator path="/us/hsa"><HSACalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/529" element={<ProtectedRoute><GatedCalculator path="/us/529"><Calculator529 /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/fire-calculator" element={<ProtectedRoute><GatedCalculator path="/us/fire-calculator"><FIRECalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/student-loan" element={<ProtectedRoute><GatedCalculator path="/us/student-loan"><StudentLoanCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/self-employed" element={<ProtectedRoute><GatedCalculator path="/us/self-employed"><SelfEmployedTaxCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/tax-calculator" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/tax-calculator"><TaxCalculatorUS /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/401k-calculator" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/401k-calculator"><Calculator401k /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/roth-ira" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/roth-ira"><RothIRACalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/social-security" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/social-security"><SocialSecurityCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/hsa" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/hsa"><HSACalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/529" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/529"><Calculator529 /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/fire-calculator" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/fire-calculator"><FIRECalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/student-loan" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/student-loan"><StudentLoanCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/self-employed" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/self-employed"><SelfEmployedTaxCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
                   {/* US Calculators, Batch 2 */}
-                  <Route path="/us/capital-gains" element={<ProtectedRoute><GatedCalculator path="/us/capital-gains"><CapitalGainsTaxCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/rmd" element={<ProtectedRoute><GatedCalculator path="/us/rmd"><RMDCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/roth-conversion" element={<ProtectedRoute><GatedCalculator path="/us/roth-conversion"><RothConversionCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/paycheck" element={<ProtectedRoute><GatedCalculator path="/us/paycheck"><PaycheckCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/capital-gains" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/capital-gains"><CapitalGainsTaxCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/rmd" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/rmd"><RMDCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/roth-conversion" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/roth-conversion"><RothConversionCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/paycheck" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/paycheck"><PaycheckCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
                   {/* US Calculators, Tier 1 */}
-                  <Route path="/us/irmaa" element={<ProtectedRoute><GatedCalculator path="/us/irmaa"><MedicareIRMAA /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/w4-optimizer" element={<ProtectedRoute><GatedCalculator path="/us/w4-optimizer"><W4Optimizer /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/home-affordability" element={<ProtectedRoute><GatedCalculator path="/us/home-affordability"><HomeAffordabilityCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/rent-vs-buy" element={<ProtectedRoute><GatedCalculator path="/us/rent-vs-buy"><RentVsBuyCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/rsu-calculator" element={<ProtectedRoute><GatedCalculator path="/us/rsu-calculator"><RSUCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/irmaa" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/irmaa"><MedicareIRMAA /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/w4-optimizer" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/w4-optimizer"><W4Optimizer /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/home-affordability" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/home-affordability"><HomeAffordabilityCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/rent-vs-buy" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/rent-vs-buy"><RentVsBuyCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/rsu-calculator" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/rsu-calculator"><RSUCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
                   {/* US Calculators, Tier 2 */}
-                  <Route path="/us/aca-subsidy" element={<ProtectedRoute><GatedCalculator path="/us/aca-subsidy"><ACASubsidyCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/mega-backdoor-roth" element={<ProtectedRoute><GatedCalculator path="/us/mega-backdoor-roth"><MegaBackdoorRothCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/freelancer-rate" element={<ProtectedRoute><GatedCalculator path="/us/freelancer-rate"><FreelancerRateCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/dca-vs-lump-sum" element={<ProtectedRoute><GatedCalculator path="/us/dca-vs-lump-sum"><DCAvsLumpSumCalculator /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/amt-calculator" element={<ProtectedRoute><GatedCalculator path="/us/amt-calculator"><AMTCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/aca-subsidy" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/aca-subsidy"><ACASubsidyCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/mega-backdoor-roth" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/mega-backdoor-roth"><MegaBackdoorRothCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/freelancer-rate" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/freelancer-rate"><FreelancerRateCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/dca-vs-lump-sum" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/dca-vs-lump-sum"><DCAvsLumpSumCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/amt-calculator" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/amt-calculator"><AMTCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
                   {/* US Calculators, Tier 3 */}
-                  <Route path="/us/fi-score" element={<ProtectedRoute><FinancialIndependenceScore /></ProtectedRoute>} />
-                  <Route path="/us/tax-calendar" element={<ProtectedRoute><USTaxCalendar /></ProtectedRoute>} />
-                  <Route path="/us/savings-comparison" element={<ProtectedRoute><GatedCalculator path="/us/savings-comparison"><SavingsComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/us/fi-score" element={<ProtectedRoute><JurisdictionRoute require="US"><FinancialIndependenceScore /></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/tax-calendar" element={<ProtectedRoute><JurisdictionRoute require="US"><USTaxCalendar /></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/savings-comparison" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/savings-comparison"><SavingsComparisonCalculator /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
                   {/* Growth & Viral Tools */}
-                  <Route path="/us/tax-savings-finder" element={<ProtectedRoute><GatedCalculator path="/us/tax-savings-finder"><TaxSavingsFinder /></GatedCalculator></ProtectedRoute>} />
-                  <Route path="/us/tax-comparison-2025" element={<ProtectedRoute><TaxComparison2025 /></ProtectedRoute>} />
+                  <Route path="/us/tax-savings-finder" element={<ProtectedRoute><JurisdictionRoute require="US"><GatedCalculator path="/us/tax-savings-finder"><TaxSavingsFinder /></GatedCalculator></JurisdictionRoute></ProtectedRoute>} />
+                  <Route path="/us/tax-comparison-2025" element={<ProtectedRoute><JurisdictionRoute require="US"><TaxComparison2025 /></JurisdictionRoute></ProtectedRoute>} />
                   {/* Public landing page, no login required */}
-                  <Route path="/tools" element={<PublicToolsPage />} />
+                  <Route path="/tools" element={<JurisdictionRoute require="US"><PublicToolsPage /></JurisdictionRoute>} />
                 </Routes>
               </AppLayout>
               <Toaster position="top-right" />

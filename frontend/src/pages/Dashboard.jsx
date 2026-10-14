@@ -109,6 +109,7 @@ const debtCalculators = [
     path: '/bond',
     features: ['Amortization', 'Extra Payments', 'Interest Savings'],
     isFree: true,
+    isSAOnly: true,
   },
   {
     id: 'car-finance',
@@ -119,6 +120,7 @@ const debtCalculators = [
     path: '/car-finance',
     features: ['Loan vs Lease', 'Total Cost', 'Payment Schedule'],
     isFree: false,
+    isSAOnly: true,
   },
   {
     id: 'debt-payoff',
@@ -264,6 +266,7 @@ const planningTools = [
     path: '/estate-planning',
     features: ['Estate Duty', 'Executor Fees', 'Liquidity'],
     isFree: false,
+    isSAOnly: true,
   },
   {
     id: 'education-savings',
