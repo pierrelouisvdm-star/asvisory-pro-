@@ -27,6 +27,7 @@ PAYSTACK_BASE_URL = "https://api.paystack.co"
 class InitializePaymentRequest(BaseModel):
     billing_cycle: BillingCycle
     origin_url: str
+    jurisdiction: str = "ZA"  # "ZA" or "US" — determines currency (zar/usd)
 
 
 @router.post("/paystack/initialize")
@@ -41,17 +42,19 @@ async def initialize_paystack_payment(
     if payload.billing_cycle not in PRICING[SubscriptionTier.PREMIUM]:
         raise HTTPException(status_code=400, detail="Invalid billing cycle")
 
-    amount_rand = PRICING[SubscriptionTier.PREMIUM][payload.billing_cycle]["zar"]
+    currency = "usd" if payload.jurisdiction == "US" else "zar"
+
+    amount = PRICING[SubscriptionTier.PREMIUM][payload.billing_cycle][currency]
     if payload.billing_cycle == BillingCycle.ANNUAL:
         existing_sub = await db.subscriptions.find_one({"user_id": current_user["id"]})
-        if existing_sub and existing_sub.get("founding_member") and existing_sub.get("founding_currency") == "zar":
+        if existing_sub and existing_sub.get("founding_member") and existing_sub.get("founding_currency") == currency:
             # Founding members keep their locked-in annual price on every renewal
-            amount_rand = existing_sub["founding_price"]
+            amount = existing_sub["founding_price"]
         else:
-            zar_founding_count = await count_founding_members_by_currency(db, "zar")
-            if zar_founding_count < FOUNDING_MEMBER_LIMIT_PER_JURISDICTION:
-                amount_rand = FOUNDING_PRICING["zar"]
-    amount_kobo = int(round(amount_rand * 100))
+            currency_founding_count = await count_founding_members_by_currency(db, currency)
+            if currency_founding_count < FOUNDING_MEMBER_LIMIT_PER_JURISDICTION:
+                amount = FOUNDING_PRICING[currency]
+    amount_subunits = int(round(amount * 100))
 
     origin = payload.origin_url.rstrip("/")
     callback_url = f"{origin}/payment/success"
@@ -63,8 +66,8 @@ async def initialize_paystack_payment(
                 headers={"Authorization": f"Bearer {PAYSTACK_SECRET_KEY}"},
                 json={
                     "email": current_user["email"],
-                    "amount": amount_kobo,
-                    "currency": "ZAR",
+                    "amount": amount_subunits,
+                    "currency": currency.upper(),
                     "callback_url": callback_url,
                     "metadata": {
                         "user_id": current_user["id"],
@@ -144,19 +147,21 @@ async def process_paystack_charge(data: dict):
         logger.info(f"Duplicate Paystack charge ignored: {reference}")
         return
 
-    amount_rand = (data.get("amount") or 0) / 100
+    amount_major = (data.get("amount") or 0) / 100
     metadata = data.get("metadata") or {}
     user_id = metadata.get("user_id", "")
     billing_cycle = metadata.get("billing_cycle", "monthly")
     email = (data.get("customer") or {}).get("email", "")
     status = data.get("status", "")
+    currency = (data.get("currency") or "ZAR").lower()
 
     await db.paystack_transactions.update_one(
         {"reference": reference},
         {"$set": {
             "reference": reference,
             "status": status,
-            "amount": amount_rand,
+            "amount": amount_major,
+            "currency": currency,
             "user_id": user_id,
             "email": email,
             "billing_cycle": billing_cycle,
@@ -167,14 +172,14 @@ async def process_paystack_charge(data: dict):
     )
 
     if status == "success":
-        await activate_premium_subscription(user_id, email, reference, amount_rand, billing_cycle)
+        await activate_premium_subscription(user_id, email, reference, amount_major, billing_cycle, currency)
         await db.paystack_transactions.update_one(
             {"reference": reference},
             {"$set": {"processed": True, "processed_at": datetime.now(timezone.utc)}}
         )
 
 
-async def activate_premium_subscription(user_id: str, email: str, reference: str, amount: float, billing_cycle: str):
+async def activate_premium_subscription(user_id: str, email: str, reference: str, amount: float, billing_cycle: str, currency: str = "zar"):
     """Activate or extend the user's premium subscription after a successful Paystack charge."""
     user = None
     if user_id:
@@ -204,6 +209,7 @@ async def activate_premium_subscription(user_id: str, email: str, reference: str
         "billing_cycle": billing_cycle,
         "status": "active",
         "payment_method": "paystack",
+        "currency": currency,
         "current_period_start": now,
         "current_period_end": period_end,
         "last_payment_id": reference,
@@ -211,12 +217,12 @@ async def activate_premium_subscription(user_id: str, email: str, reference: str
         "last_payment_date": now,
         "updated_at": now,
     }
-    is_founding_payment = billing_cycle == "annual" and amount == FOUNDING_PRICING["zar"]
+    is_founding_payment = billing_cycle == "annual" and amount == FOUNDING_PRICING.get(currency)
     if is_founding_payment:
         update_fields.update({
             "founding_member": True,
-            "founding_price": FOUNDING_PRICING["zar"],
-            "founding_currency": "zar",
+            "founding_price": FOUNDING_PRICING[currency],
+            "founding_currency": currency,
             "priority_support": True,
         })
     update_fields.update(await compute_community_grant(db, existing_sub, is_founding_payment))

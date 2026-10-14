@@ -352,13 +352,14 @@ export const subscriptionApi = {
 
 // Payments API (Paystack)
 export const paymentsApi = {
-  initializePaystack: async (billingCycle) => {
+  initializePaystack: async (billingCycle, jurisdiction = 'ZA') => {
     const response = await fetch(`${API_URL}/api/payments/paystack/initialize`, {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify({
         billing_cycle: billingCycle,
         origin_url: window.location.origin,
+        jurisdiction,
       }),
     });
     return handleResponse(response);
