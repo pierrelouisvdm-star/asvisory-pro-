@@ -7,7 +7,7 @@ import {
   Umbrella, PiggyBank, Receipt, ScrollText, ShieldAlert, CreditCard, 
   GraduationCap, Wallet, Landmark, Users, LogIn, LogOut, User, 
   BarChart3, GitCompare, ArrowRightLeft, Crown, LineChart, Briefcase, 
-  Target, FileText, Home, Settings, Grid3X3, Scale, ChevronDown, ChevronRight,
+  Target, Home, Settings, Grid3X3, Scale, ChevronDown, ChevronRight,
   Globe2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -86,7 +86,6 @@ const allCalculators = [
 
 // Quick access tools
 const quickTools = [
-  { path: '/document-reader', label: 'AI Doc Reader', icon: FileText },
   { path: '/financial-literacy', label: 'Literacy Quiz', icon: GraduationCap },
 ];
 
@@ -166,7 +165,6 @@ export const Header = () => {
             </button>
 
             {/* Quick Tools */}
-            <NavLink to="/document-reader" icon={FileText}>AI Docs</NavLink>
             {!isUS && <NavLink to="/tax-planning" icon={Receipt}>Tax Hub</NavLink>}
             {hasCommunityAccess && (
               <Link
@@ -353,14 +351,6 @@ export const Header = () => {
                 Analytics
               </Link>
               )}
-              <Link
-                to="/document-reader"
-                onClick={() => setIsMenuOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
-              >
-                <FileText className="h-5 w-5 text-primary" />
-                AI Document Reader
-              </Link>
               {!isUS && (
               <Link
                 to="/tax-planning"

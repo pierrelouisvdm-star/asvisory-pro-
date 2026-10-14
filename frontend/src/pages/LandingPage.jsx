@@ -926,7 +926,6 @@ export const LandingPage = () => {
                   { label: 'Emergency Fund Calculator', included: true },
                   { label: '14+ Premium Calculators', included: false },
                   { label: 'PDF Reports', included: false },
-                  { label: 'AI Document Analysis', included: false },
                 ]).map(({ label, included }) => (
                   <li key={label} className="flex items-center gap-3">
                     <CheckCircle2 className={`h-5 w-5 flex-shrink-0 ${included ? 'text-emerald-600' : 'text-muted-foreground/30'}`} />

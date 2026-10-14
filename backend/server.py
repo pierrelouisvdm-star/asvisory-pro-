@@ -43,7 +43,6 @@ from routes.analytics import router as analytics_router
 from routes.net_worth import router as net_worth_router
 from routes.audit import router as audit_router
 from routes.payments import router as payments_router
-from routes.documents import router as documents_router
 from routes.admin import router as admin_router
 from routes.transactions import router as transactions_router
 from routes.growth import router as growth_router
@@ -65,7 +64,6 @@ api_router.include_router(analytics_router)
 api_router.include_router(net_worth_router)
 api_router.include_router(audit_router)
 api_router.include_router(payments_router)
-api_router.include_router(documents_router)
 api_router.include_router(admin_router)
 api_router.include_router(transactions_router)
 api_router.include_router(growth_router)

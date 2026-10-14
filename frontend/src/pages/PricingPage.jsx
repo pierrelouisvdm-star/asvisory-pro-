@@ -198,7 +198,6 @@ export const PricingPage = () => {
                   { label: 'Emergency Fund Calculator', included: true },
                   { label: '14+ Premium Calculators', included: false },
                   { label: 'PDF Reports', included: false },
-                  { label: 'AI Document Analysis', included: false },
                 ]).map(({ label, included }) => (
                   <div key={label} className="flex items-center gap-3 p-2">
                     <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center ${included ? 'bg-emerald-500/20' : 'bg-slate-700/50'}`}>
