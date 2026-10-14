@@ -22,6 +22,29 @@ export const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+export const AdminRoute = ({ children }) => {
+  const { isAuthenticated, loading, user } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse text-slate-500">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" state={{ from: location }} replace />;
+  }
+
+  if (!user?.is_admin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+};
+
 export const PublicOnlyRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   const location = useLocation();

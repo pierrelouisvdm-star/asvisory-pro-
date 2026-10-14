@@ -81,7 +81,7 @@ import { SubscriptionProvider } from "@/context/SubscriptionContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { JurisdictionProvider } from "@/context/JurisdictionContext";
 import { CalculatorGate } from "@/components/FeatureGate";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { ProtectedRoute, AdminRoute } from "@/components/ProtectedRoute";
 import { AIAdvisorButton } from "@/components/AIAdvisorChat";
 import { InstallPrompt } from "@/components/InstallPrompt";
 import { JurisdictionGate } from "@/components/JurisdictionGate";
@@ -190,7 +190,7 @@ function App() {
                   <Route path="/security" element={<ProtectedRoute><SecurityPage /></ProtectedRoute>} />
                   <Route path="/community" element={<ProtectedRoute><CommunityPage /></ProtectedRoute>} />
                   <Route path="/account" element={<ProtectedRoute><AccountPage /></ProtectedRoute>} />
-                  <Route path="/analytics" element={<ProtectedRoute><AnalyticsDashboard /></ProtectedRoute>} />
+                  <Route path="/analytics" element={<AdminRoute><AnalyticsDashboard /></AdminRoute>} />
                   <Route path="/document-reader" element={<ProtectedRoute><GatedCalculator path="/document-reader"><DocumentReader /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
