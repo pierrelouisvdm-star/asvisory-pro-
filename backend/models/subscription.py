@@ -20,7 +20,7 @@ PRICING = {
     },
     SubscriptionTier.PREMIUM: {
         BillingCycle.MONTHLY: {"zar": 299.0, "usd": 22.0},
-        BillingCycle.ANNUAL: {"zar": 1999.0, "usd": 199.0},  # ZAR: ~R1,589 saved vs monthly; USD: ~$65 saved vs monthly
+        BillingCycle.ANNUAL: {"zar": 2499.0, "usd": 249.0},  # ZAR: ~R1,089 saved vs monthly; USD: ~$15 saved vs monthly
     },
 }
 

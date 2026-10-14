@@ -507,8 +507,8 @@ export const LandingPage = () => {
       { value: 'PDF', label: 'Instant Reports' },
     ],
     price: '$22/month',
-    priceAnnual: '$199/year',
-    priceNote: 'or $199/year (save $65)',
+    priceAnnual: '$249/year',
+    priceNote: 'or $249/year (save $15)',
   } : {
     tagline: 'Built for South African Financial Advisers',
     badge: '2026/2027 Tax Year Ready',
@@ -521,8 +521,8 @@ export const LandingPage = () => {
       { value: 'PDF', label: 'Instant Reports' },
     ],
     price: 'R299/month',
-    priceAnnual: 'R1,999/year',
-    priceNote: 'or R1,999/year, save R1,589',
+    priceAnnual: 'R2,499/year',
+    priceNote: 'or R2,499/year, save R1,089',
   };
 
   return (
@@ -623,9 +623,9 @@ export const LandingPage = () => {
               <p className="text-sm text-slate-500">
                 {isFoundingActive
                   ? (isUS
-                      ? `$22/month, or $${founding.price}/year as a founding member (reverts to $199/year once the first 200 spots fill) • Have a coupon? Apply at signup`
-                      : `R299/month, or R${founding.price}/year as a founding member (reverts to R1,999/year once the first 200 spots fill) • Have a coupon? Apply at signup`)
-                  : (isUS ? '$22/month or $199/year (Save $65!) • Have a coupon? Apply at signup' : 'R299/month or R1,999/year (Save R1,589!) • Have a coupon? Apply at signup')
+                      ? `$22/month, or $${founding.price}/year as a founding member (reverts to $249/year once the first 200 spots fill) • Have a coupon? Apply at signup`
+                      : `R299/month, or R${founding.price}/year as a founding member (reverts to R2,499/year once the first 200 spots fill) • Have a coupon? Apply at signup`)
+                  : (isUS ? '$22/month or $249/year (Save $15!) • Have a coupon? Apply at signup' : 'R299/month or R2,499/year (Save R1,089!) • Have a coupon? Apply at signup')
                 }
               </p>
             </div>
@@ -695,7 +695,7 @@ export const LandingPage = () => {
                       'Price locked in forever, every renewal',
                       'Priority support from the founder & team',
                       'Private seat in the Founding Advisor Network',
-                      `First 200 members only, then ${isUS ? '$199' : 'R1,999'}/year`,
+                      `First 200 members only, then ${isUS ? '$249' : 'R2,499'}/year`,
                     ].map((item) => (
                       <li key={item} className="flex items-center gap-3 text-slate-200">
                         <CheckCircle2 className="h-5 w-5 text-amber-400 flex-shrink-0" />
@@ -719,13 +719,13 @@ export const LandingPage = () => {
                 </div>
                 <div className="text-center lg:border-l lg:border-amber-500/20 lg:pl-10">
                   <p className="text-slate-400 text-sm uppercase tracking-wide mb-2">Founding Price</p>
-                  <span className="text-2xl text-slate-500 line-through">{isUS ? '$199' : 'R1,999'}</span>
+                  <span className="text-2xl text-slate-500 line-through">{isUS ? '$249' : 'R2,499'}</span>
                   <div className="text-6xl font-extrabold text-amber-400 mb-1 mt-1">
                     {isUS ? `$${founding.price}` : `R${founding.price}`}
                   </div>
                   <p className="text-slate-400 text-sm mb-4">/year, locked in forever</p>
                   <div className="inline-block px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-                    Reverts to {isUS ? '$199' : 'R1,999'}/year once the first 200 spots fill
+                    Reverts to {isUS ? '$249' : 'R2,499'}/year once the first 200 spots fill
                   </div>
                 </div>
               </div>
@@ -977,7 +977,7 @@ export const LandingPage = () => {
                     🔥 Founding Member Pricing • Locked in forever + priority support
                   </div>
                   <p className="text-xs text-muted-foreground mb-3">
-                    Limited to the first 200 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
+                    Limited to the first 200 members. Price reverts to {isUS ? '$249/year' : 'R2,499/year'} once filled.
                   </p>
                 </>
               )}
@@ -989,10 +989,10 @@ export const LandingPage = () => {
                   </div>
                   {isFoundingActive ? (
                     <p className="text-emerald-500 text-sm mt-1">
-                      or <span className="line-through text-muted-foreground">$199</span> <span className="font-semibold">${founding.price}/year</span>
+                      or <span className="line-through text-muted-foreground">$249</span> <span className="font-semibold">${founding.price}/year</span>
                     </p>
                   ) : (
-                    <p className="text-emerald-500 text-sm mt-1">or $199/year, save $65</p>
+                    <p className="text-emerald-500 text-sm mt-1">or $249/year, save $15</p>
                   )}
                   <p className="text-muted-foreground text-xs mt-1">7-day money-back guarantee on annual plans</p>
                 </div>
@@ -1002,10 +1002,10 @@ export const LandingPage = () => {
                   <span className="text-muted-foreground ml-2">/month</span>
                   {isFoundingActive ? (
                     <p className="text-emerald-500 text-sm mt-1">
-                      or <span className="line-through text-muted-foreground">R1,999</span> <span className="font-semibold">R{founding.price}/year</span>
+                      or <span className="line-through text-muted-foreground">R2,499</span> <span className="font-semibold">R{founding.price}/year</span>
                     </p>
                   ) : (
-                    <p className="text-emerald-500 text-sm mt-1">or R1,999/year, save R1,589</p>
+                    <p className="text-emerald-500 text-sm mt-1">or R2,499/year, save R1,089</p>
                   )}
                   <p className="text-muted-foreground text-xs mt-1">7-day money-back guarantee on annual plans</p>
                 </div>
@@ -1048,7 +1048,7 @@ export const LandingPage = () => {
               </Link>
 
               <p className="mt-4 text-sm text-center text-muted-foreground">
-                {isUS ? '$22/month or $199/year. Cancel anytime • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
+                {isUS ? '$22/month or $249/year. Cancel anytime • Have a coupon code? Enter it at signup' : 'R299/month. Cancel anytime • Have a coupon code? Enter it at signup'}
               </p>
             </CardContent>
           </Card>
@@ -1273,7 +1273,7 @@ export const LandingPage = () => {
             </Button>
           </Link>
           <p className="mt-4 text-muted-foreground">
-            {isUS ? '$22/month or $199/year • Cancel anytime' : 'R299/month or R1,999/year • Cancel anytime'}
+            {isUS ? '$22/month or $249/year • Cancel anytime' : 'R299/month or R2,499/year • Cancel anytime'}
           </p>
         </div>
       </section>

@@ -35,12 +35,12 @@ const US_PREMIUM_FEATURES = [
 ];
 
 const PREMIUM_PRICE = 299;
-const ANNUAL_PRICE = 1999;
-const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R1999 vs R3588 = R1589 savings
+const ANNUAL_PRICE = 2499;
+const ANNUAL_SAVINGS = (PREMIUM_PRICE * 12) - ANNUAL_PRICE; // R2499 vs R3588 = R1089 savings
 
 const PREMIUM_PRICE_USD = 22;
-const ANNUAL_PRICE_USD = 199;
-const ANNUAL_SAVINGS_USD = (PREMIUM_PRICE_USD * 12) - ANNUAL_PRICE_USD; // $199 vs $264 = $65 savings
+const ANNUAL_PRICE_USD = 249;
+const ANNUAL_SAVINGS_USD = (PREMIUM_PRICE_USD * 12) - ANNUAL_PRICE_USD; // $249 vs $264 = $15 savings
 
 export const PricingPage = () => {
   const navigate = useNavigate();
@@ -112,10 +112,10 @@ export const PricingPage = () => {
   return (
     <div className="min-h-screen bg-navy-950" data-testid="pricing-page">
       <SEOHead
-        title={isUS ? "AdvisoryPro Pricing, $22/month or $199/year" : "AdvisoryPro Pricing"}
+        title={isUS ? "AdvisoryPro Pricing, $22/month or $249/year" : "AdvisoryPro Pricing"}
         description={isUS
-          ? "Professional financial planning tools. $22/month or $199/year. All 30+ US calculators. Advisor-level tools, without the advisor."
-          : "Professional financial planning tools. R299/month or R1999/year. 20+ South African calculators. Advisor-level tools, without the advisor."}
+          ? "Professional financial planning tools. $22/month or $249/year. All 30+ US calculators. Advisor-level tools, without the advisor."
+          : "Professional financial planning tools. R299/month or R2499/year. 20+ South African calculators. Advisor-level tools, without the advisor."}
         path="/pricing"
         keywords="financial calculator pricing, AdvisoryPro pricing, financial tools subscription, tax calculator subscription"
       />
@@ -236,7 +236,7 @@ export const PricingPage = () => {
                       🔥 Founding Member Pricing • Price locked in forever + priority support
                     </div>
                     <p className="text-xs text-slate-500 mb-2">
-                      Limited to the first 200 members. Price reverts to {isUS ? '$199/year' : 'R1,999/year'} once filled.
+                      Limited to the first 200 members. Price reverts to {isUS ? `$${ANNUAL_PRICE_USD}/year` : `R${ANNUAL_PRICE.toLocaleString()}/year`} once filled.
                     </p>
                   </>
                 )}

@@ -34,10 +34,10 @@ const SA_TIERS = [
   {
     name: 'Premium',
     price: 'R299',
-    annualPrice: 'R1,999',
+    annualPrice: 'R2,499',
     period: '/month',
     annualPeriod: '/year',
-    annualSavings: 'Save R1,589',
+    annualSavings: 'Save R1,089',
     description: 'Full professional suite',
     features: [
       'All 20 Financial Calculators',
@@ -69,10 +69,10 @@ const US_TIERS = [
   {
     name: 'Premium',
     price: '$22',
-    annualPrice: '$199',
+    annualPrice: '$249',
     period: '/month',
     annualPeriod: '/year',
-    annualSavings: 'Save $65',
+    annualSavings: 'Save $15',
     description: 'Advisor-level tools, without the advisor',
     features: [
       'All 30+ US Financial Calculators',
@@ -501,16 +501,16 @@ export const AuthPage = () => {
               <p className="text-muted-foreground text-sm">
                 {isFoundingActive ? (
                   isUS ? (
-                    <>$22/month, or <span className="line-through">$199</span> <span className="text-amber-500 font-medium">${founding.price}/year</span> as a founding member</>
+                    <>$22/month, or <span className="line-through">$249</span> <span className="text-amber-500 font-medium">${founding.price}/year</span> as a founding member</>
                   ) : (
-                    <>R299/month, or <span className="line-through">R1,999</span> <span className="text-amber-500 font-medium">R{founding.price}/year</span> as a founding member</>
+                    <>R299/month, or <span className="line-through">R2,499</span> <span className="text-amber-500 font-medium">R{founding.price}/year</span> as a founding member</>
                   )
                 ) : isUS ? (
                   <>
-                    $22/month or <span className="text-emerald-500 font-medium">$199/year</span> (Save $65!)
+                    $22/month or <span className="text-emerald-500 font-medium">$249/year</span> (Save $15!)
                   </>
                 ) : (
-                  <>R299/month or <span className="text-emerald-500 font-medium">R1,999/year</span> (Save R1,589!)</>
+                  <>R299/month or <span className="text-emerald-500 font-medium">R2,499/year</span> (Save R1,089!)</>
                 )}
               </p>
             </div>
