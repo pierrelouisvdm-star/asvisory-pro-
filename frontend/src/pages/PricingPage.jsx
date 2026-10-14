@@ -100,26 +100,8 @@ export const PricingPage = () => {
     setPaymentLoading(true);
 
     try {
-      const result = await paymentsApi.initializePaystack(billingPeriod);
+      const result = await paymentsApi.initializePaystack(billingPeriod, isUS ? 'US' : 'ZA');
       window.location.href = result.authorization_url;
-    } catch (error) {
-      toast.error(error.message || 'Failed to start payment');
-      setPaymentLoading(false);
-    }
-  };
-
-  const handleStripePayment = async () => {
-    if (!isAuthenticated) {
-      toast.error('Please sign in to make a payment');
-      navigate('/auth?redirect=/pricing');
-      return;
-    }
-
-    setPaymentLoading(true);
-
-    try {
-      const result = await subscriptionApi.createCheckout('premium', billingPeriod, 'US');
-      window.location.href = result.checkout_url;
     } catch (error) {
       toast.error(error.message || 'Failed to start payment');
       setPaymentLoading(false);
@@ -340,38 +322,24 @@ export const PricingPage = () => {
               </div>
 
               {/* Payment Button */}
-              {isUS ? (
-                <Button
-                  className="w-full h-12 text-lg btn-premium"
-                  onClick={handleStripePayment}
-                  disabled={paymentLoading}
-                  data-testid="us-payment-btn"
-                >
-                  {paymentLoading ? (
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                  ) : (
-                    <CreditCard className="h-5 w-5 mr-2" />
-                  )}
-                  {billingPeriod === 'annual' ? `Get Annual Access, $${isFoundingActive ? founding.price : ANNUAL_PRICE_USD}` : `Get Monthly Access, $${PREMIUM_PRICE_USD}/mo`}
-                </Button>
-              ) : (
-                <Button
-                  className="w-full h-12 text-lg btn-premium"
-                  onClick={handlePaystackPayment}
-                  disabled={paymentLoading}
-                  data-testid="paystack-payment-btn"
-                >
-                  {paymentLoading ? (
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                  ) : (
-                    <CreditCard className="h-5 w-5 mr-2" />
-                  )}
-                  Subscribe with Paystack
-                </Button>
-              )}
+              <Button
+                className="w-full h-12 text-lg btn-premium"
+                onClick={handlePaystackPayment}
+                disabled={paymentLoading}
+                data-testid="paystack-payment-btn"
+              >
+                {paymentLoading ? (
+                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                ) : (
+                  <CreditCard className="h-5 w-5 mr-2" />
+                )}
+                {isUS
+                  ? (billingPeriod === 'annual' ? `Get Annual Access, $${isFoundingActive ? founding.price : ANNUAL_PRICE_USD}` : `Get Monthly Access, $${PREMIUM_PRICE_USD}/mo`)
+                  : 'Subscribe with Paystack'}
+              </Button>
 
               <p className="text-center text-xs text-slate-500 mt-3">
-                {isUS ? 'Secure checkout • Cancel or upgrade anytime' : 'Secure payment via Paystack • Cards, EFT & more'}
+                Secure payment via Paystack • Cards{!isUS && ', EFT'} & more
               </p>
             </CardContent>
           </Card>
