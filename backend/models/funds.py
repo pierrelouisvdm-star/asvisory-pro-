@@ -7,6 +7,7 @@ class FundSummary(BaseModel):
     name: str
     category: str
     market: str
+    description: str
     price: float
     change: float
     change_percent: float
@@ -31,6 +32,7 @@ class FundDetail(BaseModel):
     name: str
     category: str
     market: str
+    description: str
     price: float
     change: float
     change_percent: float
