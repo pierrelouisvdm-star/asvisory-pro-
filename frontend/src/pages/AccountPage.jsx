@@ -1,22 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import {
   User, Mail, Building2, Crown, Calendar, CreditCard, ArrowRight,
-  CheckCircle2, Flame, Globe2, Loader2,
+  CheckCircle2, Flame, Globe2, Loader2, Undo2,
 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useAuth } from '@/context/AuthContext';
 import { useSubscription } from '@/context/SubscriptionContext';
 import { useJurisdiction } from '@/context/JurisdictionContext';
+import { paymentsApi } from '@/services/api';
 
 const CURRENCY_SYMBOL = { usd: '$', zar: 'R' };
 
 const AccountPage = () => {
   const { user } = useAuth();
-  const { subscription } = useSubscription();
+  const { subscription, refreshSubscription } = useSubscription();
   const { isUS } = useJurisdiction();
+  const [refunding, setRefunding] = useState(false);
+
+  const handleRefund = async () => {
+    setRefunding(true);
+    try {
+      const result = await paymentsApi.requestRefund();
+      toast.success(result.message || 'Your refund has been processed.');
+      await refreshSubscription();
+    } catch (err) {
+      toast.error(err.message || 'Failed to process refund');
+    } finally {
+      setRefunding(false);
+    }
+  };
 
   if (subscription.loading) {
     return (
@@ -139,6 +160,43 @@ const AccountPage = () => {
                   <p className="text-sm text-foreground">
                     Founding Member #{String(subscription.founderNumber).padStart(4, '0')} of the Advisory Pro Founders Network
                   </p>
+                </div>
+              )}
+
+              {subscription.refundEligible && (
+                <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+                  <Undo2 className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm text-foreground">
+                      You're within the 7-day money-back guarantee on your first annual plan
+                      {subscription.refundDeadline ? `, until ${formatDate(subscription.refundDeadline)}` : ''}.
+                    </p>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="outline" size="sm" className="mt-2">
+                          Request Refund
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Request a refund?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This refunds {currencySymbol}{subscription.lastPaymentAmount} to your original payment
+                            method and immediately moves your account back to the Free plan
+                            {subscription.foundingMember ? ', including your locked-in founding price and Founders Network number' : ''}.
+                            This can't be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction onClick={handleRefund} disabled={refunding}>
+                            {refunding ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                            Confirm Refund
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </div>
                 </div>
               )}
 

@@ -70,6 +70,8 @@ export const SubscriptionProvider = ({ children }) => {
         paymentMethod: result.payment_method || null,
         lastPaymentAmount: result.last_payment_amount ?? null,
         foundingPrice: result.founding_price ?? null,
+        refundEligible: result.refund_eligible || false,
+        refundDeadline: result.refund_deadline || null,
         loading: false,
       });
     } catch (error) {

@@ -21,6 +21,7 @@ from models.subscription import (
 )
 from utils.auth import get_current_user
 from utils.founding import count_founding_members_by_currency, count_combined_community_members, compute_community_grant
+from utils.refunds import get_refund_eligibility
 from server import db
 
 router = APIRouter(prefix="/subscriptions", tags=["Subscriptions"])
@@ -56,7 +57,8 @@ async def get_current_subscription(current_user: dict = Depends(get_current_user
     user_id = current_user["id"]
     subscription = await get_user_subscription(user_id)
     tier = subscription.get("tier", SubscriptionTier.FREE)
-    
+    refund_eligible, refund_deadline = get_refund_eligibility(subscription)
+
     return UserSubscriptionInfo(
         tier=tier,
         billing_cycle=subscription.get("billing_cycle"),
@@ -72,6 +74,8 @@ async def get_current_subscription(current_user: dict = Depends(get_current_user
         payment_method=subscription.get("payment_method"),
         last_payment_amount=subscription.get("last_payment_amount"),
         founding_price=subscription.get("founding_price"),
+        refund_eligible=refund_eligible,
+        refund_deadline=refund_deadline,
     )
 
 @router.post("/checkout", response_model=CheckoutResponse)

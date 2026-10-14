@@ -969,6 +969,7 @@ export const LandingPage = () => {
                   ) : (
                     <p className="text-emerald-500 text-sm mt-1">or $199/year, save $65</p>
                   )}
+                  <p className="text-muted-foreground text-xs mt-1">7-day money-back guarantee on annual plans</p>
                 </div>
               ) : (
                 <div className="mb-6">
@@ -981,6 +982,7 @@ export const LandingPage = () => {
                   ) : (
                     <p className="text-emerald-500 text-sm mt-1">or R1,999/year, save R1,589</p>
                   )}
+                  <p className="text-muted-foreground text-xs mt-1">7-day money-back guarantee on annual plans</p>
                 </div>
               )}
               </div>
