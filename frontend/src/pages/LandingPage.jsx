@@ -17,7 +17,7 @@ import {
   LineChart, Target, Clock, Zap, Award, Globe,
   ChevronRight, Play, Receipt, Mail,
   Send, Linkedin, Twitter, Building2, Loader2, Scale, AlertTriangle, Flame, DollarSign, Flag,
-  FileCheck, Wallet
+  FileCheck, Wallet, Search
 } from 'lucide-react';
 import logo from '../assets/logo_new.png';
 import heroFinanceBg from '../assets/hero-finance-bg.jpg';
@@ -30,6 +30,7 @@ import screenshotNetWorth from '../assets/screenshot-networth.png';
 import screenshotAiChat from '../assets/screenshot-ai-chat.png';
 import screenshotSecurity from '../assets/screenshot-security.png';
 import screenshotLiteracy from '../assets/screenshot-literacy.png';
+import screenshotFundExplorer from '../assets/screenshot-fund-explorer.png';
 import founderPhoto from '../assets/founder-pierre.jpg';
 import screenshotUSTax from '../assets/screenshot-us-tax.png';
 import screenshotUSFire from '../assets/screenshot-us-fire.png';
@@ -168,6 +169,13 @@ const SA_KEY_FEATURES = [
     highlights: ['Historical Snapshots', 'Goal Tracking', 'Smart Insights'],
   },
   {
+    icon: Search,
+    image: screenshotFundExplorer,
+    title: 'Fund Explorer',
+    description: 'Search and compare JSE-listed and US ETFs side by side. Live prices, 5-year price charts, and trailing 1-month to 5-year returns on every fund.',
+    highlights: ['60+ Curated ETFs', 'Live Prices', '5-Year Charts'],
+  },
+  {
     icon: Bot,
     image: screenshotAiChat,
     title: 'AI Financial Assistant',
@@ -225,6 +233,13 @@ const US_KEY_FEATURES = [
     title: 'Net Worth & Budget Tracker',
     description: 'Track assets, liabilities, set financial milestones, and monitor your wealth growth over time, denominated in USD with US-specific categories.',
     highlights: ['Dollar-Denominated', 'Budget Tracking', 'Goal Milestones'],
+  },
+  {
+    icon: Search,
+    image: screenshotFundExplorer,
+    title: 'Fund Explorer',
+    description: 'Search and compare US and JSE-listed ETFs side by side. Live prices, 5-year price charts, and trailing 1-month to 5-year returns on every fund.',
+    highlights: ['60+ Curated ETFs', 'Live Prices', '5-Year Charts'],
   },
   {
     icon: Shield,
@@ -400,6 +415,17 @@ export const LandingPage = () => {
       description: 'Every calculator exports a branded report in one click, with the client\'s name and the basis of the calculation included.',
       image: isUS ? screenshotUSPdfReport : screenshotPdfReport,
       imageAlt: isUS ? 'A generated AdvisoryPro net worth statement PDF report in US dollars, branded and ready to send to a client' : 'A generated AdvisoryPro retirement planning PDF report, branded and ready to send to a client',
+    },
+    {
+      id: 'funds',
+      icon: LineChart,
+      badgeClass: 'bg-sky-500/20 text-sky-400 border-sky-500/30',
+      label: 'Fund Explorer',
+      title: <>Compare <span className="text-sky-400">JSE and US ETFs</span> side by side</>,
+      description: 'Search 60+ curated ETFs, see live prices, 5-year price charts, and trailing 1-month to 5-year returns, all in one place.',
+      cta: { label: 'Explore Funds', to: '/funds' },
+      image: screenshotFundExplorer,
+      imageAlt: 'AdvisoryPro Fund Explorer showing a 5-year price chart and trailing returns for an S&P 500 ETF',
     },
     {
       id: 'networth',
@@ -758,7 +784,7 @@ export const LandingPage = () => {
                 <div className="flex flex-wrap gap-4">
                   <Link to={activeTour.cta.to}>
                     <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-white">
-                      <Receipt className="mr-2 h-5 w-5" />
+                      <activeTour.icon className="mr-2 h-5 w-5" />
                       {activeTour.cta.label}
                     </Button>
                   </Link>

@@ -51,7 +51,8 @@ import {
   Star,
   Search,
   Users,
-  Gift
+  Gift,
+  LineChart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -59,6 +60,17 @@ import { cn } from '@/lib/utils';
 const FREE_CALCULATOR_IDS = ['tfsa-calculator', 'bond', 'future-value', 'compound-interest'];
 
 const investmentCalculators = [
+  {
+    id: 'funds',
+    title: 'Fund Explorer',
+    description: 'Search and compare JSE and US ETF performance, with 5-year charts and trailing returns',
+    icon: LineChart,
+    path: '/funds',
+    features: ['60+ Curated ETFs', 'Live Prices', '5-Year Charts'],
+    isFree: false,
+    isNew: true,
+    isFeatured: true,
+  },
   {
     id: 'future-value',
     title: 'Future Value',
