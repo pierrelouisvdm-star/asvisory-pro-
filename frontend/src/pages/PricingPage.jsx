@@ -45,7 +45,8 @@ const ANNUAL_SAVINGS_USD = (PREMIUM_PRICE_USD * 12) - ANNUAL_PRICE_USD; // $199 
 export const PricingPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAuth();
-  const { refreshSubscription } = useSubscription();
+  const { subscription, refreshSubscription } = useSubscription();
+  const isAlreadyPremium = isAuthenticated && subscription.tier === 'premium';
   const { isUS } = useJurisdiction();
   
   // Billing period toggle
@@ -322,25 +323,42 @@ export const PricingPage = () => {
               </div>
 
               {/* Payment Button */}
-              <Button
-                className="w-full h-12 text-lg btn-premium"
-                onClick={handlePaystackPayment}
-                disabled={paymentLoading}
-                data-testid="paystack-payment-btn"
-              >
-                {paymentLoading ? (
-                  <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
-                  <CreditCard className="h-5 w-5 mr-2" />
-                )}
-                {isUS
-                  ? (billingPeriod === 'annual' ? `Get Annual Access, $${isFoundingActive ? founding.price : ANNUAL_PRICE_USD}` : `Get Monthly Access, $${PREMIUM_PRICE_USD}/mo`)
-                  : 'Subscribe with Paystack'}
-              </Button>
-
-              <p className="text-center text-xs text-slate-500 mt-3">
-                Secure payment via Paystack • Cards{!isUS && ', EFT'} & more
-              </p>
+              {isAlreadyPremium ? (
+                <>
+                  <Button
+                    className="w-full h-12 text-lg bg-emerald-600 hover:bg-emerald-700 text-white"
+                    onClick={() => navigate('/account')}
+                    data-testid="already-premium-btn"
+                  >
+                    <Check className="h-5 w-5 mr-2" />
+                    You're Already Subscribed
+                  </Button>
+                  <p className="text-center text-xs text-slate-500 mt-3">
+                    View your plan details in My Account
+                  </p>
+                </>
+              ) : (
+                <>
+                  <Button
+                    className="w-full h-12 text-lg btn-premium"
+                    onClick={handlePaystackPayment}
+                    disabled={paymentLoading}
+                    data-testid="paystack-payment-btn"
+                  >
+                    {paymentLoading ? (
+                      <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                    ) : (
+                      <CreditCard className="h-5 w-5 mr-2" />
+                    )}
+                    {isUS
+                      ? (billingPeriod === 'annual' ? `Get Annual Access, $${isFoundingActive ? founding.price : ANNUAL_PRICE_USD}` : `Get Monthly Access, $${PREMIUM_PRICE_USD}/mo`)
+                      : 'Subscribe with Paystack'}
+                  </Button>
+                  <p className="text-center text-xs text-slate-500 mt-3">
+                    Secure payment via Paystack • Cards{!isUS && ', EFT'} & more
+                  </p>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>

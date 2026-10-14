@@ -67,7 +67,11 @@ async def get_current_subscription(current_user: dict = Depends(get_current_user
         founding_member=subscription.get("founding_member", False),
         community_member=subscription.get("community_member", False),
         founder_number=subscription.get("founder_number"),
-        priority_support=subscription.get("priority_support", False)
+        priority_support=subscription.get("priority_support", False),
+        currency=subscription.get("currency"),
+        payment_method=subscription.get("payment_method"),
+        last_payment_amount=subscription.get("last_payment_amount"),
+        founding_price=subscription.get("founding_price"),
     )
 
 @router.post("/checkout", response_model=CheckoutResponse)

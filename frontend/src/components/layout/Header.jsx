@@ -215,14 +215,17 @@ export const Header = () => {
                   <LogOut className="h-4 w-4 mr-2" />
                   <span className="hidden sm:inline">Logout</span>
                 </Button>
-                <div className="flex items-center gap-2 pl-2 border-l border-border">
+                <Link
+                  to="/account"
+                  className="flex items-center gap-2 pl-2 border-l border-border hover:opacity-80 transition-opacity"
+                >
                   <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
                     <User className="h-4 w-4" />
                   </div>
                   <span className="text-sm text-foreground hidden md:block">
-                    {user?.name?.split(' ')[0] || user?.email?.split('@')[0]}
+                    {user?.full_name?.split(' ')[0] || user?.email?.split('@')[0]}
                   </span>
-                </div>
+                </Link>
               </div>
             ) : (
               <Link to="/auth">
@@ -322,6 +325,14 @@ export const Header = () => {
               >
                 <Home className="h-5 w-5 text-primary" />
                 Dashboard
+              </Link>
+              <Link
+                to="/account"
+                onClick={() => setIsMenuOpen(false)}
+                className="flex items-center gap-3 px-4 py-3 text-foreground rounded-lg hover:bg-muted"
+              >
+                <User className="h-5 w-5 text-primary" />
+                My Account
               </Link>
               <Link
                 to="/clients"
