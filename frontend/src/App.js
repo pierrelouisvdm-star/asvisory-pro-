@@ -41,6 +41,7 @@ import AccountPage from "@/pages/AccountPage";
 import TaxPlanningHub from "@/pages/TaxPlanningHub";
 import DocumentReader from "@/pages/DocumentReader";
 import FeeComparisonCalculator from "@/pages/FeeComparisonCalculator";
+import FundExplorer from "@/pages/FundExplorer";
 import TFSACalculator from "@/pages/TFSACalculator";
 import IncomeExpenseTracker from "@/pages/IncomeExpenseTracker";
 import TaxCalculatorUS from "@/pages/calculators/TaxCalculatorUS";
@@ -193,6 +194,7 @@ function App() {
                   <Route path="/analytics" element={<AdminRoute><AnalyticsDashboard /></AdminRoute>} />
                   <Route path="/document-reader" element={<ProtectedRoute><GatedCalculator path="/document-reader"><DocumentReader /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/fee-comparison" element={<ProtectedRoute><GatedCalculator path="/fee-comparison"><FeeComparisonCalculator /></GatedCalculator></ProtectedRoute>} />
+                  <Route path="/funds" element={<ProtectedRoute><GatedCalculator path="/funds"><FundExplorer /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/tfsa-calculator" element={<ProtectedRoute><GatedCalculator path="/tfsa-calculator"><TFSACalculator /></GatedCalculator></ProtectedRoute>} />
                   <Route path="/income-expense-tracker" element={<ProtectedRoute><IncomeExpenseTracker /></ProtectedRoute>} />
                   <Route path="/clients" element={<ProtectedRoute><ClientsPage /></ProtectedRoute>} />

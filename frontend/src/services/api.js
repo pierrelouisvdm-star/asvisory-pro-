@@ -403,6 +403,28 @@ export const marketApi = {
   },
 };
 
+// Fund Explorer API
+export const fundsApi = {
+  list: async ({ market, category, q } = {}) => {
+    const params = new URLSearchParams();
+    if (market) params.set('market', market);
+    if (category) params.set('category', category);
+    if (q) params.set('q', q);
+    const qs = params.toString();
+    const response = await fetch(`${API_URL}/api/funds${qs ? `?${qs}` : ''}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+
+  getDetail: async (ticker) => {
+    const response = await fetch(`${API_URL}/api/funds/${encodeURIComponent(ticker)}`, {
+      headers: getHeaders(),
+    });
+    return handleResponse(response);
+  },
+};
+
 // Analytics API
 export const analyticsApi = {
   getDashboard: async () => {

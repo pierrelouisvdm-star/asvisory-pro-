@@ -23,6 +23,10 @@ INDICES = {
     "^GSPC": {"name": "S&P 500", "region": "US"},
     "^NSEI": {"name": "Nifty 50", "region": "IN"},
     "VNQI": {"name": "SA Property (ETF Proxy)", "region": "ZA"},
+    "^N225": {"name": "Nikkei 225", "region": "JP"},
+    "^FCHI": {"name": "CAC 40", "region": "FR"},
+    "^FTSE": {"name": "FTSE 100", "region": "UK"},
+    "URTH": {"name": "MSCI World (ETF Proxy)", "region": "GLOBAL"},
 }
 
 # JSE Indices (scraped from Moneyweb)
