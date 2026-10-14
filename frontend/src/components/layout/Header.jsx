@@ -38,8 +38,8 @@ const allCalculators = [
     category: 'Debt',
     color: 'blue',
     items: [
-      { path: '/bond', label: 'Bond Calculator', icon: Building2 },
-      { path: '/car-finance', label: 'Vehicle Finance', icon: Car },
+      { path: '/bond', label: 'Bond Calculator', icon: Building2, saOnly: true },
+      { path: '/car-finance', label: 'Vehicle Finance', icon: Car, saOnly: true },
       { path: '/debt-payoff', label: 'Debt Payoff', icon: CreditCard },
       { path: '/loan-comparison', label: 'Loan Compare', icon: GitCompare },
     ]
@@ -78,7 +78,7 @@ const allCalculators = [
       { path: '/net-worth', label: 'Net Worth Tracker', icon: Landmark },
       { path: '/budget-planner', label: 'Budget Planner', icon: Wallet },
       { path: '/cash-flow', label: 'Cash Flow', icon: ArrowRightLeft },
-      { path: '/estate-planning', label: 'Estate Planning', icon: ScrollText },
+      { path: '/estate-planning', label: 'Estate Planning', icon: ScrollText, saOnly: true },
       { path: '/education-savings', label: 'Education Savings', icon: GraduationCap },
     ]
   },
