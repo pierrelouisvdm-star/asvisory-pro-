@@ -79,6 +79,60 @@ async def send_password_reset_email(to_email: str, reset_code: str, user_name: s
         return False
 
 
+async def send_welcome_email(to_email: str, user_name: str = None):
+    """Send a welcome email via Resend when a new account is created"""
+    first_name = user_name.split()[0] if user_name else "there"
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #ffffff; margin: 0; font-size: 28px;">AdvisoryPro</h1>
+            <p style="color: #94a3b8; margin: 10px 0 0 0;">Welcome aboard</p>
+        </div>
+
+        <p style="font-size: 16px;">Hi {first_name},</p>
+
+        <p style="font-size: 16px;">Thanks for signing up for AdvisoryPro! Your account is ready, and you already have access to our free financial calculators and tools.</p>
+
+        <p style="font-size: 16px;">Ready for more? Upgrade to Premium any time for the full calculator suite, the complete Tax Hub, professional PDF reports, and the AI Financial Assistant.</p>
+
+        <div style="text-align: center; margin: 25px 0;">
+            <a href="https://advisorypro.co.za/pricing" style="display: inline-block; background: #10b981; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 8px; font-weight: bold; font-size: 15px;">Explore Premium</a>
+        </div>
+
+        <p style="font-size: 14px; color: #64748b;">Questions? Reach out any time at {SENDER_EMAIL}.</p>
+
+        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+            © 2026 AdvisoryPro. All rights reserved.<br>
+            This is an automated message, please do not reply.
+        </p>
+    </body>
+    </html>
+    """
+
+    params = {
+        "from": f"AdvisoryPro <{SENDER_EMAIL}>",
+        "to": [to_email],
+        "subject": "Welcome to AdvisoryPro!",
+        "html": html_content
+    }
+
+    try:
+        email = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Welcome email sent to {to_email}, email_id: {email.get('id')}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to send welcome email to {to_email}: {str(e)}")
+        return False
+
+
 @router.post("/register", response_model=Token)
 async def register(user_data: UserCreate):
     """Register a new advisor account"""
@@ -114,10 +168,13 @@ async def register(user_data: UserCreate):
     user_dict['created_at'] = now.isoformat()
     user_dict['last_login'] = now.isoformat()
     await db.users.insert_one(user_dict)
-    
+
+    # Send the welcome email in the background — don't make signup wait on it
+    asyncio.create_task(send_welcome_email(user.email, user.full_name))
+
     # Create access token
     access_token = create_access_token(data={"sub": user.id})
-    
+
     return Token(access_token=access_token, user=user)
 
 
