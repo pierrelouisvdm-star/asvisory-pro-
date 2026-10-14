@@ -6,10 +6,21 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Search, TrendingUp, TrendingDown, LineChart as LineChartIcon } from 'lucide-react';
+import { ArrowLeft, Search, TrendingUp, TrendingDown, LineChart as LineChartIcon, Clock } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { useJurisdiction } from '@/context/JurisdictionContext';
+
+const formatDateTime = (dateStr, isUS) => {
+  if (!dateStr) return null;
+  return new Date(dateStr).toLocaleString(isUS ? 'en-US' : 'en-ZA', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
 
 const RETURN_FIELDS = [
   { key: 'one_month', label: '1 Month' },
@@ -38,7 +49,9 @@ const ReturnBadge = ({ value }) => {
 };
 
 const FundExplorer = () => {
+  const { isUS } = useJurisdiction();
   const [funds, setFunds] = useState([]);
+  const [lastUpdated, setLastUpdated] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [market, setMarket] = useState('all');
@@ -53,6 +66,7 @@ const FundExplorer = () => {
     try {
       const result = await fundsApi.list({ market: market === 'all' ? undefined : market });
       setFunds(result.funds || []);
+      setLastUpdated(result.last_updated || null);
     } catch (err) {
       setError(err.message || 'Failed to load funds');
     } finally {
@@ -125,6 +139,12 @@ const FundExplorer = () => {
                   {detail.change >= 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
                   {detail.change >= 0 ? '+' : ''}{detail.change.toLocaleString()} ({formatPct(detail.change_percent)})
                 </div>
+                {detail.last_updated && (
+                  <div className="flex items-center justify-end gap-1 text-xs text-slate-500 mt-1" data-testid="fund-detail-last-updated">
+                    <Clock className="h-3 w-3" />
+                    Updated {formatDateTime(detail.last_updated, isUS)}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -176,11 +196,19 @@ const FundExplorer = () => {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl" data-testid="fund-explorer-page">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Fund Explorer</h1>
-        <p className="text-slate-500">
-          Browse and compare performance of curated JSE-listed and US-listed ETFs.
-        </p>
+      <div className="mb-6 flex items-start justify-between flex-wrap gap-2">
+        <div>
+          <h1 className="text-2xl font-bold">Fund Explorer</h1>
+          <p className="text-slate-500">
+            Browse and compare performance of curated JSE-listed and US-listed ETFs.
+          </p>
+        </div>
+        {lastUpdated && (
+          <div className="flex items-center gap-1.5 text-xs text-slate-500" data-testid="fund-last-updated">
+            <Clock className="h-3.5 w-3.5" />
+            Updated {formatDateTime(lastUpdated, isUS)}
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
