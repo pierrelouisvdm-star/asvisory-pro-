@@ -102,6 +102,9 @@ export const AuthPage = () => {
     ? redirectParam
     : '/';
 
+  // Which plan the user wants — selectable below, defaults based on how they arrived
+  const [selectedPlan, setSelectedPlan] = useState(redirectTo === '/pricing' ? 'premium' : 'free');
+
   const tiers = isUS ? US_TIERS : SA_TIERS;
 
   const [foundingStatus, setFoundingStatus] = useState(null);
@@ -179,8 +182,9 @@ export const AuthPage = () => {
           toast.error(`Coupon error: ${couponErr.message}`);
         }
       }
-      
-      navigate(redirectTo);
+
+      // Premium gets routed to checkout; Free respects wherever the link meant to send them
+      navigate(selectedPlan === 'premium' ? '/pricing' : redirectTo);
     } catch (err) {
       setError(err.message);
       toast.error(err.message);
@@ -399,15 +403,26 @@ export const AuthPage = () => {
                         </div>
                       )}
 
-                      <Button 
-                        type="submit" 
-                        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold" 
+                      <Button
+                        type="submit"
+                        className={`w-full font-semibold ${
+                          selectedPlan === 'premium'
+                            ? 'bg-amber-500 hover:bg-amber-600 text-black'
+                            : 'bg-primary hover:bg-primary/90 text-primary-foreground'
+                        }`}
                         disabled={isLoading}
                         data-testid="register-submit-btn"
                       >
-                        {isLoading ? 'Creating account...' : 'Create Account'}
+                        {isLoading
+                          ? 'Creating account...'
+                          : selectedPlan === 'premium' ? 'Create Account — Premium' : 'Create Account — Free'}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
+                      <p className="text-center text-xs text-muted-foreground">
+                        {selectedPlan === 'premium'
+                          ? "You'll land on checkout to finish subscribing right after"
+                          : 'Free forever — upgrade to Premium any time'}
+                      </p>
                     </form>
                   </TabsContent>
                 </Tabs>
@@ -469,7 +484,8 @@ export const AuthPage = () => {
           {/* Right Side - Pricing Tiers */}
           <div className="space-y-4">
             <div className="text-center lg:text-left mb-4">
-              <h2 className="text-xl font-display font-bold text-foreground mb-1">Premium Plan</h2>
+              <h2 className="text-xl font-display font-bold text-foreground mb-1">Choose Your Plan</h2>
+              <p className="text-muted-foreground text-xs mb-3">Tap a plan below, then create your account</p>
               {isFoundingActive && (
                 <>
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-semibold mb-2">
@@ -499,17 +515,32 @@ export const AuthPage = () => {
               </p>
             </div>
 
-            {tiers.map((tier) => (
-              <Card 
+            {tiers.map((tier) => {
+              const planKey = tier.name.toLowerCase();
+              const isSelected = selectedPlan === planKey;
+              return (
+              <Card
                 key={tier.name}
-                className={`border-border bg-card relative overflow-hidden ${
-                  tier.highlight ? 'border-primary/50 ring-1 ring-primary/20' : ''
+                role="radio"
+                aria-checked={isSelected}
+                tabIndex={0}
+                onClick={() => setSelectedPlan(planKey)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedPlan(planKey); } }}
+                className={`border-2 bg-card relative overflow-hidden cursor-pointer transition-all ${
+                  isSelected
+                    ? (planKey === 'premium' ? 'border-amber-500 ring-2 ring-amber-500/30' : 'border-primary ring-2 ring-primary/30')
+                    : 'border-border hover:border-muted-foreground/40'
                 }`}
               >
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
+                        <div className={`flex h-4 w-4 items-center justify-center rounded-full border-2 flex-shrink-0 ${
+                          isSelected ? (planKey === 'premium' ? 'border-amber-500 bg-amber-500' : 'border-primary bg-primary') : 'border-muted-foreground/40'
+                        }`}>
+                          {isSelected && <div className="h-1.5 w-1.5 rounded-full bg-white" />}
+                        </div>
                         <h3 className="font-display font-bold text-foreground">{tier.name}</h3>
                         {tier.name === 'Premium' && <Sparkles className="h-4 w-4 text-amber-500" />}
                       </div>
@@ -546,7 +577,8 @@ export const AuthPage = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
 
             {/* Features Highlight */}
             <Card className="border-border bg-gradient-to-br from-primary/5 to-card">
